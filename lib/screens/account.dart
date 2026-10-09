@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'leaderboard.dart';
 
 // ---- 28/29 profile
 class AccountPage extends StatefulWidget {
@@ -43,6 +44,26 @@ class _AccountPageState extends State<AccountPage> {
                 profile.outingTypes.isEmpty ? 'Nothing picked yet' : profile.outingTypes.join(', '),
                 style: const TextStyle(fontWeight: FontWeight.w600)),
           ),
+          if (profile.isParent) ...[
+            const SectionTitle('Parent'),
+            LCard(
+              color: C.navy,
+              onTap: () => go(context, const ParentControlsPage()),
+              child: const Row(children: [
+                Icon(Icons.shield_rounded, color: C.mustard),
+                SizedBox(width: 14),
+                Expanded(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text('Parent controls',
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
+                    Text('Phone-free time, consequences, rewards',
+                        style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  ]),
+                ),
+                Icon(Icons.chevron_right_rounded, color: Colors.white70),
+              ]),
+            ),
+          ],
           const SectionTitle('Achievements'),
           Row(children: [
             _stat('12', 'Days', C.mustardTint),
@@ -116,7 +137,10 @@ class _DesignAvatarPageState extends State<DesignAvatarPage> {
           bottom: Btn('Save', onTap: () {
             profile.avatar = _a;
             final i = members.indexWhere((m) => m.name == profile.name);
-            if (i >= 0) members[i] = Member(profile.name, 'You', profile.age, characters[_a].$2);
+            if (i >= 0) {
+              final o = members[i];
+              members[i] = Member(o.key, o.name, o.role, o.age, characters[_a].$2, o.points);
+            }
             Navigator.pop(context);
           }));
 }

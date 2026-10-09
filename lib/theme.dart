@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// Single source of truth for the Lamma palette. Adjust here to match the
 /// reference image exactly.
 class C {
-  static const cream = Color(0xFFFBF4E8);
+  static const cream = Color(0xFFFFFFFF);
   static const beige = Color(0xFFEFE2CC);
   static const sand = Color(0xFFE2D0B2);
-  static const terracotta = Color(0xFFA4443B);
+  static const terracotta = Color(0xFFC4634A);
   static const coral = Color(0xFFEE8D75);
   static const teal = Color(0xFF2E8B88);
   static const green = Color(0xFF86A57E);
@@ -14,7 +14,7 @@ class C {
   static const ink = Color(0xFF3D2B23);
   static const inkSoft = Color(0xFF7D6A5E);
   static const navy = Color(0xFF1B2A45);
-  static const card = Color(0xFFFFFBF4);
+  static const card = Color(0xFFF6F3EF);
 
   // soft tints for card backgrounds
   static const coralTint = Color(0xFFF8D9CC);
@@ -65,11 +65,11 @@ ThemeData buildTheme() {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: C.sand),
+        borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: C.sand),
+        borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),

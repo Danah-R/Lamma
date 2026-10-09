@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'data.dart';
 import 'theme.dart';
 
@@ -62,10 +63,7 @@ class LCard extends StatelessWidget {
           onTap: onTap,
           child: Container(
             padding: padding,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              border: color == null ? Border.all(color: C.beige, width: 1.5) : null,
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
             child: child,
           ),
         ),
@@ -125,7 +123,6 @@ class Choice extends StatelessWidget {
           decoration: BoxDecoration(
             color: selected ? color : C.card,
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: selected ? color : C.sand),
           ),
           child: Text(label,
               style: TextStyle(
@@ -241,7 +238,7 @@ class TabHeader extends StatelessWidget {
   const TabHeader(this.title, this.subtitle, {super.key, this.onBell});
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(4, 12, 4, 8),
+        padding: const EdgeInsets.fromLTRB(0, 12, 0, 8),
         child: Row(children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -283,6 +280,7 @@ class Field extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
   final TextInputType? keyboard;
+  final List<TextInputFormatter>? formatters;
   const Field(this.label,
       {super.key,
       this.hint,
@@ -290,7 +288,8 @@ class Field extends StatelessWidget {
       this.icon,
       this.controller,
       this.onChanged,
-      this.keyboard});
+      this.keyboard,
+      this.formatters});
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: 14),
@@ -303,6 +302,7 @@ class Field extends StatelessWidget {
             controller: controller,
             onChanged: onChanged,
             keyboardType: keyboard,
+            inputFormatters: formatters,
             maxLines: lines,
             decoration: InputDecoration(
                 hintText: hint,

@@ -4,6 +4,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'account.dart';
 import 'activities.dart';
+import 'leaderboard.dart';
 
 class HomePage extends StatefulWidget {
   final void Function(int) onSwitchTab;
@@ -13,7 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const _tonight = ['Noura', 'Mohammed', 'Abdullah', 'Amina', 'Sarah'];
+  List<String> get _tonight =>
+      [n('daughter'), n('brother'), n('dad'), n('mom'), n('girl')];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -32,11 +34,42 @@ class _HomePageState extends State<HomePage> {
             ),
             BellButton(() => go(context, const NotificationsPage())),
           ]),
+          if (rules.phoneFree || rules.punishments.containsKey(profile.name)) ...[
+            const SizedBox(height: 14),
+            if (rules.phoneFree)
+              LCard(
+                color: C.mustardTint,
+                padding: const EdgeInsets.all(14),
+                child: Row(children: [
+                  const Icon(Icons.phonelink_erase_rounded, color: C.terracotta),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text('Phone-free time · ${rules.from} – ${rules.to}',
+                        style: const TextStyle(fontWeight: FontWeight.w800)),
+                  ),
+                ]),
+              ),
+            if (rules.punishments.containsKey(profile.name)) ...[
+              const SizedBox(height: 8),
+              LCard(
+                color: C.coralTint,
+                padding: const EdgeInsets.all(14),
+                child: Row(children: [
+                  const Icon(Icons.gavel_rounded, color: C.terracotta),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text('Your punishment: ${rules.punishments[profile.name]}',
+                        style: const TextStyle(fontWeight: FontWeight.w800)),
+                  ),
+                ]),
+              ),
+            ],
+          ],
           const SizedBox(height: 18),
 
           // today with the family
           LCard(
-            color: C.terracotta,
+            color: C.teal,
             padding: const EdgeInsets.all(18),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Today with the family',
@@ -46,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
               const SizedBox(height: 12),
               Row(children: [
-                const AvatarStack(_tonight, size: 36),
+                AvatarStack(_tonight, size: 36),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text('${_tonight.length} of ${members.length} attending',
@@ -78,11 +111,12 @@ class _HomePageState extends State<HomePage> {
           // calendar
           SectionTitle('Family calendar', action: '+ Add event', onAction: _addEvent),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            for (final d in calendarDays) ...[
-              Expanded(child: _day(d.$1, d.$2)),
-              if (d != calendarDays.last) const SizedBox(width: 10),
+            for (var i = 0; i < 3; i++) ...[
+              Expanded(child: _day(today.add(Duration(days: i)), i == 0)),
+              if (i < 2) const SizedBox(width: 10),
             ],
           ]),
+          ..._later(),
 
           // weekly podcast
           const SectionTitle('Weekly podcast'),
@@ -110,6 +144,12 @@ class _HomePageState extends State<HomePage> {
             ]),
           ),
 
+          SectionTitle('Leaderboard', action: 'See all', onAction: () async {
+            await go(context, const LeaderboardPage());
+            if (mounted) setState(() {});
+          }),
+          const RankList(limit: 3),
+
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 26),
             child: Text('The best memories start with a simple question',
@@ -119,13 +159,13 @@ class _HomePageState extends State<HomePage> {
 
           // activity
           const SectionTitle('Family activity'),
-          const LCard(
+          LCard(
             child: Column(children: [
-              _Feed('Sarah', 'Sarah shared a photo'),
-              Divider(color: C.beige, height: 22),
-              _Feed('Mohammed', "Mohammed finished today's challenge"),
-              Divider(color: C.beige, height: 22),
-              _Feed('Amina', 'Amina listened to the weekly podcast'),
+              _Feed(n('girl'), '${n('girl')} shared a photo'),
+              const Divider(color: C.beige, height: 22),
+              _Feed(n('brother'), "${n('brother')} finished today's challenge"),
+              const Divider(color: C.beige, height: 22),
+              _Feed(n('mom'), '${n('mom')} listened to the weekly podcast'),
             ]),
           ),
           const SizedBox(height: 16),
@@ -139,22 +179,55 @@ class _HomePageState extends State<HomePage> {
     if (mounted) setState(() {});
   }
 
-  Widget _day(int n, String label) {
-    final today = n == 12;
-    final dayEvents = events.where((e) => e.day == n).toList();
+  /// Events further out than the 3-day strip, so nothing added is ever hidden.
+  List<Widget> _later() {
+    final cutoff = DateTime(today.year, today.month, today.day + 3);
+    final later = events.where((e) => !e.date.isBefore(cutoff)).toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+    if (later.isEmpty) return [];
+    return [
+      const SizedBox(height: 14),
+      for (final e in later)
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: LCard(
+            padding: const EdgeInsets.all(12),
+            onTap: () async {
+              await go(context, EventDetailsPage(e));
+              if (mounted) setState(() {});
+            },
+            child: Row(children: [
+              IconBubble(Icons.event_rounded, e.color, size: 38),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(e.title, style: const TextStyle(fontWeight: FontWeight.w800)),
+                  Text('${dateLabel(e.date)} · ${e.time}',
+                      style: const TextStyle(color: C.inkSoft, fontSize: 12)),
+                ]),
+              ),
+            ]),
+          ),
+        ),
+    ];
+  }
+
+  Widget _day(DateTime date, bool isToday) {
+    final n = date.day;
+    final label = weekdayName(date);
+    final dayEvents = events.where((e) => sameDay(e.date, date)).toList();
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 12, 8, 10),
       decoration: BoxDecoration(
-        color: today ? C.coralTint : C.card,
+        color: isToday ? C.coralTint : C.card,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: today ? C.coral : C.beige, width: 1.5),
       ),
       child: Column(children: [
-        Text(today ? '$label · Today' : label,
+        Text(isToday ? '$label · Today' : label,
             style: TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w800, color: today ? C.terracotta : C.inkSoft)),
+                fontSize: 11, fontWeight: FontWeight.w800, color: isToday ? C.terracotta : C.inkSoft)),
         const SizedBox(height: 6),
-        today
+        isToday
             ? CircleAvatar(
                 radius: 15,
                 backgroundColor: C.terracotta,
@@ -214,7 +287,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   Widget build(BuildContext context) {
     final e = widget.e;
     final me = e.going.contains(profile.name);
-    final day = calendarDays.firstWhere((d) => d.$1 == e.day, orElse: () => (e.day, '')).$2;
     return Page1('Event details', [
       const SizedBox(height: 10),
       Center(child: IconBubble(Icons.event_rounded, e.color, size: 72)),
@@ -222,7 +294,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       Center(child: Text(e.title, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900))),
       const SizedBox(height: 6),
       Center(
-          child: Text('$day ${e.day} · ${e.time}',
+          child: Text('${dateLabel(e.date)} · ${e.time}',
               style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700))),
       const SizedBox(height: 8),
       Center(child: Pill(e.type, color: e.color.withValues(alpha: .25))),
@@ -236,7 +308,15 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         bottom: Btn(me ? "You're in" : "I'm coming",
             icon: me ? Icons.check_rounded : null,
             color: me ? C.green : C.terracotta,
-            onTap: () => setState(() => me ? e.going.remove(profile.name) : e.going.add(profile.name))));
+            onTap: () => setState(() {
+              if (me) {
+                e.going.remove(profile.name);
+                addPoints(profile.name, -5);
+              } else {
+                e.going.add(profile.name);
+                addPoints(profile.name, 5);
+              }
+            })));
   }
 }
 
@@ -249,7 +329,7 @@ class AddEventPage extends StatefulWidget {
 
 class _AddEventPageState extends State<AddEventPage> {
   String _type = eventTypes.first;
-  int _day = 12;
+  DateTime _date = DateTime(today.year, today.month, today.day);
   TimeOfDay _time = const TimeOfDay(hour: 20, minute: 0);
   final _name = TextEditingController();
 
@@ -268,12 +348,25 @@ class _AddEventPageState extends State<AddEventPage> {
         ]),
         const SizedBox(height: 18),
         Field('Name', hint: 'Event name...', controller: _name, onChanged: (_) => setState(() {})),
-        const Text('Day', style: TextStyle(fontWeight: FontWeight.w700)),
+        const Text('Date', style: TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
-        Wrap(spacing: 8, children: [
-          for (final d in calendarDays)
-            Choice('${d.$2} ${d.$1}', _day == d.$1, () => setState(() => _day = d.$1)),
-        ]),
+        LCard(
+          onTap: () async {
+            final d = await showDatePicker(
+              context: context,
+              initialDate: _date,
+              firstDate: DateTime(today.year, today.month, today.day),
+              lastDate: DateTime(today.year + 2, today.month, today.day),
+            );
+            if (d != null) setState(() => _date = d);
+          },
+          child: Row(children: [
+            const Icon(Icons.calendar_today_rounded, color: C.inkSoft),
+            const SizedBox(width: 12),
+            Expanded(child: Text(dateLabel(_date), style: const TextStyle(fontWeight: FontWeight.w800))),
+            const Icon(Icons.expand_more_rounded, color: C.inkSoft),
+          ]),
+        ),
         const SizedBox(height: 18),
         const Text('Time', style: TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
@@ -290,7 +383,7 @@ class _AddEventPageState extends State<AddEventPage> {
         ),
       ],
           bottom: Btn('Add to calendar', enabled: _name.text.trim().isNotEmpty, onTap: () {
-            events.add(Ev(_name.text.trim(), _day, _time.format(context), _type,
+            events.add(Ev(_name.text.trim(), _date, _time.format(context), _type,
                 [C.teal, C.mustard, C.coral, C.green][eventTypes.indexOf(_type) % 4], [profile.name]));
             Navigator.pop(context);
           }));
@@ -301,7 +394,7 @@ class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    Widget n(IconData i, Color c, String t) => Padding(
+    Widget n2(IconData i, Color c, String t) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: LCard(
               child: Row(children: [
@@ -311,9 +404,9 @@ class NotificationsPage extends StatelessWidget {
           ])),
         );
     return Page1('Notifications', [
-      n(Icons.headphones_rounded, C.terracotta, "This week's episode is ready"),
-      n(Icons.camera_alt_rounded, C.teal, 'Sarah shared a moment'),
-      n(Icons.favorite_rounded, C.mustard, 'You earned the Lamma spirit badge'),
+      n2(Icons.headphones_rounded, C.terracotta, "This week's episode is ready"),
+      n2(Icons.camera_alt_rounded, C.teal, '${n('girl')} shared a moment'),
+      n2(Icons.favorite_rounded, C.mustard, 'You earned the Lamma spirit badge'),
       const SizedBox(height: 12),
       const Center(
           child: Text("That's all for now",

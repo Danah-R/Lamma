@@ -15,19 +15,31 @@ const characters = <(String name, String asset)>[
 const familyScene = '${_dir}family_scene.jpg';
 
 class Member {
-  final String name, role, asset;
+  final String key, name, role, asset;
   final int age;
-  const Member(this.name, this.role, this.age, this.asset);
+  int points;
+  Member(this.key, this.name, this.role, this.age, this.asset, this.points);
+  bool get isParent => key == 'mom' || key == 'dad';
 }
 
+/// Sample family. The person using the app takes over the slot matching their role.
 final members = <Member>[
-  Member('Noura', 'You', 16, characters[0].$2),
-  Member('Mohammed', 'Brother', 19, characters[1].$2),
-  Member('Abdullah', 'Dad', 47, characters[2].$2),
-  Member('Amina', 'Mom', 44, characters[3].$2),
-  Member('Sarah', 'Sister', 8, characters[4].$2),
-  Member('Yousef', 'Brother', 6, characters[5].$2),
+  Member('daughter', 'Noura', 'Daughter', 16, characters[0].$2, 210),
+  Member('brother', 'Mohammed', 'Son', 19, characters[1].$2, 245),
+  Member('dad', 'Abdullah', 'Dad', 47, characters[2].$2, 90),
+  Member('mom', 'Amina', 'Mom', 44, characters[3].$2, 120),
+  Member('girl', 'Sarah', 'Daughter', 8, characters[4].$2, 280),
+  Member('boy', 'Yousef', 'Son', 6, characters[5].$2, 160),
 ];
+
+/// Name of the family member holding a role key (mom, dad, daughter, brother, girl, boy).
+String n(String key) => members.firstWhere((m) => m.key == key).name;
+
+void addPoints(String name, int delta) {
+  for (final m in members) {
+    if (m.name == name) m.points = (m.points + delta).clamp(0, 99999);
+  }
+}
 
 String? avatarAsset(String name) {
   for (final m in members) {
@@ -42,33 +54,37 @@ class Profile {
   String family = 'Al-Otaibi family';
   String familyCode = 'LAMMA-48';
   String name = 'Noura';
+  String role = 'daughter'; // mom, dad, daughter, brother
   int age = 16;
   String job = 'Student';
   Set<String> interests = {'Coffee', 'Games', 'Reading', 'Walking', 'Podcasts'};
   Set<String> outingTypes = {'Nature', 'Cafés'};
   String prefer = 'Games';
   int avatar = 0;
+  bool get isParent => role == 'mom' || role == 'dad';
 }
 
 final profile = Profile();
 
 class Ev {
   final String title, time, type;
-  final int day; // day of the month shown in the family calendar
+  final DateTime date;
   final Color color;
   final List<String> going;
-  Ev(this.title, this.day, this.time, this.type, this.color, this.going);
+  Ev(this.title, this.date, this.time, this.type, this.color, this.going);
 }
 
-const calendarDays = <(int, String)>[(12, 'Sat'), (13, 'Sun'), (14, 'Mon')];
+const _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+String weekdayName(DateTime d) => _weekdays[d.weekday - 1];
+String monthName(DateTime d) => _months[d.month - 1];
+String dateLabel(DateTime d) => '${weekdayName(d)}, ${monthName(d)} ${d.day}';
+bool sameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
+DateTime get today => DateTime.now();
+
 const eventTypes = ['Gathering', 'Outing', 'Dinner', 'Games', 'Trip', 'Movie', 'Occasion'];
 
-final events = <Ev>[
-  Ev('Village outing', 12, '4:00 PM', 'Outing', C.green,
-      ['Noura', 'Mohammed', 'Amina', 'Sarah', 'Yousef']),
-  Ev('Family dinner', 14, '8:00 PM', 'Dinner', C.coral,
-      ['Noura', 'Abdullah', 'Amina', 'Sarah']),
-];
+final events = <Ev>[];
 
 class Moment {
   final String who, caption, time;
@@ -78,14 +94,7 @@ class Moment {
   Moment(this.who, this.caption, this.time, this.a, this.b, this.likes, this.comments);
 }
 
-final moments = <Moment>[
-  Moment('Sarah', 'Went out today with the girls', 'Today, 4:10 PM', C.green, C.tealTint, 13, 6),
-  Moment('Mohammed', 'Study break at the café', 'Today, 1:30 PM', C.coral, C.mustardTint, 8, 3),
-  Moment('Amina', 'Fresh coffee, quiet morning', 'Today, 8:15 AM', C.mustard, C.coralTint, 11, 4),
-  Moment('Abdullah', 'Evening in the majlis', 'Yesterday', C.teal, C.greenTint, 9, 2),
-  Moment('Yousef', 'My new Lego!', 'Yesterday', C.coral, C.coralTint, 15, 7),
-  Moment('Noura', 'Baking with Mom', '2 days ago', C.mustard, C.mustardTint, 10, 5),
-];
+final moments = <Moment>[];
 
 class Talk {
   final String who, text, time;
@@ -93,16 +102,8 @@ class Talk {
   Talk(this.who, this.text, this.time, this.likes, this.comments);
 }
 
-final talks = <Talk>[
-  Talk('Sarah', 'What do you want to eat on Thursday?', 'Yesterday', 4, 6),
-  Talk('Amina', 'Who wants to come with me to the market?', 'Today', 2, 3),
-];
-
-const comments = <(String, String)>[
-  ('Abdullah', 'Nice!'),
-  ('Amina', 'God protect you all'),
-  ('Mohammed', 'Take me with you'),
-];
+final talks = <Talk>[];
+final comments = <(String, String)>[];
 
 class Place {
   final String name, type, why;
@@ -149,3 +150,75 @@ const topics = [
   'What tradition should we start this year?',
   "What's one thing you've never told us?",
 ];
+
+/// Parent controls: phone-free time, consequences and leaderboard rewards.
+class Violation {
+  final String who, kind, detail, when;
+  bool done = false;
+  Violation(this.who, this.kind, this.detail, this.when);
+}
+
+class Rules {
+  bool phoneFree = true;
+  String from = '8:00 PM', to = '9:30 PM';
+  String consequence = 'points'; // 'points' or 'punishment'
+  int penalty = 10;
+  String punishment = 'Wash the dishes';
+  String cycle = 'Weekly'; // 'Weekly' or 'Monthly'
+  String reward = 'Choose the family dinner place';
+  String? lastWinner, lastReward;
+  final violations = <Violation>[];
+  final punishments = <String, String>{}; // member name -> active punishment
+}
+
+final rules = Rules();
+
+const punishmentOptions = [
+  'Wash the dishes',
+  'No games tonight',
+  'Clean your room',
+  'Early bedtime',
+  'Help cook dinner',
+];
+const rewardOptions = [
+  'Choose the family dinner place',
+  'Pick the movie for movie night',
+  'Skip a chore',
+  'Choose the weekend outing',
+  'Extra game time',
+];
+
+/// (Re)builds the sample feed using the current family names.
+void seedSample() {
+  events
+    ..clear()
+    ..addAll([
+      Ev('Village outing', today, '4:00 PM', 'Outing', C.green,
+          [n('daughter'), n('brother'), n('mom'), n('girl'), n('boy')]),
+      Ev('Family dinner', today.add(const Duration(days: 2)), '8:00 PM', 'Dinner', C.coral,
+          [n('daughter'), n('dad'), n('mom'), n('girl')]),
+    ]);
+  moments
+    ..clear()
+    ..addAll([
+      Moment(n('girl'), 'Went out today with the girls', 'Today, 4:10 PM', C.green, C.tealTint, 13, 6),
+      Moment(n('brother'), 'Study break at the café', 'Today, 1:30 PM', C.coral, C.mustardTint, 8, 3),
+      Moment(n('mom'), 'Fresh coffee, quiet morning', 'Today, 8:15 AM', C.mustard, C.coralTint, 11, 4),
+      Moment(n('dad'), 'Evening in the majlis', 'Yesterday', C.teal, C.greenTint, 9, 2),
+      Moment(n('boy'), 'My new Lego!', 'Yesterday', C.coral, C.coralTint, 15, 7),
+      Moment(n('daughter'), 'Baking with Mom', '2 days ago', C.mustard, C.mustardTint, 10, 5),
+    ]);
+  talks
+    ..clear()
+    ..addAll([
+      Talk(n('girl'), 'What do you want to eat on Thursday?', 'Yesterday', 4, 6),
+      Talk(n('mom'), 'Who wants to come with me to the market?', 'Today', 2, 3),
+    ]);
+  comments
+    ..clear()
+    ..addAll([
+      (n('dad'), 'Nice!'),
+      (n('mom'), 'God protect you all'),
+      (n('brother'), 'Take me with you'),
+    ]);
+}

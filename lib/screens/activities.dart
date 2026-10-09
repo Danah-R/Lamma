@@ -4,40 +4,205 @@ import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
-// ---- 18 activities menu
+// ---- 18 activity box
 class ActivitiesPage extends StatelessWidget {
   const ActivitiesPage({super.key});
+
+  // space the floating tab bar occupies
+  static const _bottomInset = 104.0;
+
   @override
   Widget build(BuildContext context) {
-    Widget item(String t, String s, IconData i, Color c, Widget page) => Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: LCard(
-            onTap: () => go(context, page),
-            child: Row(children: [
-              IconBubble(i, c, size: 50),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(t, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900)),
-                  Text(s, style: const TextStyle(color: C.inkSoft)),
-                ]),
-              ),
-              const Icon(Icons.chevron_right_rounded, color: C.inkSoft),
-            ]),
-          ),
-        );
+    final place = places.first;
     return Scaffold(
-      body: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 120), children: [
-        const TabHeader('Activities', 'What can we do together?'),
-        const SizedBox(height: 12),
-        item('Group games', 'Roulette, Sin Jim and more', Icons.casino_rounded, C.terracotta, const GamesPage()),
-        item('Book club', 'A Thousand Splendid Suns', Icons.menu_book_rounded, C.teal, const BookClubPage()),
-        item('Podcast club', 'Episode 12 · 3 of 6 listened', Icons.headphones_rounded, C.coral, const PodcastPage()),
-        item('Talk topics', 'Conversation starters', Icons.forum_rounded, C.green, const TalkTopicsPage()),
-        item('Outings', 'Places that suit the whole family', Icons.explore_rounded, C.mustard, const OutingsPage()),
-      ]),
+      body: LayoutBuilder(
+        builder: (context, box) => SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, _bottomInset),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: box.maxHeight - 8 - _bottomInset),
+            child: IntrinsicHeight(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const TabHeader('Activity Box', 'What can we do together?'),
+                const SizedBox(height: 20),
+                _GamesPanel(
+                  onOpen: () => go(context, const GamesPage()),
+                  onRoulette: () => go(context, const RoulettePage()),
+                ),
+                const SizedBox(height: 28),
+                const Spacer(),
+                _SectionLabel('Talk topics',
+                    action: 'New topic', onTap: () => go(context, const TalkTopicsPage())),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => go(context, const TalkTopicsPage()),
+                  child: Text(topics.first,
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.w500, height: 1.3, letterSpacing: -.2)),
+                ),
+                const SizedBox(height: 28),
+                const Spacer(),
+                const _SectionLabel('Clubs'),
+                _ClubRow(
+                  icon: Icons.menu_book_outlined,
+                  title: 'Book club',
+                  detail: 'A Thousand Splendid Suns',
+                  count: '3 of 6 reading',
+                  progress: .5,
+                  onTap: () => go(context, const BookClubPage()),
+                ),
+                const Divider(height: 1, color: C.beige),
+                _ClubRow(
+                  icon: Icons.headphones_outlined,
+                  title: 'Podcast club',
+                  detail: 'Episode 12 · What makes us laugh together?',
+                  count: '3 of 6 listened',
+                  progress: .5,
+                  onTap: () => go(context, const PodcastPage()),
+                ),
+                const SizedBox(height: 14),
+                const Spacer(),
+                _SectionLabel('Outings',
+                    action: 'See all', onTap: () => go(context, const OutingsPage())),
+                const SizedBox(height: 4),
+                InkWell(
+                  onTap: () => go(context, SuggestPlacePage(place)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Icon(Icons.park_outlined, size: 22, color: C.ink.withValues(alpha: .8)),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text(place.name,
+                              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 2),
+                          Text(place.why,
+                              style: TextStyle(fontSize: 14, height: 1.35, color: C.ink.withValues(alpha: .7))),
+                        ]),
+                      ),
+                    ]),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+        ),
+      ),
     );
   }
+}
+
+/// The one prominent block on the screen: group games, with a shortcut to the roulette.
+class _GamesPanel extends StatelessWidget {
+  final VoidCallback onOpen, onRoulette;
+  const _GamesPanel({required this.onOpen, required this.onRoulette});
+  @override
+  Widget build(BuildContext context) => Material(
+        color: C.navy,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: onOpen,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(22, 22, 22, 8),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Group games',
+                  style: TextStyle(
+                      color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700, letterSpacing: -.3)),
+              const SizedBox(height: 6),
+              Text('Roulette, Talks with Aziz and Sin Jim',
+                  style: TextStyle(color: Colors.white.withValues(alpha: .7), fontSize: 14)),
+              const SizedBox(height: 14),
+              InkWell(
+                onTap: onRoulette,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(children: [
+                    const Icon(Icons.casino_outlined, size: 20, color: C.coral),
+                    const SizedBox(width: 8),
+                    const Text('Spin the roulette',
+                        style: TextStyle(color: C.coral, fontSize: 15, fontWeight: FontWeight.w600)),
+                    const Spacer(),
+                    Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white.withValues(alpha: .7)),
+                  ]),
+                ),
+              ),
+            ]),
+          ),
+        ),
+      );
+}
+
+class _SectionLabel extends StatelessWidget {
+  final String text;
+  final String? action;
+  final VoidCallback? onTap;
+  const _SectionLabel(this.text, {this.action, this.onTap});
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Row(children: [
+          Text(text,
+              style: const TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: .3, color: C.inkSoft)),
+          const Spacer(),
+          if (action != null)
+            Text(action!,
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: C.terracotta)),
+        ]),
+      );
+}
+
+class _ClubRow extends StatelessWidget {
+  final IconData icon;
+  final String title, detail, count;
+  final double progress;
+  final VoidCallback onTap;
+  const _ClubRow(
+      {required this.icon,
+      required this.title,
+      required this.detail,
+      required this.count,
+      required this.progress,
+      required this.onTap});
+  @override
+  Widget build(BuildContext context) => InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Icon(icon, size: 22, color: C.ink.withValues(alpha: .8)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
+                  Expanded(
+                    child: Text(title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(count, style: const TextStyle(fontSize: 13, color: C.inkSoft)),
+                ]),
+                const SizedBox(height: 2),
+                Text(detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 14, color: C.ink.withValues(alpha: .7))),
+                const SizedBox(height: 10),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: LinearProgressIndicator(
+                      value: progress, minHeight: 3, color: C.terracotta, backgroundColor: C.beige),
+                ),
+              ]),
+            ),
+          ]),
+        ),
+      );
 }
 
 // ---- 19 games
@@ -110,7 +275,7 @@ class _AzizPageState extends State<AzizPage> {
   @override
   Widget build(BuildContext context) => Page1('Talks with Aziz', [
         LCard(
-          color: C.terracotta,
+          color: C.teal,
           padding: const EdgeInsets.all(28),
           child: Center(
             child: Text(azizQuestions[_i],
@@ -181,7 +346,7 @@ class _RoulettePageState extends State<RoulettePage> with SingleTickerProviderSt
     'Challenge': ['Tell a joke', 'Sing a line', 'Imitate someone', 'Dance 10 sec', 'Tell a secret', 'Draw in 10 sec'],
     'Decision': ['Stay home', 'Go out', 'Cook', 'Order food', 'Watch a movie', 'Play games'],
   };
-  static const _colors = [C.terracotta, C.navy, C.coral, C.mustard, C.teal, C.green];
+  static const _colors = [C.coral, C.navy, C.mustard, C.teal, C.terracotta, C.green];
 
   late final AnimationController _ctrl =
       AnimationController(vsync: this, duration: const Duration(seconds: 3));
@@ -363,7 +528,10 @@ class _PodcastPageState extends State<PodcastPage> {
           const Text('32 min', style: TextStyle(color: Colors.white70)),
           const SizedBox(height: 16),
           FilledButton.icon(
-            onPressed: () => setState(() => _listened = true),
+            onPressed: () => setState(() {
+              if (!_listened) addPoints(profile.name, 15);
+              _listened = true;
+            }),
             style: FilledButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: C.terracotta,
@@ -409,12 +577,12 @@ class _TalkTopicsPageState extends State<TalkTopicsPage> {
   @override
   Widget build(BuildContext context) => Page1('Talk topics', [
         LCard(
-          color: C.terracotta,
+          color: C.mustardTint,
           padding: const EdgeInsets.all(28),
           child: Center(
             child: Text(topics[_i],
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w900, height: 1.35)),
+                style: const TextStyle(color: C.ink, fontSize: 21, fontWeight: FontWeight.w900, height: 1.35)),
           ),
         ),
         const SizedBox(height: 14),
@@ -426,7 +594,7 @@ class _TalkTopicsPageState extends State<TalkTopicsPage> {
             ActionChip(
               label: Text(t, style: const TextStyle(fontWeight: FontWeight.w700)),
               backgroundColor: C.card,
-              side: const BorderSide(color: C.sand),
+              side: BorderSide.none,
               onPressed: () {},
             ),
         ]),
@@ -498,7 +666,7 @@ class SuggestPlacePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Page1('Suggestion for the family', [
         LCard(
-          color: C.terracotta,
+          color: C.teal,
           padding: const EdgeInsets.symmetric(vertical: 36),
           child: Center(
               child: Text(p.name,

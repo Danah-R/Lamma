@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
 enum _Step { splash, about, interests, signup, family, character }
 
-const _jobs = <(String, String, IconData, Color)>[
-  ('I work', 'Working', Icons.work_rounded, C.tealTint),
-  ("I'm a student", 'Student', Icons.school_rounded, C.mustardTint),
-  ('I stay at home', 'Stays at home', Icons.home_rounded, C.coralTint),
+const _jobs = <(String, String, Color)>[
+  ('I work', 'Working', C.tealTint),
+  ("I'm a student", 'Student', C.mustardTint),
+  ('I stay at home', 'Stays at home', C.coralTint),
+];
+/// (key, label, default character index)
+const _roles = <(String, String, int)>[
+  ('mom', 'Mom', 3),
+  ('dad', 'Dad', 2),
+  ('daughter', 'Daughter', 0),
+  ('brother', 'Son', 1),
 ];
 const _interests = [
   'Coffee', 'Games', 'Reading', 'Walking', 'Podcasts', 'Movies',
@@ -30,8 +38,10 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   final _phone = TextEditingController();
   final _family = TextEditingController();
   final _code = TextEditingController();
-  int _age = 16;
+  final _ageCtrl = TextEditingController();
+  int get _age => int.tryParse(_ageCtrl.text) ?? 0;
   String? _job;
+  String? _role;
   final _picked = <String>{};
   final _outings = <String>{};
   String? _prefer;
@@ -41,7 +51,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   void _back() => setState(() => _step = _Step.values[_step.index - 1]);
 
   bool get _canNext => switch (_step) {
-        _Step.about => _name.text.trim().isNotEmpty && _job != null,
+        _Step.about => _name.text.trim().isNotEmpty && _role != null && _age >= 3 && _age <= 110 && _job != null,
         _Step.interests => _picked.isNotEmpty,
         _Step.signup => _phone.text.trim().length >= 9,
         _ => true,
@@ -57,14 +67,19 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
       ..interests = {..._picked}
       ..outingTypes = {..._outings}
       ..prefer = _prefer ?? 'Games'
+      ..role = _role!
       ..avatar = _avatar;
-    members[0] = Member(profile.name, 'You', _age, characters[_avatar].$2);
+    // take over the family slot that matches the chosen role
+    final i = members.indexWhere((m) => m.key == _role);
+    members[i] = Member(_role!, profile.name, _roles.firstWhere((r) => r.$1 == _role).$2, _age,
+        characters[_avatar].$2, 0);
+    seedSample();
     widget.onDone();
   }
 
   @override
   void dispose() {
-    for (final c in [_name, _phone, _family, _code]) {
+    for (final c in [_name, _phone, _family, _code, _ageCtrl]) {
       c.dispose();
     }
     super.dispose();
@@ -140,20 +155,20 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   Widget _about() => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Field('Your name',
             hint: 'Name', controller: _name, onChanged: (_) => setState(() {})),
-        const Text('Age', style: TextStyle(fontWeight: FontWeight.w700)),
-        Row(children: [
-          IconButton.filled(
-              style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
-              onPressed: () => setState(() => _age = (_age - 1).clamp(3, 99)),
-              icon: const Icon(Icons.remove_rounded)),
-          Expanded(
-              child: Text('$_age',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: C.terracotta))),
-          IconButton.filled(
-              style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
-              onPressed: () => setState(() => _age = (_age + 1).clamp(3, 99)),
-              icon: const Icon(Icons.add_rounded)),
+        Field('Age',
+            hint: 'Your age',
+            controller: _ageCtrl,
+            keyboard: TextInputType.number,
+            formatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(3)],
+            onChanged: (_) => setState(() {})),
+        const Text("I'm the family's...", style: TextStyle(fontWeight: FontWeight.w700)),
+        const SizedBox(height: 8),
+        Wrap(spacing: 8, runSpacing: 8, children: [
+          for (final r in _roles)
+            Choice(r.$2, _role == r.$1, () => setState(() {
+                  _role = r.$1;
+                  _avatar = r.$3;
+                })),
         ]),
         const SizedBox(height: 16),
         const Text('What do you do?', style: TextStyle(fontWeight: FontWeight.w700)),
@@ -162,11 +177,9 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: LCard(
-              color: _job == j.$1 ? j.$4 : null,
+              color: _job == j.$1 ? j.$3 : null,
               onTap: () => setState(() => _job = j.$1),
               child: Row(children: [
-                IconBubble(j.$3, C.terracotta, size: 40),
-                const SizedBox(width: 14),
                 Expanded(child: Text(j.$1, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800))),
                 if (_job == j.$1) const Icon(Icons.check_circle_rounded, color: C.terracotta),
               ]),

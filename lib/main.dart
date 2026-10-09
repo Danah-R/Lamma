@@ -4,6 +4,7 @@ import 'screens/activities.dart';
 import 'screens/home.dart';
 import 'screens/lamma.dart';
 import 'screens/onboarding.dart';
+import 'data.dart';
 import 'theme.dart';
 
 void main() => runApp(const LammaApp());
@@ -18,6 +19,12 @@ class LammaApp extends StatefulWidget {
 
 class _LammaAppState extends State<LammaApp> {
   late bool _onboarded = widget.skipOnboarding;
+
+  @override
+  void initState() {
+    super.initState();
+    seedSample();
+  }
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -44,7 +51,7 @@ class _ShellState extends State<Shell> {
   static const _tabs = <(String, IconData, IconData)>[
     ('Home', Icons.home_outlined, Icons.home_rounded),
     ('Lamma', Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
-    ('Activities', Icons.widgets_outlined, Icons.widgets_rounded),
+    ('Activity Box', Icons.widgets_outlined, Icons.widgets_rounded),
     ('Account', Icons.person_outline_rounded, Icons.person_rounded),
   ];
   static const _muted = Color(0xFFA9B3C6);
@@ -88,20 +95,20 @@ class _ShellState extends State<Shell> {
           ),
           bottomNavigationBar: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
               child: SizedBox(
-                height: 88,
+                height: 76,
                 child: Stack(clipBehavior: Clip.none, alignment: Alignment.bottomCenter, children: [
                   Container(
-                    height: 68,
+                    height: 64,
                     decoration: BoxDecoration(
                       color: C.navy,
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(28),
                       boxShadow: [
                         BoxShadow(
-                            color: C.navy.withValues(alpha: .28),
-                            blurRadius: 18,
-                            offset: const Offset(0, 6)),
+                            color: Colors.black.withValues(alpha: .10),
+                            blurRadius: 16,
+                            offset: const Offset(0, 4)),
                       ],
                     ),
                     child: Row(children: [
@@ -112,33 +119,27 @@ class _ShellState extends State<Shell> {
                       _item(3),
                     ]),
                   ),
-                  // centered big button: share a moment
+                  // share a moment: centered, only slightly raised so it doesn't outweigh the tabs
                   Positioned(
-                    bottom: 8,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: _shareMoment,
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        Container(
-                          width: 58,
-                          height: 58,
-                          decoration: BoxDecoration(
-                            color: C.terracotta,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: C.navy.withValues(alpha: .25),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4)),
-                            ],
+                    bottom: 7,
+                    child: Semantics(
+                      button: true,
+                      label: 'Share a moment',
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: _shareMoment,
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: const BoxDecoration(color: C.terracotta, shape: BoxShape.circle),
+                            child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 24),
                           ),
-                          child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 28),
-                        ),
-                        const SizedBox(height: 2),
-                        const Text('Share',
-                            style: TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.w800, color: _muted)),
-                      ]),
+                          const SizedBox(height: 4),
+                          const Text('Share',
+                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _muted)),
+                        ]),
+                      ),
                     ),
                   ),
                 ]),
@@ -157,13 +158,12 @@ class _ShellState extends State<Shell> {
         behavior: HitTestBehavior.opaque,
         onTap: () => _select(i),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(sel ? t.$3 : t.$2, color: color),
-          const SizedBox(height: 4),
+          Icon(sel ? t.$3 : t.$2, size: 24, color: color),
+          const SizedBox(height: 3),
           Text(t.$1,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 11, fontWeight: sel ? FontWeight.w800 : FontWeight.w600, color: color)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
         ]),
       ),
     );

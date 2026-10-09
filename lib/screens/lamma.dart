@@ -203,6 +203,7 @@ class _ShareMomentPageState extends State<ShareMomentPage> {
         ]),
       ],
           bottom: Btn('Share with family', icon: Icons.send_rounded, onTap: () {
+            addPoints(profile.name, 10);
             moments.insert(
                 0,
                 Moment(profile.name, _text.text.trim().isEmpty ? 'A moment' : _text.text.trim(), 'Just now',
@@ -221,9 +222,9 @@ class FamilyChatPage extends StatefulWidget {
 class _FamilyChatPageState extends State<FamilyChatPage> {
   final _text = TextEditingController();
   final _msgs = <(String, String)>[
-    ('Sarah', 'What are we cooking tonight?'),
+    (n('girl'), 'What are we cooking tonight?'),
     (profile.name, "Let's go to the park!"),
-    ('Amina', 'Dinner will be ready soon'),
+    (n('mom'), 'Dinner will be ready soon'),
     (profile.name, 'Coming!'),
   ];
 
@@ -265,9 +266,8 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
                           constraints: const BoxConstraints(maxWidth: 270),
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
                           decoration: BoxDecoration(
-                            color: m.$1 == profile.name ? C.terracotta : C.card,
+                            color: m.$1 == profile.name ? C.teal : C.card,
                             borderRadius: BorderRadius.circular(20),
-                            border: m.$1 == profile.name ? null : Border.all(color: C.beige),
                           ),
                           child: Text(m.$2,
                               style: TextStyle(

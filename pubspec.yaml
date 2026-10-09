@@ -4,11 +4,15 @@ publish_to: 'none'
 version: 0.1.0+1
 
 environment:
-  sdk: ^3.13.2
+  sdk: ^3.13.1
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -17,5 +21,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/characters/
+    - assets/splash/

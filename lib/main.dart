@@ -1,33 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
 import 'screens/account.dart';
 import 'screens/activities.dart';
 import 'screens/home.dart';
 import 'screens/lamma.dart';
 import 'screens/onboarding.dart';
+import 'splash/lamma_splash.dart';
 import 'theme.dart';
 
-void main() => runApp(const LammaApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(const LammaApp());
+}
 
 class LammaApp extends StatefulWidget {
-  /// Set to true to jump straight to the app (used by tests).
+  /// Set to true to jump straight to the app, skipping the splash and
+  /// onboarding (used by tests).
   final bool skipOnboarding;
-  const LammaApp({super.key, this.skipOnboarding = false});
+
+  /// Set to true to skip only the splash screen (used by tests that
+  /// exercise onboarding directly).
+  final bool skipSplash;
+  const LammaApp({super.key, this.skipOnboarding = false, this.skipSplash = false});
   @override
   State<LammaApp> createState() => _LammaAppState();
 }
 
 class _LammaAppState extends State<LammaApp> {
   late bool _onboarded = widget.skipOnboarding;
+  late bool _showSplash = !widget.skipOnboarding && !widget.skipSplash;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Lamma',
+        title: 'لمّه',
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
-        locale: const Locale('en', 'US'),
-        home: _onboarded
-            ? const Shell()
-            : OnboardingFlow(onDone: () => setState(() => _onboarded = true)),
+        locale: const Locale('ar'),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: _showSplash
+            ? LammaSplash(onStart: () => setState(() => _showSplash = false))
+            : (_onboarded
+                ? const Shell()
+                : OnboardingFlow(onDone: () => setState(() => _onboarded = true))),
       );
 }
 
@@ -41,12 +64,12 @@ class _ShellState extends State<Shell> {
   int _i = 0;
   final _keys = List.generate(4, (_) => GlobalKey<NavigatorState>());
 
-  static const _tabs = <(String, IconData, IconData)>[
-    ('Home', Icons.home_outlined, Icons.home_rounded),
-    ('Lamma', Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
-    ('Activities', Icons.widgets_outlined, Icons.widgets_rounded),
-    ('Account', Icons.person_outline_rounded, Icons.person_rounded),
-  ];
+  List<(String, IconData, IconData)> _tabs(AppLocalizations l) => [
+        (l.navHome, Icons.home_outlined, Icons.home_rounded),
+        (l.navLamma, Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
+        (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
+        (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
+      ];
   static const _muted = Color(0xFFA9B3C6);
 
   Widget _root(int i) => switch (i) {
@@ -68,7 +91,9 @@ class _ShellState extends State<Shell> {
   }
 
   @override
-  Widget build(BuildContext context) => PopScope(
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return PopScope(
         canPop: false,
         onPopInvokedWithResult: (didPop, _) {
           if (didPop) return;
@@ -105,11 +130,11 @@ class _ShellState extends State<Shell> {
                       ],
                     ),
                     child: Row(children: [
-                      _item(0),
-                      _item(1),
+                      _item(0, l),
+                      _item(1, l),
                       const Expanded(child: SizedBox()),
-                      _item(2),
-                      _item(3),
+                      _item(2, l),
+                      _item(3, l),
                     ]),
                   ),
                   // centered big button: share a moment
@@ -135,8 +160,8 @@ class _ShellState extends State<Shell> {
                           child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 28),
                         ),
                         const SizedBox(height: 2),
-                        const Text('Share',
-                            style: TextStyle(
+                        Text(l.navShare,
+                            style: const TextStyle(
                                 fontSize: 11, fontWeight: FontWeight.w800, color: _muted)),
                       ]),
                     ),
@@ -147,9 +172,10 @@ class _ShellState extends State<Shell> {
           ),
         ),
       );
+  }
 
-  Widget _item(int i) {
-    final t = _tabs[i];
+  Widget _item(int i, AppLocalizations l) {
+    final t = _tabs(l)[i];
     final sel = _i == i;
     final color = sel ? C.coral : _muted;
     return Expanded(

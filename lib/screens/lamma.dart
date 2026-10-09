@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../l10n/app_localizations.dart';
+import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'home.dart';
@@ -13,10 +15,12 @@ class LammaPage extends StatefulWidget {
 
 class _LammaPageState extends State<LammaPage> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 120), children: [
-          TabHeader('Lamma', "Let's chat", onBell: () => go(context, const NotificationsPage())),
-          const SectionTitle('Family talk'),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+        body: ListView(padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 120), children: [
+          TabHeader(l.navLamma, l.lammaSubtitle, onBell: () => go(context, const NotificationsPage())),
+          SectionTitle(l.lammaFamilyTalk),
           for (final t in talks)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
@@ -27,13 +31,13 @@ class _LammaPageState extends State<LammaPage> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(t.who, style: const TextStyle(fontWeight: FontWeight.w800)),
-                        Text(t.time, style: const TextStyle(color: C.inkSoft, fontSize: 12)),
+                        Text(ld(context, t.who), style: const TextStyle(fontWeight: FontWeight.w800)),
+                        Text(ld(context, t.time), style: const TextStyle(color: C.inkSoft, fontSize: 12)),
                       ]),
                     ),
                   ]),
                   const SizedBox(height: 12),
-                  Text(t.text, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, height: 1.4)),
+                  Text(ld(context, t.text), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, height: 1.4)),
                   const SizedBox(height: 12),
                   Row(children: [
                     GestureDetector(
@@ -57,9 +61,9 @@ class _LammaPageState extends State<LammaPage> {
                 ]),
               ),
             ),
-          Btn('Open family chat', color: C.navy, onTap: () => go(context, const FamilyChatPage())),
-          SectionTitle('Moments of our day',
-              action: '+ Share moment', onAction: () async {
+          Btn(l.lammaOpenFamilyChat, color: C.navy, onTap: () => go(context, const FamilyChatPage())),
+          SectionTitle(l.lammaMomentsOfOurDay,
+              action: l.lammaShareMomentAction, onAction: () async {
             await go(context, const ShareMomentPage());
             if (mounted) setState(() {});
           }),
@@ -76,6 +80,7 @@ class _LammaPageState extends State<LammaPage> {
           ),
         ]),
       );
+  }
 }
 
 /// Square photo box: only name and time show; the caption lives in the details.
@@ -90,12 +95,12 @@ class _Box extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           child: Stack(fit: StackFit.expand, children: [
             PhotoBox(m.a, m.b),
-            Positioned(
-              left: 0,
-              right: 0,
+            PositionedDirectional(
+              start: 0,
+              end: 0,
               bottom: 0,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(12, 26, 12, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(12, 26, 12, 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -108,9 +113,9 @@ class _Box extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(m.who,
+                      Text(ld(context, m.who),
                           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13)),
-                      Text(m.time, style: const TextStyle(color: Colors.white70, fontSize: 10)),
+                      Text(ld(context, m.time), style: const TextStyle(color: Colors.white70, fontSize: 10)),
                     ]),
                   ),
                 ]),
@@ -132,8 +137,9 @@ class MomentDetailsPage extends StatefulWidget {
 class _MomentDetailsPageState extends State<MomentDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final m = widget.m;
-    return Page1('Moment', [
+    return Page1(l.momentTitle, [
       AspectRatio(
         aspectRatio: 1,
         child: PhotoBox(m.a, m.b, radius: 24, iconSize: 64),
@@ -144,13 +150,13 @@ class _MomentDetailsPageState extends State<MomentDetailsPage> {
         const SizedBox(width: 10),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(m.who, style: const TextStyle(fontWeight: FontWeight.w900)),
-            Text(m.time, style: const TextStyle(color: C.inkSoft, fontSize: 12)),
+            Text(ld(context, m.who), style: const TextStyle(fontWeight: FontWeight.w900)),
+            Text(ld(context, m.time), style: const TextStyle(color: C.inkSoft, fontSize: 12)),
           ]),
         ),
       ]),
       const SizedBox(height: 12),
-      Text(m.caption, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+      Text(ld(context, m.caption), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
       const SizedBox(height: 16),
       Reactions(
         likes: m.likes,
@@ -182,33 +188,37 @@ class _ShareMomentPageState extends State<ShareMomentPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Page1('Share a moment', [
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final tags = [l.shareMomentTagCafe, l.shareMomentTagWalking, l.shareMomentTagCooking];
+    return Page1(l.shareMomentTitle, [
         AspectRatio(
           aspectRatio: 1,
           child: Container(
             decoration: BoxDecoration(color: C.beige, borderRadius: BorderRadius.circular(24)),
-            child: const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.camera_alt_rounded, size: 44, color: C.terracotta),
-              SizedBox(height: 8),
-              Text('Take or choose a photo',
-                  style: TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Icon(Icons.camera_alt_rounded, size: 44, color: C.terracotta),
+              const SizedBox(height: 8),
+              Text(l.shareMomentPhotoHint,
+                  style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
             ]),
           ),
         ),
         const SizedBox(height: 18),
-        Field('', hint: "What's on your mind? (a word or two)", controller: _text),
+        Field('', hint: l.shareMomentTextHint, controller: _text),
         Wrap(spacing: 8, children: [
-          for (final s in ['At the café', 'Walking', 'Cooking'])
+          for (final s in tags)
             Choice(s, false, () => setState(() => _text.text = s), color: C.navy),
         ]),
       ],
-          bottom: Btn('Share with family', icon: Icons.send_rounded, onTap: () {
+          bottom: Btn(l.shareMomentSubmit, icon: Icons.send_rounded, onTap: () {
             moments.insert(
                 0,
-                Moment(profile.name, _text.text.trim().isEmpty ? 'A moment' : _text.text.trim(), 'Just now',
+                Moment(profile.name, _text.text.trim().isEmpty ? l.shareMomentFallbackCaption : _text.text.trim(), 'Just now',
                     C.coral, C.coralTint, 0, 0));
             Navigator.pop(context);
           }));
+  }
 }
 
 // ---- 13 family chat
@@ -241,8 +251,10 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Family chat')),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+        appBar: AppBar(title: Text(l.familyChatTitle)),
         body: Column(children: [
           Expanded(
             child: ListView(padding: const EdgeInsets.all(20), children: [
@@ -250,15 +262,17 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Align(
-                    alignment: m.$1 == profile.name ? Alignment.centerRight : Alignment.centerLeft,
+                    alignment: m.$1 == profile.name
+                        ? AlignmentDirectional.centerEnd
+                        : AlignmentDirectional.centerStart,
                     child: Column(
                       crossAxisAlignment:
                           m.$1 == profile.name ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                       children: [
                         if (m.$1 != profile.name)
                           Padding(
-                            padding: const EdgeInsets.only(left: 4, bottom: 2),
-                            child: Text(m.$1,
+                            padding: const EdgeInsetsDirectional.only(start: 4, bottom: 2),
+                            child: Text(ld(context, m.$1),
                                 style: const TextStyle(fontSize: 11, color: C.inkSoft, fontWeight: FontWeight.w700)),
                           ),
                         Container(
@@ -269,7 +283,7 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
                             borderRadius: BorderRadius.circular(20),
                             border: m.$1 == profile.name ? null : Border.all(color: C.beige),
                           ),
-                          child: Text(m.$2,
+                          child: Text(ld(context, m.$2),
                               style: TextStyle(
                                   color: m.$1 == profile.name ? Colors.white : C.ink,
                                   fontWeight: FontWeight.w600)),
@@ -282,13 +296,13 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
           ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 12),
               child: Row(children: [
                 Expanded(
                   child: TextField(
                     controller: _text,
                     onSubmitted: (_) => _send(),
-                    decoration: const InputDecoration(hintText: 'Write a message...'),
+                    decoration: InputDecoration(hintText: l.familyChatInputHint),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -302,4 +316,5 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
           ),
         ]),
       );
+  }
 }

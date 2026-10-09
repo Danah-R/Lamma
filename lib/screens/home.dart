@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../l10n/app_localizations.dart';
+import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'account.dart';
@@ -16,17 +18,19 @@ class _HomePageState extends State<HomePage> {
   static const _tonight = ['Noura', 'Mohammed', 'Abdullah', 'Amina', 'Sarah'];
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 120), children: [
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+        body: ListView(padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 120), children: [
           // header
           Row(children: [
             Avatar(profile.name, size: 48),
             const SizedBox(width: 12),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('Good evening, ${profile.name}',
+                Text(l.homeGreeting(profile.name),
                     style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w900)),
-                Text(profile.family,
+                Text(ld(context, profile.family),
                     style: const TextStyle(fontSize: 13, color: C.inkSoft, fontWeight: FontWeight.w700)),
               ]),
             ),
@@ -39,17 +43,17 @@ class _HomePageState extends State<HomePage> {
             color: C.terracotta,
             padding: const EdgeInsets.all(18),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Today with the family',
-                  style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w700)),
+              Text(l.homeTodayWithFamily,
+                  style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700)),
               const SizedBox(height: 4),
-              const Text('Family night · 8:00 PM',
-                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
+              Text(l.homeFamilyNightTime,
+                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
               const SizedBox(height: 12),
               Row(children: [
                 const AvatarStack(_tonight, size: 36),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text('${_tonight.length} of ${members.length} attending',
+                  child: Text(l.homeAttendingCount(_tonight.length, members.length),
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
                 ),
               ]),
@@ -57,18 +61,18 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: () => go(context, const BadgesPage()),
                 behavior: HitTestBehavior.opaque,
-                child: const Row(children: [
-                  Icon(Icons.local_fire_department_rounded, color: C.mustardTint, size: 20),
-                  SizedBox(width: 6),
-                  Text('7 day streak', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-                  SizedBox(width: 12),
-                  Icon(Icons.chat_bubble_outline_rounded, color: Colors.white70, size: 18),
-                  SizedBox(width: 6),
+                child: Row(children: [
+                  const Icon(Icons.local_fire_department_rounded, color: C.mustardTint, size: 20),
+                  const SizedBox(width: 6),
+                  Text(l.homeStreak, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                  const SizedBox(width: 12),
+                  const Icon(Icons.chat_bubble_outline_rounded, color: Colors.white70, size: 18),
+                  const SizedBox(width: 6),
                   Expanded(
-                    child: Text('12 interactions this week',
+                    child: Text(l.homeInteractions,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
                   ),
                 ]),
               ),
@@ -76,81 +80,84 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // calendar
-          SectionTitle('Family calendar', action: '+ Add event', onAction: _addEvent),
+          SectionTitle(l.homeFamilyCalendar, action: l.homeAddEvent, onAction: _addEvent),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             for (final d in calendarDays) ...[
-              Expanded(child: _day(d.$1, d.$2)),
+              Expanded(child: _day(context, d.$1, d.$2)),
               if (d != calendarDays.last) const SizedBox(width: 10),
             ],
           ]),
 
           // weekly podcast
-          const SectionTitle('Weekly podcast'),
+          SectionTitle(l.homeWeeklyPodcast),
           LCard(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const IconBubble(Icons.headphones_rounded, C.terracotta),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('What makes us laugh together?',
-                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                    Text('Episode 12 · 32 min', style: TextStyle(color: C.inkSoft)),
+                    Text(l.homePodcastTitle,
+                        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                    Text(l.homePodcastEpisode, style: const TextStyle(color: C.inkSoft)),
                   ]),
                 ),
               ]),
               const SizedBox(height: 14),
               const Bar(.5),
               const SizedBox(height: 6),
-              const Text('3 of 6 listened',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: C.inkSoft)),
+              Text(l.homePodcastListenedCount,
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: C.inkSoft)),
               const SizedBox(height: 14),
-              Btn('Start listening', icon: Icons.play_arrow_rounded,
+              Btn(l.homeStartListening, icon: Icons.play_arrow_rounded,
                   onTap: () => go(context, const PodcastPage())),
             ]),
           ),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 26),
-            child: Text('The best memories start with a simple question',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 26),
+            child: Text(l.homeMemoriesQuote,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: C.terracotta, fontWeight: FontWeight.w800, fontSize: 15)),
+                style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w800, fontSize: 15)),
           ),
 
           // activity
-          const SectionTitle('Family activity'),
-          const LCard(
+          SectionTitle(l.homeFamilyActivity),
+          LCard(
             child: Column(children: [
-              _Feed('Sarah', 'Sarah shared a photo'),
-              Divider(color: C.beige, height: 22),
-              _Feed('Mohammed', "Mohammed finished today's challenge"),
-              Divider(color: C.beige, height: 22),
-              _Feed('Amina', 'Amina listened to the weekly podcast'),
+              _Feed('Sarah', l.homeFeedSarahPhoto),
+              const Divider(color: C.beige, height: 22),
+              _Feed('Mohammed', l.homeFeedMohammedChallenge),
+              const Divider(color: C.beige, height: 22),
+              _Feed('Amina', l.homeFeedAminaPodcast),
             ]),
           ),
           const SizedBox(height: 16),
-          Btn('Your week in Lamma',
+          Btn(l.homeYourWeekButton,
               color: C.navy, onTap: () => go(context, const WeeklyRecapPage())),
         ]),
       );
+  }
 
   Future<void> _addEvent() async {
     await go(context, const AddEventPage());
     if (mounted) setState(() {});
   }
 
-  Widget _day(int n, String label) {
+  Widget _day(BuildContext context, int n, String label) {
+    final l = AppLocalizations.of(context);
     final today = n == 12;
     final dayEvents = events.where((e) => e.day == n).toList();
+    final dayLabel = ld(context, label);
     return Container(
-      padding: const EdgeInsets.fromLTRB(8, 12, 8, 10),
+      padding: const EdgeInsetsDirectional.fromSTEB(8, 12, 8, 10),
       decoration: BoxDecoration(
         color: today ? C.coralTint : C.card,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: today ? C.coral : C.beige, width: 1.5),
       ),
       child: Column(children: [
-        Text(today ? '$label · Today' : label,
+        Text(today ? '$dayLabel ${l.homeDayToday}' : dayLabel,
             style: TextStyle(
                 fontSize: 11, fontWeight: FontWeight.w800, color: today ? C.terracotta : C.inkSoft)),
         const SizedBox(height: 6),
@@ -162,7 +169,7 @@ class _HomePageState extends State<HomePage> {
             : Text('$n', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
         const SizedBox(height: 8),
         if (dayEvents.isEmpty)
-          const Text('No events', style: TextStyle(fontSize: 11, color: C.inkSoft))
+          Text(l.homeNoEvents, style: const TextStyle(fontSize: 11, color: C.inkSoft))
         else
           for (final e in dayEvents)
             GestureDetector(
@@ -177,11 +184,11 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                     color: e.color.withValues(alpha: .28), borderRadius: BorderRadius.circular(10)),
                 child: Column(children: [
-                  Text(e.title,
+                  Text(ld(context, e.title),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800)),
-                  Text(e.time, style: const TextStyle(fontSize: 10, color: C.inkSoft)),
+                  Text(ld(context, e.time), style: const TextStyle(fontSize: 10, color: C.inkSoft)),
                 ]),
               ),
             ),
@@ -212,28 +219,29 @@ class EventDetailsPage extends StatefulWidget {
 class _EventDetailsPageState extends State<EventDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final e = widget.e;
     final me = e.going.contains(profile.name);
     final day = calendarDays.firstWhere((d) => d.$1 == e.day, orElse: () => (e.day, '')).$2;
-    return Page1('Event details', [
+    return Page1(l.eventDetailsTitle, [
       const SizedBox(height: 10),
       Center(child: IconBubble(Icons.event_rounded, e.color, size: 72)),
       const SizedBox(height: 16),
-      Center(child: Text(e.title, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900))),
+      Center(child: Text(ld(context, e.title), style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900))),
       const SizedBox(height: 6),
       Center(
-          child: Text('$day ${e.day} · ${e.time}',
+          child: Text(l.eventDetailsDateLine(ld(context, day), e.day, ld(context, e.time)),
               style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700))),
       const SizedBox(height: 8),
-      Center(child: Pill(e.type, color: e.color.withValues(alpha: .25))),
+      Center(child: Pill(ld(context, e.type), color: e.color.withValues(alpha: .25))),
       const SizedBox(height: 24),
       Center(child: AvatarStack(e.going, size: 46)),
       const SizedBox(height: 8),
       Center(
-          child: Text('${e.going.length} of the family are coming',
+          child: Text(l.eventDetailsGoingCount(e.going.length),
               style: const TextStyle(fontWeight: FontWeight.w700))),
     ],
-        bottom: Btn(me ? "You're in" : "I'm coming",
+        bottom: Btn(me ? l.eventDetailsImIn : l.eventDetailsImComing,
             icon: me ? Icons.check_rounded : null,
             color: me ? C.green : C.terracotta,
             onTap: () => setState(() => me ? e.going.remove(profile.name) : e.going.add(profile.name))));
@@ -260,22 +268,24 @@ class _AddEventPageState extends State<AddEventPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Page1('New event', [
-        const Text('Event type', style: TextStyle(fontWeight: FontWeight.w700)),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Page1(l.addEventTitle, [
+        Text(l.addEventTypeLabel, style: const TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         Wrap(spacing: 8, runSpacing: 8, children: [
-          for (final t in eventTypes) Choice(t, _type == t, () => setState(() => _type = t)),
+          for (final t in eventTypes) Choice(ld(context, t), _type == t, () => setState(() => _type = t)),
         ]),
         const SizedBox(height: 18),
-        Field('Name', hint: 'Event name...', controller: _name, onChanged: (_) => setState(() {})),
-        const Text('Day', style: TextStyle(fontWeight: FontWeight.w700)),
+        Field(l.addEventNameLabel, hint: l.addEventNameHint, controller: _name, onChanged: (_) => setState(() {})),
+        Text(l.addEventDayLabel, style: const TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         Wrap(spacing: 8, children: [
           for (final d in calendarDays)
-            Choice('${d.$2} ${d.$1}', _day == d.$1, () => setState(() => _day = d.$1)),
+            Choice('${ld(context, d.$2)} ${d.$1}', _day == d.$1, () => setState(() => _day = d.$1)),
         ]),
         const SizedBox(height: 18),
-        const Text('Time', style: TextStyle(fontWeight: FontWeight.w700)),
+        Text(l.addEventTimeLabel, style: const TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         LCard(
           onTap: () async {
@@ -289,11 +299,12 @@ class _AddEventPageState extends State<AddEventPage> {
           ]),
         ),
       ],
-          bottom: Btn('Add to calendar', enabled: _name.text.trim().isNotEmpty, onTap: () {
+          bottom: Btn(l.addEventSubmit, enabled: _name.text.trim().isNotEmpty, onTap: () {
             events.add(Ev(_name.text.trim(), _day, _time.format(context), _type,
                 [C.teal, C.mustard, C.coral, C.green][eventTypes.indexOf(_type) % 4], [profile.name]));
             Navigator.pop(context);
           }));
+  }
 }
 
 // ---- 11 notifications
@@ -301,6 +312,7 @@ class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     Widget n(IconData i, Color c, String t) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: LCard(
@@ -310,14 +322,14 @@ class NotificationsPage extends StatelessWidget {
             Expanded(child: Text(t, style: const TextStyle(fontWeight: FontWeight.w700))),
           ])),
         );
-    return Page1('Notifications', [
-      n(Icons.headphones_rounded, C.terracotta, "This week's episode is ready"),
-      n(Icons.camera_alt_rounded, C.teal, 'Sarah shared a moment'),
-      n(Icons.favorite_rounded, C.mustard, 'You earned the Lamma spirit badge'),
+    return Page1(l.notificationsTitle, [
+      n(Icons.headphones_rounded, C.terracotta, l.notifEpisodeReady),
+      n(Icons.camera_alt_rounded, C.teal, l.notifSarahMoment),
+      n(Icons.favorite_rounded, C.mustard, l.notifBadgeEarned),
       const SizedBox(height: 12),
-      const Center(
-          child: Text("That's all for now",
-              style: TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w600))),
+      Center(
+          child: Text(l.notifEmpty,
+              style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w600))),
     ]);
   }
 }
@@ -327,52 +339,53 @@ class WeeklyRecapPage extends StatelessWidget {
   const WeeklyRecapPage({super.key});
   @override
   Widget build(BuildContext context) {
-    Widget tile(String v, String l, IconData i, Color c) => Expanded(
+    final l = AppLocalizations.of(context);
+    Widget tile(String v, String label, IconData i, Color c) => Expanded(
           child: LCard(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(children: [
               Icon(i, color: c),
               const SizedBox(height: 8),
               Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
-              Text(l, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
+              Text(label, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
             ]),
           ),
         );
-    return Page1('Your week', [
+    return Page1(l.recapTitle, [
       LCard(
         color: C.navy,
         padding: const EdgeInsets.symmetric(vertical: 26),
-        child: const Center(
-            child: Text('Your week in Lamma',
-                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900))),
+        child: Center(
+            child: Text(l.recapHeroTitle,
+                style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900))),
       ),
       const SizedBox(height: 12),
       Row(children: [
-        tile('12', 'Chats', Icons.chat_bubble_rounded, C.teal),
+        tile('12', l.recapChats, Icons.chat_bubble_rounded, C.teal),
         const SizedBox(width: 12),
-        tile('24', 'Photos', Icons.camera_alt_rounded, C.terracotta),
+        tile('24', l.recapPhotos, Icons.camera_alt_rounded, C.terracotta),
       ]),
       const SizedBox(height: 12),
       Row(children: [
-        tile('6', 'Active days', Icons.local_fire_department_rounded, C.mustard),
+        tile('6', l.recapActiveDays, Icons.local_fire_department_rounded, C.mustard),
         const SizedBox(width: 12),
-        tile('3/6', 'Listened', Icons.headphones_rounded, C.coral),
+        tile('3/6', l.recapListened, Icons.headphones_rounded, C.coral),
       ]),
       const SizedBox(height: 12),
       LCard(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('Most shared: Talks with Aziz', style: TextStyle(fontWeight: FontWeight.w800)),
+          Text(l.recapMostShared, style: const TextStyle(fontWeight: FontWeight.w800)),
           const SizedBox(height: 12),
           Row(children: [
             AvatarStack([for (final m in members.take(4)) m.name], size: 38),
             const SizedBox(width: 10),
-            const Expanded(
-                child: Text('Everyone played it', style: TextStyle(color: C.inkSoft, fontWeight: FontWeight.w600))),
+            Expanded(
+                child: Text(l.recapEveryonePlayed, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w600))),
           ]),
         ]),
       ),
       const SizedBox(height: 12),
-      Btn('See badges', outlined: true, onTap: () => go(context, const BadgesPage())),
+      Btn(l.recapSeeBadges, outlined: true, onTap: () => go(context, const BadgesPage())),
     ]);
   }
 }

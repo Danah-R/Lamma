@@ -11,7 +11,7 @@ Future<void> tapText(WidgetTester t, String s, {bool last = false}) async {
 }
 
 Future<void> back(WidgetTester t) async {
-  await t.tap(find.byTooltip('Back').last);
+  await t.tap(find.byTooltip('رجوع').last);
   await t.pumpAndSettle();
 }
 
@@ -19,77 +19,77 @@ void main() {
   testWidgets('all tabs and key screens render', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipOnboarding: true));
-    for (final label in ['Lamma', 'Activities', 'Account', 'Home']) {
+    for (final label in ['لمّه', 'الأنشطة', 'الحساب', 'الرئيسية']) {
       await tapText(t, label, last: true);
     }
     // home screens
-    for (final s in ['Start listening', 'Your week in Lamma']) {
+    for (final s in ['ابدأ الاستماع', 'أسبوعك في لمّه']) {
       await tapText(t, s);
       await back(t);
     }
-    await tapText(t, 'Village outing');
-    await tapText(t, "You're in");
+    await tapText(t, 'خرجة إلى القرية');
+    await tapText(t, 'أنت مشارك');
     await back(t);
     await t.drag(find.byType(ListView).first, const Offset(0, 2000));
     await t.pumpAndSettle();
-    await tapText(t, '+ Add event');
+    await tapText(t, '+ إضافة فعالية');
     await back(t);
     // lamma
-    await tapText(t, 'Lamma', last: true);
-    await tapText(t, 'Open family chat');
+    await tapText(t, 'لمّه', last: true);
+    await tapText(t, 'فتح محادثة العائلة');
     await back(t);
-    await tapText(t, 'Sarah');
+    await tapText(t, 'سارة');
     await back(t);
     await t.drag(find.byType(ListView).first, const Offset(0, 2000));
     await t.pumpAndSettle();
-    await tapText(t, '+ Share moment');
+    await tapText(t, '+ شارك لحظة');
     await back(t);
     // activities
-    await tapText(t, 'Activities', last: true);
-    for (final s in ['Group games', 'Book club', 'Podcast club', 'Talk topics', 'Outings']) {
+    await tapText(t, 'الأنشطة', last: true);
+    for (final s in ['ألعاب جماعية', 'نادي الكتاب', 'نادي البودكاست', 'مواضيع للحديث', 'الخرجات']) {
       await tapText(t, s);
-      if (s == 'Group games') {
-        await tapText(t, 'Roulette');
-        await tapText(t, 'Spin the wheel');
+      if (s == 'ألعاب جماعية') {
+        await tapText(t, 'الروليت');
+        await tapText(t, 'دور العجلة');
         await t.pump(const Duration(seconds: 4));
         await back(t);
-        await tapText(t, 'Start playing');
-        await tapText(t, 'Next');
+        await tapText(t, 'ابدأ اللعب');
+        await tapText(t, 'التالي');
         await back(t);
       }
-      if (s == 'Outings') {
-        await tapText(t, 'King Salman Park');
-        await tapText(t, 'Add to "Our outings"');
+      if (s == 'الخرجات') {
+        await tapText(t, 'حديقة الملك سلمان');
+        await tapText(t, 'إضافة إلى «خرجاتنا»');
         await back(t);
       }
       await back(t);
     }
     // account
-    await tapText(t, 'Account', last: true);
-    await tapText(t, 'Design your character');
+    await tapText(t, 'الحساب', last: true);
+    await tapText(t, 'صمم شخصيتك');
     await back(t);
-    await tapText(t, 'All badges and achievements');
+    await tapText(t, 'كل الأوسمة والإنجازات');
     expect(t.takeException(), isNull);
   });
 
   testWidgets('onboarding creates a profile and enters the app', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
-    await t.pumpWidget(const LammaApp());
-    await tapText(t, 'Start');
+    await t.pumpWidget(const LammaApp(skipSplash: true));
+    await tapText(t, 'ابدأ');
     await t.enterText(find.byType(TextField).first, 'Reem');
     await t.pump();
-    await tapText(t, "I'm a student");
-    await tapText(t, 'Next');
-    await tapText(t, 'Coffee');
-    await tapText(t, 'Next');
+    await tapText(t, 'طالب/ة');
+    await tapText(t, 'التالي');
+    await tapText(t, 'قهوة');
+    await tapText(t, 'التالي');
     await t.enterText(find.byType(TextField).first, '0500000000');
     await t.pump();
-    await tapText(t, 'Create account');
+    await tapText(t, 'إنشاء حساب');
     await t.enterText(find.byType(TextField).first, 'Test family');
     await t.pump();
-    await tapText(t, 'Create');
-    await tapText(t, "Let's go");
-    expect(find.text('Good evening, Reem'), findsOneWidget);
+    await tapText(t, 'إنشاء');
+    await tapText(t, 'يلا نبدأ');
+    expect(find.text('مساء الخير، Reem'), findsOneWidget);
     expect(t.takeException(), isNull);
   });
 }

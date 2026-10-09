@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../l10n/app_localizations.dart';
+import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -15,6 +17,13 @@ const _interests = [
   'Cooking', 'Drawing', 'Football', 'Swimming', 'Music', 'Travel',
 ];
 const _outingTypes = ['Nature', 'Restaurants', 'Cafés', 'Entertainment'];
+
+String _jobLabel(AppLocalizations l, String key) => switch (key) {
+      'I work' => l.onboardingJobWork,
+      "I'm a student" => l.onboardingJobStudent,
+      'I stay at home' => l.onboardingJobHome,
+      _ => key,
+    };
 
 /// 01 Splash -> 02 questionnaire -> 03 sign up -> 04 create/join family -> pick a character.
 class OnboardingFlow extends StatefulWidget {
@@ -71,25 +80,28 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
         body: SafeArea(
           child: switch (_step) {
-            _Step.splash => _splash(),
-            _Step.about => _page('Let\'s get to know you', 'A few quick questions', _about(), 'Next',
+            _Step.splash => _splash(l),
+            _Step.about => _page(l, l.onboardingAboutTitle, l.onboardingAboutSubtitle, _about(l), l.onboardingNext,
                 () => _go(_Step.interests)),
-            _Step.interests => _page('What do you like?', 'Pick what suits your experience',
-                _interestsBody(), 'Next', () => _go(_Step.signup)),
-            _Step.signup => _page('Welcome!', "We'll text you a verification code", _signup(),
-                'Create account', () => _go(_Step.family)),
-            _Step.family => _page('Your family', 'Create a family space or join one', _familyBody(), null, null),
-            _Step.character => _page('Pick your character', 'You can change it any time in Account',
-                _characterBody(), "Let's go", () => _finish(joined: _code.text.trim().isNotEmpty)),
+            _Step.interests => _page(l, l.onboardingInterestsTitle, l.onboardingInterestsSubtitle,
+                _interestsBody(l), l.onboardingNext, () => _go(_Step.signup)),
+            _Step.signup => _page(l, l.onboardingSignupTitle, l.onboardingSignupSubtitle, _signup(l),
+                l.onboardingCreateAccount, () => _go(_Step.family)),
+            _Step.family => _page(l, l.onboardingFamilyTitle, l.onboardingFamilySubtitle, _familyBody(l), null, null),
+            _Step.character => _page(l, l.onboardingCharacterTitle, l.onboardingCharacterSubtitle,
+                _characterBody(l), l.onboardingLetsGo, () => _finish(joined: _code.text.trim().isNotEmpty)),
           },
         ),
       );
+  }
 
   // ---- 01 splash
-  Widget _splash() => Padding(
+  Widget _splash(AppLocalizations l) => Padding(
         padding: const EdgeInsets.all(24),
         child: Column(children: [
           const Spacer(),
@@ -98,28 +110,38 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
             child: Image.asset(familyScene, height: 230, width: double.infinity, fit: BoxFit.cover),
           ),
           const SizedBox(height: 28),
-          const Text('Lamma',
-              style: TextStyle(fontSize: 48, fontWeight: FontWeight.w900, color: C.terracotta)),
+          Text(l.onboardingSplashLogo,
+              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900, color: C.terracotta)),
           const SizedBox(height: 6),
-          const Text("Let's gather", style: TextStyle(fontSize: 18, color: C.inkSoft)),
+          Text(l.onboardingSplashTagline, style: const TextStyle(fontSize: 18, color: C.inkSoft)),
           const Spacer(),
-          Btn('Start', icon: Icons.arrow_forward_rounded, onTap: () => _go(_Step.about)),
+          Builder(builder: (context) {
+            final rtl = Directionality.of(context) == TextDirection.rtl;
+            return Btn(l.onboardingSplashStart,
+                icon: rtl ? Icons.arrow_back_rounded : Icons.arrow_forward_rounded,
+                onTap: () => _go(_Step.about));
+          }),
         ]),
       );
 
   // ---- shared step scaffold
-  Widget _page(String title, String sub, Widget body, String? cta, VoidCallback? onCta) =>
+  Widget _page(AppLocalizations l, String title, String sub, Widget body, String? cta, VoidCallback? onCta) =>
       Column(children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 24, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 24, 0),
           child: Row(children: [
-            IconButton(onPressed: _back, icon: const Icon(Icons.arrow_back_rounded)),
+            Builder(builder: (context) {
+              final rtl = Directionality.of(context) == TextDirection.rtl;
+              return IconButton(
+                  onPressed: _back,
+                  icon: Icon(rtl ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded));
+            }),
             Expanded(child: Bar((_step.index) / (_Step.values.length - 1))),
           ]),
         ),
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+            padding: const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900, height: 1.2)),
               const SizedBox(height: 6),
@@ -131,16 +153,16 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
         ),
         if (cta != null)
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 16),
             child: Btn(cta, enabled: _canNext, onTap: onCta),
           ),
       ]);
 
   // ---- 02a about you
-  Widget _about() => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Field('Your name',
-            hint: 'Name', controller: _name, onChanged: (_) => setState(() {})),
-        const Text('Age', style: TextStyle(fontWeight: FontWeight.w700)),
+  Widget _about(AppLocalizations l) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Field(l.onboardingNameLabel,
+            hint: l.onboardingNameHint, controller: _name, onChanged: (_) => setState(() {})),
+        Text(l.onboardingAgeLabel, style: const TextStyle(fontWeight: FontWeight.w700)),
         Row(children: [
           IconButton.filled(
               style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
@@ -156,7 +178,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
               icon: const Icon(Icons.add_rounded)),
         ]),
         const SizedBox(height: 16),
-        const Text('What do you do?', style: TextStyle(fontWeight: FontWeight.w700)),
+        Text(l.onboardingJobQuestion, style: const TextStyle(fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         for (final j in _jobs)
           Padding(
@@ -167,7 +189,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
               child: Row(children: [
                 IconBubble(j.$3, C.terracotta, size: 40),
                 const SizedBox(width: 14),
-                Expanded(child: Text(j.$1, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800))),
+                Expanded(child: Text(_jobLabel(l, j.$1), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800))),
                 if (_job == j.$1) const Icon(Icons.check_circle_rounded, color: C.terracotta),
               ]),
             ),
@@ -175,71 +197,73 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
       ]);
 
   // ---- 02b interests
-  Widget _interestsBody() => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('Things you love', style: TextStyle(fontWeight: FontWeight.w800)),
-        const SizedBox(height: 10),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          for (final h in _interests)
-            Choice(h, _picked.contains(h),
-                () => setState(() => _picked.contains(h) ? _picked.remove(h) : _picked.add(h))),
-        ]),
-        const SizedBox(height: 24),
-        const Text('Type of outings', style: TextStyle(fontWeight: FontWeight.w800)),
-        const SizedBox(height: 10),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          for (final h in _outingTypes)
-            Choice(h, _outings.contains(h),
-                () => setState(() => _outings.contains(h) ? _outings.remove(h) : _outings.add(h))),
-        ]),
-        const SizedBox(height: 24),
-        const Text('I prefer...', style: TextStyle(fontWeight: FontWeight.w800)),
-        const SizedBox(height: 10),
-        Row(children: [
-          for (final p in ['Games', 'Discussions']) ...[
-            Expanded(
-              child: LCard(
-                color: _prefer == p ? C.navy : null,
-                onTap: () => setState(() => _prefer = p),
-                padding: const EdgeInsets.symmetric(vertical: 22),
-                child: Center(
-                    child: Text(p,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: _prefer == p ? Colors.white : C.ink))),
+  Widget _interestsBody(AppLocalizations l) => Builder(builder: (context) {
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(l.onboardingThingsYouLove, style: const TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 10),
+          Wrap(spacing: 8, runSpacing: 8, children: [
+            for (final h in _interests)
+              Choice(ld(context, h), _picked.contains(h),
+                  () => setState(() => _picked.contains(h) ? _picked.remove(h) : _picked.add(h))),
+          ]),
+          const SizedBox(height: 24),
+          Text(l.onboardingTypeOfOutings, style: const TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 10),
+          Wrap(spacing: 8, runSpacing: 8, children: [
+            for (final h in _outingTypes)
+              Choice(ld(context, h), _outings.contains(h),
+                  () => setState(() => _outings.contains(h) ? _outings.remove(h) : _outings.add(h))),
+          ]),
+          const SizedBox(height: 24),
+          Text(l.onboardingIPrefer, style: const TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 10),
+          Row(children: [
+            for (final p in ['Games', 'Discussions']) ...[
+              Expanded(
+                child: LCard(
+                  color: _prefer == p ? C.navy : null,
+                  onTap: () => setState(() => _prefer = p),
+                  padding: const EdgeInsets.symmetric(vertical: 22),
+                  child: Center(
+                      child: Text(p == 'Games' ? l.onboardingPreferGames : l.onboardingPreferDiscussions,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                              color: _prefer == p ? Colors.white : C.ink))),
+                ),
               ),
-            ),
-            if (p == 'Games') const SizedBox(width: 12),
-          ],
-        ]),
-      ]);
+              if (p == 'Games') const SizedBox(width: 12),
+            ],
+          ]),
+        ]);
+      });
 
   // ---- 03 sign up
-  Widget _signup() => Column(children: [
-        Field('', hint: '05 ••• ••• ••', icon: Icons.phone_rounded,
+  Widget _signup(AppLocalizations l) => Column(children: [
+        Field('', hint: l.onboardingPhoneHint, icon: Icons.phone_rounded,
             controller: _phone, keyboard: TextInputType.phone, onChanged: (_) => setState(() {})),
         const SizedBox(height: 4),
         TextButton(
             onPressed: () => _go(_Step.family),
-            child: const Text('Already have an account? Sign in',
-                style: TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700))),
+            child: Text(l.onboardingSigninInstead,
+                style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700))),
       ]);
 
   // ---- 04 family
-  Widget _familyBody() => Column(children: [
+  Widget _familyBody(AppLocalizations l) => Column(children: [
         LCard(
           color: C.navy,
           padding: const EdgeInsets.all(20),
           child: Column(children: [
-            const Text('Start a family',
-                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w900)),
+            Text(l.onboardingStartFamily,
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w900)),
             const SizedBox(height: 12),
             TextField(
               controller: _family,
-              decoration: const InputDecoration(hintText: 'e.g. Al-Otaibi family'),
+              decoration: InputDecoration(hintText: l.onboardingFamilyNameHint),
             ),
             const SizedBox(height: 12),
-            Btn('Create', color: C.terracotta, onTap: () {
+            Btn(l.onboardingCreate, color: C.terracotta, onTap: () {
               _code.clear();
               _go(_Step.character);
             }),
@@ -249,16 +273,16 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
         LCard(
           padding: const EdgeInsets.all(20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Have an invite code?',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            Text(l.onboardingHaveInviteCode,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
             const SizedBox(height: 12),
             TextField(
               controller: _code,
               textCapitalization: TextCapitalization.characters,
-              decoration: const InputDecoration(hintText: 'LAMMA-48'),
+              decoration: InputDecoration(hintText: l.onboardingInviteCodeHint),
             ),
             const SizedBox(height: 12),
-            Btn('Join', outlined: true, onTap: () {
+            Btn(l.onboardingJoin, outlined: true, onTap: () {
               if (_code.text.trim().isEmpty) return;
               _go(_Step.character);
             }),
@@ -267,41 +291,43 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
       ]);
 
   // ---- character
-  Widget _characterBody() => Column(children: [
-        Center(
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 5)),
-            child: ClipOval(
-                child: Image.asset(characters[_avatar].$2, fit: BoxFit.cover, alignment: Alignment.topCenter)),
+  Widget _characterBody(AppLocalizations l) => Builder(builder: (context) {
+        return Column(children: [
+          Center(
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 5)),
+              child: ClipOval(
+                  child: Image.asset(characters[_avatar].$2, fit: BoxFit.cover, alignment: Alignment.topCenter)),
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(characters[_avatar].$1, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-        const SizedBox(height: 18),
-        GridView.count(
-          crossAxisCount: 3,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 14,
-          crossAxisSpacing: 14,
-          children: [
-            for (var i = 0; i < characters.length; i++)
-              GestureDetector(
-                onTap: () => setState(() => _avatar = i),
-                child: Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: _avatar == i ? C.terracotta : Colors.transparent, width: 3),
+          const SizedBox(height: 8),
+          Text(ld(context, characters[_avatar].$1), style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+          const SizedBox(height: 18),
+          GridView.count(
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 14,
+            crossAxisSpacing: 14,
+            children: [
+              for (var i = 0; i < characters.length; i++)
+                GestureDetector(
+                  onTap: () => setState(() => _avatar = i),
+                  child: Container(
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: _avatar == i ? C.terracotta : Colors.transparent, width: 3),
+                    ),
+                    child: ClipOval(
+                        child: Image.asset(characters[i].$2, fit: BoxFit.cover, alignment: Alignment.topCenter)),
                   ),
-                  child: ClipOval(
-                      child: Image.asset(characters[i].$2, fit: BoxFit.cover, alignment: Alignment.topCenter)),
                 ),
-              ),
-          ],
-        ),
-      ]);
+            ],
+          ),
+        ]);
+      });
 }

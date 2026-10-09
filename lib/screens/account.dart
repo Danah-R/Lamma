@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../l10n/app_localizations.dart';
+import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'leaderboard.dart';
@@ -13,15 +15,17 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 120), children: [
-          const TabHeader('Account', 'Your Lamma profile'),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Scaffold(
+        body: ListView(padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 120), children: [
+          TabHeader(l.accountTitle, l.accountSubtitle),
           const SizedBox(height: 12),
           Center(child: Avatar(profile.name, size: 104)),
           const SizedBox(height: 12),
           Center(child: Text(profile.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900))),
           Center(
-              child: Text('${profile.age} years · Lamma spirit',
+              child: Text(l.accountAgeSpirit(profile.age),
                   style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w600))),
           const SizedBox(height: 6),
           Center(
@@ -30,58 +34,61 @@ class _AccountPageState extends State<AccountPage> {
                 await go(context, const DesignAvatarPage());
                 if (mounted) setState(() {});
               },
-              child: const Text('Design your character',
-                  style: TextStyle(color: C.terracotta, fontWeight: FontWeight.w800)),
+              child: Text(l.accountDesignCharacter,
+                  style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w800)),
             ),
           ),
-          const SectionTitle('My interests'),
+          SectionTitle(l.accountMyInterests),
           Wrap(spacing: 8, runSpacing: 8, children: [
-            for (final i in profile.interests) Pill(i, color: C.greenTint),
+            for (final i in profile.interests) Pill(ld(context, i), color: C.greenTint),
           ]),
-          const SectionTitle('Places I\'d like to visit'),
+          SectionTitle(l.accountPlacesToVisit),
           LCard(
             child: Text(
-                profile.outingTypes.isEmpty ? 'Nothing picked yet' : profile.outingTypes.join(', '),
+                profile.outingTypes.isEmpty
+                    ? l.accountNothingPicked
+                    : profile.outingTypes.map((t) => ld(context, t)).join('، '),
                 style: const TextStyle(fontWeight: FontWeight.w600)),
           ),
           if (profile.isParent) ...[
-            const SectionTitle('Parent'),
+            SectionTitle(l.accountParentSection),
             LCard(
               color: C.navy,
               onTap: () => go(context, const ParentControlsPage()),
-              child: const Row(children: [
-                Icon(Icons.shield_rounded, color: C.mustard),
-                SizedBox(width: 14),
+              child: Row(children: [
+                const Icon(Icons.shield_rounded, color: C.mustard),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Parent controls',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
-                    Text('Phone-free time, consequences, rewards',
-                        style: TextStyle(color: Colors.white70, fontSize: 12)),
+                    Text(l.accountParentControlsTitle,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
+                    Text(l.accountParentControlsDesc,
+                        style: const TextStyle(color: Colors.white70, fontSize: 12)),
                   ]),
                 ),
-                Icon(Icons.chevron_right_rounded, color: Colors.white70),
+                const Icon(Icons.chevron_right_rounded, color: Colors.white70),
               ]),
             ),
           ],
-          const SectionTitle('Achievements'),
+          SectionTitle(l.accountAchievements),
           Row(children: [
-            _stat('12', 'Days', C.mustardTint),
+            _stat('12', l.accountStatDays, C.mustardTint),
             const SizedBox(width: 12),
-            _stat('8', 'Games', C.tealTint),
+            _stat('8', l.accountStatGames, C.tealTint),
           ]),
           const SizedBox(height: 14),
-          Btn('All badges and achievements', color: C.navy, onTap: () => go(context, const BadgesPage())),
+          Btn(l.accountAllBadges, color: C.navy, onTap: () => go(context, const BadgesPage())),
         ]),
       );
+  }
 
-  Widget _stat(String v, String l, Color c) => Expanded(
+  Widget _stat(String v, String label, Color c) => Expanded(
         child: LCard(
           color: c,
           padding: const EdgeInsets.symmetric(vertical: 18),
           child: Column(children: [
             Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
-            Text(l, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
+            Text(label, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
           ]),
         ),
       );
@@ -97,7 +104,9 @@ class DesignAvatarPage extends StatefulWidget {
 class _DesignAvatarPageState extends State<DesignAvatarPage> {
   int _a = profile.avatar;
   @override
-  Widget build(BuildContext context) => Page1('My character', [
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Page1(l.designCharacterTitle, [
         const SizedBox(height: 8),
         Center(
           child: Container(
@@ -109,7 +118,7 @@ class _DesignAvatarPageState extends State<DesignAvatarPage> {
                 child: Image.asset(characters[_a].$2, fit: BoxFit.cover, alignment: Alignment.topCenter)),
           ),
         ),
-        const SectionTitle('Character'),
+        SectionTitle(l.designCharacterSection),
         SizedBox(
           height: 78,
           child: ListView(scrollDirection: Axis.horizontal, children: [
@@ -117,7 +126,7 @@ class _DesignAvatarPageState extends State<DesignAvatarPage> {
               GestureDetector(
                 onTap: () => setState(() => _a = i),
                 child: Container(
-                  margin: const EdgeInsets.only(right: 12),
+                  margin: const EdgeInsetsDirectional.only(end: 12),
                   padding: const EdgeInsets.all(3),
                   width: 74,
                   decoration: BoxDecoration(
@@ -129,12 +138,12 @@ class _DesignAvatarPageState extends State<DesignAvatarPage> {
               ),
           ]),
         ),
-        const SectionTitle('Outfits'),
-        const Wrap(spacing: 10, runSpacing: 10, children: [
-          Pill('Coming soon', color: C.beige),
+        SectionTitle(l.designOutfitsSection),
+        Wrap(spacing: 10, runSpacing: 10, children: [
+          Pill(l.commonComingSoon, color: C.beige),
         ]),
       ],
-          bottom: Btn('Save', onTap: () {
+          bottom: Btn(l.designSave, onTap: () {
             profile.avatar = _a;
             final i = members.indexWhere((m) => m.name == profile.name);
             if (i >= 0) {
@@ -143,13 +152,16 @@ class _DesignAvatarPageState extends State<DesignAvatarPage> {
             }
             Navigator.pop(context);
           }));
+  }
 }
 
 // ---- 10 badges and achievements
 class BadgesPage extends StatelessWidget {
   const BadgesPage({super.key});
   @override
-  Widget build(BuildContext context) => Page1('Badges and achievements', [
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Page1(l.badgesTitle, [
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
@@ -167,7 +179,7 @@ class BadgesPage extends StatelessWidget {
                     Icon(b.$4 ? b.$2 : Icons.lock_rounded,
                         color: b == badges.first ? C.mustard : b.$3, size: 30),
                     const SizedBox(height: 8),
-                    Text(b.$1,
+                    Text(ld(context, b.$1),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
@@ -178,4 +190,5 @@ class BadgesPage extends StatelessWidget {
           ],
         ),
       ]);
+  }
 }

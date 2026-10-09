@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'data.dart';
+import 'l10n/app_localizations.dart';
+import 'l10n/data_localizations.dart';
 import 'theme.dart';
 
 Future<T?> go<T>(BuildContext c, Widget page) =>
@@ -77,7 +79,7 @@ class SectionTitle extends StatelessWidget {
   const SectionTitle(this.text, {super.key, this.action, this.onAction});
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(4, 26, 4, 12),
+        padding: const EdgeInsetsDirectional.fromSTEB(4, 26, 4, 12),
         child: Row(children: [
           Expanded(
               child: Text(text,
@@ -221,13 +223,13 @@ class Page1 extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text(title)),
         body: ListView(
-            padding: EdgeInsets.fromLTRB(20, 4, 20, bottom == null ? 120 : 28),
+            padding: EdgeInsetsDirectional.fromSTEB(20, 4, 20, bottom == null ? 120 : 28),
             children: children),
         bottomNavigationBar: bottom == null
             ? null
             : SafeArea(
                 child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 12), child: bottom)),
+                    padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 12), child: bottom)),
       );
 }
 
@@ -238,7 +240,7 @@ class TabHeader extends StatelessWidget {
   const TabHeader(this.title, this.subtitle, {super.key, this.onBell});
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(0, 12, 0, 8),
+        padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 8),
         child: Row(children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -262,9 +264,9 @@ class BellButton extends StatelessWidget {
           style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
           icon: const Icon(Icons.notifications_none_rounded),
         ),
-        Positioned(
+        PositionedDirectional(
             top: 8,
-            right: 10,
+            end: 10,
             child: Container(
                 width: 10,
                 height: 10,
@@ -296,7 +298,7 @@ class Field extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (label.isNotEmpty)
             Padding(
-                padding: const EdgeInsets.only(bottom: 6, left: 4),
+                padding: const EdgeInsetsDirectional.only(bottom: 6, start: 4),
                 child: Text(label, style: const TextStyle(fontWeight: FontWeight.w700))),
           TextField(
             controller: controller,
@@ -348,6 +350,7 @@ class Reactions extends StatelessWidget {
       required this.onComments});
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     Widget item(IconData i, String t, Color c, VoidCallback f) => GestureDetector(
           onTap: f,
           behavior: HitTestBehavior.opaque,
@@ -363,7 +366,7 @@ class Reactions extends StatelessWidget {
       const SizedBox(width: 20),
       item(Icons.chat_bubble_outline_rounded, '$comments', C.inkSoft, onComments),
       const SizedBox(width: 20),
-      item(Icons.share_outlined, 'Share', C.inkSoft, () {}),
+      item(Icons.share_outlined, l.commonShareAction, C.inkSoft, () {}),
     ]);
   }
 }
@@ -375,29 +378,32 @@ void showComments(BuildContext context) => showModalBottomSheet(
       backgroundColor: C.cream,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
-      builder: (c) => Padding(
-        padding: EdgeInsets.fromLTRB(20, 18, 20, MediaQuery.of(c).viewInsets.bottom + 20),
-        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('Comments', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 14),
-          for (final cm in comments)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Avatar(cm.$1, size: 36),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: LCard(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(cm.$1, style: const TextStyle(fontWeight: FontWeight.w800)),
-                      Text(cm.$2),
-                    ]),
+      builder: (c) {
+        final l = AppLocalizations.of(c);
+        return Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(20, 18, 20, MediaQuery.of(c).viewInsets.bottom + 20),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(l.commonComments, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+            const SizedBox(height: 14),
+            for (final cm in comments)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Avatar(cm.$1, size: 36),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: LCard(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(ld(c, cm.$1), style: const TextStyle(fontWeight: FontWeight.w800)),
+                        Text(ld(c, cm.$2)),
+                      ]),
+                    ),
                   ),
-                ),
-              ]),
-            ),
-          const TextField(decoration: InputDecoration(hintText: 'Write a comment...')),
-        ]),
-      ),
+                ]),
+              ),
+            TextField(decoration: InputDecoration(hintText: l.commonWriteCommentHint)),
+          ]),
+        );
+      },
     );

@@ -8,6 +8,12 @@ import 'theme.dart';
 Future<T?> go<T>(BuildContext c, Widget page) =>
     Navigator.of(c).push<T>(MaterialPageRoute(builder: (_) => page));
 
+/// Opens a game full-screen above the tab bar (root navigator), so the
+/// bottom navigation never shows during a game.
+Future<T?> goGame<T>(BuildContext c, Widget page) =>
+    Navigator.of(c, rootNavigator: true)
+        .push<T>(MaterialPageRoute(builder: (_) => page));
+
 class Avatar extends StatelessWidget {
   final String name;
   final double size;

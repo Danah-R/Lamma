@@ -352,7 +352,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activitiesTitle => 'Activities';
 
   @override
-  String get activitiesSubtitle => 'What can we do together?';
+  String get activitiesSubtitle => 'What should we do together today?';
 
   @override
   String get activitiesGroupGamesTitle => 'Group games';
@@ -391,6 +391,257 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activitiesClubsSection => 'Clubs';
 
   @override
+  String get clubsSubtitle =>
+      'Reading and listening together, then talking about it';
+
+  @override
+  String get clubsDiscussionSession => 'Discussion session';
+
+  @override
+  String get clubsRemindMe => 'Remind me';
+
+  @override
+  String get clubsRemindMeOn => 'We\'ll remind you';
+
+  @override
+  String get clubsBookOfMonthBadge => 'Book of the month';
+
+  @override
+  String get clubsAboutHeading => 'About';
+
+  @override
+  String get clubsReadMore => 'Read more';
+
+  @override
+  String get clubsReadLess => 'Less';
+
+  @override
+  String clubsFinishedCount(int done, int total) {
+    return '$done of $total finished';
+  }
+
+  @override
+  String get clubsCatchUpBold => 'Catch up!';
+
+  @override
+  String get clubsLogProgress => 'Log your progress';
+
+  @override
+  String clubsLogProgressSheetTitle(String title) {
+    return 'How far are you in $title?';
+  }
+
+  @override
+  String clubsPageOfTotal(int page, int total) {
+    return 'Page $page of $total';
+  }
+
+  @override
+  String get clubsMarkAsFinished => 'Mark as finished';
+
+  @override
+  String get clubsSaveButton => 'Save';
+
+  @override
+  String get clubsMyDoneWaitingRest => 'Waiting for the discussion';
+
+  @override
+  String get clubsDoneLabel => 'Done';
+
+  @override
+  String clubsPagesLeft(int pages) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pages,
+      locale: localeName,
+      other: '$pages pages left for you',
+      one: '1 page left for you',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clubsFamilyProgressTitle => 'How far has the family gotten?';
+
+  @override
+  String get clubsThursday => 'Thursday';
+
+  @override
+  String get clubsBookDiscussionTime => 'After dinner · 9:00 PM';
+
+  @override
+  String get clubsNextMonthSuggestions => 'Next month\'s suggestions';
+
+  @override
+  String get clubsNotVotedYet => 'Haven\'t voted yet';
+
+  @override
+  String clubsVotedForCount(int count) {
+    return 'Voted for $count';
+  }
+
+  @override
+  String get clubsVoteForMoreHint =>
+      'Vote for more than one book — the most-voted becomes the book of the month';
+
+  @override
+  String get clubsSuggestBook => 'Suggest a book';
+
+  @override
+  String get clubsSuggestBookHint => 'Didn\'t find what you had in mind?';
+
+  @override
+  String get clubsReadBeforeTitle => 'We\'ve read before';
+
+  @override
+  String clubsScoreOutOf(int completed, int total) {
+    return '$completed of $total';
+  }
+
+  @override
+  String get clubsSuggestPodcastHeading => 'Suggest a podcast';
+
+  @override
+  String get clubsSuggestFormSubtitle =>
+      'It\'ll reach the family and join the suggestions';
+
+  @override
+  String get clubsClose => 'Close';
+
+  @override
+  String get clubsBookNameLabel => 'Book name';
+
+  @override
+  String get clubsBookNameHint => 'e.g. I Missed a Prayer';
+
+  @override
+  String get clubsBookAuthorLabel => 'Author (optional)';
+
+  @override
+  String get clubsBookAuthorHint => 'Author\'s name';
+
+  @override
+  String get clubsPodcastNameLabel => 'Podcast or episode name';
+
+  @override
+  String get clubsPodcastNameHint => 'e.g. How relationships succeed';
+
+  @override
+  String get clubsPodcastHostLabel => 'Host or channel (optional)';
+
+  @override
+  String get clubsPodcastHostHint => 'e.g. Yasser Al-Huzaimi';
+
+  @override
+  String get clubsCategoryLabel => 'Category';
+
+  @override
+  String get clubsAboutShort => 'Short blurb';
+
+  @override
+  String get clubsBookAboutHint =>
+      'What\'s the book about? Why does it suit the family?';
+
+  @override
+  String get clubsPodcastAboutHint =>
+      'What\'s the episode about? Why\'s it worth hearing together?';
+
+  @override
+  String get clubsAddToSuggestions => 'Add to suggestions';
+
+  @override
+  String get clubsCancel => 'Cancel';
+
+  @override
+  String get clubsSuggestionAdded => 'Your suggestion was added';
+
+  @override
+  String get clubsYourSuggestion => 'Your suggestion';
+
+  @override
+  String get clubsCatNovel => 'Novel';
+
+  @override
+  String get clubsCatBiographyHistory => 'Biography and history';
+
+  @override
+  String get clubsCatLiteratureEssays => 'Literature and essays';
+
+  @override
+  String get clubsCatSelfDev => 'Self-development';
+
+  @override
+  String get clubsCatFaith => 'Faith';
+
+  @override
+  String get clubsCatManners => 'Manners and conduct';
+
+  @override
+  String get clubsCatRelationships => 'Relationships';
+
+  @override
+  String get clubsCatCulture => 'Culture';
+
+  @override
+  String get clubsCatStories => 'Stories';
+
+  @override
+  String get clubsCatReligion => 'Religion';
+
+  @override
+  String get clubsCatParenting => 'Parenting';
+
+  @override
+  String get clubsCatOther => 'Other';
+
+  @override
+  String get clubsCustomCategoryHint => 'Type your category';
+
+  @override
+  String get clubsEpisodeOfWeekBadge => 'Episode of the week';
+
+  @override
+  String get clubsAboutEpisodeHeading => 'About the episode';
+
+  @override
+  String get clubsApplePodcasts => 'Apple Podcasts';
+
+  @override
+  String get clubsYoutube => 'YouTube';
+
+  @override
+  String get clubsWhoHeardTitle => 'Who\'s heard it?';
+
+  @override
+  String get clubsHeardButton => 'I heard it';
+
+  @override
+  String get clubsHeardButtonOn => 'I heard it ✓';
+
+  @override
+  String get clubsHalfFamilyFinished => 'Half the family finished it';
+
+  @override
+  String get clubsWhatToDiscussTitle => 'What should we discuss?';
+
+  @override
+  String get clubsWhoHeardAvatarsLabel => 'Who\'s heard it';
+
+  @override
+  String get clubsPodcastDiscussionTime => 'Over coffee · 5:00 PM';
+
+  @override
+  String get clubsNextWeekSuggestions => 'Next week\'s suggestions';
+
+  @override
+  String get clubsVoteForMorePodcastHint => 'Vote for more than one podcast';
+
+  @override
+  String get clubsAddDiscussionPoint => 'Add a discussion point';
+
+  @override
+  String get clubsAddQuestionHint => 'Type your question here';
+
+  @override
   String get activitiesBookClubCount => '3 of 6 reading';
 
   @override
@@ -405,7 +656,163 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activitiesSpinRoulette => 'Spin the roulette';
 
   @override
+  String get activitiesTonightTopicBadge => 'Tonight\'s topic';
+
+  @override
+  String activitiesTopicCounter(int index, int total) {
+    return 'Topic $index of $total';
+  }
+
+  @override
+  String get activitiesChatNow => 'Let\'s chat';
+
+  @override
+  String get activitiesChangeTopic => 'Change it';
+
+  @override
+  String get activitiesPrevTopic => 'Previous topic';
+
+  @override
+  String get activitiesRouletteBadge => 'Whose turn tonight?';
+
+  @override
+  String get activitiesRouletteCardDesc =>
+      'Who starts, a challenge, or a family decision';
+
+  @override
+  String get activitiesSinJimCardDesc =>
+      'Questions about each other — who knows best?';
+
+  @override
+  String get activitiesLettersAzizTitle => 'Letters with Aziz';
+
+  @override
+  String get activitiesLettersAzizDesc =>
+      'Two teams compete, each answer starts with a letter';
+
+  @override
+  String activitiesBookClubDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days left',
+      one: '1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get activitiesClubCatchUpBold => 'Catch up!';
+
+  @override
+  String activitiesClubFinishedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count finished before you',
+      one: '1 finished before you',
+      zero: 'No one finished yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String activitiesPodcastEpisodeLabel(int episode) {
+    return 'Podcast club · Episode $episode';
+  }
+
+  @override
+  String get activitiesPodcastCardQuestion => 'What makes us laugh together?';
+
+  @override
+  String get activitiesPodcastYourTurnBold => 'Your turn to listen!';
+
+  @override
+  String get activitiesPodcastHalfDone =>
+      'Half the family finished it — discussion on Thursday';
+
+  @override
+  String clubsPodcastClubLabel(String host) {
+    return 'Podcast club · $host';
+  }
+
+  @override
+  String get clubsBookDoneWaitingBold => 'Done!';
+
+  @override
+  String clubsBookDoneWaitingRest(int remaining) {
+    String _temp0 = intl.Intl.pluralLogic(
+      remaining,
+      locale: localeName,
+      other: '$remaining left to finish the club',
+      one: '1 left to finish the club',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clubsBookAllDoneBold => 'Everyone\'s done!';
+
+  @override
+  String clubsBookAllDoneRest(String day) {
+    return 'See you $day';
+  }
+
+  @override
+  String clubsPodcastYourTurnRest(int heard, int total, String day) {
+    return '$heard of $total listened, discussion $day';
+  }
+
+  @override
+  String get clubsPodcastHeardBold => 'Listened ✓';
+
+  @override
+  String clubsPodcastHeardRest(String day, String time) {
+    return 'See you $day $time';
+  }
+
+  @override
+  String get activitiesPlayPodcastTooltip => 'Play';
+
+  @override
+  String get activitiesWeekendOutingTitle => 'Weekend outing';
+
+  @override
+  String get activitiesPrevPlace => 'Previous place';
+
+  @override
+  String get activitiesNextPlace => 'Next place';
+
+  @override
+  String activitiesPlaceCounter(int index, int total) {
+    return '$index of $total';
+  }
+
+  @override
+  String activitiesWeekendVoteText(int votes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      votes,
+      locale: localeName,
+      other: '$votes of 6 want to go Friday',
+      one: '1 of 6 wants to go Friday',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get activitiesWeekendVoteButton => 'I\'m in';
+
+  @override
+  String get activitiesWeekendVotedButton => 'You\'re in';
+
+  @override
+  String get activitiesWhoVotedLabel => 'Who voted';
+
+  @override
   String get gamesTitle => 'Games';
+
+  @override
+  String get gamesPageSubtitle => 'Pick tonight\'s game';
 
   @override
   String get gamesRouletteTitle => 'Roulette';
@@ -414,10 +821,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gamesRouletteDesc => 'Who starts? Who takes the challenge?';
 
   @override
-  String get gamesAzizTitle => 'Talks with Aziz';
+  String get gamesTonightBadge => 'Tonight\'s game';
 
   @override
-  String get gamesAzizDesc => 'Funny and surprising questions';
+  String get gamesRouletteHeroDesc =>
+      'Who starts, a challenge, or a decision.. the wheel decides';
+
+  @override
+  String get gamesSpinItButton => 'Spin it';
+
+  @override
+  String get gamesAzizTitle => 'Letters with Aziz';
+
+  @override
+  String get gamesAzizDesc => 'Two teams, each answer starts with a letter';
 
   @override
   String get gamesSinJimTitle => 'Sin Jim';
@@ -430,6 +847,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gamesThabbitDesc => 'Hold the pose!';
+
+  @override
+  String get gamesCharadesTitle => 'No Talking';
+
+  @override
+  String get gamesCharadesDesc => 'Act out the word without speaking';
+
+  @override
+  String get gamesPhotoTitle => 'Who\'s in the Photo?';
+
+  @override
+  String get gamesPhotoDesc => 'Family childhood photos, guess who';
+
+  @override
+  String get gamesWhoAmITitle => 'Who Am I?';
+
+  @override
+  String get gamesWhoAmIDesc => 'Phone on your forehead, everyone hints';
 
   @override
   String get gamesShiddahTitle => 'Shiddah';
@@ -451,6 +886,505 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gamesStartPlaying => 'Start playing';
+
+  @override
+  String get gamesAllGamesTitle => 'All games';
+
+  @override
+  String gamesCountText(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count games',
+      one: '1 game',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gamesFilterGroupLabel => 'Game type';
+
+  @override
+  String get gamesFilterAll => 'All';
+
+  @override
+  String get gamesFilterMove => 'Active';
+
+  @override
+  String get gamesFilterChallenge => 'Challenge';
+
+  @override
+  String get gamesFilterFamily => 'Family';
+
+  @override
+  String get gamesSoonBadge => 'Soon';
+
+  @override
+  String get gamesSoonSnack => 'Coming soon! We\'re getting it ready';
+
+  @override
+  String gamesTileSemanticsLabel(String title, String time) {
+    return '$title, $time';
+  }
+
+  @override
+  String get confirmEndYes => 'Yes, end it';
+
+  @override
+  String get confirmEndKeepPlaying => 'Keep playing';
+
+  @override
+  String get confirmEndTimerPaused => 'Timer paused until you decide';
+
+  @override
+  String get whoAmIBadge => 'One player + everyone hints';
+
+  @override
+  String get whoAmIHeroDesc => 'Phone on your forehead, everyone hints';
+
+  @override
+  String get whoAmIHow1 => 'Phone on your forehead';
+
+  @override
+  String get whoAmIHow2 => 'Hints without the word';
+
+  @override
+  String get whoAmIHow3 => 'Guess before time\'s up';
+
+  @override
+  String get whoAmIChooseCategory => 'Pick a category';
+
+  @override
+  String get whoAmICatAnimals => 'Animals';
+
+  @override
+  String get whoAmICatFood => 'Food';
+
+  @override
+  String get whoAmICatJobs => 'Jobs';
+
+  @override
+  String get whoAmICatPlaces => 'Places';
+
+  @override
+  String whoAmIWordsCount(int count) {
+    return '$count words';
+  }
+
+  @override
+  String get whoAmIRoundTime => 'Round length';
+
+  @override
+  String whoAmISeconds(int n) {
+    return '${n}s';
+  }
+
+  @override
+  String get whoAmIStart => 'Let\'s go';
+
+  @override
+  String get whoAmITime => 'Time';
+
+  @override
+  String get whoAmIScoreLabel => 'Score';
+
+  @override
+  String whoAmIWordNo(int n) {
+    return 'Word $n';
+  }
+
+  @override
+  String get whoAmIFlashCorrect => 'Got it! +1';
+
+  @override
+  String get whoAmIFlashSkip => 'Skipped';
+
+  @override
+  String get whoAmISkip => 'Skip';
+
+  @override
+  String get whoAmIGotIt => 'Got it!';
+
+  @override
+  String whoAmITimeLeft(int n) {
+    return '$n seconds left';
+  }
+
+  @override
+  String get whoAmIEndRound => 'End round';
+
+  @override
+  String get whoAmIEndTitle => 'End the round?';
+
+  @override
+  String get whoAmIEndMessage =>
+      'You\'ll go to the results with what you\'ve got so far.';
+
+  @override
+  String get whoAmITimesUp => 'Time\'s up!';
+
+  @override
+  String get whoAmIVerdictTop => 'Guessing legend!';
+
+  @override
+  String get whoAmIVerdictGood => 'Great job!';
+
+  @override
+  String get whoAmIVerdictLow => 'Better luck next time!';
+
+  @override
+  String get whoAmIKnew => 'Got it';
+
+  @override
+  String get whoAmISkipped => 'Skipped';
+
+  @override
+  String get whoAmIRoundWords => 'Round words';
+
+  @override
+  String get whoAmIAgain => 'Another round';
+
+  @override
+  String get whoAmIBackToGames => 'Games';
+
+  @override
+  String get charadesSetupDesc =>
+      'Act the word out for your team without speaking';
+
+  @override
+  String get charadesTeamLabelA => 'First team name';
+
+  @override
+  String get charadesTeamLabelB => 'Second team name';
+
+  @override
+  String get charadesDefaultTeamA => 'Falcons';
+
+  @override
+  String get charadesDefaultTeamB => 'Stars';
+
+  @override
+  String get charadesFallbackTeamA => 'Team 1';
+
+  @override
+  String get charadesFallbackTeamB => 'Team 2';
+
+  @override
+  String charadesMembersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+      zero: 'Nobody',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get charadesWhoWithWho => 'Who\'s with who?';
+
+  @override
+  String get charadesTapToPick => 'Tap each person to pick their team';
+
+  @override
+  String charadesPlayerTeamGroup(String name) {
+    return '$name\'s team';
+  }
+
+  @override
+  String get charadesRounds => 'Rounds';
+
+  @override
+  String charadesRoundsOption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rounds',
+      one: '1 round',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get charadesStart => 'Let\'s go';
+
+  @override
+  String get charadesNeedMembers => 'Each team needs at least one player';
+
+  @override
+  String charadesRoundOf(int n, int total) {
+    return 'Round $n of $total';
+  }
+
+  @override
+  String get charadesEndGame => 'End game';
+
+  @override
+  String get charadesTeamTurn => 'Team turn:';
+
+  @override
+  String get charadesActorThisTime => 'Acting this time';
+
+  @override
+  String charadesPassPhone(String name) {
+    return 'Pass the phone to $name; everyone else, don\'t look';
+  }
+
+  @override
+  String charadesImReady(String name) {
+    return 'I\'m $name, ready';
+  }
+
+  @override
+  String charadesActing(String name) {
+    return '$name is acting';
+  }
+
+  @override
+  String charadesSecondsShort(int n) {
+    return '${n}s';
+  }
+
+  @override
+  String get charadesActIt => 'Act it out!';
+
+  @override
+  String get charadesTapToReveal => 'Tap to see the word';
+
+  @override
+  String get charadesNoTalking => 'No talking or pointing at letters';
+
+  @override
+  String get charadesSkip => 'Skip';
+
+  @override
+  String get charadesCorrect => 'Got it! +1';
+
+  @override
+  String get charadesEndTurn => 'End turn';
+
+  @override
+  String get charadesEndTurnTitle => 'End the turn?';
+
+  @override
+  String charadesEndTurnMessage(String team) {
+    return 'The turn passes to $team.';
+  }
+
+  @override
+  String get charadesEndGameTitle => 'End the game?';
+
+  @override
+  String get charadesEndGameMessage =>
+      'We\'ll count the points so far and pick the winner.';
+
+  @override
+  String get charadesWinnerTeam => 'Winning team';
+
+  @override
+  String get charadesTie => 'It\'s a tie!';
+
+  @override
+  String get charadesEveryoneWon => 'Everyone wins';
+
+  @override
+  String get charadesPlayerPoints => 'Points per player';
+
+  @override
+  String get charadesStarPlayer => 'Star player';
+
+  @override
+  String get charadesBackToGames => 'Games';
+
+  @override
+  String get charadesNewGame => 'New game';
+
+  @override
+  String get seenDesc =>
+      'Answer on behalf of someone and see who knows the family best';
+
+  @override
+  String get seenWhoPlays => 'Who\'s playing?';
+
+  @override
+  String seenPlayersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count players',
+      one: '1 player',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seenPickAtLeast3 => 'pick at least 3';
+
+  @override
+  String get seenQuestionCount => 'Number of questions';
+
+  @override
+  String seenQuestionsOption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count questions',
+      one: '1 question',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seenStart => 'Let\'s go';
+
+  @override
+  String seenQuestionNo(int n, int total) {
+    return 'Question $n of $total';
+  }
+
+  @override
+  String get seenAbout => 'Question about';
+
+  @override
+  String get seenAnswersAloud => 'answers out loud';
+
+  @override
+  String seenIsAnswerRight(String name) {
+    return '$name, is the answer right?';
+  }
+
+  @override
+  String get seenWrong => 'Wrong';
+
+  @override
+  String get seenRight => 'Right! +1';
+
+  @override
+  String get seenEndTitle => 'End the game?';
+
+  @override
+  String get seenEndMessage =>
+      'We\'ll rank everyone on the questions answered so far.';
+
+  @override
+  String get seenWinnerLabel => 'Knows the family best';
+
+  @override
+  String seenPointsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count points',
+      one: '1 point',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seenBackToGames => 'Games';
+
+  @override
+  String get seenPlayAgain => 'Play again';
+
+  @override
+  String get seenCloseLabel => 'End';
+
+  @override
+  String get topicsSubtitle => 'Start a conversation, the rest is up to you';
+
+  @override
+  String get topicsGroupLabel => 'Topic type';
+
+  @override
+  String get topicsAll => 'All';
+
+  @override
+  String get topicsCatMemories => 'Memories';
+
+  @override
+  String get topicsCatDreams => 'Dreams & travel';
+
+  @override
+  String get topicsCatFood => 'Food';
+
+  @override
+  String get topicsCatFun => 'Laughs';
+
+  @override
+  String get topicsCatWyr => 'Would you rather';
+
+  @override
+  String get topicsCatMine => 'Our topics';
+
+  @override
+  String get topicsSave => 'Save topic';
+
+  @override
+  String topicsCountOf(int n, int total) {
+    return '$n of $total';
+  }
+
+  @override
+  String get topicsDiscussedBadge => 'We talked about it';
+
+  @override
+  String get topicsLetsTalk => 'Let\'s talk';
+
+  @override
+  String get topicsDiscussedButton => 'We talked about it';
+
+  @override
+  String get topicsPrev => 'Previous topic';
+
+  @override
+  String get topicsShuffle => 'Change it';
+
+  @override
+  String get topicsTrendingTitle => 'Trending now';
+
+  @override
+  String get topicsTrendingSub => 'Most talked about this week';
+
+  @override
+  String get topicsTalkAboutIt => 'Let\'s talk about it';
+
+  @override
+  String get topicsSuggestTitle => 'Got a topic in mind?';
+
+  @override
+  String get topicsSuggestSub => 'Write it and it joins your family\'s topics';
+
+  @override
+  String get topicsSuggestHint => 'e.g. What was your first salary?';
+
+  @override
+  String get topicsSuggestFieldLabel => 'Your topic';
+
+  @override
+  String get topicsAdd => 'Add';
+
+  @override
+  String get topicsAddedSnack => 'Your topic was added';
+
+  @override
+  String get topicsDoneTitle => 'We talked about these';
+
+  @override
+  String topicsDoneCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count topics',
+      one: '1 topic',
+      zero: 'No topics yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topicsDoneEmpty =>
+      'When you tap \"Let\'s talk\" on a topic,\nit\'s saved here so you remember what you talked about';
 
   @override
   String get soonPageMessage => 'Coming soon';
@@ -534,6 +1468,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rouletteSpin => 'Spin the wheel';
+
+  @override
+  String get rouletteGotIt => 'Got it';
 
   @override
   String get bookClubCurrentBook => 'Current book';

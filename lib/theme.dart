@@ -35,29 +35,51 @@ ThemeData buildTheme() {
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: C.cream,
-    fontFamilyFallback: const ['SF Arabic', 'Geeza Pro', 'Noto Sans Arabic', 'Roboto'],
-    textTheme: Typography.blackMountainView.apply(bodyColor: C.ink, displayColor: C.ink),
+    fontFamilyFallback: const [
+      'SF Arabic',
+      'Geeza Pro',
+      'Noto Sans Arabic',
+      'Roboto',
+    ],
+    textTheme: Typography.blackMountainView.apply(
+      bodyColor: C.ink,
+      displayColor: C.ink,
+    ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: C.cream,
+      backgroundColor: Colors.transparent,
       foregroundColor: C.ink,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
-      titleTextStyle: TextStyle(color: C.ink, fontSize: 18, fontWeight: FontWeight.w800),
+      titleTextStyle: TextStyle(
+        color: C.ink,
+        fontSize: 18,
+        fontWeight: FontWeight.w800,
+      ),
     ),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: C.navy,
       indicatorColor: Colors.transparent,
       overlayColor: WidgetStateProperty.all(Colors.transparent),
       height: 68,
-      labelTextStyle: WidgetStateProperty.resolveWith((s) => TextStyle(
-            fontSize: 11,
-            fontWeight: s.contains(WidgetState.selected) ? FontWeight.w800 : FontWeight.w600,
-            color: s.contains(WidgetState.selected) ? C.coral : const Color(0xFFA9B3C6),
-          )),
-      iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(
-            color: s.contains(WidgetState.selected) ? C.coral : const Color(0xFFA9B3C6),
-          )),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (s) => TextStyle(
+          fontSize: 11,
+          fontWeight: s.contains(WidgetState.selected)
+              ? FontWeight.w800
+              : FontWeight.w600,
+          color: s.contains(WidgetState.selected)
+              ? C.coral
+              : const Color(0xFFA9B3C6),
+        ),
+      ),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (s) => IconThemeData(
+          color: s.contains(WidgetState.selected)
+              ? C.coral
+              : const Color(0xFFA9B3C6),
+        ),
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

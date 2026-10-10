@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// No description provided for @activitiesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'What can we do together?'**
+  /// **'What should we do together today?'**
   String get activitiesSubtitle;
 
   /// No description provided for @activitiesGroupGamesTitle.
@@ -782,6 +782,462 @@ abstract class AppLocalizations {
   /// **'Clubs'**
   String get activitiesClubsSection;
 
+  /// No description provided for @clubsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading and listening together, then talking about it'**
+  String get clubsSubtitle;
+
+  /// No description provided for @clubsDiscussionSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Discussion session'**
+  String get clubsDiscussionSession;
+
+  /// No description provided for @clubsRemindMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get clubsRemindMe;
+
+  /// No description provided for @clubsRemindMeOn.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll remind you'**
+  String get clubsRemindMeOn;
+
+  /// No description provided for @clubsBookOfMonthBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Book of the month'**
+  String get clubsBookOfMonthBadge;
+
+  /// No description provided for @clubsAboutHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get clubsAboutHeading;
+
+  /// No description provided for @clubsReadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Read more'**
+  String get clubsReadMore;
+
+  /// No description provided for @clubsReadLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get clubsReadLess;
+
+  /// No description provided for @clubsFinishedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} finished'**
+  String clubsFinishedCount(int done, int total);
+
+  /// No description provided for @clubsCatchUpBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Catch up!'**
+  String get clubsCatchUpBold;
+
+  /// No description provided for @clubsLogProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your progress'**
+  String get clubsLogProgress;
+
+  /// No description provided for @clubsLogProgressSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How far are you in {title}?'**
+  String clubsLogProgressSheetTitle(String title);
+
+  /// No description provided for @clubsPageOfTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {total}'**
+  String clubsPageOfTotal(int page, int total);
+
+  /// No description provided for @clubsMarkAsFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as finished'**
+  String get clubsMarkAsFinished;
+
+  /// No description provided for @clubsSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get clubsSaveButton;
+
+  /// No description provided for @clubsMyDoneWaitingRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the discussion'**
+  String get clubsMyDoneWaitingRest;
+
+  /// No description provided for @clubsDoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get clubsDoneLabel;
+
+  /// No description provided for @clubsPagesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{pages, plural, one{1 page left for you} other{{pages} pages left for you}}'**
+  String clubsPagesLeft(int pages);
+
+  /// No description provided for @clubsFamilyProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How far has the family gotten?'**
+  String get clubsFamilyProgressTitle;
+
+  /// No description provided for @clubsThursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get clubsThursday;
+
+  /// No description provided for @clubsBookDiscussionTime.
+  ///
+  /// In en, this message translates to:
+  /// **'After dinner · 9:00 PM'**
+  String get clubsBookDiscussionTime;
+
+  /// No description provided for @clubsNextMonthSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month\'s suggestions'**
+  String get clubsNextMonthSuggestions;
+
+  /// No description provided for @clubsNotVotedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Haven\'t voted yet'**
+  String get clubsNotVotedYet;
+
+  /// No description provided for @clubsVotedForCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Voted for {count}'**
+  String clubsVotedForCount(int count);
+
+  /// No description provided for @clubsVoteForMoreHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote for more than one book — the most-voted becomes the book of the month'**
+  String get clubsVoteForMoreHint;
+
+  /// No description provided for @clubsSuggestBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a book'**
+  String get clubsSuggestBook;
+
+  /// No description provided for @clubsSuggestBookHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t find what you had in mind?'**
+  String get clubsSuggestBookHint;
+
+  /// No description provided for @clubsReadBeforeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve read before'**
+  String get clubsReadBeforeTitle;
+
+  /// No description provided for @clubsScoreOutOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} of {total}'**
+  String clubsScoreOutOf(int completed, int total);
+
+  /// No description provided for @clubsSuggestPodcastHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a podcast'**
+  String get clubsSuggestPodcastHeading;
+
+  /// No description provided for @clubsSuggestFormSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'ll reach the family and join the suggestions'**
+  String get clubsSuggestFormSubtitle;
+
+  /// No description provided for @clubsClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get clubsClose;
+
+  /// No description provided for @clubsBookNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Book name'**
+  String get clubsBookNameLabel;
+
+  /// No description provided for @clubsBookNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. I Missed a Prayer'**
+  String get clubsBookNameHint;
+
+  /// No description provided for @clubsBookAuthorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Author (optional)'**
+  String get clubsBookAuthorLabel;
+
+  /// No description provided for @clubsBookAuthorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Author\'s name'**
+  String get clubsBookAuthorHint;
+
+  /// No description provided for @clubsPodcastNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast or episode name'**
+  String get clubsPodcastNameLabel;
+
+  /// No description provided for @clubsPodcastNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. How relationships succeed'**
+  String get clubsPodcastNameHint;
+
+  /// No description provided for @clubsPodcastHostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Host or channel (optional)'**
+  String get clubsPodcastHostLabel;
+
+  /// No description provided for @clubsPodcastHostHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Yasser Al-Huzaimi'**
+  String get clubsPodcastHostHint;
+
+  /// No description provided for @clubsCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get clubsCategoryLabel;
+
+  /// No description provided for @clubsAboutShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Short blurb'**
+  String get clubsAboutShort;
+
+  /// No description provided for @clubsBookAboutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the book about? Why does it suit the family?'**
+  String get clubsBookAboutHint;
+
+  /// No description provided for @clubsPodcastAboutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the episode about? Why\'s it worth hearing together?'**
+  String get clubsPodcastAboutHint;
+
+  /// No description provided for @clubsAddToSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to suggestions'**
+  String get clubsAddToSuggestions;
+
+  /// No description provided for @clubsCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get clubsCancel;
+
+  /// No description provided for @clubsSuggestionAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion was added'**
+  String get clubsSuggestionAdded;
+
+  /// No description provided for @clubsYourSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion'**
+  String get clubsYourSuggestion;
+
+  /// No description provided for @clubsCatNovel.
+  ///
+  /// In en, this message translates to:
+  /// **'Novel'**
+  String get clubsCatNovel;
+
+  /// No description provided for @clubsCatBiographyHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Biography and history'**
+  String get clubsCatBiographyHistory;
+
+  /// No description provided for @clubsCatLiteratureEssays.
+  ///
+  /// In en, this message translates to:
+  /// **'Literature and essays'**
+  String get clubsCatLiteratureEssays;
+
+  /// No description provided for @clubsCatSelfDev.
+  ///
+  /// In en, this message translates to:
+  /// **'Self-development'**
+  String get clubsCatSelfDev;
+
+  /// No description provided for @clubsCatFaith.
+  ///
+  /// In en, this message translates to:
+  /// **'Faith'**
+  String get clubsCatFaith;
+
+  /// No description provided for @clubsCatManners.
+  ///
+  /// In en, this message translates to:
+  /// **'Manners and conduct'**
+  String get clubsCatManners;
+
+  /// No description provided for @clubsCatRelationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get clubsCatRelationships;
+
+  /// No description provided for @clubsCatCulture.
+  ///
+  /// In en, this message translates to:
+  /// **'Culture'**
+  String get clubsCatCulture;
+
+  /// No description provided for @clubsCatStories.
+  ///
+  /// In en, this message translates to:
+  /// **'Stories'**
+  String get clubsCatStories;
+
+  /// No description provided for @clubsCatReligion.
+  ///
+  /// In en, this message translates to:
+  /// **'Religion'**
+  String get clubsCatReligion;
+
+  /// No description provided for @clubsCatParenting.
+  ///
+  /// In en, this message translates to:
+  /// **'Parenting'**
+  String get clubsCatParenting;
+
+  /// No description provided for @clubsCatOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get clubsCatOther;
+
+  /// No description provided for @clubsCustomCategoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your category'**
+  String get clubsCustomCategoryHint;
+
+  /// No description provided for @clubsEpisodeOfWeekBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Episode of the week'**
+  String get clubsEpisodeOfWeekBadge;
+
+  /// No description provided for @clubsAboutEpisodeHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'About the episode'**
+  String get clubsAboutEpisodeHeading;
+
+  /// No description provided for @clubsApplePodcasts.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Podcasts'**
+  String get clubsApplePodcasts;
+
+  /// No description provided for @clubsYoutube.
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube'**
+  String get clubsYoutube;
+
+  /// No description provided for @clubsWhoHeardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s heard it?'**
+  String get clubsWhoHeardTitle;
+
+  /// No description provided for @clubsHeardButton.
+  ///
+  /// In en, this message translates to:
+  /// **'I heard it'**
+  String get clubsHeardButton;
+
+  /// No description provided for @clubsHeardButtonOn.
+  ///
+  /// In en, this message translates to:
+  /// **'I heard it ✓'**
+  String get clubsHeardButtonOn;
+
+  /// No description provided for @clubsHalfFamilyFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Half the family finished it'**
+  String get clubsHalfFamilyFinished;
+
+  /// No description provided for @clubsWhatToDiscussTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What should we discuss?'**
+  String get clubsWhatToDiscussTitle;
+
+  /// No description provided for @clubsWhoHeardAvatarsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s heard it'**
+  String get clubsWhoHeardAvatarsLabel;
+
+  /// No description provided for @clubsPodcastDiscussionTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Over coffee · 5:00 PM'**
+  String get clubsPodcastDiscussionTime;
+
+  /// No description provided for @clubsNextWeekSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Next week\'s suggestions'**
+  String get clubsNextWeekSuggestions;
+
+  /// No description provided for @clubsVoteForMorePodcastHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote for more than one podcast'**
+  String get clubsVoteForMorePodcastHint;
+
+  /// No description provided for @clubsAddDiscussionPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a discussion point'**
+  String get clubsAddDiscussionPoint;
+
+  /// No description provided for @clubsAddQuestionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your question here'**
+  String get clubsAddQuestionHint;
+
   /// No description provided for @activitiesBookClubCount.
   ///
   /// In en, this message translates to:
@@ -806,11 +1262,221 @@ abstract class AppLocalizations {
   /// **'Spin the roulette'**
   String get activitiesSpinRoulette;
 
+  /// No description provided for @activitiesTonightTopicBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s topic'**
+  String get activitiesTonightTopicBadge;
+
+  /// No description provided for @activitiesTopicCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic {index} of {total}'**
+  String activitiesTopicCounter(int index, int total);
+
+  /// No description provided for @activitiesChatNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s chat'**
+  String get activitiesChatNow;
+
+  /// No description provided for @activitiesChangeTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Change it'**
+  String get activitiesChangeTopic;
+
+  /// No description provided for @activitiesPrevTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous topic'**
+  String get activitiesPrevTopic;
+
+  /// No description provided for @activitiesRouletteBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Whose turn tonight?'**
+  String get activitiesRouletteBadge;
+
+  /// No description provided for @activitiesRouletteCardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Who starts, a challenge, or a family decision'**
+  String get activitiesRouletteCardDesc;
+
+  /// No description provided for @activitiesSinJimCardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions about each other — who knows best?'**
+  String get activitiesSinJimCardDesc;
+
+  /// No description provided for @activitiesLettersAzizTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Letters with Aziz'**
+  String get activitiesLettersAzizTitle;
+
+  /// No description provided for @activitiesLettersAzizDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Two teams compete, each answer starts with a letter'**
+  String get activitiesLettersAzizDesc;
+
+  /// No description provided for @activitiesBookClubDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{1 day left} other{{days} days left}}'**
+  String activitiesBookClubDaysLeft(int days);
+
+  /// No description provided for @activitiesClubCatchUpBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Catch up!'**
+  String get activitiesClubCatchUpBold;
+
+  /// No description provided for @activitiesClubFinishedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, zero{No one finished yet} one{1 finished before you} other{{count} finished before you}}'**
+  String activitiesClubFinishedCount(int count);
+
+  /// No description provided for @activitiesPodcastEpisodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast club · Episode {episode}'**
+  String activitiesPodcastEpisodeLabel(int episode);
+
+  /// No description provided for @activitiesPodcastCardQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'What makes us laugh together?'**
+  String get activitiesPodcastCardQuestion;
+
+  /// No description provided for @activitiesPodcastYourTurnBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Your turn to listen!'**
+  String get activitiesPodcastYourTurnBold;
+
+  /// No description provided for @activitiesPodcastHalfDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Half the family finished it — discussion on Thursday'**
+  String get activitiesPodcastHalfDone;
+
+  /// No description provided for @clubsPodcastClubLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast club · {host}'**
+  String clubsPodcastClubLabel(String host);
+
+  /// No description provided for @clubsBookDoneWaitingBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Done!'**
+  String get clubsBookDoneWaitingBold;
+
+  /// No description provided for @clubsBookDoneWaitingRest.
+  ///
+  /// In en, this message translates to:
+  /// **'{remaining, plural, one{1 left to finish the club} other{{remaining} left to finish the club}}'**
+  String clubsBookDoneWaitingRest(int remaining);
+
+  /// No description provided for @clubsBookAllDoneBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone\'s done!'**
+  String get clubsBookAllDoneBold;
+
+  /// No description provided for @clubsBookAllDoneRest.
+  ///
+  /// In en, this message translates to:
+  /// **'See you {day}'**
+  String clubsBookAllDoneRest(String day);
+
+  /// No description provided for @clubsPodcastYourTurnRest.
+  ///
+  /// In en, this message translates to:
+  /// **'{heard} of {total} listened, discussion {day}'**
+  String clubsPodcastYourTurnRest(int heard, int total, String day);
+
+  /// No description provided for @clubsPodcastHeardBold.
+  ///
+  /// In en, this message translates to:
+  /// **'Listened ✓'**
+  String get clubsPodcastHeardBold;
+
+  /// No description provided for @clubsPodcastHeardRest.
+  ///
+  /// In en, this message translates to:
+  /// **'See you {day} {time}'**
+  String clubsPodcastHeardRest(String day, String time);
+
+  /// No description provided for @activitiesPlayPodcastTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get activitiesPlayPodcastTooltip;
+
+  /// No description provided for @activitiesWeekendOutingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend outing'**
+  String get activitiesWeekendOutingTitle;
+
+  /// No description provided for @activitiesPrevPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous place'**
+  String get activitiesPrevPlace;
+
+  /// No description provided for @activitiesNextPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Next place'**
+  String get activitiesNextPlace;
+
+  /// No description provided for @activitiesPlaceCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{index} of {total}'**
+  String activitiesPlaceCounter(int index, int total);
+
+  /// No description provided for @activitiesWeekendVoteText.
+  ///
+  /// In en, this message translates to:
+  /// **'{votes, plural, one{1 of 6 wants to go Friday} other{{votes} of 6 want to go Friday}}'**
+  String activitiesWeekendVoteText(int votes);
+
+  /// No description provided for @activitiesWeekendVoteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m in'**
+  String get activitiesWeekendVoteButton;
+
+  /// No description provided for @activitiesWeekendVotedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re in'**
+  String get activitiesWeekendVotedButton;
+
+  /// No description provided for @activitiesWhoVotedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who voted'**
+  String get activitiesWhoVotedLabel;
+
   /// No description provided for @gamesTitle.
   ///
   /// In en, this message translates to:
   /// **'Games'**
   String get gamesTitle;
+
+  /// No description provided for @gamesPageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick tonight\'s game'**
+  String get gamesPageSubtitle;
 
   /// No description provided for @gamesRouletteTitle.
   ///
@@ -824,16 +1490,34 @@ abstract class AppLocalizations {
   /// **'Who starts? Who takes the challenge?'**
   String get gamesRouletteDesc;
 
+  /// No description provided for @gamesTonightBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s game'**
+  String get gamesTonightBadge;
+
+  /// No description provided for @gamesRouletteHeroDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Who starts, a challenge, or a decision.. the wheel decides'**
+  String get gamesRouletteHeroDesc;
+
+  /// No description provided for @gamesSpinItButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Spin it'**
+  String get gamesSpinItButton;
+
   /// No description provided for @gamesAzizTitle.
   ///
   /// In en, this message translates to:
-  /// **'Talks with Aziz'**
+  /// **'Letters with Aziz'**
   String get gamesAzizTitle;
 
   /// No description provided for @gamesAzizDesc.
   ///
   /// In en, this message translates to:
-  /// **'Funny and surprising questions'**
+  /// **'Two teams, each answer starts with a letter'**
   String get gamesAzizDesc;
 
   /// No description provided for @gamesSinJimTitle.
@@ -859,6 +1543,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hold the pose!'**
   String get gamesThabbitDesc;
+
+  /// No description provided for @gamesCharadesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Talking'**
+  String get gamesCharadesTitle;
+
+  /// No description provided for @gamesCharadesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Act out the word without speaking'**
+  String get gamesCharadesDesc;
+
+  /// No description provided for @gamesPhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s in the Photo?'**
+  String get gamesPhotoTitle;
+
+  /// No description provided for @gamesPhotoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Family childhood photos, guess who'**
+  String get gamesPhotoDesc;
+
+  /// No description provided for @gamesWhoAmITitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who Am I?'**
+  String get gamesWhoAmITitle;
+
+  /// No description provided for @gamesWhoAmIDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone on your forehead, everyone hints'**
+  String get gamesWhoAmIDesc;
 
   /// No description provided for @gamesShiddahTitle.
   ///
@@ -901,6 +1621,816 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start playing'**
   String get gamesStartPlaying;
+
+  /// No description provided for @gamesAllGamesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All games'**
+  String get gamesAllGamesTitle;
+
+  /// No description provided for @gamesCountText.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 game} other{{count} games}}'**
+  String gamesCountText(int count);
+
+  /// No description provided for @gamesFilterGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Game type'**
+  String get gamesFilterGroupLabel;
+
+  /// No description provided for @gamesFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get gamesFilterAll;
+
+  /// No description provided for @gamesFilterMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get gamesFilterMove;
+
+  /// No description provided for @gamesFilterChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge'**
+  String get gamesFilterChallenge;
+
+  /// No description provided for @gamesFilterFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get gamesFilterFamily;
+
+  /// No description provided for @gamesSoonBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Soon'**
+  String get gamesSoonBadge;
+
+  /// No description provided for @gamesSoonSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon! We\'re getting it ready'**
+  String get gamesSoonSnack;
+
+  /// No description provided for @gamesTileSemanticsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, {time}'**
+  String gamesTileSemanticsLabel(String title, String time);
+
+  /// No description provided for @confirmEndYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, end it'**
+  String get confirmEndYes;
+
+  /// No description provided for @confirmEndKeepPlaying.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep playing'**
+  String get confirmEndKeepPlaying;
+
+  /// No description provided for @confirmEndTimerPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer paused until you decide'**
+  String get confirmEndTimerPaused;
+
+  /// No description provided for @whoAmIBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'One player + everyone hints'**
+  String get whoAmIBadge;
+
+  /// No description provided for @whoAmIHeroDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone on your forehead, everyone hints'**
+  String get whoAmIHeroDesc;
+
+  /// No description provided for @whoAmIHow1.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone on your forehead'**
+  String get whoAmIHow1;
+
+  /// No description provided for @whoAmIHow2.
+  ///
+  /// In en, this message translates to:
+  /// **'Hints without the word'**
+  String get whoAmIHow2;
+
+  /// No description provided for @whoAmIHow3.
+  ///
+  /// In en, this message translates to:
+  /// **'Guess before time\'s up'**
+  String get whoAmIHow3;
+
+  /// No description provided for @whoAmIChooseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a category'**
+  String get whoAmIChooseCategory;
+
+  /// No description provided for @whoAmICatAnimals.
+  ///
+  /// In en, this message translates to:
+  /// **'Animals'**
+  String get whoAmICatAnimals;
+
+  /// No description provided for @whoAmICatFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get whoAmICatFood;
+
+  /// No description provided for @whoAmICatJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs'**
+  String get whoAmICatJobs;
+
+  /// No description provided for @whoAmICatPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get whoAmICatPlaces;
+
+  /// No description provided for @whoAmIWordsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} words'**
+  String whoAmIWordsCount(int count);
+
+  /// No description provided for @whoAmIRoundTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Round length'**
+  String get whoAmIRoundTime;
+
+  /// No description provided for @whoAmISeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}s'**
+  String whoAmISeconds(int n);
+
+  /// No description provided for @whoAmIStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go'**
+  String get whoAmIStart;
+
+  /// No description provided for @whoAmITime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get whoAmITime;
+
+  /// No description provided for @whoAmIScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Score'**
+  String get whoAmIScoreLabel;
+
+  /// No description provided for @whoAmIWordNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Word {n}'**
+  String whoAmIWordNo(int n);
+
+  /// No description provided for @whoAmIFlashCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it! +1'**
+  String get whoAmIFlashCorrect;
+
+  /// No description provided for @whoAmIFlashSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get whoAmIFlashSkip;
+
+  /// No description provided for @whoAmISkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get whoAmISkip;
+
+  /// No description provided for @whoAmIGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it!'**
+  String get whoAmIGotIt;
+
+  /// No description provided for @whoAmITimeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} seconds left'**
+  String whoAmITimeLeft(int n);
+
+  /// No description provided for @whoAmIEndRound.
+  ///
+  /// In en, this message translates to:
+  /// **'End round'**
+  String get whoAmIEndRound;
+
+  /// No description provided for @whoAmIEndTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the round?'**
+  String get whoAmIEndTitle;
+
+  /// No description provided for @whoAmIEndMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll go to the results with what you\'ve got so far.'**
+  String get whoAmIEndMessage;
+
+  /// No description provided for @whoAmITimesUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Time\'s up!'**
+  String get whoAmITimesUp;
+
+  /// No description provided for @whoAmIVerdictTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Guessing legend!'**
+  String get whoAmIVerdictTop;
+
+  /// No description provided for @whoAmIVerdictGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job!'**
+  String get whoAmIVerdictGood;
+
+  /// No description provided for @whoAmIVerdictLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Better luck next time!'**
+  String get whoAmIVerdictLow;
+
+  /// No description provided for @whoAmIKnew.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get whoAmIKnew;
+
+  /// No description provided for @whoAmISkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get whoAmISkipped;
+
+  /// No description provided for @whoAmIRoundWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Round words'**
+  String get whoAmIRoundWords;
+
+  /// No description provided for @whoAmIAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Another round'**
+  String get whoAmIAgain;
+
+  /// No description provided for @whoAmIBackToGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get whoAmIBackToGames;
+
+  /// No description provided for @charadesSetupDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Act the word out for your team without speaking'**
+  String get charadesSetupDesc;
+
+  /// No description provided for @charadesTeamLabelA.
+  ///
+  /// In en, this message translates to:
+  /// **'First team name'**
+  String get charadesTeamLabelA;
+
+  /// No description provided for @charadesTeamLabelB.
+  ///
+  /// In en, this message translates to:
+  /// **'Second team name'**
+  String get charadesTeamLabelB;
+
+  /// No description provided for @charadesDefaultTeamA.
+  ///
+  /// In en, this message translates to:
+  /// **'Falcons'**
+  String get charadesDefaultTeamA;
+
+  /// No description provided for @charadesDefaultTeamB.
+  ///
+  /// In en, this message translates to:
+  /// **'Stars'**
+  String get charadesDefaultTeamB;
+
+  /// No description provided for @charadesFallbackTeamA.
+  ///
+  /// In en, this message translates to:
+  /// **'Team 1'**
+  String get charadesFallbackTeamA;
+
+  /// No description provided for @charadesFallbackTeamB.
+  ///
+  /// In en, this message translates to:
+  /// **'Team 2'**
+  String get charadesFallbackTeamB;
+
+  /// No description provided for @charadesMembersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nobody} one{1 member} other{{count} members}}'**
+  String charadesMembersCount(int count);
+
+  /// No description provided for @charadesWhoWithWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s with who?'**
+  String get charadesWhoWithWho;
+
+  /// No description provided for @charadesTapToPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap each person to pick their team'**
+  String get charadesTapToPick;
+
+  /// No description provided for @charadesPlayerTeamGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s team'**
+  String charadesPlayerTeamGroup(String name);
+
+  /// No description provided for @charadesRounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Rounds'**
+  String get charadesRounds;
+
+  /// No description provided for @charadesRoundsOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 round} other{{count} rounds}}'**
+  String charadesRoundsOption(int count);
+
+  /// No description provided for @charadesStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go'**
+  String get charadesStart;
+
+  /// No description provided for @charadesNeedMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Each team needs at least one player'**
+  String get charadesNeedMembers;
+
+  /// No description provided for @charadesRoundOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Round {n} of {total}'**
+  String charadesRoundOf(int n, int total);
+
+  /// No description provided for @charadesEndGame.
+  ///
+  /// In en, this message translates to:
+  /// **'End game'**
+  String get charadesEndGame;
+
+  /// No description provided for @charadesTeamTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'Team turn:'**
+  String get charadesTeamTurn;
+
+  /// No description provided for @charadesActorThisTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Acting this time'**
+  String get charadesActorThisTime;
+
+  /// No description provided for @charadesPassPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass the phone to {name}; everyone else, don\'t look'**
+  String charadesPassPhone(String name);
+
+  /// No description provided for @charadesImReady.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m {name}, ready'**
+  String charadesImReady(String name);
+
+  /// No description provided for @charadesActing.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is acting'**
+  String charadesActing(String name);
+
+  /// No description provided for @charadesSecondsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}s'**
+  String charadesSecondsShort(int n);
+
+  /// No description provided for @charadesActIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Act it out!'**
+  String get charadesActIt;
+
+  /// No description provided for @charadesTapToReveal.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to see the word'**
+  String get charadesTapToReveal;
+
+  /// No description provided for @charadesNoTalking.
+  ///
+  /// In en, this message translates to:
+  /// **'No talking or pointing at letters'**
+  String get charadesNoTalking;
+
+  /// No description provided for @charadesSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get charadesSkip;
+
+  /// No description provided for @charadesCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it! +1'**
+  String get charadesCorrect;
+
+  /// No description provided for @charadesEndTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'End turn'**
+  String get charadesEndTurn;
+
+  /// No description provided for @charadesEndTurnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the turn?'**
+  String get charadesEndTurnTitle;
+
+  /// No description provided for @charadesEndTurnMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The turn passes to {team}.'**
+  String charadesEndTurnMessage(String team);
+
+  /// No description provided for @charadesEndGameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the game?'**
+  String get charadesEndGameTitle;
+
+  /// No description provided for @charadesEndGameMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll count the points so far and pick the winner.'**
+  String get charadesEndGameMessage;
+
+  /// No description provided for @charadesWinnerTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Winning team'**
+  String get charadesWinnerTeam;
+
+  /// No description provided for @charadesTie.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s a tie!'**
+  String get charadesTie;
+
+  /// No description provided for @charadesEveryoneWon.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone wins'**
+  String get charadesEveryoneWon;
+
+  /// No description provided for @charadesPlayerPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Points per player'**
+  String get charadesPlayerPoints;
+
+  /// No description provided for @charadesStarPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Star player'**
+  String get charadesStarPlayer;
+
+  /// No description provided for @charadesBackToGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get charadesBackToGames;
+
+  /// No description provided for @charadesNewGame.
+  ///
+  /// In en, this message translates to:
+  /// **'New game'**
+  String get charadesNewGame;
+
+  /// No description provided for @seenDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer on behalf of someone and see who knows the family best'**
+  String get seenDesc;
+
+  /// No description provided for @seenWhoPlays.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s playing?'**
+  String get seenWhoPlays;
+
+  /// No description provided for @seenPlayersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 player} other{{count} players}}'**
+  String seenPlayersCount(int count);
+
+  /// No description provided for @seenPickAtLeast3.
+  ///
+  /// In en, this message translates to:
+  /// **'pick at least 3'**
+  String get seenPickAtLeast3;
+
+  /// No description provided for @seenQuestionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of questions'**
+  String get seenQuestionCount;
+
+  /// No description provided for @seenQuestionsOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 question} other{{count} questions}}'**
+  String seenQuestionsOption(int count);
+
+  /// No description provided for @seenStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go'**
+  String get seenStart;
+
+  /// No description provided for @seenQuestionNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {n} of {total}'**
+  String seenQuestionNo(int n, int total);
+
+  /// No description provided for @seenAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Question about'**
+  String get seenAbout;
+
+  /// No description provided for @seenAnswersAloud.
+  ///
+  /// In en, this message translates to:
+  /// **'answers out loud'**
+  String get seenAnswersAloud;
+
+  /// No description provided for @seenIsAnswerRight.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, is the answer right?'**
+  String seenIsAnswerRight(String name);
+
+  /// No description provided for @seenWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get seenWrong;
+
+  /// No description provided for @seenRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right! +1'**
+  String get seenRight;
+
+  /// No description provided for @seenEndTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the game?'**
+  String get seenEndTitle;
+
+  /// No description provided for @seenEndMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll rank everyone on the questions answered so far.'**
+  String get seenEndMessage;
+
+  /// No description provided for @seenWinnerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Knows the family best'**
+  String get seenWinnerLabel;
+
+  /// No description provided for @seenPointsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 point} other{{count} points}}'**
+  String seenPointsCount(int count);
+
+  /// No description provided for @seenBackToGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get seenBackToGames;
+
+  /// No description provided for @seenPlayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get seenPlayAgain;
+
+  /// No description provided for @seenCloseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get seenCloseLabel;
+
+  /// No description provided for @topicsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a conversation, the rest is up to you'**
+  String get topicsSubtitle;
+
+  /// No description provided for @topicsGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic type'**
+  String get topicsGroupLabel;
+
+  /// No description provided for @topicsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get topicsAll;
+
+  /// No description provided for @topicsCatMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get topicsCatMemories;
+
+  /// No description provided for @topicsCatDreams.
+  ///
+  /// In en, this message translates to:
+  /// **'Dreams & travel'**
+  String get topicsCatDreams;
+
+  /// No description provided for @topicsCatFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get topicsCatFood;
+
+  /// No description provided for @topicsCatFun.
+  ///
+  /// In en, this message translates to:
+  /// **'Laughs'**
+  String get topicsCatFun;
+
+  /// No description provided for @topicsCatWyr.
+  ///
+  /// In en, this message translates to:
+  /// **'Would you rather'**
+  String get topicsCatWyr;
+
+  /// No description provided for @topicsCatMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Our topics'**
+  String get topicsCatMine;
+
+  /// No description provided for @topicsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save topic'**
+  String get topicsSave;
+
+  /// No description provided for @topicsCountOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total}'**
+  String topicsCountOf(int n, int total);
+
+  /// No description provided for @topicsDiscussedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'We talked about it'**
+  String get topicsDiscussedBadge;
+
+  /// No description provided for @topicsLetsTalk.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s talk'**
+  String get topicsLetsTalk;
+
+  /// No description provided for @topicsDiscussedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'We talked about it'**
+  String get topicsDiscussedButton;
+
+  /// No description provided for @topicsPrev.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous topic'**
+  String get topicsPrev;
+
+  /// No description provided for @topicsShuffle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change it'**
+  String get topicsShuffle;
+
+  /// No description provided for @topicsTrendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trending now'**
+  String get topicsTrendingTitle;
+
+  /// No description provided for @topicsTrendingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Most talked about this week'**
+  String get topicsTrendingSub;
+
+  /// No description provided for @topicsTalkAboutIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s talk about it'**
+  String get topicsTalkAboutIt;
+
+  /// No description provided for @topicsSuggestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Got a topic in mind?'**
+  String get topicsSuggestTitle;
+
+  /// No description provided for @topicsSuggestSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Write it and it joins your family\'s topics'**
+  String get topicsSuggestSub;
+
+  /// No description provided for @topicsSuggestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. What was your first salary?'**
+  String get topicsSuggestHint;
+
+  /// No description provided for @topicsSuggestFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your topic'**
+  String get topicsSuggestFieldLabel;
+
+  /// No description provided for @topicsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get topicsAdd;
+
+  /// No description provided for @topicsAddedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Your topic was added'**
+  String get topicsAddedSnack;
+
+  /// No description provided for @topicsDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We talked about these'**
+  String get topicsDoneTitle;
+
+  /// No description provided for @topicsDoneCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No topics yet} one{1 topic} other{{count} topics}}'**
+  String topicsDoneCount(int count);
+
+  /// No description provided for @topicsDoneEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'When you tap \"Let\'s talk\" on a topic,\nit\'s saved here so you remember what you talked about'**
+  String get topicsDoneEmpty;
 
   /// No description provided for @soonPageMessage.
   ///
@@ -1045,6 +2575,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spin the wheel'**
   String get rouletteSpin;
+
+  /// No description provided for @rouletteGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get rouletteGotIt;
 
   /// No description provided for @bookClubCurrentBook.
   ///

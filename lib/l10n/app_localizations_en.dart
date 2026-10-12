@@ -2511,4 +2511,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String notifsYesterdayAt(String time) {
     return 'Yesterday, $time';
   }
+
+  @override
+  String get accountResetCoach => 'Show the camera hint again';
+
+  @override
+  String get accountResetCoachDone => 'The hint will show on the moments page';
 }

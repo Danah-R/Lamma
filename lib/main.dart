@@ -183,11 +183,14 @@ class _ShellState extends State<Shell> {
   void initState() {
     super.initState();
     _notifications = context.read<NotificationsController>()
-      ..onOpen = _openTarget;
+      ..onOpen = _openTarget
+      ..addListener(_onNotificationsChanged);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowCoach());
   }
 
   @override
   void dispose() {
+    _notifications.removeListener(_onNotificationsChanged);
     if (_notifications.onOpen == _openTarget) _notifications.onOpen = null;
     super.dispose();
   }
@@ -222,30 +225,41 @@ class _ShellState extends State<Shell> {
     }
   }
 
-  static const _coachSeenKey = 'moments_coach_seen';
   bool _coach = false;
 
   void _select(int i) {
     if (i == _i) _keys[i].currentState?.popUntil((r) => r.isFirst);
-    setState(() {
-      _i = i;
-      if (i != _momentsTab) _coach = false;
-    });
+    setState(() => _i = i);
     if (i == _momentsTab) _maybeShowCoach();
   }
 
-  /// First time the feed opens, and I haven't shared: show the tooltip once.
+  /// The camera hint: once, if I haven't shared today. Tried at launch and
+  /// whenever the moments page opens (so "reset hint" shows it again there).
   Future<void> _maybeShowCoach() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool(_coachSeenKey) ?? false) return;
-      if (!mounted || _i != _momentsTab) return;
+      if (prefs.getBool(kCoachSeenKey) ?? false) return;
+      if (!mounted || _coach) return;
       if (context.read<MomentsController>().didIShareToday) return;
-      await prefs.setBool(_coachSeenKey, true);
-      if (mounted) setState(() => _coach = true);
+      if (_notifications.panelOpen) return;
+      setState(() => _coach = true);
     } catch (_) {
       // storage unavailable: skip the hint rather than risk showing it every time
     }
+  }
+
+  /// However it goes away, it never comes back: remember it.
+  Future<void> _dismissCoach() async {
+    if (!_coach) return;
+    setState(() => _coach = false);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(kCoachSeenKey, true);
+    } catch (_) {}
+  }
+
+  void _onNotificationsChanged() {
+    if (_notifications.panelOpen) _dismissCoach();
   }
 
   // The camera button opens the moments feed, a tab of its own (index 4),
@@ -257,7 +271,7 @@ class _ShellState extends State<Shell> {
   // From any other tab the camera goes to the feed; pressing it again while
   // on the feed opens "لحظة جديدة".
   void _shareMoment() {
-    if (_coach) setState(() => _coach = false);
+    _dismissCoach();
     if (_i == _momentsTab &&
         _keys[_momentsTab].currentState?.canPop() != true) {
       _momentsKey.currentState?.openNewMoment();
@@ -301,7 +315,7 @@ class _ShellState extends State<Shell> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
                 child: SizedBox(
-                  height: 76,
+                  height: 98, // 64 bar + 34 for the raised camera
                   child: Stack(
                     clipBehavior: Clip.none,
                     alignment: Alignment.bottomCenter,
@@ -329,9 +343,10 @@ class _ShellState extends State<Shell> {
                           ],
                         ),
                       ),
-                      // share a moment: centered, only slightly raised so it doesn't outweigh the tabs
+                      // The camera: 64px, raised 34px above the bar (the box is
+                      // taller than the bar only so the raised part can be tapped).
                       Positioned(
-                        bottom: 7,
+                        top: 0,
                         child: Semantics(
                           button: true,
                           label: l.momentsShareSemantics,
@@ -344,22 +359,26 @@ class _ShellState extends State<Shell> {
                               children: [
                                 SharePulse(
                                   active: !shared,
-                                  size: 48,
+                                  size: 64,
                                   child: Container(
-                                    width: 48,
-                                    height: 48,
-                                    decoration: const BoxDecoration(
-                                      color: C.terracotta,
+                                    width: 64,
+                                    height: 64,
+                                    decoration: BoxDecoration(
+                                      color: AC.brick,
                                       shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AC.background,
+                                        width: 4,
+                                      ),
                                     ),
                                     child: const Icon(
                                       Icons.camera_alt_rounded,
                                       color: Colors.white,
-                                      size: 24,
+                                      size: 26,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 1),
                                 Text(
                                   l.navShare,
                                   style: const TextStyle(
@@ -379,7 +398,7 @@ class _ShellState extends State<Shell> {
               ),
             ),
           ),
-          if (_coach && _i == _momentsTab)
+          if (_coach && !shared)
             Positioned(
               left: 0,
               right: 0,
@@ -388,9 +407,9 @@ class _ShellState extends State<Shell> {
                 type: MaterialType.transparency,
                 child: Center(
                   child: CameraCoach(
-                    onLater: () => setState(() => _coach = false),
+                    onLater: _dismissCoach,
                     onNow: () {
-                      setState(() => _coach = false);
+                      _dismissCoach();
                       _momentsKey.currentState?.openNewMoment();
                     },
                   ),

@@ -2557,4 +2557,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String notifsYesterdayAt(String time) {
     return 'أمس، $time';
   }
+
+  @override
+  String get accountResetCoach => 'إعادة تلميح الكاميرا';
+
+  @override
+  String get accountResetCoachDone => 'بيطلع لك التلميح في صفحة اللحظات';
 }

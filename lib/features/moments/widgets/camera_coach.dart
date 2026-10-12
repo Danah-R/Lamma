@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../screens/activities_colors.dart';
 
+/// shared_preferences key: the camera hint was shown (or dismissed) once.
+const kCoachSeenKey = 'moments_coach_seen';
+
 /// First-visit tooltip over the camera button. Bobs up and down 5px.
 class CameraCoach extends StatefulWidget {
   final VoidCallback onLater, onNow;
@@ -16,7 +19,7 @@ class _CameraCoachState extends State<CameraCoach>
     with SingleTickerProviderStateMixin {
   late final AnimationController _bob = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1600),
+    duration: const Duration(milliseconds: 800), // 1.6s there-and-back
   );
 
   @override
@@ -144,6 +147,7 @@ class _CameraCoachState extends State<CameraCoach>
   }
 }
 
+/// 40px button (as designed) inside a 44px tap area.
 class _Button extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
@@ -155,29 +159,27 @@ class _Button extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Material(
-    color: filled ? Colors.white : Colors.transparent,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-      side: filled
-          ? BorderSide.none
-          : const BorderSide(color: Color(0x73FFFFFF)),
-    ),
-    child: InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: onTap,
-      child: SizedBox(
-        height: 44,
-        child: Padding(
+  Widget build(BuildContext context) => InkWell(
+    borderRadius: BorderRadius.circular(14),
+    onTap: onTap,
+    child: SizedBox(
+      height: 44,
+      child: Center(
+        child: Container(
+          height: 40,
           padding: EdgeInsets.symmetric(horizontal: filled ? 16 : 14),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: filled ? FontWeight.w800 : FontWeight.w700,
-                color: filled ? AC.brick : Colors.white,
-              ),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: filled ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: filled ? null : Border.all(color: const Color(0x73FFFFFF)),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: filled ? FontWeight.w800 : FontWeight.w700,
+              color: filled ? AC.brick : Colors.white,
             ),
           ),
         ),

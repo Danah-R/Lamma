@@ -860,5 +860,8 @@
   "notifsNewPrefix": "New: {text}",
   "@notifsNewPrefix": { "placeholders": { "text": { "type": "String" } } },
   "notifsYesterdayAt": "Yesterday, {time}",
-  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } }
+  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
+
+  "accountResetCoach": "Show the camera hint again",
+  "accountResetCoachDone": "The hint will show on the moments page"
 }

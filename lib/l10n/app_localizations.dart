@@ -4469,6 +4469,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday, {time}'**
   String notifsYesterdayAt(String time);
+
+  /// No description provided for @accountResetCoach.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the camera hint again'**
+  String get accountResetCoach;
+
+  /// No description provided for @accountResetCoachDone.
+  ///
+  /// In en, this message translates to:
+  /// **'The hint will show on the moments page'**
+  String get accountResetCoachDone;
 }
 
 class _AppLocalizationsDelegate

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../screens/activities_colors.dart';
 
-/// A ring that expands and fades around [child] every 1.8s while [active]
+/// A ring that expands and fades around [child] every 1.6s while [active]
 /// (and animations are allowed). Starts/stops its ticker, so nothing runs
 /// when there's no pulse.
 class SharePulse extends StatefulWidget {
@@ -24,7 +24,7 @@ class _SharePulseState extends State<SharePulse>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1800),
+    duration: const Duration(milliseconds: 1600),
   );
 
   bool get _run => widget.active && !MediaQuery.disableAnimationsOf(context);

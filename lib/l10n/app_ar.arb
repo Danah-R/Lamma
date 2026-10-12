@@ -800,5 +800,8 @@
   "notifsNewPrefix": "جديد: {text}",
   "@notifsNewPrefix": { "placeholders": { "text": { "type": "String" } } },
   "notifsYesterdayAt": "أمس، {time}",
-  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } }
+  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
+
+  "accountResetCoach": "إعادة تلميح الكاميرا",
+  "accountResetCoachDone": "بيطلع لك التلميح في صفحة اللحظات"
 }

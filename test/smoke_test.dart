@@ -26,7 +26,7 @@ Future<void> tapText(
   await t.pumpAndSettle();
   if (clear) {
     // lift it above the floating bar
-    await t.drag(find.byType(ListView).first, const Offset(0, -200));
+    await t.drag(find.byType(ListView).first, const Offset(0, -320));
     await t.pumpAndSettle();
   }
   await t.tap(f);
@@ -201,7 +201,12 @@ void main() {
     await t.pumpAndSettle();
     await tapText(t, 'شهرية');
     expect(rules.cycle, 'Monthly');
-    await t.pump(const Duration(seconds: 6)); // let the snackbar go away
+    // let the snackbars go away (the taller camera box lifts them a bit)
+    await t.pump(const Duration(seconds: 6));
+    await t.pump(const Duration(seconds: 6));
+    await t.pumpAndSettle();
+    // the (taller) camera box lifts snackbars over the button: clear them
+    ScaffoldMessenger.of(t.element(find.byType(Shell))).clearSnackBars();
     await t.pumpAndSettle();
     await tapText(t, 'كافئ سارة (الأول) الحين', clear: true);
     expect(rules.lastWinner, 'Sarah');

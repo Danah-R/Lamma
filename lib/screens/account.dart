@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
+import '../features/moments/widgets/camera_coach.dart' show kCoachSeenKey;
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -36,6 +38,23 @@ class _AccountPageState extends State<AccountPage> {
               },
               child: Text(l.accountDesignCharacter,
                   style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w800)),
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () async {
+                final messenger = ScaffoldMessenger.of(context);
+                final msg = l.accountResetCoachDone;
+                try {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.remove(kCoachSeenKey);
+                } catch (_) {}
+                messenger
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(content: Text(msg)));
+              },
+              child: Text(l.accountResetCoach,
+                  style: const TextStyle(color: C.inkSoft, fontSize: 13, fontWeight: FontWeight.w700)),
             ),
           ),
           SectionTitle(l.accountMyInterests),

@@ -19,7 +19,7 @@ class _LammaPageState extends State<LammaPage> {
     final l = AppLocalizations.of(context);
     return Scaffold(
         body: ListView(padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 120), children: [
-          TabHeader(l.navLamma, l.lammaSubtitle, onBell: () => go(context, const NotificationsPage())),
+          TabHeader(l.navLamma, l.lammaSubtitle, onBell: () => showNotifications(context)),
           SectionTitle(l.lammaFamilyTalk),
           for (final t in talks)
             Padding(
@@ -61,7 +61,7 @@ class _LammaPageState extends State<LammaPage> {
                 ]),
               ),
             ),
-          Btn(l.lammaOpenFamilyChat, color: C.navy, onTap: () => go(context, const FamilyChatPage())),
+          Btn(l.lammaOpenFamilyChat, color: C.teal, onTap: () => go(context, const FamilyChatPage())),
           SectionTitle(l.lammaMomentsOfOurDay,
               action: l.lammaShareMomentAction, onAction: () async {
             await go(context, const ShareMomentPage());
@@ -195,9 +195,9 @@ class _ShareMomentPageState extends State<ShareMomentPage> {
         AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(color: C.beige, borderRadius: BorderRadius.circular(24)),
+            decoration: BoxDecoration(color: C.peachTint, borderRadius: BorderRadius.circular(24)),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(Icons.camera_alt_rounded, size: 44, color: C.terracotta),
+              const Icon(Icons.camera_alt_rounded, size: 44, color: C.brick),
               const SizedBox(height: 8),
               Text(l.shareMomentPhotoHint,
                   style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
@@ -208,7 +208,7 @@ class _ShareMomentPageState extends State<ShareMomentPage> {
         Field('', hint: l.shareMomentTextHint, controller: _text),
         Wrap(spacing: 8, children: [
           for (final s in tags)
-            Choice(s, false, () => setState(() => _text.text = s), color: C.navy),
+            Choice(s, false, () => setState(() => _text.text = s), color: C.brick),
         ]),
       ],
           bottom: Btn(l.shareMomentSubmit, icon: Icons.send_rounded, onTap: () {
@@ -216,7 +216,7 @@ class _ShareMomentPageState extends State<ShareMomentPage> {
             moments.insert(
                 0,
                 Moment(profile.name, _text.text.trim().isEmpty ? l.shareMomentFallbackCaption : _text.text.trim(), 'Just now',
-                    C.coral, C.coralTint, 0, 0));
+                    C.peach, C.peachTint, 0, 0));
             Navigator.pop(context);
           }));
   }
@@ -308,7 +308,7 @@ class _FamilyChatPageState extends State<FamilyChatPage> {
                 const SizedBox(width: 8),
                 IconButton.filled(
                   onPressed: _send,
-                  style: IconButton.styleFrom(backgroundColor: C.terracotta, foregroundColor: Colors.white),
+                  style: IconButton.styleFrom(backgroundColor: C.brick, foregroundColor: Colors.white),
                   icon: const Icon(Icons.send_rounded),
                 ),
               ]),

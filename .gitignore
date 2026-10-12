@@ -46,3 +46,8 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Thmanyah font files may not be redistributed (see assets/fonts/README.md)
+/assets/fonts/*.otf
+/assets/fonts/*.ttf
+/assets/fonts/*.woff2

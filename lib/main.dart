@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'backend/backend.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/account.dart';
+import 'package:provider/provider.dart';
+import 'features/clubs/clubs_controller.dart';
+import 'features/topics/topics_controller.dart';
 import 'screens/activities.dart';
 import 'screens/home.dart';
 import 'screens/lamma.dart';
@@ -11,10 +15,19 @@ import 'data.dart';
 import 'splash/lamma_splash.dart';
 import 'theme.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const LammaApp());
+  // A returning install signs in silently and, if it already belongs to a family,
+  // goes straight into the app. Offline or on any failure, onboarding runs as usual.
+  var inFamily = false;
+  try {
+    await Backend.init();
+    inFamily = await Backend.restore();
+  } catch (e) {
+    debugPrint('Starting without the database: $e');
+  }
+  runApp(LammaApp(skipOnboarding: inFamily));
 }
 
 class LammaApp extends StatefulWidget {
@@ -41,7 +54,12 @@ class _LammaAppState extends State<LammaApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ClubsController()),
+          ChangeNotifierProvider(create: (_) => TopicsController()),
+        ],
+        child: MaterialApp(
         title: 'لمّه',
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
@@ -57,7 +75,7 @@ class _LammaAppState extends State<LammaApp> {
             ? LammaSplash(onStart: () => setState(() => _showSplash = false))
             : (_onboarded
                 ? const Shell()
-                : OnboardingFlow(onDone: () => setState(() => _onboarded = true))),
+                : OnboardingFlow(onDone: () => setState(() => _onboarded = true))),),
       );
 }
 
@@ -77,7 +95,7 @@ class _ShellState extends State<Shell> {
         (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
         (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
       ];
-  static const _muted = Color(0xFFA9B3C6);
+  static const _muted = Color(0x99FFF7F1); // page cream at 60% on the navy bar
 
   Widget _root(int i) => switch (i) {
         0 => HomePage(onSwitchTab: _select),
@@ -157,7 +175,7 @@ class _ShellState extends State<Shell> {
                           Container(
                             width: 48,
                             height: 48,
-                            decoration: const BoxDecoration(color: C.terracotta, shape: BoxShape.circle),
+                            decoration: const BoxDecoration(color: C.brick, shape: BoxShape.circle),
                             child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 24),
                           ),
                           const SizedBox(height: 4),
@@ -178,7 +196,7 @@ class _ShellState extends State<Shell> {
   Widget _item(int i, AppLocalizations l) {
     final t = _tabs(l)[i];
     final sel = _i == i;
-    final color = sel ? C.coral : _muted;
+    final color = sel ? C.peach : _muted;
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

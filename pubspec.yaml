@@ -13,6 +13,11 @@ dependencies:
     sdk: flutter
   intl: any
   google_fonts: ^6.2.1
+  confetti: ^0.7.0
+  supabase_flutter: ^2.8.0
+  url_launcher: ^6.3.1
+  provider: ^6.1.2
+  wakelock_plus: ^1.8.1
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +27,21 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  fonts:
+    # Thmanyah Sans. The files are not committed (see assets/fonts/README.md).
+    - family: Thmanyah
+      fonts:
+        - asset: assets/fonts/thmanyahsans-Light.otf
+          weight: 300
+        - asset: assets/fonts/thmanyahsans-Regular.otf
+          weight: 400
+        - asset: assets/fonts/thmanyahsans-Medium.otf
+          weight: 500
+        - asset: assets/fonts/thmanyahsans-Bold.otf
+          weight: 700
+        - asset: assets/fonts/thmanyahsans-Black.otf
+          weight: 900
   assets:
     - assets/characters/
+    - assets/icons/
     - assets/splash/

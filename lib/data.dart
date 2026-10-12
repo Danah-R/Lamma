@@ -16,10 +16,12 @@ const familyScene = '${_dir}family_scene.jpg';
 
 class Member {
   final String key, name, role, asset;
+  final String? id; // the member row in the database (null for the offline sample family)
   final int age;
   int points;
-  Member(this.key, this.name, this.role, this.age, this.asset, this.points);
-  bool get isParent => key == 'mom' || key == 'dad';
+  final bool? parent; // from the database; null means "decide from the role"
+  Member(this.key, this.name, this.role, this.age, this.asset, this.points, {this.id, this.parent});
+  bool get isParent => parent ?? (key == 'mom' || key == 'dad');
 }
 
 /// Sample family. The person using the app takes over the slot matching their role.
@@ -33,7 +35,8 @@ final members = <Member>[
 ];
 
 /// Name of the family member holding a role key (mom, dad, daughter, brother, girl, boy).
-String n(String key) => members.firstWhere((m) => m.key == key).name;
+String n(String key) =>
+    members.where((m) => m.key == key).firstOrNull?.name ?? members.firstOrNull?.name ?? '';
 
 void addPoints(String name, int delta) {
   for (final m in members) {
@@ -57,11 +60,14 @@ class Profile {
   String role = 'daughter'; // mom, dad, daughter, brother
   int age = 16;
   String job = 'Student';
+  bool livesWithFamily = true;
   Set<String> interests = {'Coffee', 'Games', 'Reading', 'Walking', 'Podcasts'};
   Set<String> outingTypes = {'Nature', 'Cafés'};
   String prefer = 'Games';
   int avatar = 0;
-  bool get isParent => role == 'mom' || role == 'dad';
+  String? memberId; // set once the profile lives in the database
+  bool? parent; // from the database; null means "decide from the role"
+  bool get isParent => parent ?? (role == 'mom' || role == 'dad');
 }
 
 final profile = Profile();
@@ -114,21 +120,21 @@ class Place {
 
 const places = <Place>[
   Place('King Salman Park', 'Nature', '4 of 6 family members like this type of place',
-      Icons.park_rounded, C.green),
-  Place('Café Al-Dar', 'Cafés', 'Suits everyone, a good choice', Icons.coffee_rounded, C.mustard),
+      Icons.park_rounded, C.sage),
+  Place('Café Al-Dar', 'Cafés', 'Suits everyone, a good choice', Icons.coffee_rounded, C.peach),
   Place('Strike Bowling', 'Entertainment', '3 of 6 love games and group activities',
-      Icons.sports_score_rounded, C.teal),
+      Icons.sports_score_rounded, C.lavender),
   Place('Sufrat Al-Bayt', 'Restaurants', 'Homestyle food and family seating',
-      Icons.restaurant_rounded, C.terracotta),
+      Icons.restaurant_rounded, C.yellow),
 ];
 final ourOutings = <Place>[];
 
 const badges = <(String, IconData, Color, bool)>[
-  ('Most interactive', Icons.emoji_events_rounded, C.mustard, true),
-  ('Lamma spirit', Icons.favorite_rounded, C.terracotta, true),
+  ('Most interactive', Icons.emoji_events_rounded, C.yellow, true),
+  ('Lamma spirit', Icons.favorite_rounded, C.brick, true),
   ('Weekly listener', Icons.headphones_rounded, C.teal, true),
-  ('Week winner', Icons.military_tech_rounded, C.coral, true),
-  ('Talks king', Icons.forum_rounded, C.green, true),
+  ('Week winner', Icons.military_tech_rounded, C.navy, true),
+  ('Talks king', Icons.forum_rounded, C.brick, true),
   ('Reader', Icons.menu_book_rounded, C.inkSoft, false),
 ];
 
@@ -193,20 +199,20 @@ void seedSample() {
   events
     ..clear()
     ..addAll([
-      Ev('Village outing', today, '4:00 PM', 'Outing', C.green,
+      Ev('Village outing', today, '4:00 PM', 'Outing', C.sage,
           [n('daughter'), n('brother'), n('mom'), n('girl'), n('boy')]),
-      Ev('Family dinner', today.add(const Duration(days: 2)), '8:00 PM', 'Dinner', C.coral,
+      Ev('Family dinner', today.add(const Duration(days: 2)), '8:00 PM', 'Dinner', C.peach,
           [n('daughter'), n('dad'), n('mom'), n('girl')]),
     ]);
   moments
     ..clear()
     ..addAll([
-      Moment(n('girl'), 'Went out today with the girls', 'Today, 4:10 PM', C.green, C.tealTint, 13, 6),
-      Moment(n('brother'), 'Study break at the café', 'Today, 1:30 PM', C.coral, C.mustardTint, 8, 3),
-      Moment(n('mom'), 'Fresh coffee, quiet morning', 'Today, 8:15 AM', C.mustard, C.coralTint, 11, 4),
-      Moment(n('dad'), 'Evening in the majlis', 'Yesterday', C.teal, C.greenTint, 9, 2),
-      Moment(n('boy'), 'My new Lego!', 'Yesterday', C.coral, C.coralTint, 15, 7),
-      Moment(n('daughter'), 'Baking with Mom', '2 days ago', C.mustard, C.mustardTint, 10, 5),
+      Moment(n('girl'), 'Went out today with the girls', 'Today, 4:10 PM', C.sage, C.sageTint, 13, 6),
+      Moment(n('brother'), 'Study break at the café', 'Today, 1:30 PM', C.peach, C.peachTint, 8, 3),
+      Moment(n('mom'), 'Fresh coffee, quiet morning', 'Today, 8:15 AM', C.yellow, C.yellowTint, 11, 4),
+      Moment(n('dad'), 'Evening in the majlis', 'Yesterday', C.lavender, C.lavenderTint, 9, 2),
+      Moment(n('boy'), 'My new Lego!', 'Yesterday', C.teal, C.tealTint, 15, 7),
+      Moment(n('daughter'), 'Baking with Mom', '2 days ago', C.sage, C.sageTint, 10, 5),
     ]);
   talks
     ..clear()

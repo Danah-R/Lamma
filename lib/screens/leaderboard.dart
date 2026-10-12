@@ -25,14 +25,14 @@ class RankList extends StatelessWidget {
     final list = limit == null ? ranked : ranked.take(limit!).toList();
     return Column(children: [
       for (var i = 0; i < list.length; i++) ...[
-        if (i > 0) const Divider(height: 1, color: C.beige),
+        if (i > 0) const Divider(height: 1, color: C.line),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(children: [
             SizedBox(
                 width: 30,
                 child: Text('${i + 1}',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: C.terracotta))),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: C.brick))),
             Avatar(list[i].name, size: 34),
             const SizedBox(width: 12),
             Expanded(
@@ -57,9 +57,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     final l = AppLocalizations.of(context);
     return Page1(l.leaderboardTitle, [
         LCard(
-          color: C.mustardTint,
+          color: C.yellowTint,
           child: Row(children: [
-            const Icon(Icons.emoji_events_rounded, color: C.terracotta, size: 30),
+            const Icon(Icons.emoji_events_rounded, color: C.brick, size: 30),
             const SizedBox(width: 14),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -86,7 +86,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         const RankList(),
         if (profile.isParent) ...[
           const SizedBox(height: 20),
-          Btn(l.accountParentControlsTitle, icon: Icons.shield_rounded, color: C.navy, onTap: () async {
+          Btn(l.accountParentControlsTitle, icon: Icons.shield_rounded, color: C.teal, onTap: () async {
             await go(context, const ParentControlsPage());
             if (mounted) setState(() {});
           }),
@@ -158,7 +158,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
       LCard(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
-            const Icon(Icons.phonelink_erase_rounded, color: C.terracotta),
+            const Icon(Icons.phonelink_erase_rounded, color: C.brick),
             const SizedBox(width: 12),
             Expanded(
                 child: Text(l.parentControlsPhoneFreeTime, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900))),
@@ -179,15 +179,15 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
             Text(l.parentControlsIfPhoneUsed, style: const TextStyle(fontWeight: FontWeight.w700)),
             const SizedBox(height: 8),
             Wrap(spacing: 8, children: [
-              Choice(l.parentControlsLosePointsChoice, points, () => setState(() => rules.consequence = 'points')),
-              Choice(ld(context, 'Punishment'), !points, () => setState(() => rules.consequence = 'punishment')),
+              Choice(l.parentControlsLosePointsChoice, points, () => setState(() => rules.consequence = 'points'), idle: C.cream),
+              Choice(ld(context, 'Punishment'), !points, () => setState(() => rules.consequence = 'punishment'), idle: C.cream),
             ]),
             const SizedBox(height: 14),
             if (points)
               Row(children: [
                 Expanded(child: Text(l.parentControlsPointsLost, style: const TextStyle(fontWeight: FontWeight.w700))),
                 IconButton.filled(
-                    style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
+                    style: IconButton.styleFrom(backgroundColor: C.line, foregroundColor: C.ink),
                     onPressed: () => setState(() => rules.penalty = (rules.penalty - 5).clamp(5, 50)),
                     icon: const Icon(Icons.remove_rounded)),
                 SizedBox(
@@ -196,7 +196,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18))),
                 IconButton.filled(
-                    style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
+                    style: IconButton.styleFrom(backgroundColor: C.line, foregroundColor: C.ink),
                     onPressed: () => setState(() => rules.penalty = (rules.penalty + 5).clamp(5, 50)),
                     icon: const Icon(Icons.add_rounded)),
               ])
@@ -206,7 +206,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                   Choice(ld(context, p), rules.punishment == p, () => setState(() {
                         rules.punishment = p;
                         _custom.text = p;
-                      })),
+                      }), idle: C.cream),
               ]),
               const SizedBox(height: 10),
               TextField(
@@ -255,7 +255,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                           }),
                       child: Text(l.parentControlsDone, style: const TextStyle(color: C.teal, fontWeight: FontWeight.w800)))
                 else if (v.done)
-                  const Icon(Icons.check_circle_rounded, color: C.green),
+                  const Icon(Icons.check_circle_rounded, color: C.teal),
               ]),
             ),
           ),

@@ -37,11 +37,11 @@ void main() {
     expect(find.text('4 لاعبين'), findsOneWidget);
     // drop to 2 players: start is disabled and the hint shows
     await _tapText(t, 'يوسف');
-    await _tapText(t, 'آمنة');
+    await _tapText(t, 'أمينة');
     expect(find.textContaining('اختار 3 على الأقل'), findsOneWidget);
     await _tapText(t, 'يلا نبدأ');
     expect(find.text('سؤال 1 من 8'), findsNothing);
-    await _tapText(t, 'آمنة');
+    await _tapText(t, 'أمينة');
     await _tapText(t, 'يلا نبدأ');
     expect(find.text('سؤال 1 من 8'), findsOneWidget);
     expect(_navBar, findsNothing);

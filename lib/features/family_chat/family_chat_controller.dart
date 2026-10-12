@@ -2,68 +2,17 @@
 
 import 'package:flutter/material.dart';
 
+import '../../data/family_members.dart';
 import '../notifications/notification_events.dart';
 import '../notifications/notifications_controller.dart';
 
-class ChatMember {
-  final String id, name, initial;
-  final Color color, ink, nameColor;
-  const ChatMember({
-    required this.id,
-    required this.name,
-    required this.initial,
-    required this.color,
-    required this.ink,
-    required this.nameColor,
-  });
-}
+typedef ChatMember = FamilyMember;
 
-const chatMeId = 'mo';
+const chatMeId = familyMeId;
 
-const chatMembers = <ChatMember>[
-  ChatMember(
-    id: 'mo',
-    name: 'محمد',
-    initial: 'م',
-    color: Color(0xFF9A4A3E),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF9A4A3E),
-  ),
-  ChatMember(
-    id: 'sa',
-    name: 'سارة',
-    initial: 'س',
-    color: Color(0xFF1E2A47),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF1E2A47),
-  ),
-  ChatMember(
-    id: 'am',
-    name: 'أمينة',
-    initial: 'أ',
-    color: Color(0xFF3E7A75),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF2F6662),
-  ),
-  ChatMember(
-    id: 'ab',
-    name: 'عبدالله',
-    initial: 'ع',
-    color: Color(0xFF8FA580),
-    ink: Color(0xFF2B211E),
-    nameColor: Color(0xFF3F5634),
-  ),
-  ChatMember(
-    id: 'yo',
-    name: 'يوسف',
-    initial: 'ي',
-    color: Color(0xFFE29079),
-    ink: Color(0xFF2B211E),
-    nameColor: Color(0xFF9A4A3E),
-  ),
-];
+const chatMembers = familyMembers;
 
-ChatMember chatMember(String id) => chatMembers.firstWhere((m) => m.id == id);
+ChatMember chatMember(String id) => familyMemberById(id);
 
 enum ChatKind { text, reply, poll }
 

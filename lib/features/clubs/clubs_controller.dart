@@ -174,7 +174,7 @@ class ClubsController extends ChangeNotifier {
   List<ClubReader> _bookMembers = const [
     ClubReader(initial: 'م', name: 'محمد', percent: 100, color: AC.brick),
     ClubReader(initial: 'س', name: 'سارة', percent: 100, color: AC.navy),
-    ClubReader(initial: 'آ', name: 'آمنة', percent: 100, color: AC.teal),
+    ClubReader(initial: 'أ', name: 'أمينة', percent: 100, color: AC.teal),
     ClubReader(
       initial: 'أ',
       name: 'أنت',
@@ -183,7 +183,7 @@ class ClubsController extends ChangeNotifier {
       isMe: true,
     ),
     ClubReader(initial: 'ي', name: 'يوسف', percent: 35, color: AC.sage),
-    ClubReader(initial: 'ن', name: 'نوف', percent: 10, color: AC.salmon),
+    ClubReader(initial: 'ن', name: 'نورة', percent: 10, color: AC.salmon),
   ];
   List<ClubReader> get bookMembers => List.unmodifiable(_bookMembers);
 
@@ -362,7 +362,7 @@ class ClubsController extends ChangeNotifier {
   final List<ClubReader> _heardBy = const [
     ClubReader(initial: 'م', name: 'محمد', percent: 100, color: AC.brick),
     ClubReader(initial: 'س', name: 'سارة', percent: 100, color: AC.navy),
-    ClubReader(initial: 'آ', name: 'آمنة', percent: 100, color: AC.teal),
+    ClubReader(initial: 'أ', name: 'أمينة', percent: 100, color: AC.teal),
   ];
   List<ClubReader> get heardBy => List.unmodifiable(_heardBy);
 

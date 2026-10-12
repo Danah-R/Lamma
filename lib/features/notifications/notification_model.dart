@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../games/shared/family_players.dart';
+import '../../data/family_members.dart';
 
 enum NotificationType { moment, comment, chat, event, game, club, vote }
 
@@ -61,32 +60,11 @@ class AppNotification {
 }
 
 /// The id notifications use for "me": nothing is announced about my own acts.
-const notificationMeId = 'mo';
+const notificationMeId = familyMeId;
 
-class NotificationActor {
-  final String id, name, initial;
-  final Color color, ink;
-  final Gender gender;
-  const NotificationActor(
-    this.id,
-    this.name,
-    this.initial,
-    this.color,
-    this.ink,
-    this.gender,
-  );
-}
+/// Who a notification is from: the shared family list.
+typedef NotificationActor = FamilyMember;
 
-// Same ids as the moments and chat members. Gender comes from
-// [familyPlayers] (via [genderOfName]).
 final notificationActors = <String, NotificationActor>{
-  for (final a in [
-    ('mo', 'محمد', 'م', const Color(0xFF9A4A3E), const Color(0xFFFFFFFF)),
-    ('sa', 'سارة', 'س', const Color(0xFF1E2A47), const Color(0xFFFFFFFF)),
-    ('am', 'أمينة', 'أ', const Color(0xFF3E7A75), const Color(0xFFFFFFFF)),
-    ('ab', 'عبدالله', 'ع', const Color(0xFF8FA580), const Color(0xFF2B211E)),
-    ('no', 'نورة', 'ن', const Color(0xFFDEB461), const Color(0xFF2B211E)),
-    ('yo', 'يوسف', 'ي', const Color(0xFFE29079), const Color(0xFF2B211E)),
-  ])
-    a.$1: NotificationActor(a.$1, a.$2, a.$3, a.$4, a.$5, genderOfName(a.$2)),
+  for (final m in familyMembers) m.id: m,
 };

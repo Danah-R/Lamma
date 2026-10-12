@@ -2,7 +2,7 @@
 // here (with verbs that agree with the person's gender), never hard-coded
 // per screen. Everything returns null for acts by me.
 
-import '../games/shared/family_players.dart';
+import '../../data/family_members.dart';
 import 'notification_model.dart';
 
 class NotificationEvents {

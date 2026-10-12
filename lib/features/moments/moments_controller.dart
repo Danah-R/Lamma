@@ -3,79 +3,18 @@
 
 import 'package:flutter/material.dart';
 
+import '../../data/family_members.dart';
 import '../notifications/notification_events.dart';
 import '../notifications/notifications_controller.dart';
 
-/// A family member as the moments feed shows them (initial in a colored
-/// circle, plus the color their name takes inside comments).
-class MomentsMember {
-  final String id, name, initial;
-  final Color color, ink, nameColor;
-  const MomentsMember({
-    required this.id,
-    required this.name,
-    required this.initial,
-    required this.color,
-    required this.ink,
-    required this.nameColor,
-  });
-}
+/// A family member as the moments feed shows them.
+typedef MomentsMember = FamilyMember;
 
-const momentsMeId = 'mo';
+const momentsMeId = familyMeId;
 
-const momentsMembers = <MomentsMember>[
-  MomentsMember(
-    id: 'mo',
-    name: 'محمد',
-    initial: 'م',
-    color: Color(0xFF9A4A3E),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF9A4A3E),
-  ),
-  MomentsMember(
-    id: 'sa',
-    name: 'سارة',
-    initial: 'س',
-    color: Color(0xFF1E2A47),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF1E2A47),
-  ),
-  MomentsMember(
-    id: 'am',
-    name: 'أمينة',
-    initial: 'أ',
-    color: Color(0xFF3E7A75),
-    ink: Color(0xFFFFFFFF),
-    nameColor: Color(0xFF2F6662),
-  ),
-  MomentsMember(
-    id: 'ab',
-    name: 'عبدالله',
-    initial: 'ع',
-    color: Color(0xFF8FA580),
-    ink: Color(0xFF2B211E),
-    nameColor: Color(0xFF3F5634),
-  ),
-  MomentsMember(
-    id: 'no',
-    name: 'نورة',
-    initial: 'ن',
-    color: Color(0xFFDEB461),
-    ink: Color(0xFF2B211E),
-    nameColor: Color(0xFF6E5418),
-  ),
-  MomentsMember(
-    id: 'yo',
-    name: 'يوسف',
-    initial: 'ي',
-    color: Color(0xFFE29079),
-    ink: Color(0xFF2B211E),
-    nameColor: Color(0xFF9A4A3E),
-  ),
-];
+const momentsMembers = familyMembers;
 
-MomentsMember momentsMember(String id) =>
-    momentsMembers.firstWhere((m) => m.id == id);
+MomentsMember momentsMember(String id) => familyMemberById(id);
 
 /// Placeholder pictures for the sample data, until real photos are wired.
 enum MomentScene { park, coffee, dinner, desert }

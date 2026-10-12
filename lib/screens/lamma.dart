@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../features/notifications/notifications_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'home.dart';
 
 // ---- 12/15 Lamma tab: family talk + moments of our day
 class LammaPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _LammaPageState extends State<LammaPage> {
     final l = AppLocalizations.of(context);
     return Scaffold(
         body: ListView(padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 120), children: [
-          TabHeader(l.navLamma, l.lammaSubtitle, onBell: () => go(context, const NotificationsPage())),
+          TabHeader(l.navLamma, l.lammaSubtitle, onBell: () => openNotificationsScreen(context)),
           SectionTitle(l.lammaFamilyTalk),
           for (final t in talks)
             Padding(

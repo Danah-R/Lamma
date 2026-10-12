@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data.dart';
+import '../features/notifications/notifications_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -23,7 +24,6 @@ import '../features/games/seen_jeem/seen_jeem_screen.dart';
 import '../features/games/who_am_i/who_am_i_screen.dart';
 import 'game_illustrations.dart';
 import 'games_data.dart';
-import 'home.dart';
 
 // ---- 18 activity box
 class ActivitiesPage extends StatelessWidget {
@@ -42,7 +42,7 @@ class ActivitiesPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _ActivitiesHeader(
-              onBell: () => go(context, const NotificationsPage()),
+              onBell: () => openNotificationsScreen(context),
             ),
             const SizedBox(height: 22),
             Builder(

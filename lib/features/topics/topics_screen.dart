@@ -206,6 +206,7 @@ class _Header extends StatelessWidget {
                   color: AC.ink,
                 ),
               ),
+              const SizedBox(height: 2),
               Text(
                 subtitle,
                 style: const TextStyle(fontSize: 14, color: AC.muted),

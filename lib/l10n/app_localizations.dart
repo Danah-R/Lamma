@@ -3893,6 +3893,582 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming!'**
   String get chatSeedMeComing;
+
+  /// No description provided for @momentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Our day\'s moments'**
+  String get momentsTitle;
+
+  /// No description provided for @momentsSharedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of 6 shared today'**
+  String momentsSharedCount(int count);
+
+  /// No description provided for @momentsNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get momentsNotifications;
+
+  /// No description provided for @momentsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get momentsNew;
+
+  /// No description provided for @momentsLike.
+  ///
+  /// In en, this message translates to:
+  /// **'Like'**
+  String get momentsLike;
+
+  /// No description provided for @momentsYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get momentsYou;
+
+  /// No description provided for @momentsWith.
+  ///
+  /// In en, this message translates to:
+  /// **' with {names}'**
+  String momentsWith(String names);
+
+  /// No description provided for @momentsAnd.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get momentsAnd;
+
+  /// No description provided for @momentsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get momentsToday;
+
+  /// No description provided for @momentsYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get momentsYesterday;
+
+  /// No description provided for @momentsNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get momentsNow;
+
+  /// No description provided for @momentsDayTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}, {time}'**
+  String momentsDayTime(String day, String time);
+
+  /// No description provided for @momentsAm.
+  ///
+  /// In en, this message translates to:
+  /// **'AM'**
+  String get momentsAm;
+
+  /// No description provided for @momentsPm.
+  ///
+  /// In en, this message translates to:
+  /// **'PM'**
+  String get momentsPm;
+
+  /// No description provided for @momentsSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all comments ({count})'**
+  String momentsSeeAll(int count);
+
+  /// No description provided for @momentsSeeSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'See the other comment'**
+  String get momentsSeeSecond;
+
+  /// No description provided for @momentsHideComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide comments'**
+  String get momentsHideComments;
+
+  /// No description provided for @momentsQuick1.
+  ///
+  /// In en, this message translates to:
+  /// **'Amazing!'**
+  String get momentsQuick1;
+
+  /// No description provided for @momentsQuick2.
+  ///
+  /// In en, this message translates to:
+  /// **'Where is this?'**
+  String get momentsQuick2;
+
+  /// No description provided for @momentsQuick3.
+  ///
+  /// In en, this message translates to:
+  /// **'Wish I was there'**
+  String get momentsQuick3;
+
+  /// No description provided for @momentsCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment on {name}\'s moment…'**
+  String momentsCommentHint(String name);
+
+  /// No description provided for @momentsReplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply to the comments…'**
+  String get momentsReplyHint;
+
+  /// No description provided for @momentsSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send comment'**
+  String get momentsSend;
+
+  /// No description provided for @momentsEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve seen all of the last two days'**
+  String get momentsEnd;
+
+  /// No description provided for @momentsNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New moment'**
+  String get momentsNewTitle;
+
+  /// No description provided for @momentsClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get momentsClose;
+
+  /// No description provided for @momentsSnapPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture a moment from your day'**
+  String get momentsSnapPrompt;
+
+  /// No description provided for @momentsCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get momentsCamera;
+
+  /// No description provided for @momentsGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get momentsGallery;
+
+  /// No description provided for @momentsChangePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get momentsChangePhoto;
+
+  /// No description provided for @momentsWhatHappened.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get momentsWhatHappened;
+
+  /// No description provided for @momentsCaptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A line to start the story, e.g. first coffee of winter'**
+  String get momentsCaptionHint;
+
+  /// No description provided for @momentsWithWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s with you?'**
+  String get momentsWithWho;
+
+  /// No description provided for @momentsOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get momentsOptional;
+
+  /// No description provided for @momentsPickPhotoFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a photo to share'**
+  String get momentsPickPhotoFirst;
+
+  /// No description provided for @momentsShareWithFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with the family'**
+  String get momentsShareWithFamily;
+
+  /// No description provided for @momentsPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Your moment was shared with the family'**
+  String get momentsPublished;
+
+  /// No description provided for @momentsCameraDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'We need camera access to take a photo'**
+  String get momentsCameraDenied;
+
+  /// No description provided for @momentsPhotosDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'We need photo access to pick a picture'**
+  String get momentsPhotosDenied;
+
+  /// No description provided for @momentsSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get momentsSettings;
+
+  /// No description provided for @momentsDefaultCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'A moment from my day'**
+  String get momentsDefaultCaption;
+
+  /// No description provided for @momentsShareSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Share: capture a moment'**
+  String get momentsShareSemantics;
+
+  /// No description provided for @momentsCoachLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip'**
+  String get momentsCoachLabel;
+
+  /// No description provided for @momentsCoachBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the camera below and share it with the family'**
+  String get momentsCoachBody;
+
+  /// No description provided for @momentsCoachLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get momentsCoachLater;
+
+  /// No description provided for @momentsCoachNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture now'**
+  String get momentsCoachNow;
+
+  /// No description provided for @chatSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Family chat · {count} online'**
+  String chatSubtitle(int count);
+
+  /// No description provided for @chatNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get chatNotifications;
+
+  /// No description provided for @chatToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get chatToday;
+
+  /// No description provided for @chatQuestionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Question of the day'**
+  String get chatQuestionLabel;
+
+  /// No description provided for @chatQuestionFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} family members answered'**
+  String chatQuestionFamily(int count);
+
+  /// No description provided for @chatQuestionAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'You answered it'**
+  String get chatQuestionAnswered;
+
+  /// No description provided for @chatAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get chatAnswer;
+
+  /// No description provided for @chatYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get chatYou;
+
+  /// No description provided for @chatNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get chatNow;
+
+  /// No description provided for @chatAm.
+  ///
+  /// In en, this message translates to:
+  /// **'AM'**
+  String get chatAm;
+
+  /// No description provided for @chatPm.
+  ///
+  /// In en, this message translates to:
+  /// **'PM'**
+  String get chatPm;
+
+  /// No description provided for @chatPollBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Poll'**
+  String get chatPollBadge;
+
+  /// No description provided for @chatVotes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} votes'**
+  String chatVotes(int count);
+
+  /// No description provided for @chatTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is typing'**
+  String chatTyping(String name);
+
+  /// No description provided for @chatHintWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to the family…'**
+  String get chatHintWrite;
+
+  /// No description provided for @chatHintReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your answer…'**
+  String get chatHintReply;
+
+  /// No description provided for @chatReplyingTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to the question of the day'**
+  String get chatReplyingTo;
+
+  /// No description provided for @chatCancelReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel reply'**
+  String get chatCancelReply;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get chatSend;
+
+  /// No description provided for @chatMessageField.
+  ///
+  /// In en, this message translates to:
+  /// **'Your message'**
+  String get chatMessageField;
+
+  /// No description provided for @notifBellLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications, {count} new'**
+  String notifBellLabel(int count);
+
+  /// No description provided for @notifBellLabelNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifBellLabelNone;
+
+  /// No description provided for @notifSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{All read} =1{1 new notification} other{{count} new notifications}}'**
+  String notifSummary(int count);
+
+  /// No description provided for @notifReadAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get notifReadAll;
+
+  /// No description provided for @notifSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all notifications'**
+  String get notifSeeAll;
+
+  /// No description provided for @notifPanelEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing new'**
+  String get notifPanelEmpty;
+
+  /// No description provided for @notifBannerKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'New notification · Just now'**
+  String get notifBannerKicker;
+
+  /// No description provided for @notifNewDot.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get notifNewDot;
+
+  /// No description provided for @notifClosePanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Close notifications'**
+  String get notifClosePanel;
+
+  /// No description provided for @notifTimeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get notifTimeNow;
+
+  /// No description provided for @notifTimeAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute ago} other{{count} minutes ago}}'**
+  String notifTimeAgo(int count);
+
+  /// No description provided for @notifYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get notifYesterday;
+
+  /// No description provided for @notifsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifsTitle;
+
+  /// No description provided for @notifsBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get notifsBack;
+
+  /// No description provided for @notifsHeroKickerNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Something new in the family'**
+  String get notifsHeroKickerNew;
+
+  /// No description provided for @notifsHeroKickerRead.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t missed anything'**
+  String get notifsHeroKickerRead;
+
+  /// No description provided for @notifsHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{All read} =1{You have 1 new notification} other{You have {count} new notifications}}'**
+  String notifsHeroTitle(int count);
+
+  /// No description provided for @notifsGroupToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get notifsGroupToday;
+
+  /// No description provided for @notifsGroupYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get notifsGroupYesterday;
+
+  /// No description provided for @notifsGroupEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get notifsGroupEarlier;
+
+  /// No description provided for @notifsGroupCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{None} =1{1 notification} other{{count} notifications}}'**
+  String notifsGroupCount(int count);
+
+  /// No description provided for @notifsTagEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get notifsTagEvent;
+
+  /// No description provided for @notifsTagMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'Moment'**
+  String get notifsTagMoment;
+
+  /// No description provided for @notifsTagComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get notifsTagComment;
+
+  /// No description provided for @notifsTagChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get notifsTagChat;
+
+  /// No description provided for @notifsTagGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Game'**
+  String get notifsTagGame;
+
+  /// No description provided for @notifsTagClub.
+  ///
+  /// In en, this message translates to:
+  /// **'Book club'**
+  String get notifsTagClub;
+
+  /// No description provided for @notifsTagVote.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote'**
+  String get notifsTagVote;
+
+  /// No description provided for @notifsNewPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'New: {text}'**
+  String notifsNewPrefix(String text);
+
+  /// No description provided for @notifsYesterdayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday, {time}'**
+  String notifsYesterdayAt(String time);
 }
 
 class _AppLocalizationsDelegate

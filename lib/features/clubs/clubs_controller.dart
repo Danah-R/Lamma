@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 
 import '../../screens/activities_colors.dart';
+import '../notifications/notification_events.dart';
+import '../notifications/notifications_controller.dart';
 
 class Book {
   final String title, author, category, about;
@@ -127,6 +129,22 @@ const suggestionCoverPalette = <(Color, Color, Color)>[
 /// `main.dart`), so the Activities page and ClubsScreen — which sit under
 /// different nested Navigators — always read the same instance.
 class ClubsController extends ChangeNotifier {
+  final NotificationsController? _notifications;
+
+  ClubsController({this._notifications});
+
+  /// "باقي X أيام على نقاش …": the title and days come from the current book.
+  void announceDiscussionReminder({DateTime? at, bool announce = true}) {
+    _notifications?.add(
+      NotificationEvents.clubReminder(
+        bookTitle: _currentBook.title,
+        daysLeft: _daysLeft,
+        at: at ?? DateTime.now(),
+      ),
+      announce: announce,
+    );
+  }
+
   // ===================== shared household roster =====================
 
   /// Household size, shared by both clubs (there's one family).

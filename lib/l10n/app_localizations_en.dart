@@ -2162,4 +2162,353 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatSeedMeComing => 'Coming!';
+
+  @override
+  String get momentsTitle => 'Our day\'s moments';
+
+  @override
+  String momentsSharedCount(int count) {
+    return '$count of 6 shared today';
+  }
+
+  @override
+  String get momentsNotifications => 'Notifications';
+
+  @override
+  String get momentsNew => 'New';
+
+  @override
+  String get momentsLike => 'Like';
+
+  @override
+  String get momentsYou => 'You';
+
+  @override
+  String momentsWith(String names) {
+    return ' with $names';
+  }
+
+  @override
+  String get momentsAnd => ' and ';
+
+  @override
+  String get momentsToday => 'Today';
+
+  @override
+  String get momentsYesterday => 'Yesterday';
+
+  @override
+  String get momentsNow => 'Just now';
+
+  @override
+  String momentsDayTime(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String get momentsAm => 'AM';
+
+  @override
+  String get momentsPm => 'PM';
+
+  @override
+  String momentsSeeAll(int count) {
+    return 'See all comments ($count)';
+  }
+
+  @override
+  String get momentsSeeSecond => 'See the other comment';
+
+  @override
+  String get momentsHideComments => 'Hide comments';
+
+  @override
+  String get momentsQuick1 => 'Amazing!';
+
+  @override
+  String get momentsQuick2 => 'Where is this?';
+
+  @override
+  String get momentsQuick3 => 'Wish I was there';
+
+  @override
+  String momentsCommentHint(String name) {
+    return 'Comment on $name\'s moment…';
+  }
+
+  @override
+  String get momentsReplyHint => 'Reply to the comments…';
+
+  @override
+  String get momentsSend => 'Send comment';
+
+  @override
+  String get momentsEnd => 'You\'ve seen all of the last two days';
+
+  @override
+  String get momentsNewTitle => 'New moment';
+
+  @override
+  String get momentsClose => 'Close';
+
+  @override
+  String get momentsSnapPrompt => 'Capture a moment from your day';
+
+  @override
+  String get momentsCamera => 'Camera';
+
+  @override
+  String get momentsGallery => 'Gallery';
+
+  @override
+  String get momentsChangePhoto => 'Change photo';
+
+  @override
+  String get momentsWhatHappened => 'What happened?';
+
+  @override
+  String get momentsCaptionHint =>
+      'A line to start the story, e.g. first coffee of winter';
+
+  @override
+  String get momentsWithWho => 'Who\'s with you?';
+
+  @override
+  String get momentsOptional => 'Optional';
+
+  @override
+  String get momentsPickPhotoFirst => 'Pick a photo to share';
+
+  @override
+  String get momentsShareWithFamily => 'Share with the family';
+
+  @override
+  String get momentsPublished => 'Your moment was shared with the family';
+
+  @override
+  String get momentsCameraDenied => 'We need camera access to take a photo';
+
+  @override
+  String get momentsPhotosDenied => 'We need photo access to pick a picture';
+
+  @override
+  String get momentsSettings => 'Settings';
+
+  @override
+  String get momentsDefaultCaption => 'A moment from my day';
+
+  @override
+  String get momentsShareSemantics => 'Share: capture a moment';
+
+  @override
+  String get momentsCoachLabel => 'Tip';
+
+  @override
+  String get momentsCoachBody =>
+      'Tap the camera below and share it with the family';
+
+  @override
+  String get momentsCoachLater => 'Later';
+
+  @override
+  String get momentsCoachNow => 'Capture now';
+
+  @override
+  String chatSubtitle(int count) {
+    return 'Family chat · $count online';
+  }
+
+  @override
+  String get chatNotifications => 'Notifications';
+
+  @override
+  String get chatToday => 'Today';
+
+  @override
+  String get chatQuestionLabel => 'Question of the day';
+
+  @override
+  String chatQuestionFamily(int count) {
+    return '$count family members answered';
+  }
+
+  @override
+  String get chatQuestionAnswered => 'You answered it';
+
+  @override
+  String get chatAnswer => 'Answer';
+
+  @override
+  String get chatYou => 'You';
+
+  @override
+  String get chatNow => 'Just now';
+
+  @override
+  String get chatAm => 'AM';
+
+  @override
+  String get chatPm => 'PM';
+
+  @override
+  String get chatPollBadge => 'Poll';
+
+  @override
+  String chatVotes(int count) {
+    return '$count votes';
+  }
+
+  @override
+  String chatTyping(String name) {
+    return '$name is typing';
+  }
+
+  @override
+  String get chatHintWrite => 'Write to the family…';
+
+  @override
+  String get chatHintReply => 'Write your answer…';
+
+  @override
+  String get chatReplyingTo => 'Replying to the question of the day';
+
+  @override
+  String get chatCancelReply => 'Cancel reply';
+
+  @override
+  String get chatSend => 'Send';
+
+  @override
+  String get chatMessageField => 'Your message';
+
+  @override
+  String notifBellLabel(int count) {
+    return 'Notifications, $count new';
+  }
+
+  @override
+  String get notifBellLabelNone => 'Notifications';
+
+  @override
+  String notifSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new notifications',
+      one: '1 new notification',
+      zero: 'All read',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifReadAll => 'Mark all read';
+
+  @override
+  String get notifSeeAll => 'See all notifications';
+
+  @override
+  String get notifPanelEmpty => 'Nothing new';
+
+  @override
+  String get notifBannerKicker => 'New notification · Just now';
+
+  @override
+  String get notifNewDot => 'New';
+
+  @override
+  String get notifClosePanel => 'Close notifications';
+
+  @override
+  String get notifTimeNow => 'Just now';
+
+  @override
+  String notifTimeAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes ago',
+      one: '1 minute ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifYesterday => 'Yesterday';
+
+  @override
+  String get notifsTitle => 'Notifications';
+
+  @override
+  String get notifsBack => 'Back';
+
+  @override
+  String get notifsHeroKickerNew => 'Something new in the family';
+
+  @override
+  String get notifsHeroKickerRead => 'You haven\'t missed anything';
+
+  @override
+  String notifsHeroTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You have $count new notifications',
+      one: 'You have 1 new notification',
+      zero: 'All read',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifsGroupToday => 'Today';
+
+  @override
+  String get notifsGroupYesterday => 'Yesterday';
+
+  @override
+  String get notifsGroupEarlier => 'Earlier';
+
+  @override
+  String notifsGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count notifications',
+      one: '1 notification',
+      zero: 'None',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifsTagEvent => 'Event';
+
+  @override
+  String get notifsTagMoment => 'Moment';
+
+  @override
+  String get notifsTagComment => 'Comment';
+
+  @override
+  String get notifsTagChat => 'Chat';
+
+  @override
+  String get notifsTagGame => 'Game';
+
+  @override
+  String get notifsTagClub => 'Book club';
+
+  @override
+  String get notifsTagVote => 'Vote';
+
+  @override
+  String notifsNewPrefix(String text) {
+    return 'New: $text';
+  }
+
+  @override
+  String notifsYesterdayAt(String time) {
+    return 'Yesterday, $time';
+  }
 }

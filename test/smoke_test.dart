@@ -39,6 +39,20 @@ Future<void> back(WidgetTester t) async {
 }
 
 void main() {
+  // The camera button pulses forever while nothing was shared today; tests
+  // run with reduced motion so pumpAndSettle can finish.
+  setUp(() {
+    TestWidgetsFlutterBinding.ensureInitialized()
+        .platformDispatcher
+        .accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(
+      disableAnimations: true,
+    );
+  });
+  tearDown(() {
+    TestWidgetsFlutterBinding.instance.platformDispatcher
+        .clearAccessibilityFeaturesTestValue();
+  });
+
   testWidgets('all tabs and key screens render', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipOnboarding: true));
@@ -69,14 +83,8 @@ void main() {
     expect(find.text('Picnic'), findsOneWidget);
     // lamma
     await tapText(t, 'لمّه', last: true);
-    await tapText(t, 'فتح محادثة العائلة');
-    await back(t);
-    await tapText(t, 'سارة');
-    await back(t);
-    await t.drag(find.byType(ListView).first, const Offset(0, 2000));
-    await t.pumpAndSettle();
-    await tapText(t, '+ شارك لحظة');
-    await back(t);
+    // the tab is now the text-only family chat
+    expect(find.text('محادثة العائلة · 3 متواجدين'), findsOneWidget);
     // activities
     await tapText(t, 'صندوق الأنشطة', last: true);
     // tonight's topic card opens the talk-topics flow

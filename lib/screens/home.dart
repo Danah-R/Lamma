@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../features/notifications/notifications_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                     style: const TextStyle(fontSize: 13, color: C.inkSoft, fontWeight: FontWeight.w700)),
               ]),
             ),
-            BellButton(() => go(context, const NotificationsPage())),
+            BellButton(() => openNotificationsScreen(context)),
           ]),
           if (rules.phoneFree || rules.punishments.containsKey(profile.name)) ...[
             const SizedBox(height: 14),
@@ -396,33 +397,6 @@ class _AddEventPageState extends State<AddEventPage> {
                 [C.teal, C.mustard, C.coral, C.green][eventTypes.indexOf(_type) % 4], [profile.name]));
             Navigator.pop(context);
           }));
-  }
-}
-
-// ---- 11 notifications
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    Widget n2(IconData i, Color c, String t) => Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: LCard(
-              child: Row(children: [
-            IconBubble(i, c, size: 40),
-            const SizedBox(width: 12),
-            Expanded(child: Text(t, style: const TextStyle(fontWeight: FontWeight.w700))),
-          ])),
-        );
-    return Page1(l.notificationsTitle, [
-      n2(Icons.headphones_rounded, C.terracotta, l.notifEpisodeReady),
-      n2(Icons.camera_alt_rounded, C.teal, l.notifMomentShared(ld(context, n('girl')))),
-      n2(Icons.favorite_rounded, C.mustard, l.notifBadgeEarned),
-      const SizedBox(height: 12),
-      Center(
-          child: Text(l.notifEmpty,
-              style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w600))),
-    ]);
   }
 }
 

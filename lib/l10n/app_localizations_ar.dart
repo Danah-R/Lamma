@@ -2198,4 +2198,363 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatSeedMeComing => 'جاي!';
+
+  @override
+  String get momentsTitle => 'لحظات يومنا';
+
+  @override
+  String momentsSharedCount(int count) {
+    return '$count من 6 شاركوا اليوم';
+  }
+
+  @override
+  String get momentsNotifications => 'الإشعارات';
+
+  @override
+  String get momentsNew => 'جديد';
+
+  @override
+  String get momentsLike => 'أعجبني';
+
+  @override
+  String get momentsYou => 'أنت';
+
+  @override
+  String momentsWith(String names) {
+    return ' مع $names';
+  }
+
+  @override
+  String get momentsAnd => ' و';
+
+  @override
+  String get momentsToday => 'اليوم';
+
+  @override
+  String get momentsYesterday => 'أمس';
+
+  @override
+  String get momentsNow => 'الحين';
+
+  @override
+  String momentsDayTime(String day, String time) {
+    return '$day، $time';
+  }
+
+  @override
+  String get momentsAm => 'ص';
+
+  @override
+  String get momentsPm => 'م';
+
+  @override
+  String momentsSeeAll(int count) {
+    return 'شوف كل التعليقات ($count)';
+  }
+
+  @override
+  String get momentsSeeSecond => 'شوف التعليق الثاني';
+
+  @override
+  String get momentsHideComments => 'إخفاء التعليقات';
+
+  @override
+  String get momentsQuick1 => 'خيال!';
+
+  @override
+  String get momentsQuick2 => 'وين هذا؟';
+
+  @override
+  String get momentsQuick3 => 'ودي كنت معكم';
+
+  @override
+  String momentsCommentHint(String name) {
+    return 'علّق على لحظة $name…';
+  }
+
+  @override
+  String get momentsReplyHint => 'رد على اللي علّقوا…';
+
+  @override
+  String get momentsSend => 'أرسل التعليق';
+
+  @override
+  String get momentsEnd => 'شفت كل لحظات اليومين';
+
+  @override
+  String get momentsNewTitle => 'لحظة جديدة';
+
+  @override
+  String get momentsClose => 'إغلاق';
+
+  @override
+  String get momentsSnapPrompt => 'صوّر لحظة من يومك';
+
+  @override
+  String get momentsCamera => 'الكاميرا';
+
+  @override
+  String get momentsGallery => 'المعرض';
+
+  @override
+  String get momentsChangePhoto => 'تغيير الصورة';
+
+  @override
+  String get momentsWhatHappened => 'وش صار؟';
+
+  @override
+  String get momentsCaptionHint => 'سطر يفتح السالفة، مثلًا: أول قهوة بالشتاء';
+
+  @override
+  String get momentsWithWho => 'مين معك؟';
+
+  @override
+  String get momentsOptional => 'اختياري';
+
+  @override
+  String get momentsPickPhotoFirst => 'اختار صورة عشان تقدر تشارك';
+
+  @override
+  String get momentsShareWithFamily => 'شارك مع العائلة';
+
+  @override
+  String get momentsPublished => 'انشرت لحظتك للعائلة';
+
+  @override
+  String get momentsCameraDenied => 'نحتاج إذن الكاميرا عشان تصوّر';
+
+  @override
+  String get momentsPhotosDenied => 'نحتاج إذن الصور عشان تختار';
+
+  @override
+  String get momentsSettings => 'الإعدادات';
+
+  @override
+  String get momentsDefaultCaption => 'لحظة من يومي';
+
+  @override
+  String get momentsShareSemantics => 'مشاركة: صوّر لحظة';
+
+  @override
+  String get momentsCoachLabel => 'تلميح';
+
+  @override
+  String get momentsCoachBody => 'اضغط الكاميرا تحت وشاركها العائلة';
+
+  @override
+  String get momentsCoachLater => 'بعدين';
+
+  @override
+  String get momentsCoachNow => 'صوّر الحين';
+
+  @override
+  String chatSubtitle(int count) {
+    return 'محادثة العائلة · $count متواجدين';
+  }
+
+  @override
+  String get chatNotifications => 'الإشعارات';
+
+  @override
+  String get chatToday => 'اليوم';
+
+  @override
+  String get chatQuestionLabel => 'سؤال اليوم';
+
+  @override
+  String chatQuestionFamily(int count) {
+    return '$count من العائلة جاوبوا';
+  }
+
+  @override
+  String get chatQuestionAnswered => 'جاوبت عليه';
+
+  @override
+  String get chatAnswer => 'جاوب';
+
+  @override
+  String get chatYou => 'أنت';
+
+  @override
+  String get chatNow => 'الحين';
+
+  @override
+  String get chatAm => 'ص';
+
+  @override
+  String get chatPm => 'م';
+
+  @override
+  String get chatPollBadge => 'تصويت';
+
+  @override
+  String chatVotes(int count) {
+    return '$count أصوات';
+  }
+
+  @override
+  String chatTyping(String name) {
+    return '$name يكتب';
+  }
+
+  @override
+  String get chatHintWrite => 'اكتب للعائلة…';
+
+  @override
+  String get chatHintReply => 'اكتب ردك…';
+
+  @override
+  String get chatReplyingTo => 'ترد على سؤال اليوم';
+
+  @override
+  String get chatCancelReply => 'إلغاء الرد';
+
+  @override
+  String get chatSend => 'إرسال';
+
+  @override
+  String get chatMessageField => 'رسالتك';
+
+  @override
+  String notifBellLabel(int count) {
+    return 'الإشعارات، $count جديدة';
+  }
+
+  @override
+  String get notifBellLabelNone => 'الإشعارات';
+
+  @override
+  String notifSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count إشعارات جديدة',
+      many: '$count إشعارات جديدة',
+      few: '$count إشعارات جديدة',
+      two: 'إشعارين جداد',
+      one: 'إشعار واحد جديد',
+      zero: 'كل شي مقروء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifReadAll => 'قريت الكل';
+
+  @override
+  String get notifSeeAll => 'عرض كل الإشعارات';
+
+  @override
+  String get notifPanelEmpty => 'ما فيه شي جديد';
+
+  @override
+  String get notifBannerKicker => 'إشعار جديد · الحين';
+
+  @override
+  String get notifNewDot => 'جديد';
+
+  @override
+  String get notifClosePanel => 'إغلاق الإشعارات';
+
+  @override
+  String get notifTimeNow => 'الحين';
+
+  @override
+  String notifTimeAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'قبل $count دقيقة',
+      many: 'قبل $count دقيقة',
+      few: 'قبل $count دقايق',
+      two: 'قبل دقيقتين',
+      one: 'قبل دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifYesterday => 'أمس';
+
+  @override
+  String get notifsTitle => 'الإشعارات';
+
+  @override
+  String get notifsBack => 'رجوع';
+
+  @override
+  String get notifsHeroKickerNew => 'صار شي جديد بالعائلة';
+
+  @override
+  String get notifsHeroKickerRead => 'ما فيه شي فاتك';
+
+  @override
+  String notifsHeroTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'عندك $count إشعارات جديدة',
+      many: 'عندك $count إشعارات جديدة',
+      few: 'عندك $count إشعارات جديدة',
+      two: 'عندك إشعارين جداد',
+      one: 'عندك إشعار جديد',
+      zero: 'كل شي مقروء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifsGroupToday => 'اليوم';
+
+  @override
+  String get notifsGroupYesterday => 'أمس';
+
+  @override
+  String get notifsGroupEarlier => 'قبل';
+
+  @override
+  String notifsGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count إشعارات',
+      many: '$count إشعارات',
+      few: '$count إشعارات',
+      two: 'إشعارين',
+      one: 'إشعار واحد',
+      zero: 'ولا إشعار',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notifsTagEvent => 'فعالية';
+
+  @override
+  String get notifsTagMoment => 'لحظة';
+
+  @override
+  String get notifsTagComment => 'تعليق';
+
+  @override
+  String get notifsTagChat => 'المحادثة';
+
+  @override
+  String get notifsTagGame => 'لعبة';
+
+  @override
+  String get notifsTagClub => 'نادي الكتاب';
+
+  @override
+  String get notifsTagVote => 'تصويت';
+
+  @override
+  String notifsNewPrefix(String text) {
+    return 'جديد: $text';
+  }
+
+  @override
+  String notifsYesterdayAt(String time) {
+    return 'أمس، $time';
+  }
 }

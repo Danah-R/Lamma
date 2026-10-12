@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>عشان تصوّر لحظة من يومك وتشاركها العائلة</string>
+	<string>نحتاج الكاميرا عشان تصوّر لحظة من يومك وتشاركها العائلة</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>عشان تختار صورة من يومك وتشاركها العائلة</string>
+	<string>نحتاج الصور عشان تختار لحظة وتشاركها العائلة</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

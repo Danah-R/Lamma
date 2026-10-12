@@ -420,7 +420,7 @@ class _ShellState extends State<Shell> {
                                   l.navShare,
                                   style: const TextStyle(
                                     fontSize: 11,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                     color: Color(0xFFF0B9A5),
                                   ),
                                 ),

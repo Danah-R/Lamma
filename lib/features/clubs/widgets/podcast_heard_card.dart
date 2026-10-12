@@ -44,7 +44,7 @@ class PodcastHeardCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 17,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -55,7 +55,7 @@ class PodcastHeardCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.teal,
                 ),
               ),
@@ -101,7 +101,7 @@ class PodcastHeardCard extends StatelessWidget {
                     text: l.activitiesPodcastYourTurnBold,
                     style: const TextStyle(
                       color: AC.tealDeep,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   TextSpan(text: ' ${l.clubsHalfFamilyFinished}'),
@@ -186,7 +186,7 @@ class _HeardButton extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 color: heard ? Colors.white : AC.tealDeep,
               ),
             ),

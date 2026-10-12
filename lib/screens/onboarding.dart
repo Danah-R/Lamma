@@ -134,7 +134,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           ),
           const SizedBox(height: 28),
           Text(l.onboardingSplashLogo,
-              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900, color: C.terracotta)),
+              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w700, color: C.terracotta)),
           const SizedBox(height: 6),
           Text(l.onboardingSplashTagline, style: const TextStyle(fontSize: 18, color: C.inkSoft)),
           const Spacer(),
@@ -166,7 +166,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           child: SingleChildScrollView(
             padding: const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900, height: 1.2)),
+              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, height: 1.2)),
               const SizedBox(height: 6),
               Text(sub, style: const TextStyle(color: C.inkSoft, fontSize: 15)),
               const SizedBox(height: 24),
@@ -210,7 +210,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
               color: _job == j.$1 ? j.$3 : null,
               onTap: () => setState(() => _job = j.$1),
               child: Row(children: [
-                Expanded(child: Text(_jobLabel(l, j.$1), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800))),
+                Expanded(child: Text(_jobLabel(l, j.$1), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
                 if (_job == j.$1) const Icon(Icons.check_circle_rounded, color: C.terracotta),
               ]),
             ),
@@ -220,7 +220,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   // ---- 02b interests
   Widget _interestsBody(AppLocalizations l) => Builder(builder: (context) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.onboardingThingsYouLove, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(l.onboardingThingsYouLove, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 10),
           Wrap(spacing: 8, runSpacing: 8, children: [
             for (final h in _interests)
@@ -228,7 +228,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
                   () => setState(() => _picked.contains(h) ? _picked.remove(h) : _picked.add(h))),
           ]),
           const SizedBox(height: 24),
-          Text(l.onboardingTypeOfOutings, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(l.onboardingTypeOfOutings, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 10),
           Wrap(spacing: 8, runSpacing: 8, children: [
             for (final h in _outingTypes)
@@ -236,7 +236,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
                   () => setState(() => _outings.contains(h) ? _outings.remove(h) : _outings.add(h))),
           ]),
           const SizedBox(height: 24),
-          Text(l.onboardingIPrefer, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(l.onboardingIPrefer, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 10),
           Row(children: [
             for (final p in ['Games', 'Discussions']) ...[
@@ -248,7 +248,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
                   child: Center(
                       child: Text(p == 'Games' ? l.onboardingPreferGames : l.onboardingPreferDiscussions,
                           style: TextStyle(
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               fontSize: 16,
                               color: _prefer == p ? Colors.white : C.ink))),
                 ),
@@ -277,7 +277,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           padding: const EdgeInsets.all(20),
           child: Column(children: [
             Text(l.onboardingStartFamily,
-                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w900)),
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             TextField(
               controller: _family,
@@ -295,7 +295,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           padding: const EdgeInsets.all(20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(l.onboardingHaveInviteCode,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             TextField(
               controller: _code,
@@ -325,7 +325,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
             ),
           ),
           const SizedBox(height: 8),
-          Text(ld(context, characters[_avatar].$1), style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+          Text(ld(context, characters[_avatar].$1), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
           const SizedBox(height: 18),
           GridView.count(
             crossAxisCount: 3,

@@ -34,7 +34,7 @@ class Avatar extends StatelessWidget {
         child: asset == null
             ? Center(
                 child: Text(name.characters.first,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: size * .42)))
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: size * .42)))
             : Image.asset(asset, fit: BoxFit.cover, alignment: Alignment.topCenter),
       ),
     );
@@ -90,7 +90,7 @@ class SectionTitle extends StatelessWidget {
         child: Row(children: [
           Expanded(
               child: Text(text,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800))),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700))),
           if (action != null)
             GestureDetector(
               onTap: onAction,
@@ -191,7 +191,7 @@ class Btn extends StatelessWidget {
           child: Text(text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15))),
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15))),
     ]);
     final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(18));
     const pad = EdgeInsets.symmetric(vertical: 16, horizontal: 22);
@@ -250,7 +250,7 @@ class TabHeader extends StatelessWidget {
         child: Row(children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
+              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700)),
               const SizedBox(height: 2),
               Text(subtitle, style: const TextStyle(color: C.inkSoft, fontSize: 15)),
             ]),
@@ -369,7 +369,7 @@ void showComments(BuildContext context) => showModalBottomSheet(
         return Padding(
           padding: EdgeInsetsDirectional.fromSTEB(20, 18, 20, MediaQuery.of(c).viewInsets.bottom + 20),
           child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(l.commonComments, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+            Text(l.commonComments, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
             const SizedBox(height: 14),
             for (final cm in comments)
               Padding(
@@ -381,7 +381,7 @@ void showComments(BuildContext context) => showModalBottomSheet(
                     child: LCard(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(ld(c, cm.$1), style: const TextStyle(fontWeight: FontWeight.w800)),
+                        Text(ld(c, cm.$1), style: const TextStyle(fontWeight: FontWeight.w700)),
                         Text(ld(c, cm.$2)),
                       ]),
                     ),

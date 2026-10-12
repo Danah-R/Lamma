@@ -44,7 +44,7 @@ class FamilyProgressCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 17,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -53,7 +53,7 @@ class FamilyProgressCard extends StatelessWidget {
                 l.clubsFinishedCount(done, readers.length),
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.brick,
                 ),
               ),
@@ -82,7 +82,7 @@ class FamilyProgressCard extends StatelessWidget {
                           text: captionBold,
                           style: const TextStyle(
                             color: AC.brickDeep,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         TextSpan(text: ' $captionRest'),
@@ -106,7 +106,7 @@ class FamilyProgressCard extends StatelessWidget {
                       l.clubsLogProgress,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -191,7 +191,7 @@ class _ReaderRow extends StatelessWidget {
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: done ? AC.teal : AC.muted,
             ),
           ),

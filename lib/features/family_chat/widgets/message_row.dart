@@ -63,7 +63,7 @@ class MessageRow extends StatelessWidget {
                 who.name,
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: who.nameColor,
                 ),
               ),
@@ -149,7 +149,7 @@ class _Quote extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: mine ? AC.mustardTint : _questionInk,
                   ),
                 ),

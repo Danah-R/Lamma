@@ -32,7 +32,7 @@ class TrendingSection extends StatelessWidget {
                 l.topicsTrendingTitle,
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),
@@ -135,7 +135,7 @@ class _TrendingCard extends StatelessWidget {
                               category.label(l),
                               style: TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: category.ink,
                               ),
                             ),
@@ -147,7 +147,7 @@ class _TrendingCard extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 15,
                                 height: 1.5,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.ink,
                               ),
                             ),
@@ -159,7 +159,7 @@ class _TrendingCard extends StatelessWidget {
                                 l.topicsTalkAboutIt,
                                 style: const TextStyle(
                                   fontSize: 13,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   color: AC.brick,
                                 ),
                               ),

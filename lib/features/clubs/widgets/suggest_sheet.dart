@@ -198,7 +198,7 @@ class _SuggestSheetState extends State<SuggestSheet> {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 17,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.ink,
                               ),
                             ),
@@ -386,7 +386,7 @@ class _SuggestSheetState extends State<SuggestSheet> {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),

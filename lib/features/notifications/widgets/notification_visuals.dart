@@ -80,7 +80,7 @@ class NotificationAvatar extends StatelessWidget {
         a.initial,
         style: TextStyle(
           fontSize: (size * .42).roundToDouble(),
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: a.ink,
           height: 1.1,
         ),
@@ -95,7 +95,7 @@ InlineSpan notificationSpan(
   required Color color,
   required double size,
   double height = 1.5,
-  FontWeight leadWeight = FontWeight.w800,
+  FontWeight leadWeight = FontWeight.w700,
 }) {
   final lead = n.text.startsWith(n.lead) ? n.lead : '';
   final rest = n.text.substring(lead.length);

@@ -27,7 +27,7 @@ class ChatHeader extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 30,
                   height: 1.15,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),

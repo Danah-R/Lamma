@@ -70,7 +70,7 @@ class BookSuggestionTile extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 15,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             height: 1.3,
                             color: book.inkColor,
                           ),
@@ -124,7 +124,7 @@ class BookSuggestionTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   height: 1.3,
                   color: AC.ink,
                 ),
@@ -211,7 +211,7 @@ class VoteButton extends StatelessWidget {
                   '$votes',
                   style: TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: voted ? Colors.white : AC.ink,
                   ),
                 ),
@@ -278,7 +278,7 @@ class SuggestBookTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: AC.brick,
                     ),
                   ),

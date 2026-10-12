@@ -166,7 +166,7 @@ class NotificationsScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 26,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -197,7 +197,7 @@ class NotificationsScreen extends StatelessWidget {
                                   l.notifReadAll,
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                     color: AC.brick,
                                   ),
                                 ),
@@ -280,7 +280,7 @@ class _Hero extends StatelessWidget {
                   l.notifsHeroTitle(unread),
                   style: const TextStyle(
                     fontSize: 19,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.3,
                     color: AC.ink,
                   ),
@@ -335,7 +335,7 @@ class _GroupHeader extends StatelessWidget {
           title,
           style: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             color: AC.textSoft,
           ),
         ),

@@ -188,7 +188,7 @@ class _ReplyBar extends StatelessWidget {
                           title,
                           style: const TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: AC.brick,
                           ),
                         ),

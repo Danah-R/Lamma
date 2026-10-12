@@ -174,7 +174,7 @@ class _NewMomentScreenState extends State<NewMomentScreen> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -313,7 +313,7 @@ class _NewMomentScreenState extends State<NewMomentScreen> {
                               l.momentsShareWithFamily,
                               style: const TextStyle(
                                 fontSize: 17,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
@@ -345,7 +345,7 @@ class _Label extends StatelessWidget {
         text,
         style: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: AC.ink,
         ),
       ),

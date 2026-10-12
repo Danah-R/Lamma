@@ -61,7 +61,7 @@ class _BookOfMonthCardState extends State<BookOfMonthCard> {
                         l.clubsBookOfMonthBadge,
                         style: const TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.brick,
                         ),
                       ),
@@ -73,7 +73,7 @@ class _BookOfMonthCardState extends State<BookOfMonthCard> {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 21,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         height: 1.3,
                         color: AC.ink,
                       ),
@@ -125,7 +125,7 @@ class _BookOfMonthCardState extends State<BookOfMonthCard> {
             l.clubsAboutHeading,
             style: const TextStyle(
               fontSize: 15,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AC.ink,
             ),
           ),
@@ -161,7 +161,7 @@ class _BookOfMonthCardState extends State<BookOfMonthCard> {
                       _expanded ? l.clubsReadLess : l.clubsReadMore,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.brick,
                       ),
                     ),
@@ -242,7 +242,7 @@ class _BookCover extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       height: 1.3,
                       color: book.inkColor,
                     ),

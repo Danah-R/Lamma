@@ -176,7 +176,7 @@ class _NotificationBellState extends State<NotificationBell>
                           count > 99 ? '99+' : '$count',
                           style: const TextStyle(
                             fontSize: 11,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
                             height: 1.1,
                           ),

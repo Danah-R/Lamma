@@ -157,7 +157,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   l.gamesSinJimTitle,
                   style: const TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -175,7 +175,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                       l.seenWhoPlays,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -221,7 +221,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   l.seenQuestionCount,
                   style: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -276,7 +276,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -462,7 +462,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   win.name,
                   style: const TextStyle(
                     fontSize: 28,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),
@@ -522,7 +522,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                                 '${k + 1}',
                                 style: const TextStyle(
                                   fontSize: 13,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   color: AC.navy,
                                 ),
                               ),
@@ -547,7 +547,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                               '${_pts[ranked[k]] ?? 0}',
                               style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.ink,
                               ),
                             ),
@@ -748,7 +748,7 @@ class _StartButton extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
@@ -813,7 +813,7 @@ class _QuestionCard extends StatelessWidget {
                     about.name,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: AC.ink,
                     ),
                   ),
@@ -827,7 +827,7 @@ class _QuestionCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 26,
               height: 1.5,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AC.navy,
             ),
           ),
@@ -849,7 +849,7 @@ class _QuestionCard extends StatelessWidget {
                         TextSpan(
                           text: answerer.name,
                           style: const TextStyle(
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: _answerInk,
                           ),
                         ),
@@ -910,7 +910,7 @@ class _JudgeButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: foreground,
                 ),
               ),
@@ -934,7 +934,7 @@ class _ResultButton extends StatelessWidget {
     required this.foreground,
     required this.onTap,
     this.border,
-    this.weight = FontWeight.w800,
+    this.weight = FontWeight.w700,
   });
   @override
   Widget build(BuildContext context) => Material(

@@ -72,7 +72,7 @@ class _SuggestCardState extends State<SuggestCard> {
                       l.topicsSuggestTitle,
                       style: const TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -146,7 +146,7 @@ class _SuggestCardState extends State<SuggestCard> {
                       l.topicsAdd,
                       style: const TextStyle(
                         fontSize: 15,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),

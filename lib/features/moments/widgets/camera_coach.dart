@@ -131,7 +131,7 @@ class _CameraCoachState extends State<CameraCoach>
                               l.momentsSnapPrompt,
                               style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
@@ -215,7 +215,7 @@ class _Button extends StatelessWidget {
               label,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: filled ? FontWeight.w800 : FontWeight.w700,
+                fontWeight: filled ? FontWeight.w700 : FontWeight.w700,
                 color: filled ? AC.brick : Colors.white,
               ),
             ),

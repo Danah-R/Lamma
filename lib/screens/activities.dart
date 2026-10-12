@@ -102,7 +102,7 @@ class _ActivitiesHeader extends StatelessWidget {
                 l.navActivities,
                 style: const TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   height: 1.2,
                   color: AC.ink,
                 ),
@@ -261,7 +261,7 @@ class _RouletteCard extends StatelessWidget {
                       l.gamesRouletteTitle,
                       style: const TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -345,7 +345,7 @@ class _GameTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 17,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 color: AC.ink,
               ),
             ),
@@ -621,7 +621,7 @@ class ClubCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 17,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.ink,
                         ),
                       ),
@@ -654,7 +654,7 @@ class ClubCard extends StatelessWidget {
                           text: captionBold,
                           style: TextStyle(
                             color: captionBoldColor,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         TextSpan(text: ' $captionRest'),
@@ -785,7 +785,7 @@ class _PillButton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: foreground,
         ),
       ),
@@ -838,7 +838,7 @@ class _SectionHeading extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             color: AC.ink,
           ),
         ),
@@ -928,7 +928,7 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),
@@ -1069,7 +1069,7 @@ class _PlaceCard extends StatelessWidget {
                   place.name,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -1185,7 +1185,7 @@ class _VotersStack extends StatelessWidget {
       '+$more',
       style: const TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w700,
         color: AC.ink,
       ),
     ),
@@ -1498,7 +1498,7 @@ class _GamesPageState extends State<GamesPage> {
                             l.gamesAllGamesTitle,
                             style: const TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: AC.ink,
                             ),
                           ),
@@ -1614,7 +1614,7 @@ class _GamesHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 28,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   height: 1.2,
                   color: AC.ink,
                 ),
@@ -1722,7 +1722,7 @@ class RouletteHeroCard extends StatelessWidget {
                                 l.gamesTonightBadge,
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   color: AC.mustard,
                                 ),
                               ),
@@ -1734,7 +1734,7 @@ class RouletteHeroCard extends StatelessWidget {
                           l.gamesRouletteTitle,
                           style: const TextStyle(
                             fontSize: 28,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             height: 1.25,
                             color: Colors.white,
                           ),
@@ -1769,7 +1769,7 @@ class RouletteHeroCard extends StatelessWidget {
                                 l.gamesSpinItButton,
                                 style: const TextStyle(
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ),
@@ -1976,7 +1976,7 @@ class GameTile extends StatelessWidget {
                               l.gamesSoonBadge,
                               style: const TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
@@ -1992,7 +1992,7 @@ class GameTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: game.dark ? Colors.white : AC.ink,
                   ),
                 ),
@@ -2050,7 +2050,7 @@ class _GamePlaceholderPage extends StatelessWidget {
     body: Center(
       child: Text(
         name,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
       ),
     ),
   );
@@ -2080,7 +2080,7 @@ class _AzizPageState extends State<AzizPage> {
             style: const TextStyle(
               color: Colors.white,
               fontSize: 22,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
               height: 1.35,
             ),
           ),
@@ -2136,7 +2136,7 @@ class _SinJimPageState extends State<SinJimPage> {
             const SizedBox(height: 8),
             Text(
               ld(context, who.name),
-              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
             ),
             const SizedBox(height: 18),
             Text(
@@ -2144,7 +2144,7 @@ class _SinJimPageState extends State<SinJimPage> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 height: 1.4,
               ),
             ),
@@ -2366,7 +2366,7 @@ class _RoulettePageState extends State<RoulettePage>
                                 : ld(context, _items[_result!]),
                             style: const TextStyle(
                               fontSize: 22,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                               color: C.terracotta,
                             ),
                           ),
@@ -2401,7 +2401,7 @@ class _WheelPainter extends CustomPainter {
           style: TextStyle(
             color: Colors.white,
             fontSize: size,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             fontFamily: kFontFamily,
             shadows: const [
               Shadow(
@@ -2423,7 +2423,7 @@ class _WheelPainter extends CustomPainter {
         style: const TextStyle(
           color: Colors.white,
           fontSize: 10,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           fontFamily: kFontFamily,
           shadows: [
             Shadow(color: Colors.black38, blurRadius: 3, offset: Offset(0, 1)),
@@ -2554,7 +2554,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 28,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -2575,7 +2575,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 26,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         color: C.ink,
                       ),
                     ),
@@ -2646,7 +2646,7 @@ class BookClubPage extends StatelessWidget {
                     l.activitiesBookClubDesc,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -2709,7 +2709,7 @@ class _PodcastPageState extends State<PodcastPage> {
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
             Text(
@@ -2733,7 +2733,7 @@ class _PodcastPageState extends State<PodcastPage> {
               icon: const Icon(Icons.play_arrow_rounded),
               label: Text(
                 l.homeStartListening,
-                style: const TextStyle(fontWeight: FontWeight.w800),
+                style: const TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -2749,13 +2749,13 @@ class _PodcastPageState extends State<PodcastPage> {
                 Expanded(
                   child: Text(
                     l.podcastListenedLabel,
-                    style: const TextStyle(fontWeight: FontWeight.w800),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
                 Text(
                   l.podcastListenedFraction(count),
                   style: const TextStyle(
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w700,
                     color: C.terracotta,
                   ),
                 ),
@@ -2841,7 +2841,7 @@ class _OutingsPageState extends State<OutingsPage> {
                 l.outingsPlacesMap,
                 style: const TextStyle(
                   color: C.teal,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
@@ -2865,7 +2865,7 @@ class _OutingsPageState extends State<OutingsPage> {
                       Text(
                         ld(context, p.name),
                         style: const TextStyle(
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 16,
                         ),
                       ),
@@ -2910,7 +2910,7 @@ class SuggestPlacePage extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -2922,7 +2922,7 @@ class SuggestPlacePage extends StatelessWidget {
             children: [
               Text(
                 l.suggestPlaceWhyHeading,
-                style: const TextStyle(fontWeight: FontWeight.w900),
+                style: const TextStyle(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 6),
               Text(
@@ -2982,7 +2982,7 @@ class OurOutingsPage extends StatelessWidget {
                   child: Text(
                     ld(context, p.name),
                     style: const TextStyle(
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       fontSize: 16,
                     ),
                   ),

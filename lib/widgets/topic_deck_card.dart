@@ -390,7 +390,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                     'سالفة الليلة',
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: _C.brick,
                     ),
                   ),
@@ -438,7 +438,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.55,
                     color: _C.ink,
                   ),
@@ -478,7 +478,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                     'يلا نسولف',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
@@ -549,7 +549,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                 cat.label(l),
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: cat.ink,
                 ),
               ),
@@ -606,7 +606,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.55,
                     color: _C.ink,
                   ),
@@ -652,7 +652,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                         l.topicsDiscussedBadge,
                         style: const TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: _C.doneInk,
                         ),
                       ),
@@ -718,7 +718,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: done ? _C.doneInk : Colors.white,
                         ),
                       ),
@@ -751,7 +751,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                           l.topicsShuffle,
                           style: const TextStyle(
                             fontSize: 15,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),

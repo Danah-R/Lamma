@@ -26,7 +26,7 @@ class PlayerAvatar extends StatelessWidget {
         player.initial,
         style: TextStyle(
           fontSize: size * .42,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: player.ink,
         ),
       ),

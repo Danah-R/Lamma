@@ -33,7 +33,7 @@ class DiscussedSection extends StatelessWidget {
               l.topicsDoneTitle,
               style: const TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 color: AC.ink,
               ),
             ),

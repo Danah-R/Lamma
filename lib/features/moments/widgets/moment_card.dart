@@ -144,7 +144,7 @@ class _MomentCardState extends State<MomentCard>
                         ),
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.ink,
                         ),
                       ),
@@ -170,7 +170,7 @@ class _MomentCardState extends State<MomentCard>
                       l.momentsNew,
                       style: const TextStyle(
                         fontSize: 11,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
@@ -232,7 +232,7 @@ class _MomentCardState extends State<MomentCard>
                       '$n',
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -480,7 +480,7 @@ class _LikePill extends StatelessWidget {
                     '$count',
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: fg,
                     ),
                   ),
@@ -533,7 +533,7 @@ class _CommentTile extends StatelessWidget {
                   comment.authorId == momentsMeId ? l.momentsYou : who.name,
                   style: TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: who.nameColor,
                   ),
                 ),

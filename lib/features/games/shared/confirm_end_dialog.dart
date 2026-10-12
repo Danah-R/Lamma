@@ -87,7 +87,7 @@ class _ConfirmEndCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: AC.ink,
                     ),
                   ),
@@ -186,7 +186,7 @@ class _DialogButton extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             color: foreground,
           ),
         ),

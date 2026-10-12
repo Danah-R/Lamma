@@ -80,7 +80,7 @@ class EpisodeCard extends StatelessWidget {
                         l.clubsEpisodeOfWeekBadge,
                         style: const TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.teal,
                         ),
                       ),
@@ -99,7 +99,7 @@ class EpisodeCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 19,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         height: 1.35,
                         color: AC.ink,
                       ),
@@ -134,7 +134,7 @@ class EpisodeCard extends StatelessWidget {
             l.clubsAboutEpisodeHeading,
             style: const TextStyle(
               fontSize: 15,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AC.ink,
             ),
           ),
@@ -167,7 +167,7 @@ class EpisodeCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -191,7 +191,7 @@ class EpisodeCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),

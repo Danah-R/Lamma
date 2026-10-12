@@ -42,7 +42,7 @@ class PollCard extends StatelessWidget {
                         who.name,
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: who.nameColor,
                         ),
                       ),
@@ -69,7 +69,7 @@ class PollCard extends StatelessWidget {
                             l.chatPollBadge,
                             style: const TextStyle(
                               fontSize: 11,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: AC.navy,
                             ),
                           ),
@@ -83,7 +83,7 @@ class PollCard extends StatelessWidget {
                   message.text,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.5,
                     color: AC.ink,
                   ),
@@ -200,7 +200,7 @@ class _Option extends StatelessWidget {
                       '$votes',
                       style: const TextStyle(
                         fontSize: 13,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.muted,
                       ),
                     ),

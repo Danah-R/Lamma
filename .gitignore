@@ -49,3 +49,10 @@ app.*.map.json
 
 # Thmanyah font: licensed, must not be republished
 assets/fonts/thmanyah/
+
+# Thmanyah font + archives: licensed, never committed
+/assets/fonts/*.otf
+/assets/fonts/*.ttf
+/assets/fonts/*.woff2
+/assets/fonts/thmanyah/
+*.zip

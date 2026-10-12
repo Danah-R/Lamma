@@ -30,7 +30,7 @@ class MomentAvatar extends StatelessWidget {
       member.initial,
       style: TextStyle(
         fontSize: fontSize ?? (size * .42).roundToDouble(),
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w700,
         color: member.ink,
         height: 1.1,
       ),

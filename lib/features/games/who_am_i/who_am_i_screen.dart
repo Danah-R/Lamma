@@ -173,7 +173,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                         l.whoAmIChooseCategory,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.ink,
                         ),
                       ),
@@ -218,7 +218,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                         l.whoAmIRoundTime,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.ink,
                         ),
                       ),
@@ -299,7 +299,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                   '$_score',
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.navy,
                   ),
                 ),
@@ -337,7 +337,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                         style: const TextStyle(
                           fontSize: 30,
                           height: 1,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
@@ -412,7 +412,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                         l.whoAmIWordNo(_i + 1),
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: cat.tagInk,
                         ),
                       ),
@@ -443,7 +443,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                             style: const TextStyle(
                               fontSize: 50,
                               height: 1.2,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: AC.navy,
                             ),
                           ),
@@ -543,7 +543,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
@@ -579,7 +579,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                   l.whoAmIRoundWords,
                   style: const TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -774,7 +774,7 @@ class _IntroHeroState extends State<_IntroHero>
                                     .fontFamily,
                                 fontSize: 64,
                                 height: 1,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: widget.cat.bg,
                               ),
                               child: const Text('؟'),
@@ -802,7 +802,7 @@ class _IntroHeroState extends State<_IntroHero>
             AppLocalizations.of(context).gamesWhoAmITitle,
             style: const TextStyle(
               fontSize: 32,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
@@ -863,7 +863,7 @@ class _Pill extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: size,
-        fontWeight: size == 13 ? FontWeight.w700 : FontWeight.w800,
+        fontWeight: size == 13 ? FontWeight.w700 : FontWeight.w700,
         color: Colors.white,
       ),
     ),
@@ -968,7 +968,7 @@ class _CategoryTile extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.ink,
                               ),
                             ),
@@ -1057,7 +1057,7 @@ class _SegmentButton extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: selected ? AC.ink : AC.muted,
             ),
           ),
@@ -1104,7 +1104,7 @@ class _StartButton extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
@@ -1181,7 +1181,7 @@ class _FlashBadge extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: ok ? AC.navy : Colors.white,
         ),
       ),
@@ -1208,7 +1208,7 @@ class _ActionButton extends StatelessWidget {
     this.icon,
     this.shadow = false,
     this.radius = 22,
-    this.weight = FontWeight.w800,
+    this.weight = FontWeight.w700,
   });
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -1285,7 +1285,7 @@ class _ScoreBox extends StatelessWidget {
           style: TextStyle(
             fontSize: 28,
             height: 1,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             color: foreground,
           ),
         ),

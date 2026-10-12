@@ -48,7 +48,7 @@ class NotificationPanel extends StatelessWidget {
                           l.notifBellLabelNone,
                           style: const TextStyle(
                             fontSize: 17,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: AC.ink,
                           ),
                         ),
@@ -72,7 +72,7 @@ class NotificationPanel extends StatelessWidget {
                               l.notifReadAll,
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.brick,
                               ),
                             ),
@@ -143,7 +143,7 @@ class NotificationPanel extends StatelessWidget {
                         l.notifSeeAll,
                         style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.navy,
                         ),
                       ),

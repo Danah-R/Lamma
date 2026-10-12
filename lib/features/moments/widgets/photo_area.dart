@@ -52,7 +52,7 @@ class PhotoArea extends StatelessWidget {
                             l.momentsChangePhoto,
                             style: const TextStyle(
                               fontSize: 13,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),
@@ -96,7 +96,7 @@ class PhotoArea extends StatelessWidget {
               l.momentsSnapPrompt,
               style: const TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 color: AC.ink,
               ),
             ),
@@ -170,7 +170,7 @@ class _Btn extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: fg,
                     ),
                   ),

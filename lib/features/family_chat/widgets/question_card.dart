@@ -45,7 +45,7 @@ class QuestionCard extends StatelessWidget {
                   l.chatQuestionLabel,
                   style: const TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: _ink,
                   ),
                 ),
@@ -56,7 +56,7 @@ class QuestionCard extends StatelessWidget {
               question,
               style: const TextStyle(
                 fontSize: 17,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 height: 1.5,
                 color: AC.ink,
               ),
@@ -87,7 +87,7 @@ class QuestionCard extends StatelessWidget {
                             l.chatAnswer,
                             style: const TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),

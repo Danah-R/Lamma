@@ -186,7 +186,7 @@ class _BookTabState extends State<_BookTab> {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),
@@ -301,7 +301,7 @@ class _PodcastTabState extends State<_PodcastTab> {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),
@@ -382,7 +382,7 @@ class _ClubsHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 28,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   height: 1.2,
                   color: AC.ink,
                 ),
@@ -489,7 +489,7 @@ class _ClubsTab extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: selected ? AC.ink : AC.muted,
                   ),
                 ),

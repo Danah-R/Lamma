@@ -58,7 +58,7 @@ class DiscussionDateCard extends StatelessWidget {
                   date,
                   style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.1,
                     color: AC.navy,
                   ),
@@ -84,7 +84,7 @@ class DiscussionDateCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),
@@ -116,7 +116,7 @@ class DiscussionDateCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: reminderOn ? AC.navy : Colors.white,
                     ),
                   ),

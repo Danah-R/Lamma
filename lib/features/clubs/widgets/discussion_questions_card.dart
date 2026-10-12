@@ -64,7 +64,7 @@ class _DiscussionQuestionsCardState extends State<DiscussionQuestionsCard> {
             l.clubsWhatToDiscussTitle,
             style: const TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AC.ink,
             ),
           ),
@@ -85,7 +85,7 @@ class _DiscussionQuestionsCardState extends State<DiscussionQuestionsCard> {
                     '${i + 1}',
                     style: const TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: AC.navy,
                     ),
                   ),
@@ -219,7 +219,7 @@ class _DiscussionQuestionsCardState extends State<DiscussionQuestionsCard> {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.teal,
                         ),
                       ),

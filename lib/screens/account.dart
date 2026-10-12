@@ -26,7 +26,7 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 12),
           Center(child: Avatar(profile.name, size: 104)),
           const SizedBox(height: 12),
-          Center(child: Text(profile.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900))),
+          Center(child: Text(profile.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700))),
           Center(
               child: Text(l.accountAgeSpirit(profile.age),
                   style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w600))),
@@ -38,7 +38,7 @@ class _AccountPageState extends State<AccountPage> {
                 if (mounted) setState(() {});
               },
               child: Text(l.accountDesignCharacter,
-                  style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w800)),
+                  style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w700)),
             ),
           ),
           Center(
@@ -82,7 +82,7 @@ class _AccountPageState extends State<AccountPage> {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(l.accountParentControlsTitle,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16)),
                     Text(l.accountParentControlsDesc,
                         style: const TextStyle(color: Colors.white70, fontSize: 12)),
                   ]),
@@ -108,7 +108,7 @@ class _AccountPageState extends State<AccountPage> {
           color: c,
           padding: const EdgeInsets.symmetric(vertical: 18),
           child: Column(children: [
-            Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+            Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w700)),
             Text(label, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
           ]),
         ),
@@ -203,7 +203,7 @@ class BadgesPage extends StatelessWidget {
                     Text(ld(context, b.$1),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: b == badges.first ? Colors.white : C.ink)),
                   ]),
                 ),

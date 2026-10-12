@@ -202,7 +202,7 @@ class _Header extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 28,
                   height: 1.2,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AC.ink,
                 ),
               ),

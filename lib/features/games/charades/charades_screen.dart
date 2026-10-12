@@ -222,7 +222,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                             l.gamesCharadesTitle,
                             style: const TextStyle(
                               fontSize: 26,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: AC.ink,
                             ),
                           ),
@@ -285,7 +285,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                       l.charadesWhoWithWho,
                       style: const TextStyle(
                         fontSize: 15,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AC.ink,
                       ),
                     ),
@@ -334,7 +334,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                   l.charadesRounds,
                   style: const TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -454,7 +454,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                     style: const TextStyle(
                       fontSize: 38,
                       height: 1.2,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
@@ -494,7 +494,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                               actor.name,
                               style: const TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
@@ -588,7 +588,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: charadesTeams[k].ink,
                               ),
                             ),
@@ -597,7 +597,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                             '${_score[k]}',
                             style: TextStyle(
                               fontSize: 22,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: charadesTeams[k].ink,
                             ),
                           ),
@@ -637,7 +637,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                         l.charadesSecondsShort(left),
                         style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: left <= 10 ? AC.brick : AC.ink,
                         ),
                       ),
@@ -712,7 +712,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                               l.charadesActIt,
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                                 color: AC.brick,
                               ),
                             ),
@@ -728,7 +728,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                                     style: const TextStyle(
                                       fontSize: 38,
                                       height: 1.3,
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w700,
                                       color: AC.navy,
                                     ),
                                   )
@@ -871,7 +871,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),
@@ -898,7 +898,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: charadesTeams[k].ink,
                           ),
                         ),
@@ -907,7 +907,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                           style: TextStyle(
                             fontSize: 36,
                             height: 1.1,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: charadesTeams[k].ink,
                           ),
                         ),
@@ -937,7 +937,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                         l.charadesPlayerPoints,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: AC.ink,
                         ),
                       ),
@@ -1060,7 +1060,7 @@ class _TeamNameBox extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: style.ink,
                 ),
               ),
@@ -1076,7 +1076,7 @@ class _TeamNameBox extends StatelessWidget {
             onChanged: (_) => onChanged(),
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: style.ink,
             ),
             decoration: InputDecoration(
@@ -1207,7 +1207,7 @@ class _TeamSeg extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: on ? Colors.white : AC.muted,
             ),
           ),
@@ -1262,7 +1262,7 @@ class _Segment extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: selected ? AC.ink : AC.muted,
             ),
           ),
@@ -1293,7 +1293,7 @@ class _BigButton extends StatelessWidget {
     this.trailing,
     this.shadow = false,
     this.fontSize = 16,
-    this.weight = FontWeight.w800,
+    this.weight = FontWeight.w700,
   });
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -1387,7 +1387,7 @@ class _EndGameOutline extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: color,
                 ),
               ),
@@ -1428,7 +1428,7 @@ class _HandoffScore extends StatelessWidget {
           '$score',
           style: const TextStyle(
             fontSize: 24,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
         ),
@@ -1463,7 +1463,7 @@ class _RevealButton extends StatelessWidget {
                   label,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: AC.ink,
                   ),
                 ),
@@ -1556,7 +1556,7 @@ class _RankRow extends StatelessWidget {
             textAlign: TextAlign.end,
             style: const TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               color: AC.ink,
             ),
           ),
@@ -1581,7 +1581,7 @@ class _Tag extends StatelessWidget {
       label,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: fg),
+      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: fg),
     ),
   );
 }

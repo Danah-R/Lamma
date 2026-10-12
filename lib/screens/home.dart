@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(l.homeGreeting(profile.name),
-                    style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w900)),
+                    style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w700)),
                 Text(ld(context, profile.family),
                     style: const TextStyle(fontSize: 13, color: C.inkSoft, fontWeight: FontWeight.w700)),
               ]),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(l.homePhoneFreeBanner(ld(context, rules.from), ld(context, rules.to)),
-                        style: const TextStyle(fontWeight: FontWeight.w800)),
+                        style: const TextStyle(fontWeight: FontWeight.w700)),
                   ),
                 ]),
               ),
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(l.homePunishmentBanner(ld(context, rules.punishments[profile.name]!)),
-                        style: const TextStyle(fontWeight: FontWeight.w800)),
+                        style: const TextStyle(fontWeight: FontWeight.w700)),
                   ),
                 ]),
               ),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700)),
               const SizedBox(height: 4),
               Text(l.homeFamilyNightTime,
-                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
+                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700)),
               const SizedBox(height: 12),
               Row(children: [
                 AvatarStack(_tonight, size: 36),
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(l.homePodcastTitle,
-                        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
                     Text(l.homePodcastEpisode, style: const TextStyle(color: C.inkSoft)),
                   ]),
                 ),
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(vertical: 26),
             child: Text(l.homeMemoriesQuote,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w800, fontSize: 15)),
+                style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w700, fontSize: 15)),
           ),
 
           // activity
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(ld(context, e.title), style: const TextStyle(fontWeight: FontWeight.w800)),
+                  Text(ld(context, e.title), style: const TextStyle(fontWeight: FontWeight.w700)),
                   Text('${localizedDateLabel(context, e.date)} · ${ld(context, e.time)}',
                       style: const TextStyle(color: C.inkSoft, fontSize: 12)),
                 ]),
@@ -232,14 +232,14 @@ class _HomePageState extends State<HomePage> {
       child: Column(children: [
         Text(isToday ? '$dayLabel ${l.homeDayToday}' : dayLabel,
             style: TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w800, color: isToday ? C.terracotta : C.inkSoft)),
+                fontSize: 11, fontWeight: FontWeight.w700, color: isToday ? C.terracotta : C.inkSoft)),
         const SizedBox(height: 6),
         isToday
             ? CircleAvatar(
                 radius: 15,
                 backgroundColor: C.terracotta,
-                child: Text('$n', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900)))
-            : Text('$n', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+                child: Text('$n', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)))
+            : Text('$n', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         if (dayEvents.isEmpty)
           Text(l.homeNoEvents, style: const TextStyle(fontSize: 11, color: C.inkSoft))
@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                   Text(ld(context, e.title),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800)),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
                   Text(ld(context, e.time), style: const TextStyle(fontSize: 10, color: C.inkSoft)),
                 ]),
               ),
@@ -299,7 +299,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       const SizedBox(height: 10),
       Center(child: IconBubble(Icons.event_rounded, e.color, size: 72)),
       const SizedBox(height: 16),
-      Center(child: Text(ld(context, e.title), style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900))),
+      Center(child: Text(ld(context, e.title), style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w700))),
       const SizedBox(height: 6),
       Center(
           child: Text('${localizedDateLabel(context, e.date)} · ${ld(context, e.time)}',
@@ -373,7 +373,7 @@ class _AddEventPageState extends State<AddEventPage> {
           child: Row(children: [
             const Icon(Icons.calendar_today_rounded, color: C.inkSoft),
             const SizedBox(width: 12),
-            Expanded(child: Text(localizedDateLabel(context, _date), style: const TextStyle(fontWeight: FontWeight.w800))),
+            Expanded(child: Text(localizedDateLabel(context, _date), style: const TextStyle(fontWeight: FontWeight.w700))),
             const Icon(Icons.expand_more_rounded, color: C.inkSoft),
           ]),
         ),
@@ -388,7 +388,7 @@ class _AddEventPageState extends State<AddEventPage> {
           child: Row(children: [
             const Icon(Icons.schedule_rounded, color: C.inkSoft),
             const SizedBox(width: 12),
-            Text(_time.format(context), style: const TextStyle(fontWeight: FontWeight.w800)),
+            Text(_time.format(context), style: const TextStyle(fontWeight: FontWeight.w700)),
           ]),
         ),
       ],
@@ -412,7 +412,7 @@ class WeeklyRecapPage extends StatelessWidget {
             child: Column(children: [
               Icon(i, color: c),
               const SizedBox(height: 8),
-              Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+              Text(v, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w700)),
               Text(label, style: const TextStyle(color: C.inkSoft, fontWeight: FontWeight.w700)),
             ]),
           ),
@@ -423,7 +423,7 @@ class WeeklyRecapPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 26),
         child: Center(
             child: Text(l.recapHeroTitle,
-                style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900))),
+                style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700))),
       ),
       const SizedBox(height: 12),
       Row(children: [
@@ -440,7 +440,7 @@ class WeeklyRecapPage extends StatelessWidget {
       const SizedBox(height: 12),
       LCard(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.recapMostShared, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(l.recapMostShared, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 12),
           Row(children: [
             AvatarStack([for (final m in members.take(4)) m.name], size: 38),

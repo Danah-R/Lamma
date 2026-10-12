@@ -36,14 +36,53 @@ ThemeData buildTheme() {
     surface: C.cream,
     brightness: Brightness.light,
   );
+  // One font everywhere: the family is also set on the text themes
+  // themselves, and on every component that styles its own text.
+  final textTheme = Typography.blackMountainView.apply(
+    fontFamily: kFontFamily,
+    bodyColor: C.ink,
+    displayColor: C.ink,
+  );
+  final primaryTextTheme = Typography.whiteMountainView.apply(
+    fontFamily: kFontFamily,
+  );
+  const font = TextStyle(fontFamily: kFontFamily);
   return ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: C.cream,
     fontFamily: kFontFamily,
-    textTheme: Typography.blackMountainView.apply(
-      bodyColor: C.ink,
-      displayColor: C.ink,
+    textTheme: textTheme,
+    primaryTextTheme: primaryTextTheme,
+    snackBarTheme: SnackBarThemeData(
+      contentTextStyle: textTheme.bodyMedium!.copyWith(
+        color: scheme.onInverseSurface,
+      ),
+      actionTextColor: scheme.inversePrimary,
+    ),
+    dialogTheme: DialogThemeData(
+      titleTextStyle: textTheme.headlineSmall!.copyWith(
+        color: scheme.onSurface,
+      ),
+      contentTextStyle: textTheme.bodyMedium!.copyWith(
+        color: scheme.onSurfaceVariant,
+      ),
+    ),
+    tooltipTheme: TooltipThemeData(
+      textStyle: textTheme.bodyMedium!.copyWith(color: scheme.onInverseSurface),
+    ),
+    datePickerTheme: const DatePickerThemeData(
+      headerHeadlineStyle: font,
+      headerHelpStyle: font,
+      dayStyle: font,
+      weekdayStyle: font,
+      yearStyle: font,
+    ),
+    timePickerTheme: const TimePickerThemeData(
+      helpTextStyle: font,
+      hourMinuteTextStyle: font,
+      dayPeriodTextStyle: font,
+      dialTextStyle: font,
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -52,9 +91,10 @@ ThemeData buildTheme() {
       scrolledUnderElevation: 0,
       centerTitle: true,
       titleTextStyle: TextStyle(
+        fontFamily: kFontFamily,
         color: C.ink,
         fontSize: 18,
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w700,
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
@@ -64,9 +104,10 @@ ThemeData buildTheme() {
       height: 68,
       labelTextStyle: WidgetStateProperty.resolveWith(
         (s) => TextStyle(
+          fontFamily: kFontFamily,
           fontSize: 11,
           fontWeight: s.contains(WidgetState.selected)
-              ? FontWeight.w800
+              ? FontWeight.w700
               : FontWeight.w600,
           color: s.contains(WidgetState.selected)
               ? C.coral
@@ -82,6 +123,14 @@ ThemeData buildTheme() {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      hintStyle: font,
+      labelStyle: font,
+      floatingLabelStyle: font,
+      helperStyle: font,
+      errorStyle: font,
+      counterStyle: font,
+      prefixStyle: font,
+      suffixStyle: font,
       filled: true,
       fillColor: C.card,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

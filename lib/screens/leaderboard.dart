@@ -32,12 +32,12 @@ class RankList extends StatelessWidget {
             SizedBox(
                 width: 30,
                 child: Text('${i + 1}',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: C.terracotta))),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: C.terracotta))),
             Avatar(list[i].name, size: 34),
             const SizedBox(width: 12),
             Expanded(
-                child: Text(ld(context, list[i].name), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800))),
-            Text(l.leaderboardPts(list[i].points), style: const TextStyle(fontWeight: FontWeight.w800)),
+                child: Text(ld(context, list[i].name), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
+            Text(l.leaderboardPts(list[i].points), style: const TextStyle(fontWeight: FontWeight.w700)),
           ]),
         ),
       ],
@@ -65,7 +65,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(l.leaderboardCycleReward(ld(context, rules.cycle)),
                     style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w700)),
-                Text(ld(context, rules.reward), style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+                Text(ld(context, rules.reward), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
               ]),
             ),
           ]),
@@ -161,7 +161,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
             const Icon(Icons.phonelink_erase_rounded, color: C.terracotta),
             const SizedBox(width: 12),
             Expanded(
-                child: Text(l.parentControlsPhoneFreeTime, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900))),
+                child: Text(l.parentControlsPhoneFreeTime, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
             Switch(
                 value: rules.phoneFree,
                 activeThumbColor: Colors.white,
@@ -194,7 +194,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                     width: 48,
                     child: Text('-${rules.penalty}',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18))),
+                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18))),
                 IconButton.filled(
                     style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
                     onPressed: () => setState(() => rules.penalty = (rules.penalty + 5).clamp(5, 50)),
@@ -243,7 +243,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('${ld(context, v.who)} · ${ld(context, v.kind)}', style: const TextStyle(fontWeight: FontWeight.w800)),
+                    Text('${ld(context, v.who)} · ${ld(context, v.kind)}', style: const TextStyle(fontWeight: FontWeight.w700)),
                     Text('${ld(context, v.detail)} · ${ld(context, v.when)}', style: const TextStyle(color: C.inkSoft, fontSize: 12)),
                   ]),
                 ),
@@ -253,7 +253,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
                             v.done = true;
                             rules.punishments.remove(v.who);
                           }),
-                      child: Text(l.parentControlsDone, style: const TextStyle(color: C.teal, fontWeight: FontWeight.w800)))
+                      child: Text(l.parentControlsDone, style: const TextStyle(color: C.teal, fontWeight: FontWeight.w700)))
                 else if (v.done)
                   const Icon(Icons.check_circle_rounded, color: C.green),
               ]),
@@ -295,7 +295,7 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
         padding: const EdgeInsets.all(12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(label, style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w700)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
         ]),
       );
 }

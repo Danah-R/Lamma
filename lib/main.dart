@@ -1,18 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/foundation.dart' show debugPrint, kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'l10n/app_localizations.dart';
-import 'screens/account.dart';
-import 'screens/activities.dart';
-import 'screens/activities_colors.dart';
-import 'screens/home.dart';
-import 'screens/onboarding.dart';
+import 'backend/backend.dart';
+import 'config.dart';
 import 'data.dart';
 import 'features/clubs/clubs_controller.dart';
 import 'features/clubs/clubs_screen.dart';
@@ -20,16 +16,21 @@ import 'features/family_chat/family_chat_controller.dart';
 import 'features/family_chat/family_chat_screen.dart';
 import 'features/games/games_controller.dart';
 import 'features/moments/moments_controller.dart';
-import 'features/outings/outing_controller.dart';
-import 'features/notifications/notification_model.dart';
-import 'features/notifications/notification_seed.dart';
-import 'features/notifications/widgets/notification_banner.dart';
-import 'features/notifications/notifications_controller.dart';
 import 'features/moments/moments_screen.dart';
-import 'config.dart';
 import 'features/moments/widgets/camera_coach.dart';
 import 'features/moments/widgets/share_pulse.dart';
+import 'features/notifications/notification_model.dart';
+import 'features/notifications/notification_seed.dart';
+import 'features/notifications/notifications_controller.dart';
+import 'features/notifications/widgets/notification_banner.dart';
+import 'features/outings/outing_controller.dart';
 import 'features/topics/topics_controller.dart';
+import 'l10n/app_localizations.dart';
+import 'screens/account.dart';
+import 'screens/activities.dart';
+import 'screens/activities_colors.dart';
+import 'screens/home.dart';
+import 'screens/onboarding.dart';
 import 'splash/lamma_splash.dart';
 import 'theme.dart';
 
@@ -40,10 +41,19 @@ const _startAtHome = bool.fromEnvironment(
   defaultValue: kDebugMode,
 );
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const LammaApp(skipOnboarding: _startAtHome));
+  // A returning install signs in silently and, if it already belongs to a family,
+  // goes straight into the app. Offline or on any failure, onboarding runs as usual.
+  var inFamily = false;
+  try {
+    await Backend.init();
+    inFamily = await Backend.restore();
+  } catch (e) {
+    debugPrint('Starting without the database: $e');
+  }
+  runApp(LammaApp(skipOnboarding: inFamily || _startAtHome));
 }
 
 class LammaApp extends StatefulWidget {
@@ -55,7 +65,7 @@ class LammaApp extends StatefulWidget {
   /// exercise onboarding directly).
   final bool skipSplash;
 
-  /// Show the sample "suggested a weekend outing" notification 4 seconds in.
+  /// Show the sample "suggested a weekend outing" notification 3.5 seconds in.
   /// Defaults to [kDemoNotifications].
   final bool? demoNotifications;
 
@@ -161,11 +171,11 @@ class _ShellState extends State<Shell> {
   final _keys = List.generate(5, (_) => GlobalKey<NavigatorState>());
 
   List<(String, IconData, IconData)> _tabs(AppLocalizations l) => [
-    (l.navHome, Icons.home_outlined, Icons.home_rounded),
-    (l.navLamma, Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
-    (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
-    (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
-  ];
+        (l.navHome, Icons.home_outlined, Icons.home_rounded),
+        (l.navLamma, Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
+        (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
+        (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
+      ];
   static const _muted = Color(0xFFA9B3C6);
 
   Widget _root(int i) => switch (i) {
@@ -360,7 +370,7 @@ class _ShellState extends State<Shell> {
                       Container(
                         height: 64,
                         decoration: BoxDecoration(
-                          color: C.navy,
+                          color: AC.oldNavy,
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
@@ -462,28 +472,19 @@ class _ShellState extends State<Shell> {
   Widget _item(int i, AppLocalizations l) {
     final t = _tabs(l)[i];
     final sel = _i == i;
-    final color = sel ? C.coral : _muted;
+    final color = sel ? AC.oldCoral : _muted;
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => _select(i),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(sel ? t.$3 : t.$2, size: 24, color: color),
-            const SizedBox(height: 3),
-            Text(
-              t.$1,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Icon(sel ? t.$3 : t.$2, size: 24, color: color),
+          const SizedBox(height: 3),
+          Text(t.$1,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: color,
-              ),
-            ),
-          ],
-        ),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
+        ]),
       ),
     );
   }

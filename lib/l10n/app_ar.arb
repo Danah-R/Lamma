@@ -14,7 +14,7 @@
   "commonShareAction": "مشاركة",
   "commonComingSoon": "قريبًا",
 
-  "homeGreeting": "مساء الخير، {name}",
+  "homeGreeting": "هلا، {name}",
   "homeTodayWithFamily": "اليوم مع العائلة",
   "homeFamilyNightTime": "سهرة العائلة · 8:00 مساءً",
   "homeAttendingCount": "{attending, plural, zero{محد من {total} حاضر} one{واحد من {total} حاضر} two{اثنان من {total} حاضرون} few{{attending} من {total} حاضرين} many{{attending} من {total} حاضر} other{{attending} من {total} حاضر}}",
@@ -504,7 +504,7 @@
   "onboardingPreferGames": "الألعاب",
   "onboardingPreferDiscussions": "النقاشات",
   "onboardingPhoneHint": "05 ••• ••• ••",
-  "onboardingSigninInstead": "عندك حساب؟ سجّل دخول",
+  "onboardingSigninInstead": "عندي حساب",
   "onboardingStartFamily": "ابدأ عائلة",
   "onboardingFamilyNameHint": "مثال: عائلة العتيبي",
   "onboardingCreate": "إنشاء",
@@ -803,5 +803,19 @@
   "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
 
   "accountResetCoach": "إعادة تلميح الكاميرا",
-  "accountResetCoachDone": "بيطلع لك التلميح في صفحة اللحظات"
+  "accountResetCoachDone": "بيطلع لك التلميح في صفحة اللحظات",
+
+  "roleOtherLabel": "غير ذلك",
+  "onboardingOtherRoleHint": "دورك في العائلة (مثل: جدة)",
+  "onboardingLiveTogetherQuestion": "تسكن مع عائلتك؟",
+  "onboardingYes": "نعم",
+  "onboardingNo": "لا",
+  "onboardingNoPhone": "ما عندي رقم جوال، بس بنضم للمّة عائلتي.",
+  "onboardingPhoneLabel": "رقم الجوال",
+  "onboardingBack": "السابق",
+  "onboardingErrInvalidCode": "الرمز مو صحيح. اسأل أهلك يتأكدون منه.",
+  "onboardingErrTooMany": "محاولات كثيرة. انتظر ساعة وجرّب مرة ثانية.",
+  "onboardingErrNetwork": "ما قدرنا نوصل للمّة. تأكد من الإنترنت وجرّب مرة ثانية.",
+  "accountFamilyCode": "رمز الانضمام للعائلة",
+  "accountFamilyCodeCopied": "تم نسخ الرمز"
 }

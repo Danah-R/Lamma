@@ -58,9 +58,19 @@ void main() {
     expect(find.text('قريت الكل'), findsOneWidget);
     expect(find.text('صار شي جديد بالعائلة'), findsOneWidget);
     expect(find.text('عندك إشعارين جداد'), findsOneWidget);
-    expect(find.text('اليوم'), findsOneWidget);
-    expect(find.text('أمس'), findsOneWidget);
-    expect(find.text('3 إشعارات'), findsNWidgets(2));
+    // sections follow the real calendar: just after midnight, "5 minutes ago"
+    // already belongs to yesterday, so count what is really today
+    final now = DateTime.now();
+    final today = c.items
+        .where(
+          (n) =>
+              DateTime(n.createdAt.year, n.createdAt.month, n.createdAt.day) ==
+              DateTime(now.year, now.month, now.day),
+        )
+        .length;
+    final yesterday = c.items.length - today;
+    expect(find.text('اليوم'), today > 0 ? findsOneWidget : findsNothing);
+    expect(find.text('أمس'), yesterday > 0 ? findsOneWidget : findsNothing);
     expect(find.text('إشعار واحد'), findsNothing);
     // tags and times
     expect(find.text('لحظة'), findsOneWidget);

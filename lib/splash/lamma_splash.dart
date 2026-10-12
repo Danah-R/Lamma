@@ -199,9 +199,9 @@ class _PourPose {
   Matrix4 bodyMatrix() {
     final p = _G.leanPivot - _G.fatherBody.topLeft;
     return Matrix4.identity()
-      ..translateByDouble(p.dx, p.dy, 0.0, 1.0)
+      ..translate(p.dx, p.dy)
       ..rotateZ(_rad(lean))
-      ..translateByDouble(-p.dx, -p.dy, 0.0, 1.0);
+      ..translate(-p.dx, -p.dy);
   }
 
   /// Two-point IK: the arm pivots at the (leaning) shoulder and stretches
@@ -215,19 +215,19 @@ class _PourPose {
     final angleNow = math.atan2(v.dy, v.dx);
     final stretch = v.distance / rest.distance;
     return Matrix4.identity()
-      ..translateByDouble(s.dx - box.dx, s.dy - box.dy, 0.0, 1.0)
+      ..translate(s.dx - box.dx, s.dy - box.dy)
       ..rotateZ(angleNow)
-      ..scaleByDouble(stretch, 1.0, 1.0, 1.0)
+      ..scale(stretch, 1.0, 1.0)
       ..rotateZ(-restAngle)
-      ..translateByDouble(box.dx - _G.shoulder.dx, box.dy - _G.shoulder.dy, 0.0, 1.0);
+      ..translate(box.dx - _G.shoulder.dx, box.dy - _G.shoulder.dy);
   }
 
   Matrix4 dallahMatrix() {
     final move = grip - _G.dallahRestGrip;
     return Matrix4.identity()
-      ..translateByDouble(move.dx + _G.dallahGrip.dx, move.dy + _G.dallahGrip.dy, 0.0, 1.0)
+      ..translate(move.dx + _G.dallahGrip.dx, move.dy + _G.dallahGrip.dy)
       ..rotateZ(_rad(angle))
-      ..translateByDouble(-_G.dallahGrip.dx, -_G.dallahGrip.dy, 0.0, 1.0);
+      ..translate(-_G.dallahGrip.dx, -_G.dallahGrip.dy);
   }
 }
 
@@ -412,8 +412,8 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
                     curve: Curves.easeOut,
                     child: Transform(
                       transform: Matrix4.identity()
-                        ..translateByDouble(ox, oy, 0.0, 1.0)
-                        ..scaleByDouble(k, k, 1.0, 1.0),
+                        ..translate(ox, oy)
+                        ..scale(k, k, 1.0),
                       child: SizedBox(
                         width: _G.sceneW,
                         height: _G.sceneH,
@@ -473,7 +473,7 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
               return Transform(
                 alignment: Alignment.bottomCenter,
                 transform: Matrix4.identity()
-                  ..translateByDouble(0.0, 1.0 * s, 0.0, 1.0)
+                  ..translate(0.0, 1.0 * s)
                   ..rotateZ(_rad(1.6 * s)),
                 child: child,
               );
@@ -540,7 +540,7 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.identity()
-                        ..translateByDouble(f.offset.dx, f.offset.dy, 0.0, 1.0)
+                        ..translate(f.offset.dx, f.offset.dy)
                         ..rotateZ(_rad(f.rotation)),
                       child: child,
                     ),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../theme.dart';
+
 /// Palette for the redesigned Activities page ("صندوق الأنشطة"), matching
 /// design/activities_design_reference.html pixel-for-pixel. Scoped to this
 /// page only — the rest of the app keeps using [C] from `theme.dart`.
 class AC {
-  static const background = Color(0xFFFBF4EA);
+  /// The page background: the same value as the app-wide [C.cream], so
+  /// there is one source for it.
+  static const background = C.cream;
   static const card = Color(0xFFFFFFFF);
   static const border = Color(0xFFEADFCF);
   static const ink = Color(0xFF2B211E);
@@ -62,4 +66,17 @@ class AC {
   static const podcastFormDisabled = Color(0xFF9DBDB9);
   static const handleBar = Color(0xFFE5D7C3); // bottom-sheet drag handle
   static const tealDeep = Color(0xFF2F6662); // "سمعتها" button text
+
+  // The values my pages had for the shared `C` palette before it followed
+  // Danah's redesign (theme.dart). Pages that use them look as they did.
+  static const oldNavy = Color(0xFF1B2A45);
+  static const oldTeal = Color(0xFF2E8B88);
+  static const oldInk = Color(0xFF3D2B23);
+  static const oldInkSoft = Color(0xFF7D6A5E);
+  static const oldCard = Color(0xFFF6F3EF);
+  static const oldTealTint = Color(0xFFCDE4E0);
+  static const oldTerracotta = Color(0xFFC4634A);
+  static const oldCoral = Color(0xFFEE8D75);
+  static const oldMustard = Color(0xFFE6B350);
+  static const oldGreen = Color(0xFF86A57E);
 }

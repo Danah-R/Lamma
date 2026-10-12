@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeGreeting.
   ///
   /// In en, this message translates to:
-  /// **'Good evening, {name}'**
+  /// **'Hello, {name}'**
   String homeGreeting(String name);
 
   /// No description provided for @homeTodayWithFamily.
@@ -2945,7 +2945,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingSigninInstead.
   ///
   /// In en, this message translates to:
-  /// **'Already have an account? Sign in'**
+  /// **'I already have an account'**
   String get onboardingSigninInstead;
 
   /// No description provided for @onboardingStartFamily.
@@ -4481,6 +4481,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The hint will show on the moments page'**
   String get accountResetCoachDone;
+
+  /// No description provided for @roleOtherLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get roleOtherLabel;
+
+  /// No description provided for @onboardingOtherRoleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your role in the family (e.g. Grandma)'**
+  String get onboardingOtherRoleHint;
+
+  /// No description provided for @onboardingLiveTogetherQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you live with your family?'**
+  String get onboardingLiveTogetherQuestion;
+
+  /// No description provided for @onboardingYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get onboardingYes;
+
+  /// No description provided for @onboardingNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get onboardingNo;
+
+  /// No description provided for @onboardingNoPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t have a phone number. I\'m just going to join my family\'s Lamma.'**
+  String get onboardingNoPhone;
+
+  /// No description provided for @onboardingPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get onboardingPhoneLabel;
+
+  /// No description provided for @onboardingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingBack;
+
+  /// No description provided for @onboardingErrInvalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That code isn\'t right. Ask your family to check it.'**
+  String get onboardingErrInvalidCode;
+
+  /// No description provided for @onboardingErrTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Please wait an hour and try again.'**
+  String get onboardingErrTooMany;
+
+  /// No description provided for @onboardingErrNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach Lamma. Check your internet and try again.'**
+  String get onboardingErrNetwork;
+
+  /// No description provided for @accountFamilyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Family join code'**
+  String get accountFamilyCode;
+
+  /// No description provided for @accountFamilyCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied'**
+  String get accountFamilyCodeCopied;
 }
 
 class _AppLocalizationsDelegate

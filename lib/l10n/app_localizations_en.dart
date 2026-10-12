@@ -41,7 +41,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String homeGreeting(String name) {
-    return 'Good evening, $name';
+    return 'Hello, $name';
   }
 
   @override
@@ -1657,7 +1657,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingPhoneHint => '05 ••• ••• ••';
 
   @override
-  String get onboardingSigninInstead => 'Already have an account? Sign in';
+  String get onboardingSigninInstead => 'I already have an account';
 
   @override
   String get onboardingStartFamily => 'Start a family';
@@ -2517,4 +2517,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountResetCoachDone => 'The hint will show on the moments page';
+
+  @override
+  String get roleOtherLabel => 'Other';
+
+  @override
+  String get onboardingOtherRoleHint =>
+      'Your role in the family (e.g. Grandma)';
+
+  @override
+  String get onboardingLiveTogetherQuestion => 'Do you live with your family?';
+
+  @override
+  String get onboardingYes => 'Yes';
+
+  @override
+  String get onboardingNo => 'No';
+
+  @override
+  String get onboardingNoPhone =>
+      'I don\'t have a phone number. I\'m just going to join my family\'s Lamma.';
+
+  @override
+  String get onboardingPhoneLabel => 'Phone number';
+
+  @override
+  String get onboardingBack => 'Back';
+
+  @override
+  String get onboardingErrInvalidCode =>
+      'That code isn\'t right. Ask your family to check it.';
+
+  @override
+  String get onboardingErrTooMany =>
+      'Too many tries. Please wait an hour and try again.';
+
+  @override
+  String get onboardingErrNetwork =>
+      'Couldn\'t reach Lamma. Check your internet and try again.';
+
+  @override
+  String get accountFamilyCode => 'Family join code';
+
+  @override
+  String get accountFamilyCodeCopied => 'Code copied';
 }

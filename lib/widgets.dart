@@ -12,8 +12,7 @@ Future<T?> go<T>(BuildContext c, Widget page) =>
 /// Opens a game full-screen above the tab bar (root navigator), so the
 /// bottom navigation never shows during a game.
 Future<T?> goGame<T>(BuildContext c, Widget page) =>
-    Navigator.of(c, rootNavigator: true)
-        .push<T>(MaterialPageRoute(builder: (_) => page));
+    Navigator.of(c, rootNavigator: true).push<T>(MaterialPageRoute(builder: (_) => page));
 
 class Avatar extends StatelessWidget {
   final String name;
@@ -26,7 +25,7 @@ class Avatar extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: C.beige,
+        color: C.line,
         shape: BoxShape.circle,
         border: Border.all(color: C.cream, width: 2),
       ),
@@ -90,14 +89,36 @@ class SectionTitle extends StatelessWidget {
         child: Row(children: [
           Expanded(
               child: Text(text,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700))),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: C.navy))),
           if (action != null)
             GestureDetector(
               onTap: onAction,
               child: Text(action!,
                   style: const TextStyle(
-                      color: C.terracotta, fontWeight: FontWeight.w700, fontSize: 13)),
+                      color: C.brick, fontWeight: FontWeight.w700, fontSize: 13)),
             ),
+        ]),
+      );
+}
+
+/// Small quiet section heading, with an optional link on the far side.
+class SectionLabel extends StatelessWidget {
+  final String text;
+  final String? action;
+  final VoidCallback? onTap;
+  const SectionLabel(this.text, {this.action, this.onTap});
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Row(children: [
+          Text(text,
+              style: const TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w600, letterSpacing: .3, color: C.inkSoft)),
+          const Spacer(),
+          if (action != null)
+            Text(action!,
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: C.brick)),
         ]),
       );
 }
@@ -106,7 +127,7 @@ class Pill extends StatelessWidget {
   final String text;
   final Color color;
   final Color? fg;
-  const Pill(this.text, {super.key, this.color = C.beige, this.fg});
+  const Pill(this.text, {super.key, this.color = C.line, this.fg});
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -122,7 +143,8 @@ class Choice extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
   final Color color;
-  const Choice(this.label, this.selected, this.onTap, {super.key, this.color = C.navy});
+  final Color idle; // resting fill; use ivory when the chip sits on a white card
+  const Choice(this.label, this.selected, this.onTap, {super.key, this.color = C.brick, this.idle = C.card});
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: onTap,
@@ -130,7 +152,7 @@ class Choice extends StatelessWidget {
           duration: const Duration(milliseconds: 150),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
-            color: selected ? color : C.card,
+            color: selected ? color : idle,
             borderRadius: BorderRadius.circular(22),
           ),
           child: Text(label,
@@ -145,7 +167,7 @@ class Bar extends StatelessWidget {
   final double value;
   final Color color;
   final Color track;
-  const Bar(this.value, {super.key, this.color = C.terracotta, this.track = C.beige});
+  const Bar(this.value, {super.key, this.color = C.brick, this.track = C.line});
   @override
   Widget build(BuildContext context) => ClipRRect(
         borderRadius: BorderRadius.circular(8),
@@ -160,13 +182,18 @@ class IconBubble extends StatelessWidget {
   final double size;
   const IconBubble(this.icon, this.color, {super.key, this.size = 46});
   @override
-  Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-            color: color.withValues(alpha: .18), borderRadius: BorderRadius.circular(size * .36)),
-        child: Icon(icon, color: color, size: size * .5),
-      );
+  Widget build(BuildContext context) {
+    // pale palette colors (sage, peach, yellow, lavender) work as a fill with a dark icon;
+    // brand colors (brick, teal, navy) work as a tinted fill with a colored icon
+    final pale = color.computeLuminance() > .35;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+          color: color.withValues(alpha: pale ? .55 : .14), borderRadius: BorderRadius.circular(size * .36)),
+      child: Icon(icon, color: pale ? C.ink : color, size: size * .5),
+    );
+  }
 }
 
 class Btn extends StatelessWidget {
@@ -180,7 +207,7 @@ class Btn extends StatelessWidget {
       {super.key,
       this.icon,
       this.onTap,
-      this.color = C.terracotta,
+      this.color = C.brick,
       this.outlined = false,
       this.enabled = true});
   @override
@@ -250,7 +277,7 @@ class TabHeader extends StatelessWidget {
         child: Row(children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700)),
+              Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: C.navy)),
               const SizedBox(height: 2),
               Text(subtitle, style: const TextStyle(color: C.inkSoft, fontSize: 15)),
             ]),
@@ -348,7 +375,7 @@ class Reactions extends StatelessWidget {
         );
     return Row(children: [
       item(liked ? Icons.favorite_rounded : Icons.favorite_border_rounded, '$likes',
-          liked ? C.terracotta : C.inkSoft, onLike),
+          liked ? C.brick : C.inkSoft, onLike),
       const SizedBox(width: 20),
       item(Icons.chat_bubble_outline_rounded, '$comments', C.inkSoft, onComments),
       const SizedBox(width: 20),

@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(l.homeGreeting(profile.name),
-                    style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w700)),
+                    style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w700, color: C.navy)),
                 Text(ld(context, profile.family),
                     style: const TextStyle(fontSize: 13, color: C.inkSoft, fontWeight: FontWeight.w700)),
               ]),
@@ -43,10 +43,10 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 14),
             if (rules.phoneFree)
               LCard(
-                color: C.mustardTint,
+                color: C.yellowTint,
                 padding: const EdgeInsets.all(14),
                 child: Row(children: [
-                  const Icon(Icons.phonelink_erase_rounded, color: C.terracotta),
+                  const Icon(Icons.phonelink_erase_rounded, color: C.brick),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(l.homePhoneFreeBanner(ld(context, rules.from), ld(context, rules.to)),
@@ -57,10 +57,10 @@ class _HomePageState extends State<HomePage> {
             if (rules.punishments.containsKey(profile.name)) ...[
               const SizedBox(height: 8),
               LCard(
-                color: C.coralTint,
+                color: C.peachTint,
                 padding: const EdgeInsets.all(14),
                 child: Row(children: [
-                  const Icon(Icons.gavel_rounded, color: C.terracotta),
+                  const Icon(Icons.gavel_rounded, color: C.brick),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(l.homePunishmentBanner(ld(context, rules.punishments[profile.name]!)),
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () => go(context, const BadgesPage()),
                 behavior: HitTestBehavior.opaque,
                 child: Row(children: [
-                  const Icon(Icons.local_fire_department_rounded, color: C.mustardTint, size: 20),
+                  const Icon(Icons.local_fire_department_rounded, color: C.yellow, size: 20),
                   const SizedBox(width: 6),
                   Text(l.homeStreak, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
                   const SizedBox(width: 12),
@@ -104,9 +104,9 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(l.homeInteractions,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, height: 1.25)),
                   ),
                 ]),
               ),
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
           LCard(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                const IconBubble(Icons.headphones_rounded, C.terracotta),
+                const IconBubble(Icons.headphones_rounded, C.brick),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(vertical: 26),
             child: Text(l.homeMemoriesQuote,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: C.terracotta, fontWeight: FontWeight.w700, fontSize: 15)),
+                style: const TextStyle(color: C.brick, fontWeight: FontWeight.w700, fontSize: 15)),
           ),
 
           // activity
@@ -167,15 +167,15 @@ class _HomePageState extends State<HomePage> {
           LCard(
             child: Column(children: [
               _Feed(n('girl'), l.homeFeedPhoto(ld(context, n('girl')))),
-              const Divider(color: C.beige, height: 22),
+              const Divider(color: C.line, height: 22),
               _Feed(n('brother'), l.homeFeedChallenge(ld(context, n('brother')))),
-              const Divider(color: C.beige, height: 22),
+              const Divider(color: C.line, height: 22),
               _Feed(n('mom'), l.homeFeedPodcast(ld(context, n('mom')))),
             ]),
           ),
           const SizedBox(height: 16),
           Btn(l.homeYourWeekButton,
-              color: C.navy, onTap: () => go(context, const WeeklyRecapPage())),
+              color: C.teal, onTap: () => go(context, const WeeklyRecapPage())),
         ]),
       );
   }
@@ -226,18 +226,18 @@ class _HomePageState extends State<HomePage> {
     return Container(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 12, 8, 10),
       decoration: BoxDecoration(
-        color: isToday ? C.coralTint : C.card,
+        color: isToday ? C.peachTint : C.card,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(children: [
         Text(isToday ? '$dayLabel ${l.homeDayToday}' : dayLabel,
             style: TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w700, color: isToday ? C.terracotta : C.inkSoft)),
+                fontSize: 11, fontWeight: FontWeight.w700, color: isToday ? C.brick : C.inkSoft)),
         const SizedBox(height: 6),
         isToday
             ? CircleAvatar(
                 radius: 15,
-                backgroundColor: C.terracotta,
+                backgroundColor: C.brick,
                 child: Text('$n', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)))
             : Text('$n', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
@@ -255,7 +255,9 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.only(bottom: 4),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                 decoration: BoxDecoration(
-                    color: e.color.withValues(alpha: .28), borderRadius: BorderRadius.circular(10)),
+                    // tint over white, so it stays clean on the salmon "today" card
+                    color: Color.alphaBlend(e.color.withValues(alpha: .45), Colors.white),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Column(children: [
                   Text(ld(context, e.title),
                       maxLines: 1,
@@ -315,7 +317,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     ],
         bottom: Btn(me ? l.eventDetailsImIn : l.eventDetailsImComing,
             icon: me ? Icons.check_rounded : null,
-            color: me ? C.green : C.terracotta,
+            color: me ? C.teal : C.brick,
             onTap: () => setState(() {
               if (me) {
                 e.going.remove(profile.name);
@@ -394,7 +396,7 @@ class _AddEventPageState extends State<AddEventPage> {
       ],
           bottom: Btn(l.addEventSubmit, enabled: _name.text.trim().isNotEmpty, onTap: () {
             events.add(Ev(_name.text.trim(), _date, _time.format(context), _type,
-                [C.teal, C.mustard, C.coral, C.green][eventTypes.indexOf(_type) % 4], [profile.name]));
+                [C.teal, C.yellow, C.peach, C.sage][eventTypes.indexOf(_type) % 4], [profile.name]));
             Navigator.pop(context);
           }));
   }
@@ -429,13 +431,13 @@ class WeeklyRecapPage extends StatelessWidget {
       Row(children: [
         tile('12', l.recapChats, Icons.chat_bubble_rounded, C.teal),
         const SizedBox(width: 12),
-        tile('24', l.recapPhotos, Icons.camera_alt_rounded, C.terracotta),
+        tile('24', l.recapPhotos, Icons.camera_alt_rounded, C.navy),
       ]),
       const SizedBox(height: 12),
       Row(children: [
-        tile('6', l.recapActiveDays, Icons.local_fire_department_rounded, C.mustard),
+        tile('6', l.recapActiveDays, Icons.local_fire_department_rounded, C.brick),
         const SizedBox(width: 12),
-        tile('3/6', l.recapListened, Icons.headphones_rounded, C.coral),
+        tile('3/6', l.recapListened, Icons.headphones_rounded, C.teal),
       ]),
       const SizedBox(height: 12),
       LCard(

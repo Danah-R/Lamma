@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../features/topics/topics_data.dart';
 import '../l10n/app_localizations.dart';
+import '../screens/activities_colors.dart';
 
 /// كرت "سالفة الليلة": رزمة كروت، الأمامي يطير لما تغيّر الموضوع.
 /// التالي: زر "غيّرها" أو سحب الكرت لليسار.
@@ -77,7 +78,7 @@ class _Pose {
 }
 
 class _C {
-  static const bg = Color(0xFFFBF4EA);
+  static const bg = AC.background; // same as the page background
   static const border = Color(0xFFEADFCF);
   static const ink = Color(0xFF2B211E);
   static const brick = Color(0xFF9A4A3E);

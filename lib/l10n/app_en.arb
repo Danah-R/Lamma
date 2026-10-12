@@ -14,7 +14,7 @@
   "commonShareAction": "Share",
   "commonComingSoon": "Coming soon",
 
-  "homeGreeting": "Good evening, {name}",
+  "homeGreeting": "Hello, {name}",
   "@homeGreeting": { "placeholders": { "name": { "type": "String" } } },
   "homeTodayWithFamily": "Today with the family",
   "homeFamilyNightTime": "Family night · 8:00 PM",
@@ -557,7 +557,7 @@
   "onboardingPreferGames": "Games",
   "onboardingPreferDiscussions": "Discussions",
   "onboardingPhoneHint": "05 ••• ••• ••",
-  "onboardingSigninInstead": "Already have an account? Sign in",
+  "onboardingSigninInstead": "I already have an account",
   "onboardingStartFamily": "Start a family",
   "onboardingFamilyNameHint": "e.g. Al-Otaibi family",
   "onboardingCreate": "Create",
@@ -863,5 +863,19 @@
   "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
 
   "accountResetCoach": "Show the camera hint again",
-  "accountResetCoachDone": "The hint will show on the moments page"
+  "accountResetCoachDone": "The hint will show on the moments page",
+
+  "roleOtherLabel": "Other",
+  "onboardingOtherRoleHint": "Your role in the family (e.g. Grandma)",
+  "onboardingLiveTogetherQuestion": "Do you live with your family?",
+  "onboardingYes": "Yes",
+  "onboardingNo": "No",
+  "onboardingNoPhone": "I don't have a phone number. I'm just going to join my family's Lamma.",
+  "onboardingPhoneLabel": "Phone number",
+  "onboardingBack": "Back",
+  "onboardingErrInvalidCode": "That code isn't right. Ask your family to check it.",
+  "onboardingErrTooMany": "Too many tries. Please wait an hour and try again.",
+  "onboardingErrNetwork": "Couldn't reach Lamma. Check your internet and try again.",
+  "accountFamilyCode": "Family join code",
+  "accountFamilyCodeCopied": "Code copied"
 }

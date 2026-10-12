@@ -41,7 +41,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String homeGreeting(String name) {
-    return 'مساء الخير، $name';
+    return 'هلا، $name';
   }
 
   @override
@@ -1689,7 +1689,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingPhoneHint => '05 ••• ••• ••';
 
   @override
-  String get onboardingSigninInstead => 'عندك حساب؟ سجّل دخول';
+  String get onboardingSigninInstead => 'عندي حساب';
 
   @override
   String get onboardingStartFamily => 'ابدأ عائلة';
@@ -2563,4 +2563,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountResetCoachDone => 'بيطلع لك التلميح في صفحة اللحظات';
+
+  @override
+  String get roleOtherLabel => 'غير ذلك';
+
+  @override
+  String get onboardingOtherRoleHint => 'دورك في العائلة (مثل: جدة)';
+
+  @override
+  String get onboardingLiveTogetherQuestion => 'تسكن مع عائلتك؟';
+
+  @override
+  String get onboardingYes => 'نعم';
+
+  @override
+  String get onboardingNo => 'لا';
+
+  @override
+  String get onboardingNoPhone => 'ما عندي رقم جوال، بس بنضم للمّة عائلتي.';
+
+  @override
+  String get onboardingPhoneLabel => 'رقم الجوال';
+
+  @override
+  String get onboardingBack => 'السابق';
+
+  @override
+  String get onboardingErrInvalidCode =>
+      'الرمز مو صحيح. اسأل أهلك يتأكدون منه.';
+
+  @override
+  String get onboardingErrTooMany =>
+      'محاولات كثيرة. انتظر ساعة وجرّب مرة ثانية.';
+
+  @override
+  String get onboardingErrNetwork =>
+      'ما قدرنا نوصل للمّة. تأكد من الإنترنت وجرّب مرة ثانية.';
+
+  @override
+  String get accountFamilyCode => 'رمز الانضمام للعائلة';
+
+  @override
+  String get accountFamilyCodeCopied => 'تم نسخ الرمز';
 }

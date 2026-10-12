@@ -2071,7 +2071,7 @@ class _AzizPageState extends State<AzizPage> {
     final l = AppLocalizations.of(context);
     return Page1(l.gamesAzizTitle, [
       LCard(
-        color: C.teal,
+        color: AC.oldTeal,
         padding: const EdgeInsets.all(28),
         child: Center(
           child: Text(
@@ -2095,7 +2095,7 @@ class _AzizPageState extends State<AzizPage> {
             child: Btn(
               l.azizSkip,
               outlined: true,
-              color: C.inkSoft,
+              color: AC.oldInkSoft,
               onTap: _next,
             ),
           ),
@@ -2127,7 +2127,7 @@ class _SinJimPageState extends State<SinJimPage> {
             Text(
               l.sinJimAnswerOnBehalf,
               style: const TextStyle(
-                color: C.inkSoft,
+                color: AC.oldInkSoft,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -2164,7 +2164,7 @@ class _SinJimPageState extends State<SinJimPage> {
         child: Text(
           l.sinJimAnswersRecorded(_answered),
           style: const TextStyle(
-            color: C.inkSoft,
+            color: AC.oldInkSoft,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
@@ -2203,12 +2203,12 @@ class _RoulettePageState extends State<RoulettePage>
     ],
   };
   static const _colors = [
-    C.coral,
-    C.navy,
-    C.mustard,
-    C.teal,
-    C.terracotta,
-    C.green,
+    AC.oldCoral,
+    AC.oldNavy,
+    AC.oldMustard,
+    AC.oldTeal,
+    AC.oldTerracotta,
+    AC.oldGreen,
   ];
 
   late final AnimationController _ctrl = AnimationController(
@@ -2337,7 +2337,7 @@ class _RoulettePageState extends State<RoulettePage>
                                   child: Icon(
                                     Icons.arrow_drop_down_rounded,
                                     size: 48,
-                                    color: C.ink,
+                                    color: AC.oldInk,
                                   ),
                                 ),
                               ],
@@ -2367,7 +2367,7 @@ class _RoulettePageState extends State<RoulettePage>
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
-                              color: C.terracotta,
+                              color: AC.oldTerracotta,
                             ),
                           ),
                         ],
@@ -2468,7 +2468,7 @@ class _WheelPainter extends CustomPainter {
       tp.paint(canvas, Offset(start_, -tp.height / 2));
       canvas.restore();
     }
-    canvas.drawCircle(c, 16, Paint()..color = C.cream);
+    canvas.drawCircle(c, 16, Paint()..color = Colors.white);
   }
 
   @override
@@ -2531,7 +2531,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
             margin: const EdgeInsets.only(top: 12),
             padding: const EdgeInsets.fromLTRB(28, 36, 28, 24),
             decoration: BoxDecoration(
-              color: C.cream,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Column(
@@ -2576,7 +2576,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                       style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
-                        color: C.ink,
+                        color: AC.oldInk,
                       ),
                     ),
                   ),
@@ -2584,7 +2584,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                 const SizedBox(height: 22),
                 Btn(
                   l.rouletteGotIt,
-                  color: C.terracotta,
+                  color: AC.oldTerracotta,
                   onTap: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -2620,7 +2620,7 @@ class BookClubPage extends StatelessWidget {
               width: 74,
               height: 100,
               decoration: BoxDecoration(
-                color: C.terracotta,
+                color: AC.oldTerracotta,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
@@ -2637,7 +2637,7 @@ class BookClubPage extends StatelessWidget {
                   Text(
                     l.bookClubCurrentBook,
                     style: const TextStyle(
-                      color: C.inkSoft,
+                      color: AC.oldInkSoft,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
@@ -2652,7 +2652,7 @@ class BookClubPage extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     l.bookClubReadingStatus,
-                    style: const TextStyle(color: C.inkSoft, fontSize: 12),
+                    style: const TextStyle(color: AC.oldInkSoft, fontSize: 12),
                   ),
                 ],
               ),
@@ -2691,7 +2691,7 @@ class _PodcastPageState extends State<PodcastPage> {
     final count = 3 + (_listened ? 1 : 0);
     return Page1(l.activitiesPodcastClubTitle, [
       LCard(
-        color: C.navy,
+        color: AC.oldNavy,
         padding: const EdgeInsets.all(22),
         child: Column(
           children: [
@@ -2724,7 +2724,7 @@ class _PodcastPageState extends State<PodcastPage> {
               }),
               style: FilledButton.styleFrom(
                 backgroundColor: Colors.white,
-                foregroundColor: C.terracotta,
+                foregroundColor: AC.oldTerracotta,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 26,
                   vertical: 12,
@@ -2756,7 +2756,7 @@ class _PodcastPageState extends State<PodcastPage> {
                   l.podcastListenedFraction(count),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: C.terracotta,
+                    color: AC.oldTerracotta,
                   ),
                 ),
               ],
@@ -2767,7 +2767,7 @@ class _PodcastPageState extends State<PodcastPage> {
             Text(
               l.podcastNextGathering,
               style: const TextStyle(
-                color: C.inkSoft,
+                color: AC.oldInkSoft,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
@@ -2828,19 +2828,19 @@ class _OutingsPageState extends State<OutingsPage> {
       Container(
         height: 130,
         decoration: BoxDecoration(
-          color: C.tealTint,
+          color: AC.oldTealTint,
           borderRadius: BorderRadius.circular(24),
         ),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.map_rounded, color: C.teal, size: 34),
+              const Icon(Icons.map_rounded, color: AC.oldTeal, size: 34),
               const SizedBox(height: 6),
               Text(
                 l.outingsPlacesMap,
                 style: const TextStyle(
-                  color: C.teal,
+                  color: AC.oldTeal,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -2871,7 +2871,7 @@ class _OutingsPageState extends State<OutingsPage> {
                       ),
                       Text(
                         ld(context, p.why),
-                        style: const TextStyle(color: C.inkSoft, fontSize: 12),
+                        style: const TextStyle(color: AC.oldInkSoft, fontSize: 12),
                       ),
                     ],
                   ),
@@ -2884,7 +2884,7 @@ class _OutingsPageState extends State<OutingsPage> {
       Btn(
         l.outingsOurOutings,
         outlined: true,
-        color: C.navy,
+        color: AC.oldNavy,
         onTap: () => go(context, const OurOutingsPage()),
       ),
     ]);
@@ -2902,7 +2902,7 @@ class SuggestPlacePage extends StatelessWidget {
       l.suggestPlaceTitle,
       [
         LCard(
-          color: C.teal,
+          color: AC.oldTeal,
           padding: const EdgeInsets.symmetric(vertical: 36),
           child: Center(
             child: Text(
@@ -2927,7 +2927,7 @@ class SuggestPlacePage extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 ld(context, p.why),
-                style: const TextStyle(color: C.inkSoft, height: 1.4),
+                style: const TextStyle(color: AC.oldInkSoft, height: 1.4),
               ),
             ],
           ),
@@ -2963,7 +2963,7 @@ class OurOutingsPage extends StatelessWidget {
               l.ourOutingsEmpty,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: C.inkSoft,
+                color: AC.oldInkSoft,
                 fontWeight: FontWeight.w600,
                 height: 1.5,
               ),

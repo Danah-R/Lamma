@@ -165,21 +165,25 @@ class _Button extends StatelessWidget {
     child: SizedBox(
       height: 44,
       child: Center(
+        widthFactor: 1,
         child: Container(
           height: 40,
           padding: EdgeInsets.symmetric(horizontal: filled ? 16 : 14),
-          alignment: Alignment.center,
           decoration: BoxDecoration(
             color: filled ? Colors.white : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
             border: filled ? null : Border.all(color: const Color(0x73FFFFFF)),
           ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: filled ? FontWeight.w800 : FontWeight.w700,
-              color: filled ? AC.brick : Colors.white,
+          // width follows the text (an aligned Container would stretch)
+          child: Center(
+            widthFactor: 1,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: filled ? FontWeight.w800 : FontWeight.w700,
+                color: filled ? AC.brick : Colors.white,
+              ),
             ),
           ),
         ),

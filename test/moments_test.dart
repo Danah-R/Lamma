@@ -167,6 +167,18 @@ void _coachTests() {
     expect(find.text('صوّر لحظة من يومك'), findsOneWidget);
     expect(find.text('اضغط الكاميرا تحت وشاركها العائلة'), findsOneWidget);
     expect(find.text('مشاركة'), findsOneWidget);
+    // buttons hug their text (the wide test font may wrap them to two rows;
+    // on the simulator they sit on one row)
+    final later = t.getRect(find.text('بعدين'));
+    expect(later.width < 100, isTrue);
+    final laterBtn = t.getSize(
+      find
+          .ancestor(of: find.text('بعدين'), matching: find.byType(Container))
+          .first,
+    );
+    expect(laterBtn.height, 40);
+    expect(laterBtn.width < 140, isTrue); // not stretched to the bubble width
+    expect(t.getSize(find.byType(CameraCoach)).width, 270);
     await t.tap(find.text('بعدين'));
     await t.pumpAndSettle();
     expect(find.byType(CameraCoach), findsNothing);

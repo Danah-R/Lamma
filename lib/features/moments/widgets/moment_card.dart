@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../screens/activities_colors.dart';
 import '../moments_controller.dart';
+import '../../../widgets/photo_or_painted.dart';
 import 'moment_avatar.dart';
 import 'moment_scene.dart';
 
@@ -183,21 +184,13 @@ class _MomentCardState extends State<MomentCard>
             borderRadius: BorderRadius.circular(20),
             child: SizedBox(
               height: 280,
-              child: m.imagePath != null
-                  ? (m.imagePath!.startsWith('assets/')
-                        ? Image.asset(m.imagePath!, fit: BoxFit.cover)
-                        : Image.file(
-                            File(m.imagePath!),
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, _, _) => CustomPaint(
-                              painter: MomentScenePainter(m.scene),
-                              size: Size.infinite,
-                            ),
-                          ))
-                  : CustomPaint(
-                      painter: MomentScenePainter(m.scene),
-                      size: Size.infinite,
-                    ),
+              child: m.imagePath != null && !m.imagePath!.startsWith('assets/')
+                  ? Image.file(
+                      File(m.imagePath!),
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, _, _) => _scene(m),
+                    )
+                  : PhotoOrPainted(assetPath: m.imagePath, fallback: _scene(m)),
             ),
           ),
           const SizedBox(height: 12),
@@ -431,6 +424,9 @@ class _MomentCardState extends State<MomentCard>
     );
   }
 }
+
+Widget _scene(Moment m) =>
+    CustomPaint(painter: MomentScenePainter(m.scene), size: Size.infinite);
 
 class _LikePill extends StatelessWidget {
   final bool liked;

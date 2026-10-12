@@ -31,6 +31,8 @@ flutter:
   assets:
     - assets/characters/
     - assets/splash/
+    - assets/images/moments/
+    - assets/images/outings/
 
   # Thmanyah: licensed, so the files are NOT in git (see assets/fonts/README.md)
   fonts:

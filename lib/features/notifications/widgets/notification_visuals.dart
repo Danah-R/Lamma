@@ -6,6 +6,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../screens/activities_colors.dart';
 import '../../moments/moments_controller.dart' show MomentScene;
 import '../../moments/widgets/moment_scene.dart';
+import '../../../widgets/photo_or_painted.dart';
 import '../notification_model.dart';
 
 /// "قبل 5 دقايق" / "8:15 ص" / "أمس".
@@ -130,20 +131,19 @@ class NotificationThumbView extends StatelessWidget {
       painter: MomentScenePainter(scene),
       size: Size.square(size),
     );
+    final path = thumb.imagePath;
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
       child: SizedBox(
         width: size,
         height: size,
-        child: thumb.imagePath == null
-            ? painted
-            : (thumb.imagePath!.startsWith('assets/')
-                  ? Image.asset(thumb.imagePath!, fit: BoxFit.cover)
-                  : Image.file(
-                      File(thumb.imagePath!),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => painted,
-                    )),
+        child: path == null || path.startsWith('assets/')
+            ? PhotoOrPainted(assetPath: path, fallback: painted)
+            : Image.file(
+                File(path),
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => painted,
+              ),
       ),
     );
   }

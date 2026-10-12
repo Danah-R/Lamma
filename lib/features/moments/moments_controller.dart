@@ -19,6 +19,16 @@ MomentsMember momentsMember(String id) => familyMemberById(id);
 /// Placeholder pictures for the sample data, until real photos are wired.
 enum MomentScene { park, coffee, dinner, desert }
 
+/// The bundled photo for a sample scene. The files are added to
+/// assets/images/moments/ with exactly these names; until then the drawn
+/// scene shows.
+String momentAsset(MomentScene s) => switch (s) {
+  MomentScene.coffee => 'assets/images/moments/coffee.jpg',
+  MomentScene.dinner => 'assets/images/moments/kabsa.jpg',
+  MomentScene.park => 'assets/images/moments/park.jpg',
+  MomentScene.desert => 'assets/images/moments/desert.jpg',
+};
+
 class MomentComment {
   final String authorId, text;
   final DateTime createdAt;
@@ -201,6 +211,7 @@ class MomentsController extends ChangeNotifier {
         id: 2,
         authorId: 'sa',
         scene: MomentScene.park,
+        imagePath: momentAsset(MomentScene.park),
         caption: 'أول مشي بالحديقة بعد الصيف، الجو خيال',
         withIds: const ['am'],
         createdAt: at(0, 16, 10),
@@ -214,6 +225,7 @@ class MomentsController extends ChangeNotifier {
         id: 3,
         authorId: 'yo',
         scene: MomentScene.dinner,
+        imagePath: momentAsset(MomentScene.dinner),
         caption: 'كبسة جدتي اليوم، ما فيه مثلها',
         createdAt: at(0, 13, 30),
         likedBy: const ['sa', 'am', 'no', 'ab', 'mo'],
@@ -227,6 +239,7 @@ class MomentsController extends ChangeNotifier {
         id: 1,
         authorId: 'am',
         scene: MomentScene.coffee,
+        imagePath: momentAsset(MomentScene.coffee),
         caption: 'قهوة الصبح مع أمي، مين بيجينا العصر؟',
         createdAt: at(0, 8, 15),
         likedBy: const ['sa', 'yo', 'mo'],
@@ -241,6 +254,7 @@ class MomentsController extends ChangeNotifier {
         id: 4,
         authorId: 'ab',
         scene: MomentScene.desert,
+        imagePath: momentAsset(MomentScene.desert),
         caption: 'طلعة البر مع الشباب',
         createdAt: at(1, 18, 40),
         likedBy: const ['mo', 'yo'],

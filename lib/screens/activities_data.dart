@@ -19,6 +19,9 @@ class WeekendPlace {
   final OutingScene scene;
   final Color sky;
   final Color barColor;
+
+  /// Bundled photo (assets/images/outings/); the drawn scene shows until it exists.
+  final String imagePath;
   const WeekendPlace({
     required this.name,
     required this.tag,
@@ -26,6 +29,7 @@ class WeekendPlace {
     required this.scene,
     required this.sky,
     required this.barColor,
+    required this.imagePath,
   });
 }
 
@@ -37,6 +41,7 @@ const weekendPlaces = <WeekendPlace>[
     scene: OutingScene.park,
     sky: AC.sageTint,
     barColor: AC.sage,
+    imagePath: 'assets/images/outings/king_salman_park.jpg',
   ),
   WeekendPlace(
     name: 'وادي حنيفة',
@@ -45,6 +50,7 @@ const weekendPlaces = <WeekendPlace>[
     scene: OutingScene.wadi,
     sky: AC.wadiSky,
     barColor: AC.wadiBar,
+    imagePath: 'assets/images/outings/wadi_hanifa.jpg',
   ),
   WeekendPlace(
     name: 'البوليفارد',
@@ -53,5 +59,6 @@ const weekendPlaces = <WeekendPlace>[
     scene: OutingScene.city,
     sky: AC.navy,
     barColor: AC.mustard,
+    imagePath: 'assets/images/outings/boulevard.jpg',
   ),
 ];

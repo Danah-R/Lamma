@@ -11,6 +11,7 @@ import '../features/notifications/notifications_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
+import '../widgets/photo_or_painted.dart';
 import '../widgets.dart';
 import '../features/clubs/clubs_controller.dart';
 import '../features/clubs/clubs_screen.dart';
@@ -1032,8 +1033,16 @@ class _PlaceCard extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Container(color: place.sky),
-                CustomPaint(painter: _scenePainterFor(place.scene)),
+                PhotoOrPainted(
+                  assetPath: place.imagePath,
+                  fallback: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Container(color: place.sky),
+                      CustomPaint(painter: _scenePainterFor(place.scene)),
+                    ],
+                  ),
+                ),
                 PositionedDirectional(
                   start: 14,
                   bottom: 14,

@@ -2383,13 +2383,6 @@ class _RoulettePageState extends State<RoulettePage>
   }
 }
 
-const _wheelFontFallback = [
-  'SF Arabic',
-  'Geeza Pro',
-  'Noto Sans Arabic',
-  'Roboto',
-];
-
 class _WheelPainter extends CustomPainter {
   final List<String> items;
   final List<Color> colors;
@@ -2409,7 +2402,6 @@ class _WheelPainter extends CustomPainter {
             fontSize: size,
             fontWeight: FontWeight.w800,
             fontFamily: kFontFamily,
-            fontFamilyFallback: _wheelFontFallback,
             shadows: const [
               Shadow(
                 color: Colors.black38,
@@ -2432,7 +2424,6 @@ class _WheelPainter extends CustomPainter {
           fontSize: 10,
           fontWeight: FontWeight.w800,
           fontFamily: kFontFamily,
-          fontFamilyFallback: _wheelFontFallback,
           shadows: [
             Shadow(color: Colors.black38, blurRadius: 3, offset: Offset(0, 1)),
           ],

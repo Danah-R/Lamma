@@ -41,13 +41,6 @@ ThemeData buildTheme() {
     colorScheme: scheme,
     scaffoldBackgroundColor: C.cream,
     fontFamily: kFontFamily,
-    fontFamilyFallback: const [
-      'Tajawal',
-      'SF Arabic',
-      'Geeza Pro',
-      'Noto Sans Arabic',
-      'Roboto',
-    ],
     textTheme: Typography.blackMountainView.apply(
       bodyColor: C.ink,
       displayColor: C.ink,

@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Thmanyah font: licensed, must not be republished
+assets/fonts/thmanyah/

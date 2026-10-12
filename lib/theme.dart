@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 
 /// Single source of truth for the Lamma palette. Adjust here to match the
 /// reference image exactly.
+/// The app font (Thmanyah, bundled from assets/fonts/thmanyah/, not in git).
+/// The theme sets it for every widget; painters (CustomPainter text) don't
+/// inherit the theme, so they name it explicitly.
+const kFontFamily = 'Thmanyah';
+
 class C {
   static const cream = Color(0xFFFFFFFF);
   static const beige = Color(0xFFEFE2CC);
@@ -35,7 +40,9 @@ ThemeData buildTheme() {
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: C.cream,
+    fontFamily: kFontFamily,
     fontFamilyFallback: const [
+      'Tajawal',
       'SF Arabic',
       'Geeza Pro',
       'Noto Sans Arabic',

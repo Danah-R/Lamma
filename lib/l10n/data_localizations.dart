@@ -168,7 +168,7 @@ Map<String, String> _map(AppLocalizations l) => {
   'Your family': l.dataFamilyFallback,
   'Al-Otaibi family': l.dataFamilyDefault,
 
-  // family chat seed messages (lib/screens/lamma.dart `_msgs`)
+  // old family chat seed messages (the chat now lives in lib/features/family_chat)
   'What are we cooking tonight?': l.chatSeedSarahCooking,
   "Let's go to the park!": l.chatSeedMeGoPark,
   'Dinner will be ready soon': l.chatSeedAminaDinner,
@@ -193,7 +193,7 @@ Map<String, String> _map(AppLocalizations l) => {
   'Watch a movie': l.rouletteDecisionMovie,
   'Play games': l.rouletteDecisionGames,
 
-  // 'Just now' timestamp (lib/screens/lamma.dart ShareMomentPage)
+  // 'Just now' timestamp (the old sample `moments` list in lib/data.dart)
   'Just now': l.dataTimeJustNow,
 
   // parent controls / leaderboard (lib/screens/leaderboard.dart, lib/data.dart `Rules`) —

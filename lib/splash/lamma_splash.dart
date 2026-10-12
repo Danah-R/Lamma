@@ -9,7 +9,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // ---------------------------------------------------------------------------
 // Assets
@@ -711,12 +710,12 @@ class _Logo extends StatelessWidget {
         children: [
           Text(
             'لمّه',
-            style: GoogleFonts.tajawal(fontSize: 72, fontWeight: FontWeight.w800, color: _C.red, height: 1),
+            style: const TextStyle(fontSize: 72, fontWeight: FontWeight.w800, color: _C.red, height: 1),
           ),
           const SizedBox(height: 10),
           Text(
             'يلا نتلمّ',
-            style: GoogleFonts.tajawal(fontSize: 18, fontWeight: FontWeight.w500, color: _C.taglineBrown),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: _C.taglineBrown),
           ),
         ],
       ),

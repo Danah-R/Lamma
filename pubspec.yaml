@@ -32,3 +32,14 @@ flutter:
   assets:
     - assets/characters/
     - assets/splash/
+
+  # Thmanyah: licensed, so the files are NOT in git (see assets/fonts/README.md)
+  fonts:
+    - family: Thmanyah
+      fonts:
+        - asset: assets/fonts/thmanyah/thmanyahsans/otf/thmanyahsans-Regular.otf
+          weight: 400
+        - asset: assets/fonts/thmanyah/thmanyahsans/otf/thmanyahsans-Medium.otf
+          weight: 500
+        - asset: assets/fonts/thmanyah/thmanyahsans/otf/thmanyahsans-Bold.otf
+          weight: 700

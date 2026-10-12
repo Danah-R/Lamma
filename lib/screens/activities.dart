@@ -41,9 +41,7 @@ class ActivitiesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ActivitiesHeader(
-              onBell: () => openNotificationsScreen(context),
-            ),
+            _ActivitiesHeader(onBell: () => openNotificationsScreen(context)),
             const SizedBox(height: 22),
             Builder(
               builder: (context) {
@@ -2410,6 +2408,7 @@ class _WheelPainter extends CustomPainter {
             color: Colors.white,
             fontSize: size,
             fontWeight: FontWeight.w800,
+            fontFamily: kFontFamily,
             fontFamilyFallback: _wheelFontFallback,
             shadows: const [
               Shadow(
@@ -2432,6 +2431,7 @@ class _WheelPainter extends CustomPainter {
           color: Colors.white,
           fontSize: 10,
           fontWeight: FontWeight.w800,
+          fontFamily: kFontFamily,
           fontFamilyFallback: _wheelFontFallback,
           shadows: [
             Shadow(color: Colors.black38, blurRadius: 3, offset: Offset(0, 1)),

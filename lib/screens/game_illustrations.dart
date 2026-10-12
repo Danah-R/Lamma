@@ -9,6 +9,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 import 'activities_colors.dart';
 
@@ -87,6 +88,7 @@ class _HuroofPainter extends CustomPainter {
           style: TextStyle(
             color: textColor,
             fontSize: 14 * sy,
+            fontFamily: kFontFamily,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -131,6 +133,7 @@ class _SeenPainter extends CustomPainter {
           style: TextStyle(
             color: markColor,
             fontSize: markSize * sy,
+            fontFamily: kFontFamily,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -304,6 +307,7 @@ class _PhotoPainter extends CustomPainter {
         style: TextStyle(
           color: Colors.white,
           fontSize: 16 * s,
+          fontFamily: kFontFamily,
           fontWeight: FontWeight.w800,
         ),
       ),
@@ -357,6 +361,7 @@ class _WhoAmIPainter extends CustomPainter {
         style: TextStyle(
           color: AC.brick,
           fontSize: 15 * s,
+          fontFamily: kFontFamily,
           fontWeight: FontWeight.w800,
         ),
       ),

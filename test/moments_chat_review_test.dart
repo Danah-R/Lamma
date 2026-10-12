@@ -34,6 +34,8 @@ Future<void> _app(WidgetTester t, {Size size = const Size(360, 800)}) async {
 
 void main() {
   setUp(() {
+    // not about the camera hint: keep it out of the way
+    CoachSession.dismissed = true;
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
         .accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(

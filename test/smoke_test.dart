@@ -1,3 +1,5 @@
+import 'package:lamma/features/moments/widgets/camera_coach.dart'
+    show CoachSession;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +44,8 @@ void main() {
   // The camera button pulses forever while nothing was shared today; tests
   // run with reduced motion so pumpAndSettle can finish.
   setUp(() {
+    // not about the camera hint: keep it out of the way
+    CoachSession.dismissed = true;
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
         .accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(

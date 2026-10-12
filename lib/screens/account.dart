@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data.dart';
-import '../features/moments/widgets/camera_coach.dart' show kCoachSeenKey;
+import '../features/moments/widgets/camera_coach.dart'
+    show CoachSession, kCoachSeenKey;
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -49,6 +50,7 @@ class _AccountPageState extends State<AccountPage> {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.remove(kCoachSeenKey);
                 } catch (_) {}
+                CoachSession.reset();
                 messenger
                   ..hideCurrentSnackBar()
                   ..showSnackBar(SnackBar(content: Text(msg)));

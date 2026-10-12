@@ -1,3 +1,5 @@
+import 'package:lamma/features/moments/widgets/camera_coach.dart'
+    show CoachSession;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   setUp(() {
+    // not about the camera hint: keep it out of the way
+    CoachSession.dismissed = true;
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
         .accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(
@@ -57,7 +61,11 @@ void main() {
     for (final tab in ['الرئيسية', 'الحساب', 'صندوق الأنشطة', 'لمّه']) {
       await t.tap(find.text(tab).last);
       await t.pumpAndSettle();
-      expect(find.bySemanticsLabel(RegExp('الإشعارات(?!،)')), findsOneWidget, reason: tab);
+      expect(
+        find.bySemanticsLabel(RegExp('الإشعارات(?!،)')),
+        findsOneWidget,
+        reason: tab,
+      );
     }
     h.dispose();
   });

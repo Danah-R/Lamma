@@ -16,6 +16,8 @@ void main() {
   // The camera button pulses forever while nothing was shared today; tests
   // run with reduced motion so pumpAndSettle can finish.
   setUp(() {
+    // not about the camera hint: keep it out of the way
+    CoachSession.dismissed = true;
     TestWidgetsFlutterBinding.ensureInitialized()
         .platformDispatcher
         .accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(
@@ -147,101 +149,248 @@ void _sheetTests() {
 
 void _coachTests() {
   Future<void> launch(
-    WidgetTester t, [
+    WidgetTester t, {
     Map<String, Object> prefs = const {},
-  ]) async {
+    bool demo = true,
+    bool demoNotifications = false,
+  }) async {
     SharedPreferences.setMockInitialValues(prefs);
     await t.binding.setSurfaceSize(const Size(360, 800));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(
+      LammaApp(
+        skipOnboarding: true,
+        coachDemoMode: demo,
+        demoNotifications: demoNotifications,
+      ),
+    );
     await t.pumpAndSettle();
+  }
+
+  // the first camera tap only opens the moments page
+  Future<void> openMoments(WidgetTester t) async {
+    await t.tap(find.byIcon(Icons.camera_alt_rounded));
+    await t.pump();
   }
 
   Future<bool?> seen() async =>
       (await SharedPreferences.getInstance()).getBool('moments_coach_seen');
 
-  testWidgets('coach shows at launch, once; "بعدين" closes and remembers', (
+  setUp(CoachSession.reset); // each test is a fresh launch
+
+  testWidgets('not on the home page; on the moments page after 600ms', (
     t,
   ) async {
     await launch(t);
+    await t.pump(const Duration(seconds: 2));
+    expect(find.byType(CameraCoach), findsNothing); // home: never
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 500));
+    expect(find.byType(CameraCoach), findsNothing); // not yet
+    await t.pump(const Duration(milliseconds: 150));
+    await t.pump(const Duration(milliseconds: 20));
     expect(find.byType(CameraCoach), findsOneWidget);
     expect(find.text('صوّر لحظة من يومك'), findsOneWidget);
     expect(find.text('اضغط الكاميرا تحت وشاركها العائلة'), findsOneWidget);
     expect(find.text('مشاركة'), findsOneWidget);
+    expect(t.getSize(find.byType(CameraCoach)).width, 270);
     // buttons hug their text (the wide test font may wrap them to two rows;
     // on the simulator they sit on one row)
-    final later = t.getRect(find.text('بعدين'));
-    expect(later.width < 100, isTrue);
     final laterBtn = t.getSize(
       find
           .ancestor(of: find.text('بعدين'), matching: find.byType(Container))
           .first,
     );
     expect(laterBtn.height, 40);
-    expect(laterBtn.width < 140, isTrue); // not stretched to the bubble width
-    expect(t.getSize(find.byType(CameraCoach)).width, 270);
-    await t.tap(find.text('بعدين'));
-    await t.pumpAndSettle();
+    expect(laterBtn.width < 140, isTrue);
+    // leaving the page hides it; coming back shows it again (not dismissed)
+    await t.tap(find.text('الرئيسية').last);
+    await t.pump();
     expect(find.byType(CameraCoach), findsNothing);
-    expect(await seen(), isTrue);
-    // rebuild the whole app: it does not come back
-    await t.pumpWidget(const SizedBox());
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
-    await t.pumpAndSettle();
-    expect(find.byType(CameraCoach), findsNothing);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
   });
 
-  testWidgets('"صوّر الحين" closes it and opens the new-moment screen', (
+  testWidgets('fades and scales in from 0.9', (t) async {
+    await launch(t);
+    t.platformDispatcher.clearAccessibilityFeaturesTestValue();
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 600));
+    await t.pump(const Duration(milliseconds: 16));
+    await t.pump(const Duration(milliseconds: 16));
+    final fade = t.widget<FadeTransition>(
+      find
+          .descendant(
+            of: find.byType(CameraCoach),
+            matching: find.byType(FadeTransition),
+          )
+          .first,
+    );
+    expect(fade.opacity.value > 0 && fade.opacity.value < 1, isTrue);
+    final scale = t.widget<ScaleTransition>(
+      find
+          .descendant(
+            of: find.byType(CameraCoach),
+            matching: find.byType(ScaleTransition),
+          )
+          .first,
+    );
+    expect(scale.scale.value >= .9 && scale.scale.value < 1, isTrue);
+    await t.pump(const Duration(milliseconds: 400));
+    t.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(disableAnimations: true);
+  });
+
+  testWidgets('demo: "بعدين" hides it for the session, nothing is saved; '
+      'it is back on the next cold start', (t) async {
+    await launch(t);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    await t.tap(find.text('بعدين'));
+    await t.pump();
+    expect(find.byType(CameraCoach), findsNothing);
+    expect(CoachSession.dismissed, isTrue);
+    expect(await seen(), isNull); // no shared_preferences in demo mode
+    // same session: leave and come back
+    await t.tap(find.text('الرئيسية').last);
+    await t.pump();
+    await openMoments(t);
+    await t.pump(const Duration(seconds: 2));
+    expect(find.byType(CameraCoach), findsNothing);
+    // close the app completely and open it again
+    await t.pumpWidget(const SizedBox());
+    CoachSession.reset(); // a new process starts with a clean memory
+    await launch(t);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
+  });
+
+  testWidgets('"صوّر الحين" hides it and opens the new-moment screen', (
     t,
   ) async {
     await launch(t);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
     await t.tap(find.text('صوّر الحين'));
     await t.pumpAndSettle();
     expect(find.byType(CameraCoach), findsNothing);
     expect(find.text('لحظة جديدة'), findsOneWidget);
-    expect(await seen(), isTrue);
+    expect(CoachSession.dismissed, isTrue);
   });
 
-  testWidgets('tapping the camera closes it and remembers', (t) async {
+  testWidgets('pressing the camera while it shows hides it for the session', (
+    t,
+  ) async {
     await launch(t);
+    await openMoments(t); // this press only navigates: it must not dismiss
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
     await t.tap(find.byIcon(Icons.camera_alt_rounded));
     await t.pumpAndSettle();
     expect(find.byType(CameraCoach), findsNothing);
-    expect(await seen(), isTrue);
+    expect(CoachSession.dismissed, isTrue);
   });
 
-  testWidgets('opening the notifications box closes it and remembers', (
+  testWidgets('sharing a moment hides it, and it does not come back', (
     t,
   ) async {
     await launch(t);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
     expect(find.byType(CameraCoach), findsOneWidget);
-    await t.tap(find.text('لمّه').last);
-    await t.pumpAndSettle();
-    expect(find.byType(CameraCoach), findsOneWidget); // switching tabs keeps it
+    t
+        .element(find.byType(Shell))
+        .read<MomentsController>()
+        .addMoment(caption: 'x');
+    await t.pump();
+    expect(find.byType(CameraCoach), findsNothing);
+    await t.tap(find.text('الرئيسية').last);
+    await t.pump();
+    await openMoments(t);
+    await t.pump(const Duration(seconds: 2));
+    expect(find.byType(CameraCoach), findsNothing);
+  });
+
+  testWidgets('the notifications box hides it for now; it returns on close', (
+    t,
+  ) async {
+    await launch(t);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
     await t.tap(find.bySemanticsLabel(RegExp('^الإشعارات')));
     await t.pumpAndSettle();
     expect(find.byType(CameraCoach), findsNothing);
-    expect(await seen(), isTrue);
+    expect(CoachSession.dismissed, isFalse);
+    t.element(find.byType(Shell)).read<NotificationsController>().closePanel();
+    await t.pumpAndSettle();
+    expect(find.byType(CameraCoach), findsOneWidget);
   });
 
-  testWidgets('never when already seen', (t) async {
-    await launch(t, {'moments_coach_seen': true});
+  testWidgets('the banner does not close it and does not overlap it', (
+    t,
+  ) async {
+    await launch(t, demoNotifications: true);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
+    await t.pump(const Duration(milliseconds: 3000)); // banner at 3.5s
+    await t.pump(const Duration(milliseconds: 400));
+    expect(find.text('إشعار جديد · الحين'), findsOneWidget);
+    expect(find.byType(CameraCoach), findsOneWidget);
+    final banner = t.getRect(
+      find
+          .ancestor(
+            of: find.text('إشعار جديد · الحين'),
+            matching: find.byType(Material),
+          )
+          .first,
+    );
+    final coach = t.getRect(find.byType(CameraCoach));
+    expect(banner.bottom < coach.top, isTrue); // banner on top, hint below
+    await t.pump(const Duration(seconds: 4)); // banner leaves
+    expect(find.byType(CameraCoach), findsOneWidget);
+  });
+
+  testWidgets('the sample data has no moment of mine today', (t) async {
+    final c = MomentsController();
+    expect(c.didIShareToday, isFalse);
+    expect(c.moments.any((m) => m.authorId == 'mo'), isFalse);
+  });
+
+  testWidgets('old behaviour (demo off): once, remembered on disk', (t) async {
+    await launch(t, demo: false);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
+    expect(find.byType(CameraCoach), findsOneWidget);
+    await t.tap(find.text('بعدين'));
+    await t.pump();
+    await t.pump();
+    expect(await seen(), isTrue);
+    // a new launch: not again
+    await t.pumpWidget(const SizedBox());
+    CoachSession.reset();
+    await launch(t, demo: false, prefs: {'moments_coach_seen': true});
+    await openMoments(t);
+    await t.pump(const Duration(seconds: 2));
     expect(find.byType(CameraCoach), findsNothing);
   });
 
-  testWidgets('account "reset hint" clears the key; moments page shows it', (
+  testWidgets('account "reset hint": clears the key and the session', (
     t,
   ) async {
-    await launch(t, {'moments_coach_seen': true});
+    CoachSession.dismissed = true;
+    await launch(t, prefs: {'moments_coach_seen': true});
     await t.tap(find.text('الحساب').last);
     await t.pumpAndSettle();
     await t.tap(find.text('إعادة تلميح الكاميرا'));
     await t.pumpAndSettle();
     expect(find.text('بيطلع لك التلميح في صفحة اللحظات'), findsOneWidget);
     expect(await seen(), isNull);
-    expect(find.byType(CameraCoach), findsNothing);
-    // the hint comes on the moments page (not before)
-    await t.tap(find.byIcon(Icons.camera_alt_rounded));
-    await t.pumpAndSettle();
+    expect(CoachSession.dismissed, isFalse);
+    await openMoments(t);
+    await t.pump(const Duration(milliseconds: 700));
     expect(find.byType(CameraCoach), findsOneWidget);
   });
 

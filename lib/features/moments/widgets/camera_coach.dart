@@ -6,7 +6,17 @@ import '../../../screens/activities_colors.dart';
 /// shared_preferences key: the camera hint was shown (or dismissed) once.
 const kCoachSeenKey = 'moments_coach_seen';
 
-/// First-visit tooltip over the camera button. Bobs up and down 5px.
+/// Per-launch memory of the camera hint (demo mode): once dismissed it stays
+/// away until the app is opened again. Lives in memory only.
+class CoachSession {
+  static bool dismissed = false;
+
+  /// Tests (and "show the hint again") start a fresh launch.
+  static void reset() => dismissed = false;
+}
+
+/// First-visit tooltip over the camera button. Fades and scales in (from
+/// 0.9), then bobs up and down 5px.
 class CameraCoach extends StatefulWidget {
   final VoidCallback onLater, onNow;
   const CameraCoach({super.key, required this.onLater, required this.onNow});
@@ -16,11 +26,16 @@ class CameraCoach extends StatefulWidget {
 }
 
 class _CameraCoachState extends State<CameraCoach>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _bob = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 800), // 1.6s there-and-back
   );
+
+  late final AnimationController _in = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 250),
+  )..forward();
 
   @override
   void didChangeDependencies() {
@@ -35,6 +50,7 @@ class _CameraCoachState extends State<CameraCoach>
 
   @override
   void dispose() {
+    _in.dispose();
     _bob.dispose();
     super.dispose();
   }
@@ -42,6 +58,24 @@ class _CameraCoachState extends State<CameraCoach>
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final reduce = MediaQuery.disableAnimationsOf(context);
+    final appear = CurvedAnimation(
+      parent: _in,
+      curve: const Cubic(.2, .8, .2, 1),
+    );
+    return FadeTransition(
+      opacity: appear,
+      child: ScaleTransition(
+        scale: reduce
+            ? const AlwaysStoppedAnimation(1.0)
+            : Tween(begin: .9, end: 1.0).animate(appear),
+        alignment: Alignment.bottomCenter,
+        child: _bobbing(l),
+      ),
+    );
+  }
+
+  Widget _bobbing(AppLocalizations l) {
     return AnimatedBuilder(
       animation: _bob,
       builder: (_, child) => Transform.translate(

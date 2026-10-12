@@ -26,6 +26,7 @@ import 'features/notifications/notification_seed.dart';
 import 'features/notifications/widgets/notification_banner.dart';
 import 'features/notifications/notifications_controller.dart';
 import 'features/moments/moments_screen.dart';
+import 'config.dart';
 import 'features/moments/widgets/camera_coach.dart';
 import 'features/moments/widgets/share_pulse.dart';
 import 'features/topics/topics_controller.dart';
@@ -57,11 +58,15 @@ class LammaApp extends StatefulWidget {
   /// Show the sample "suggested a weekend outing" notification 4 seconds in.
   /// Defaults to [kDemoNotifications].
   final bool? demoNotifications;
+
+  /// Camera-hint behaviour; defaults to [kCoachDemoMode] (see config.dart).
+  final bool? coachDemoMode;
   const LammaApp({
     super.key,
     this.skipOnboarding = false,
     this.skipSplash = false,
     this.demoNotifications,
+    this.coachDemoMode,
   });
   @override
   State<LammaApp> createState() => _LammaAppState();
@@ -136,7 +141,7 @@ class _LammaAppState extends State<LammaApp> {
       home: _showSplash
           ? LammaSplash(onStart: () => setState(() => _showSplash = false))
           : (_onboarded
-                ? const Shell()
+                ? Shell(coachDemoMode: widget.coachDemoMode ?? kCoachDemoMode)
                 : OnboardingFlow(
                     onDone: () => setState(() => _onboarded = true),
                   )),
@@ -145,7 +150,8 @@ class _LammaAppState extends State<LammaApp> {
 }
 
 class Shell extends StatefulWidget {
-  const Shell({super.key});
+  final bool coachDemoMode;
+  const Shell({super.key, this.coachDemoMode = kCoachDemoMode});
   @override
   State<Shell> createState() => _ShellState();
 }
@@ -193,11 +199,11 @@ class _ShellState extends State<Shell> {
     _notifications = context.read<NotificationsController>()
       ..onOpen = _openTarget
       ..addListener(_onNotificationsChanged);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowCoach());
   }
 
   @override
   void dispose() {
+    _coachTimer?.cancel();
     _notifications.removeListener(_onNotificationsChanged);
     if (_notifications.onOpen == _openTarget) _notifications.onOpen = null;
     super.dispose();
@@ -233,33 +239,56 @@ class _ShellState extends State<Shell> {
     }
   }
 
-  bool _coach = false;
+  // ---- the camera hint (shown on the moments page only) ----
+  bool _coachArmed = false; // eligible, and 600ms after the page opened
+  Timer? _coachTimer;
 
   void _select(int i) {
     if (i == _i) _keys[i].currentState?.popUntil((r) => r.isFirst);
-    setState(() => _i = i);
-    if (i == _momentsTab) _maybeShowCoach();
+    setState(() {
+      _i = i;
+      if (i != _momentsTab) _coachArmed = false;
+    });
+    if (i == _momentsTab) _scheduleCoach();
   }
 
-  /// The camera hint: once, if I haven't shared today. Tried at launch and
-  /// whenever the moments page opens (so "reset hint" shows it again there).
-  Future<void> _maybeShowCoach() async {
+  /// 600ms after the moments page opens, show the hint if it is due.
+  void _scheduleCoach() {
+    _coachTimer?.cancel();
+    _coachTimer = Timer(const Duration(milliseconds: 600), () async {
+      if (!mounted || _i != _momentsTab || _coachArmed) return;
+      if (!await _coachDue()) return;
+      if (!mounted || _i != _momentsTab) return;
+      setState(() => _coachArmed = true);
+    });
+  }
+
+  /// Demo mode: every launch, until dismissed or a moment is shared in this
+  /// session. Otherwise: once ever (shared_preferences).
+  Future<bool> _coachDue() async {
+    if (context.read<MomentsController>().didIShareToday) return false;
+    if (widget.coachDemoMode) return !CoachSession.dismissed;
     try {
       final prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool(kCoachSeenKey) ?? false) return;
-      if (!mounted || _coach) return;
-      if (context.read<MomentsController>().didIShareToday) return;
-      if (_notifications.panelOpen) return;
-      setState(() => _coach = true);
+      return !(prefs.getBool(kCoachSeenKey) ?? false);
     } catch (_) {
-      // storage unavailable: skip the hint rather than risk showing it every time
+      return false; // storage unavailable: don't risk showing it every time
     }
   }
 
-  /// However it goes away, it never comes back: remember it.
+  bool _coachVisible(bool shared) =>
+      _coachArmed &&
+      _i == _momentsTab &&
+      !shared &&
+      !_notifications.panelOpen; // hides while the box is open, then returns
+
+  /// "بعدين", "صوّر الحين", the camera, or sharing: gone for this session
+  /// (and for good when not in demo mode).
   Future<void> _dismissCoach() async {
-    if (!_coach) return;
-    setState(() => _coach = false);
+    if (!_coachArmed) return;
+    setState(() => _coachArmed = false);
+    CoachSession.dismissed = true;
+    if (widget.coachDemoMode) return;
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(kCoachSeenKey, true);
@@ -267,7 +296,7 @@ class _ShellState extends State<Shell> {
   }
 
   void _onNotificationsChanged() {
-    if (_notifications.panelOpen) _dismissCoach();
+    if (mounted) setState(() {}); // the hint hides/returns with the box
   }
 
   // The camera button opens the moments feed, a tab of its own (index 4),
@@ -406,7 +435,7 @@ class _ShellState extends State<Shell> {
               ),
             ),
           ),
-          if (_coach && !shared)
+          if (_coachVisible(shared))
             Positioned(
               left: 0,
               right: 0,

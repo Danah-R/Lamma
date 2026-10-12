@@ -21,7 +21,7 @@ bool _demoDefault() {
   }
 }
 
-/// Shows one sample notification 4 seconds after launch, so the banner can
+/// Shows one sample notification 3.5 seconds after launch, so the banner can
 /// be seen. Turn off with `--dart-define=DEMO_NOTIFICATIONS=false`.
 final bool kDemoNotifications = _demoDefault();
 
@@ -85,6 +85,16 @@ class NotificationsController extends ChangeNotifier {
     _items.insert(at < 0 ? _items.length : at, n);
     notifyListeners();
     if (announce) _new.add(n);
+  }
+
+  /// Records something *I* did (a vote, a game started): it goes in the list
+  /// already read, with no badge and no banner.
+  void logOwn(AppNotification? n) {
+    if (n == null || byId(n.id) != null) return;
+    final read = n.copyWith(isRead: true);
+    final at = _items.indexWhere((x) => x.createdAt.isBefore(read.createdAt));
+    _items.insert(at < 0 ? _items.length : at, read);
+    notifyListeners();
   }
 
   void markRead(String id) {

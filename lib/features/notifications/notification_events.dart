@@ -11,8 +11,10 @@ class NotificationEvents {
   static String _verb(Gender g, String male, String female) =>
       g == Gender.female ? female : male;
 
-  static NotificationActor? _actor(String id) {
-    if (id == notificationMeId) return null;
+  /// [includeMe]: build it even when the actor is me (for the log of my own
+  /// acts); otherwise acts by me produce nothing.
+  static NotificationActor? _actor(String id, [bool includeMe = false]) {
+    if (id == notificationMeId && !includeMe) return null;
     return notificationActors[id];
   }
 
@@ -105,8 +107,9 @@ class NotificationEvents {
     required String actorId,
     required String place,
     required DateTime at,
+    bool includeMe = false,
   }) {
-    final a = _actor(actorId);
+    final a = _actor(actorId, includeMe);
     if (a == null) return null;
     final v = _verb(a.gender, 'اقترح', 'اقترحت');
     return AppNotification(
@@ -125,8 +128,9 @@ class NotificationEvents {
   static AppNotification? outingVote({
     required String actorId,
     required DateTime at,
+    bool includeMe = false,
   }) {
-    final a = _actor(actorId);
+    final a = _actor(actorId, includeMe);
     if (a == null) return null;
     final v = _verb(a.gender, 'صوّت', 'صوّتت');
     return AppNotification(
@@ -146,8 +150,9 @@ class NotificationEvents {
     required String actorId,
     required String game,
     required DateTime at,
+    bool includeMe = false,
   }) {
-    final a = _actor(actorId);
+    final a = _actor(actorId, includeMe);
     if (a == null) return null;
     return AppNotification(
       id: 'game-${a.id}-${at.millisecondsSinceEpoch}',

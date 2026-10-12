@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lamma/features/games/games_controller.dart';
 import 'package:lamma/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:lamma/main.dart';
 import 'package:lamma/screens/activities.dart';
 
@@ -37,11 +39,14 @@ Future<void> _tapNoTime(WidgetTester t, String s) async {
 Future<void> _openGamesDirect(WidgetTester t, Size size) async {
   await t.binding.setSurfaceSize(size);
   await t.pumpWidget(
-    MaterialApp(
-      locale: const Locale('ar'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const GamesPage(),
+    ChangeNotifierProvider(
+      create: (_) => GamesController(),
+      child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const GamesPage(),
+      ),
     ),
   );
   await t.pump(const Duration(seconds: 1));

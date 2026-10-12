@@ -11,6 +11,8 @@ import '../widgets/notification_bell.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
+import '../features/games/games_controller.dart';
+import '../features/outings/outing_controller.dart';
 import '../widgets/photo_or_painted.dart';
 import '../widgets.dart';
 import '../features/clubs/clubs_controller.dart';
@@ -892,7 +894,6 @@ class WeekendOutingCard extends StatefulWidget {
 class _WeekendOutingCardState extends State<WeekendOutingCard> {
   late final PageController _pageCtrl = PageController();
   int _index = 0;
-  final Set<int> _voted = {};
 
   @override
   void dispose() {
@@ -909,9 +910,7 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
     );
   }
 
-  void _toggleVote(int i) => setState(() {
-    if (!_voted.add(i)) _voted.remove(i);
-  });
+  void _toggleVote(int i) => context.read<OutingController>().toggleVote(i);
 
   @override
   Widget build(BuildContext context) {
@@ -974,7 +973,7 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
             onPageChanged: (i) => setState(() => _index = i),
             itemBuilder: (context, i) {
               final place = weekendPlaces[i];
-              final voted = _voted.contains(i);
+              final voted = context.watch<OutingController>().hasVoted(i);
               final votes = place.baseVotes + (voted ? 1 : 0);
               return _PlaceCard(
                 place: place,
@@ -1448,6 +1447,7 @@ class _GamesPageState extends State<GamesPage> {
       return;
     }
     // Games open full-screen on the root navigator: no bottom nav bar.
+    context.read<GamesController>().start(game.title);
     switch (game.id) {
       case 'whoami':
         goGame(context, const WhoAmIScreen());
@@ -2938,6 +2938,7 @@ class SuggestPlacePage extends StatelessWidget {
         icon: Icons.add_rounded,
         onTap: () {
           if (!ourOutings.contains(p)) ourOutings.add(p);
+          context.read<OutingController>().suggest(ld(context, p.name));
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(l.suggestPlaceAddedSnackbar)));

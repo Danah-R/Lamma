@@ -91,10 +91,10 @@ void seedNotifications({
   );
 }
 
-/// [kDemoNotifications]: 4 seconds after launch, Yousef suggests a weekend
+/// [kDemoNotifications]: 3.5 seconds after launch, Yousef suggests a weekend
 /// outing, so the banner can be seen.
 Timer scheduleDemoNotification(NotificationsController notifications) =>
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(milliseconds: 3500), () {
       notifications.add(
         NotificationEvents.outingSuggested(
           actorId: 'yo',

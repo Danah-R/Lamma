@@ -18,7 +18,9 @@ import 'features/clubs/clubs_controller.dart';
 import 'features/clubs/clubs_screen.dart';
 import 'features/family_chat/family_chat_controller.dart';
 import 'features/family_chat/family_chat_screen.dart';
+import 'features/games/games_controller.dart';
 import 'features/moments/moments_controller.dart';
+import 'features/outings/outing_controller.dart';
 import 'features/notifications/notification_model.dart';
 import 'features/notifications/notification_seed.dart';
 import 'features/notifications/widgets/notification_banner.dart';
@@ -76,6 +78,8 @@ class _LammaAppState extends State<LammaApp> {
   late final _moments = MomentsController(notifications: _notifications);
   late final _chat = FamilyChatController(notifications: _notifications);
   final _topics = TopicsController();
+  late final _outings = OutingController(notifications: _notifications);
+  late final _games = GamesController(notifications: _notifications);
   Timer? _demo;
 
   @override
@@ -101,6 +105,8 @@ class _LammaAppState extends State<LammaApp> {
     _moments.dispose();
     _chat.dispose();
     _topics.dispose();
+    _outings.dispose();
+    _games.dispose();
     super.dispose();
   }
 
@@ -112,6 +118,8 @@ class _LammaAppState extends State<LammaApp> {
       ChangeNotifierProvider.value(value: _topics),
       ChangeNotifierProvider.value(value: _moments),
       ChangeNotifierProvider.value(value: _chat),
+      ChangeNotifierProvider.value(value: _outings),
+      ChangeNotifierProvider.value(value: _games),
     ],
     child: MaterialApp(
       title: 'لمّه',

@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../l10n/app_localizations.dart';
-import '../../../screens/activities_colors.dart';
-import '../notifications_screen.dart';
-import '../notifications_controller.dart';
-import 'notification_panel.dart';
+import '../l10n/app_localizations.dart';
+import '../screens/activities_colors.dart';
+import '../features/notifications/notifications_screen.dart';
+import '../features/notifications/notifications_controller.dart';
+import '../features/notifications/widgets/notification_panel.dart';
 
 const _scrim = Color(0x2E1E2A47); // navy at 18%
 const _panelWidth = 336.0;

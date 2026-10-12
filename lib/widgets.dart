@@ -4,6 +4,7 @@ import 'data.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/data_localizations.dart';
 import 'theme.dart';
+import 'widgets/notification_bell.dart';
 
 Future<T?> go<T>(BuildContext c, Widget page) =>
     Navigator.of(c).push<T>(MaterialPageRoute(builder: (_) => page));
@@ -242,8 +243,7 @@ class Page1 extends StatelessWidget {
 /// Header for the root tabs: title, subtitle, avatar and bell.
 class TabHeader extends StatelessWidget {
   final String title, subtitle;
-  final VoidCallback? onBell;
-  const TabHeader(this.title, this.subtitle, {super.key, this.onBell});
+  const TabHeader(this.title, this.subtitle, {super.key});
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 8),
@@ -255,29 +255,9 @@ class TabHeader extends StatelessWidget {
               Text(subtitle, style: const TextStyle(color: C.inkSoft, fontSize: 15)),
             ]),
           ),
-          if (onBell != null) BellButton(onBell!),
+          const NotificationBell(),
         ]),
       );
-}
-
-class BellButton extends StatelessWidget {
-  final VoidCallback onTap;
-  const BellButton(this.onTap, {super.key});
-  @override
-  Widget build(BuildContext context) => Stack(children: [
-        IconButton.filled(
-          onPressed: onTap,
-          style: IconButton.styleFrom(backgroundColor: C.beige, foregroundColor: C.ink),
-          icon: const Icon(Icons.notifications_none_rounded),
-        ),
-        PositionedDirectional(
-            top: 8,
-            end: 10,
-            child: Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(color: C.coral, shape: BoxShape.circle))),
-      ]);
 }
 
 class Field extends StatelessWidget {

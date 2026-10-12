@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data.dart';
-import '../features/notifications/notifications_screen.dart';
+import '../widgets/notification_bell.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                     style: const TextStyle(fontSize: 13, color: C.inkSoft, fontWeight: FontWeight.w700)),
               ]),
             ),
-            BellButton(() => openNotificationsScreen(context)),
+            const NotificationBell(),
           ]),
           if (rules.phoneFree || rules.punishments.containsKey(profile.name)) ...[
             const SizedBox(height: 14),

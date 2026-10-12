@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../screens/activities_colors.dart';
-import '../../notifications/widgets/notification_bell.dart';
+import '../../../widgets/notification_bell.dart';
 
 /// "لحظات يومنا": title + "X من 6 شاركوا اليوم", bell on the far side.
 class MomentsHeader extends StatelessWidget {

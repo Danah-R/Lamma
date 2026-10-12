@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../screens/activities_colors.dart';
-import '../../notifications/widgets/notification_bell.dart';
+import '../../../widgets/notification_bell.dart';
 
 /// "لمّه" + online line, with the notifications bell.
 class ChatHeader extends StatelessWidget {

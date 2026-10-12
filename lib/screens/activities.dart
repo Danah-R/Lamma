@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data.dart';
-import '../features/notifications/notifications_screen.dart';
+import '../widgets/notification_bell.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
@@ -42,7 +42,7 @@ class ActivitiesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ActivitiesHeader(onBell: () => openNotificationsScreen(context)),
+            const _ActivitiesHeader(),
             const SizedBox(height: 22),
             Builder(
               builder: (context) {
@@ -85,8 +85,7 @@ class ActivitiesPage extends StatelessWidget {
 }
 
 class _ActivitiesHeader extends StatelessWidget {
-  final VoidCallback onBell;
-  const _ActivitiesHeader({required this.onBell});
+  const _ActivitiesHeader();
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -114,14 +113,7 @@ class _ActivitiesHeader extends StatelessWidget {
             ],
           ),
         ),
-        _RoundIconButton(
-          background: AC.card,
-          iconColor: AC.ink,
-          borderColor: AC.border,
-          icon: Icons.notifications_none_rounded,
-          tooltip: l.notificationsTitle,
-          onTap: onBell,
-        ),
+        const NotificationBell(),
       ],
     );
   }

@@ -62,7 +62,7 @@ void main() {
   ) async {
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
     await t.binding.setSurfaceSize(const Size(400, 1400));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pumpAndSettle();
     final c = t.element(find.byType(Shell)).read<NotificationsController>();
     final before = c.items.length;

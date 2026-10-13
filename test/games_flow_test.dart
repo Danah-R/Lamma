@@ -25,7 +25,7 @@ Future<void> _tapText(WidgetTester t, String s) => _tap(t, find.text(s));
 void main() {
   testWidgets('games open full-screen, charades plays through', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(seconds: 1));
     await _tap(t, find.text('صندوق الأنشطة').last);
     await _tapText(t, 'عرض الكل');

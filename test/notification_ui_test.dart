@@ -41,7 +41,9 @@ Future<NotificationsController> _openFeed(
 }) async {
   SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
   await t.binding.setSurfaceSize(size);
-  await t.pumpWidget(LammaApp(skipOnboarding: true, demoNotifications: demo));
+  await t.pumpWidget(
+    LammaApp(skipSplash: true, skipOnboarding: true, demoNotifications: demo),
+  );
   await t.pumpAndSettle();
   await t.tap(find.byIcon(Icons.camera_alt_rounded));
   await t.pumpAndSettle();

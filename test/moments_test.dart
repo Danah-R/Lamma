@@ -55,7 +55,7 @@ void main() {
   testWidgets('camera button opens the moments feed (no chat)', (t) async {
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
     await t.binding.setSurfaceSize(const Size(360, 800));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.tap(find.byIcon(Icons.camera_alt_rounded));
     await t.pumpAndSettle();
     expect(find.text('لحظات يومنا'), findsOneWidget);
@@ -158,6 +158,7 @@ void _coachTests() {
     await t.binding.setSurfaceSize(const Size(360, 800));
     await t.pumpWidget(
       LammaApp(
+        skipSplash: true,
         skipOnboarding: true,
         coachDemoMode: demo,
         demoNotifications: demoNotifications,
@@ -399,7 +400,7 @@ void _coachTests() {
     t.platformDispatcher.clearAccessibilityFeaturesTestValue();
     final h = t.ensureSemantics();
     await t.binding.setSurfaceSize(const Size(360, 800));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     expect(find.bySemanticsLabel('مشاركة: صوّر لحظة'), findsOneWidget);
     SharePulse pulse() => t.widget<SharePulse>(find.byType(SharePulse));
     expect(pulse().active, isTrue);

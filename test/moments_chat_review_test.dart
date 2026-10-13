@@ -12,8 +12,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 void _noOverflowAndTargets(WidgetTester t, String where) {
   for (final e in find.byType(InkWell).evaluate()) {
     if (!e.renderObject!.attached) continue;
-    final box = e.renderObject! as RenderBox;
+    var box = e.renderObject! as RenderBox;
     if (!box.hasSize) continue;
+    // an IconButton's ink is 40px but its tap area is padded to 48: measure
+    // the button, as Danah's bell is a plain IconButton
+    final btn = find.ancestor(
+      of: find.byWidget(e.widget),
+      matching: find.byType(IconButton),
+    );
+    if (btn.evaluate().isNotEmpty) {
+      box = btn.evaluate().first.renderObject! as RenderBox;
+    }
     // ignore off-screen (not yet scrolled to) targets
     final top = box.localToGlobal(Offset.zero);
     if (top.dy > 800 || top.dy + box.size.height < 0) continue;
@@ -28,7 +37,7 @@ void _noOverflowAndTargets(WidgetTester t, String where) {
 Future<void> _app(WidgetTester t, {Size size = const Size(360, 800)}) async {
   SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
   await t.binding.setSurfaceSize(size);
-  await t.pumpWidget(const LammaApp(skipOnboarding: true));
+  await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
   await t.pumpAndSettle();
 }
 
@@ -168,7 +177,7 @@ void main() {
     t.platformDispatcher.clearAccessibilityFeaturesTestValue();
     await t.binding.setSurfaceSize(const Size(360, 800));
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(milliseconds: 500));
     expect(t.hasRunningAnimations, isTrue);
     expect(find.text('مشاركة'), findsOneWidget);

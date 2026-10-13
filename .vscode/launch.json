@@ -7,10 +7,10 @@
       "type": "dart"
     },
     {
-      "name": "Lamma (full flow: splash + onboarding)",
+      "name": "Lamma (skip onboarding)",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define=START_AT_HOME=false"]
+      "args": ["--dart-define=START_AT_HOME=true"]
     }
   ]
 }

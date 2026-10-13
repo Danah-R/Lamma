@@ -234,7 +234,7 @@ void main() {
 
   testWidgets('from the Activities tab: bar stays, tab selected', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(seconds: 1));
     await t.tap(find.text('صندوق الأنشطة').last);
     await _settle(t);

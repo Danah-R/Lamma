@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart' show debugPrint, kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,12 +33,9 @@ import 'screens/onboarding.dart';
 import 'splash/lamma_splash.dart';
 import 'theme.dart';
 
-/// Debug runs skip splash + onboarding and land on home. Release builds show
-/// the full flow. Override with `--dart-define=START_AT_HOME=false`.
-const _startAtHome = bool.fromEnvironment(
-  'START_AT_HOME',
-  defaultValue: kDebugMode,
-);
+/// `--dart-define=START_AT_HOME=true` skips onboarding only (splash, then
+/// home). The splash always shows, in debug too.
+const _startAtHome = bool.fromEnvironment('START_AT_HOME');
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,12 +53,10 @@ Future<void> main() async {
 }
 
 class LammaApp extends StatefulWidget {
-  /// Set to true to jump straight to the app, skipping the splash and
-  /// onboarding (used by tests).
+  /// Set to true to skip onboarding and go to the app after the splash.
   final bool skipOnboarding;
 
-  /// Set to true to skip only the splash screen (used by tests that
-  /// exercise onboarding directly).
+  /// Set to true to skip the splash screen (used by tests).
   final bool skipSplash;
 
   /// Show the sample "suggested a weekend outing" notification 3.5 seconds in.
@@ -84,7 +78,8 @@ class LammaApp extends StatefulWidget {
 
 class _LammaAppState extends State<LammaApp> {
   late bool _onboarded = widget.skipOnboarding;
-  late bool _showSplash = !widget.skipOnboarding && !widget.skipSplash;
+  // the splash opens every launch; only tests skip it
+  late bool _showSplash = !widget.skipSplash;
 
   // Created here (above MaterialApp) so the controllers can notify each
   // other: the events they raise land in one shared notifications store.

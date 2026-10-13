@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
 import '../screens/activities_colors.dart';
+import '../theme.dart';
 import '../features/notifications/notifications_screen.dart';
 import '../features/notifications/notifications_controller.dart';
 import '../features/notifications/widgets/notification_panel.dart';
@@ -100,6 +101,7 @@ class _NotificationBellState extends State<NotificationBell>
     final box = context.findRenderObject() as RenderBox?;
     if (box == null || !box.attached) return;
     final bellLeft = box.localToGlobal(Offset.zero).dx;
+    final bellSize = box.size;
     final screenW = MediaQuery.sizeOf(context).width;
     final width = _panelWidth.clamp(0.0, screenW - 24);
     _entry = OverlayEntry(
@@ -107,6 +109,7 @@ class _NotificationBellState extends State<NotificationBell>
         link: _link,
         width: width,
         bellLeft: bellLeft,
+        bellSize: bellSize,
         controller: _c,
         onSeeAll: () {
           _c.closePanel();
@@ -123,6 +126,9 @@ class _NotificationBellState extends State<NotificationBell>
     final open = _c.panelOpen && _entry != null;
     final count = _c.unreadCount;
     final label = count > 0 ? l.notifBellLabel(count) : l.notifBellLabelNone;
+    // Danah's bell, as designed (the old BellButton): a filled icon button
+    // (peach tint, navy icon) with a small brick dot at its top corner. The
+    // dot shows while there is something unread; pressing opens the box.
     return CompositedTransformTarget(
       link: _link,
       child: Semantics(
@@ -130,63 +136,35 @@ class _NotificationBellState extends State<NotificationBell>
         expanded: open,
         label: label,
         excludeSemantics: true,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: Material(
-                  color: open ? AC.navy : AC.card,
-                  shape: CircleBorder(
-                    side: BorderSide(color: open ? AC.navy : AC.border),
-                  ),
-                  child: InkWell(
-                    customBorder: const CircleBorder(),
-                    onTap: _c.togglePanel,
-                    child: Icon(
-                      Icons.notifications_none_rounded,
-                      size: 20,
-                      color: open ? Colors.white : AC.ink,
-                    ),
-                  ),
-                ),
+        child: Stack(
+          children: [
+            IconButton.filled(
+              onPressed: _c.togglePanel,
+              style: IconButton.styleFrom(
+                backgroundColor: C.peachTint,
+                foregroundColor: C.navy,
               ),
-              if (count > 0)
-                Positioned(
-                  top: -4,
-                  left: -4,
-                  child: IgnorePointer(
-                    child: ScaleTransition(
-                      scale: _scale,
-                      child: Container(
-                        constraints: const BoxConstraints(
-                          minWidth: 20,
-                          minHeight: 20,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: AC.brick,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AC.background, width: 2),
-                        ),
-                        child: Text(
-                          count > 99 ? '99+' : '$count',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            height: 1.1,
-                          ),
-                        ),
+              icon: const Icon(Icons.notifications_none_rounded),
+            ),
+            if (count > 0)
+              PositionedDirectional(
+                top: 8,
+                end: 10,
+                child: IgnorePointer(
+                  child: ScaleTransition(
+                    scale: _scale,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: C.brick,
+                        shape: BoxShape.circle,
                       ),
                     ),
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -197,12 +175,14 @@ class _NotificationBellState extends State<NotificationBell>
 class _PanelLayer extends StatefulWidget {
   final LayerLink link;
   final double width, bellLeft;
+  final Size bellSize;
   final NotificationsController controller;
   final VoidCallback onSeeAll;
   const _PanelLayer({
     required this.link,
     required this.width,
     required this.bellLeft,
+    required this.bellSize,
     required this.controller,
     required this.onSeeAll,
   });
@@ -236,7 +216,7 @@ class _PanelLayerState extends State<_PanelLayer>
     final reduce = MediaQuery.disableAnimationsOf(context);
     // panel's left edge sits 12px from the screen; the arrow points at the bell
     const edge = 12.0;
-    final arrowLeft = (widget.bellLeft + 22 - edge - 7).clamp(
+    final arrowLeft = (widget.bellLeft + widget.bellSize.width / 2 - edge - 7).clamp(
       16.0,
       widget.width - 30,
     );
@@ -313,7 +293,7 @@ class _PanelLayerState extends State<_PanelLayer>
             showWhenUnlinked: false,
             targetAnchor: Alignment.topLeft,
             followerAnchor: Alignment.topLeft,
-            offset: Offset(edge - widget.bellLeft, 44 + 8),
+            offset: Offset(edge - widget.bellLeft, widget.bellSize.height + 8),
             child: Align(
               alignment: Alignment.topLeft,
               child: FadeTransition(

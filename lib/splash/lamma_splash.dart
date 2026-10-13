@@ -710,7 +710,7 @@ class _Logo extends StatelessWidget {
         children: [
           Text(
             'لمّه',
-            style: const TextStyle(fontSize: 72, fontWeight: FontWeight.w700, color: _C.red, height: 1),
+            style: const TextStyle(fontSize: 72, fontWeight: FontWeight.w900, color: _C.red, height: 1),
           ),
           const SizedBox(height: 10),
           Text(

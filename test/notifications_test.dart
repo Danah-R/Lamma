@@ -145,7 +145,11 @@ void main() {
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
     await t.binding.setSurfaceSize(const Size(360, 800));
     await t.pumpWidget(
-      const LammaApp(skipOnboarding: true, demoNotifications: true),
+      const LammaApp(
+        skipSplash: true,
+        skipOnboarding: true,
+        demoNotifications: true,
+      ),
     );
     final c = t.element(find.byType(Shell)).read<NotificationsController>();
     expect(c.items.length, 6);
@@ -163,7 +167,7 @@ void main() {
   testWidgets('opening a notification marks it read and goes there', (t) async {
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
     await t.binding.setSurfaceSize(const Size(360, 800));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pumpAndSettle();
     final c = t.element(find.byType(Shell)).read<NotificationsController>();
     final moments = t.element(find.byType(Shell)).read<MomentsController>();

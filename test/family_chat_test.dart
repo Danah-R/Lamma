@@ -110,7 +110,7 @@ void main() {
   testWidgets('chat tab is selected; camera opens the moments feed', (t) async {
     SharedPreferences.setMockInitialValues({'moments_coach_seen': true});
     await t.binding.setSurfaceSize(const Size(360, 800));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.tap(find.text('لمّه').last);
     await t.pumpAndSettle();
     expect(find.text('محادثة العائلة · 3 متواجدين'), findsOneWidget);

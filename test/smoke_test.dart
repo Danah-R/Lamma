@@ -55,7 +55,7 @@ void main() {
 
   testWidgets('all tabs and key screens render', (t) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
-    await t.pumpWidget(const LammaApp(skipOnboarding: true));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     for (final label in ['لمّه', 'صندوق الأنشطة', 'الحساب', 'الرئيسية']) {
       await tapText(t, label, last: true);
     }

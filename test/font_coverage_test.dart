@@ -161,7 +161,7 @@ void main() {
     expect(_family(t, find.text('لمّه')), kFontFamily);
     expect(_family(t, find.text('يلا نتلمّ')), kFontFamily);
     final style = t.widget<Text>(find.text('لمّه')).style!;
-    expect(style.fontWeight, FontWeight.w700);
+    expect(style.fontWeight, FontWeight.w900); // the one Black text
   });
 
   test('source scan: painters, families, Cupertino, weights', () {
@@ -202,8 +202,16 @@ void main() {
       if (src.contains('GoogleFonts') || src.contains('google_fonts')) {
         problems.add('${f.path}: google_fonts');
       }
-      if (src.contains('FontWeight.w800') || src.contains('FontWeight.w900')) {
-        problems.add('${f.path}: w800/w900');
+      // w800 would pick Black, so everything is w700 ... except the splash
+      // logo, which is Black (w900) as designed
+      final isSplash = f.path.endsWith('splash/lamma_splash.dart');
+      if (src.contains('FontWeight.w800')) problems.add('${f.path}: w800');
+      if (src.contains('FontWeight.w900') && !isSplash) {
+        problems.add('${f.path}: w900');
+      }
+      if (isSplash) {
+        final n = 'FontWeight.w900'.allMatches(src).length;
+        if (n != 1) problems.add('${f.path}: expected exactly one w900, got $n');
       }
     }
     expect(problems, isEmpty);

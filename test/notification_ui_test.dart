@@ -71,7 +71,6 @@ void main() {
     final h = t.ensureSemantics();
     final c = await _openFeed(t);
     expect(find.bySemanticsLabel('الإشعارات، 2 جديدة'), findsOneWidget);
-    expect(find.text('2'), findsWidgets);
     c.markAllRead();
     await t.pumpAndSettle();
     expect(find.bySemanticsLabel('الإشعارات'), findsOneWidget);

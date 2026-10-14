@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../screens/activities_colors.dart';
+import '../../../widgets/podcast_listen.dart';
 import '../clubs_controller.dart';
 import 'book_suggestion_tile.dart';
 
@@ -52,11 +52,12 @@ class _PodcastRow extends StatelessWidget {
     required this.onToggleVote,
   });
 
-  Future<void> _open(BuildContext context) async {
-    final url = item.url;
-    if (url == null) return;
-    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-  }
+  /// Asks YouTube or Apple Podcasts (a search is used when the podcast has no link yet).
+  Future<void> _open(BuildContext context) => chooseListenApp(
+    context,
+    youtubeUrl: item.youtubeUrl ?? youtubeSearchUrl(item.title),
+    appleUrl: item.appleUrl ?? appleSearchUrl(item.title),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -64,24 +65,32 @@ class _PodcastRow extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: item.url == null ? null : () => _open(context),
+        onTap: () => _open(context),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              // the podcast channel's own picture (a mic on a colour if it has none)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  alignment: Alignment.center,
                   color: item.iconColor,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const Icon(
-                  Icons.mic_rounded,
-                  color: Colors.white,
-                  size: 22,
+                  child: item.logo != null
+                      ? Image.asset(
+                          item.logo!,
+                          width: 48,
+                          height: 48,
+                          fit: BoxFit.cover,
+                        )
+                      : const Icon(
+                          Icons.mic_rounded,
+                          color: Colors.white,
+                          size: 22,
+                        ),
                 ),
               ),
               const SizedBox(width: 12),

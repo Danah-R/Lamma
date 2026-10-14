@@ -220,9 +220,7 @@ class _SuggestSheetState extends State<SuggestSheet> {
                         label: l.clubsClose,
                         child: Material(
                           color: AC.card,
-                          shape: const CircleBorder(
-                            side: BorderSide(color: AC.border),
-                          ),
+                          shape: const CircleBorder(),
                           child: InkWell(
                             customBorder: const CircleBorder(),
                             onTap: () => Navigator.of(context).pop(),

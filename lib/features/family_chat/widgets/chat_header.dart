@@ -9,11 +9,8 @@ class ChatHeader extends StatelessWidget {
   const ChatHeader({super.key, required this.title, required this.subtitle});
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
-    decoration: const BoxDecoration(
-      border: Border(bottom: BorderSide(color: AC.border)),
-    ),
     child: Row(
       children: [
         Expanded(

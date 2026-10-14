@@ -10,10 +10,19 @@ import 'package:lamma/features/clubs/clubs_controller.dart';
 import 'package:lamma/features/clubs/widgets/book_suggestion_tile.dart';
 import 'package:lamma/features/games/who_am_i/who_am_i_screen.dart';
 
-Future<void> tapText(WidgetTester t, String s, {bool last = false, bool clear = false}) async {
+Future<void> tapText(
+  WidgetTester t,
+  String s, {
+  bool last = false,
+  bool clear = false,
+}) async {
   final f = last ? find.text(s).last : find.text(s).first;
   if (f.evaluate().isEmpty) {
-    await t.scrollUntilVisible(f, 300, scrollable: find.byType(Scrollable).first);
+    await t.scrollUntilVisible(
+      f,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
   }
   await t.ensureVisible(f);
   await t.pumpAndSettle();
@@ -28,6 +37,12 @@ Future<void> tapText(WidgetTester t, String s, {bool last = false, bool clear = 
 
 Future<void> tapKey(WidgetTester t, String key) async {
   await t.tap(find.byKey(Key(key)));
+  await t.pumpAndSettle();
+}
+
+/// The bottom bar shows icons only; each tab is found by its tooltip (its name).
+Future<void> tapTab(WidgetTester t, String name) async {
+  await t.tap(find.byTooltip(name));
   await t.pumpAndSettle();
 }
 
@@ -57,16 +72,16 @@ void main() {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     for (final label in ['لمّه', 'صندوق الأنشطة', 'الحساب', 'الرئيسية']) {
-      await tapText(t, label, last: true);
+      await tapTab(t, label);
     }
     // home screens
-    for (final s in ['ابدأ الاستماع', 'أسبوعك في لمّه']) {
+    for (final s in ['التحرر من التشتت']) {
       await tapText(t, s);
       await back(t);
     }
     await t.drag(find.byType(ListView).first, const Offset(0, 3000));
     await t.pumpAndSettle();
-    await tapText(t, 'خرجة إلى القرية');
+    await tapText(t, 'طلعة إلى القرية');
     await tapText(t, 'أنت مشارك');
     await back(t);
     await t.drag(find.byType(ListView).first, const Offset(0, 2000));
@@ -76,7 +91,11 @@ void main() {
     await t.pump();
     final dateContext = t.element(find.byType(Scaffold).first);
     await tapText(t, localizedDateLabel(dateContext, DateTime.now()));
-    await tapText(t, 'حسنًا');
+    // the calendar opens inline; pick today's date from the month grid
+    await tapText(
+      t,
+      MaterialLocalizations.of(dateContext).formatDecimal(DateTime.now().day),
+    );
     await tapText(t, 'إضافة إلى التقويم');
     await t.drag(find.byType(ListView).first, const Offset(0, 2000));
     await t.pumpAndSettle();
@@ -86,7 +105,7 @@ void main() {
     // the tab is now the text-only family chat
     expect(find.text('محادثة العائلة · 3 متواجدين'), findsOneWidget);
     // activities
-    await tapText(t, 'صندوق الأنشطة', last: true);
+    await tapTab(t, 'صندوق الأنشطة');
     // tonight's topic card opens the talk-topics flow
     await tapText(t, 'يلا نسولف');
     await back(t);
@@ -151,13 +170,16 @@ void main() {
     await back(t);
     expect(clubs.iHeard, isTrue);
     // weekend outing: voting toggles the button label
-    await tapText(t, 'بجي معكم!');
-    expect(find.text('صوّتت معهم'), findsOneWidget);
+    await tapText(t, 'أعجبني');
+    expect(find.text('أعجبتني'), findsOneWidget);
     // account
-    await tapText(t, 'الحساب', last: true);
-    await tapText(t, 'صمم شخصيتك');
+    await tapTab(t, 'الحساب');
+    await tapText(t, 'عدّل حسابك');
     await back(t);
-    await tapText(t, 'كل الأوسمة والإنجازات');
+    // the badges sit at the top of Account, visible without opening anything; tapping opens the full list
+    expect(find.byTooltip('الأكثر تفاعلًا'), findsOneWidget);
+    await t.tap(find.byTooltip('الأكثر تفاعلًا'));
+    await t.pumpAndSettle();
     expect(t.takeException(), isNull);
   });
 
@@ -191,7 +213,7 @@ void main() {
 
     // parent controls: record a violation (lose points), then reward #1
     final before = members.firstWhere((m) => m.key == 'girl').points;
-    await tapText(t, 'الحساب', last: true);
+    await tapTab(t, 'الحساب');
     await tapText(t, 'ضوابط الوالدين');
     await tapText(t, 'سارة');
     await tapText(t, 'اخصم 10 نقاط');
@@ -201,7 +223,7 @@ void main() {
     await tapText(t, 'عقوبة');
     await tapText(t, 'يوسف');
     await tapText(t, 'طبّق العقوبة');
-    expect(rules.punishments['Yousef'], isNotNull);
+    expect(rules.punishments['يوسف'], isNotNull);
     await t.drag(find.byType(ListView).first, const Offset(0, -3000));
     await t.pumpAndSettle();
     await tapText(t, 'شهرية');
@@ -214,32 +236,43 @@ void main() {
     ScaffoldMessenger.of(t.element(find.byType(Shell))).clearSnackBars();
     await t.pumpAndSettle();
     await tapText(t, 'كافئ سارة (الأول) الحين', clear: true);
-    expect(rules.lastWinner, 'Sarah');
+    expect(rules.lastWinner, 'سارة');
     expect(t.takeException(), isNull);
   });
 
-  testWidgets('"I don\'t have a phone number" skips the number and joins a family', (t) async {
-    await t.binding.setSurfaceSize(const Size(400, 850));
-    await t.pumpWidget(const LammaApp(skipSplash: true));
-    await t.enterText(find.byType(TextField).at(0), 'Reem');
-    await t.enterText(find.byType(TextField).at(1), '17');
-    await t.pump();
-    await tapText(t, 'أم');
-    await tapText(t, 'طالب/ة');
-    await tapText(t, 'نعم');
-    await tapText(t, 'ما عندي رقم جوال، بس بنضم للمّة عائلتي.'); // no number typed
-    await tapKey(t, 'onboarding-next');
-    await tapText(t, 'قهوة');
-    await tapKey(t, 'onboarding-next');
-    expect(find.text('إنشاء'), findsNothing); // no "create a family" without a phone number
-    await t.enterText(find.byType(TextField).first, 'LAMMA-48');
-    await t.pump();
-    await tapText(t, 'انضمام');
-    await tapKey(t, 'onboarding-next');
-    expect(t.takeException(), isNull);
-  });
+  testWidgets(
+    '"I don\'t have a phone number" skips the number and joins a family',
+    (t) async {
+      await t.binding.setSurfaceSize(const Size(400, 850));
+      await t.pumpWidget(const LammaApp(skipSplash: true));
+      await t.enterText(find.byType(TextField).at(0), 'Reem');
+      await t.enterText(find.byType(TextField).at(1), '17');
+      await t.pump();
+      await tapText(t, 'أم');
+      await tapText(t, 'طالب/ة');
+      await tapText(t, 'نعم');
+      await tapText(
+        t,
+        'ما عندي رقم جوال، بس بنضم للمّة عائلتي.',
+      ); // no number typed
+      await tapKey(t, 'onboarding-next');
+      await tapText(t, 'قهوة');
+      await tapKey(t, 'onboarding-next');
+      expect(
+        find.text('إنشاء'),
+        findsNothing,
+      ); // no "create a family" without a phone number
+      await t.enterText(find.byType(TextField).first, 'LAMMA-48');
+      await t.pump();
+      await tapText(t, 'انضمام');
+      await tapKey(t, 'onboarding-next');
+      expect(t.takeException(), isNull);
+    },
+  );
 
-  testWidgets('"Other" role needs a typed role and still finishes onboarding', (t) async {
+  testWidgets('"Other" role needs a typed role and still finishes onboarding', (
+    t,
+  ) async {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipSplash: true));
     await t.enterText(find.byType(TextField).at(0), 'Reem');
@@ -260,6 +293,33 @@ void main() {
     await tapKey(t, 'onboarding-next');
     expect(profile.isParent, isFalse);
     expect(members.any((m) => m.name == 'Reem' && m.role == 'جدة'), isTrue);
+    expect(t.takeException(), isNull);
+  });
+
+  testWidgets('"Edit your account" changes the profile and saves it', (
+    t,
+  ) async {
+    await t.binding.setSurfaceSize(const Size(400, 850));
+    await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
+    await tapTab(t, 'الحساب');
+    await tapText(t, 'عدّل حسابك');
+    await t.enterText(find.byType(TextField).first, 'Noura K.'); // a nickname
+    await t.pump();
+    await t.dragUntilVisible(
+      find.text('قهوة'),
+      find.byType(ListView),
+      const Offset(0, -200),
+    );
+    await tapText(t, 'قهوة'); // toggle an interest off
+    await tapText(t, 'احفظ التعديلات');
+    expect(profile.name, 'Noura K.');
+    expect(profile.interests.contains('Coffee'), isFalse);
+    expect(members.any((m) => m.name == 'Noura K.'), isTrue);
+    expect(
+      find.text('Noura K.'),
+      findsWidgets,
+      reason: 'back on Account, showing the new name',
+    );
     expect(t.takeException(), isNull);
   });
 }

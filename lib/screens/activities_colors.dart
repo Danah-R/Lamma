@@ -19,7 +19,7 @@ class AC {
   static const salmon = Color(0xFFE29079);
   static const teal = Color(0xFF3E7A75);
   static const sage = Color(0xFF8FA580);
-  static const track = Color(0xFFF1E8DA);
+  static const track = Color(0xFFEDEDED); // dim white, no beige tint
 
   static const salmonTint = Color(0xFFF6DDD3);
   static const tealTint = Color(0xFFD6E7E4);

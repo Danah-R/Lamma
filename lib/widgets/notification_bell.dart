@@ -216,10 +216,8 @@ class _PanelLayerState extends State<_PanelLayer>
     final reduce = MediaQuery.disableAnimationsOf(context);
     // panel's left edge sits 12px from the screen; the arrow points at the bell
     const edge = 12.0;
-    final arrowLeft = (widget.bellLeft + widget.bellSize.width / 2 - edge - 7).clamp(
-      16.0,
-      widget.width - 30,
-    );
+    final arrowLeft = (widget.bellLeft + widget.bellSize.width / 2 - edge - 7)
+        .clamp(16.0, widget.width - 30);
     final curved = CurvedAnimation(
       parent: _in,
       curve: const Cubic(.2, .8, .2, 1),

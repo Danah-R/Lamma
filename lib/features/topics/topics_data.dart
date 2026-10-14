@@ -13,6 +13,7 @@ class TopicCategory {
   });
 
   String label(AppLocalizations l) => switch (id) {
+    'tell' => l.topicsCatTell,
     'memories' => l.topicsCatMemories,
     'dreams' => l.topicsCatDreams,
     'food' => l.topicsCatFood,
@@ -36,6 +37,12 @@ class Topic {
 const mineCategoryId = 'mine';
 
 const topicCategories = <TopicCategory>[
+  TopicCategory(
+    id: 'tell',
+    color: Color(0xFF9A4A3E),
+    tint: Color(0xFFF6DDD3),
+    ink: Color(0xFF7A3A30),
+  ),
   TopicCategory(
     id: 'memories',
     color: Color(0xFF9A4A3E),
@@ -98,6 +105,8 @@ const _seed = <(String, String)>[
 ];
 
 final baseTopics = <Topic>[
+  // first in the deck
+  const Topic(id: 'tell0', categoryId: 'tell', text: 'سوالف نبي نقولها'),
   for (var i = 0; i < _seed.length; i++)
     Topic(id: 'b$i', categoryId: _seed[i].$1, text: _seed[i].$2),
 ];

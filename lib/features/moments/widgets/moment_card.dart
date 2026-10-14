@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,15 +16,15 @@ const _ease = Cubic(.2, .8, .2, 1);
 /// One family moment: author, picture, caption, likes, comments, composer.
 class MomentCard extends StatefulWidget {
   final Moment moment;
-  final bool liked;
-  final VoidCallback onLike;
+  final String? myReaction;
+  final ValueChanged<String> onReact;
   final ValueChanged<String> onComment;
   final DateTime Function() clock;
   const MomentCard({
     super.key,
     required this.moment,
-    required this.liked,
-    required this.onLike,
+    required this.myReaction,
+    required this.onReact,
     required this.onComment,
     this.clock = DateTime.now,
   });
@@ -32,32 +33,120 @@ class MomentCard extends StatefulWidget {
   State<MomentCard> createState() => _MomentCardState();
 }
 
-class _MomentCardState extends State<MomentCard>
-    with SingleTickerProviderStateMixin {
+class _MomentCardState extends State<MomentCard> {
   final _draft = TextEditingController();
-  late final AnimationController _pop = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 350),
-  );
-  late final Animation<double> _popScale = TweenSequence<double>([
-    TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.25), weight: 40),
-    TweenSequenceItem(tween: Tween(begin: 1.25, end: 1.0), weight: 60),
-  ]).animate(CurvedAnimation(parent: _pop, curve: _ease));
   bool _open = false;
+  int _rainKey = 0;
+  String? _rainEmoji; // the reaction that is raining over the picture
+  final _countKey = GlobalKey();
 
   @override
   void dispose() {
     _draft.dispose();
-    _pop.dispose();
     super.dispose();
   }
 
-  void _like() {
+  void _react(String key) {
     HapticFeedback.lightImpact();
-    if (!widget.liked && !MediaQuery.disableAnimationsOf(context)) {
-      _pop.forward(from: 0);
+    // choosing a reaction (not taking it back) makes it rain on the picture
+    if (widget.myReaction != key && !MediaQuery.disableAnimationsOf(context)) {
+      setState(() {
+        _rainEmoji = momentReactionEmoji[key];
+        _rainKey++;
+      });
     }
-    widget.onLike();
+    widget.onReact(key);
+  }
+
+  /// A small pop-up under the reactions count: who reacted, and with what. Tap anywhere to close it.
+  void _showReactors() {
+    final m = widget.moment;
+    final box = _countKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null || m.likedBy.isEmpty) return;
+    final origin = box.localToGlobal(Offset.zero);
+    final screen = MediaQuery.sizeOf(context);
+    const w = 230.0;
+    final left = (origin.dx + box.size.width / 2 - w / 2).clamp(
+      12.0,
+      screen.width - w - 12,
+    );
+    final l = AppLocalizations.of(context);
+    showGeneralDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.transparent,
+      transitionDuration: const Duration(milliseconds: 160),
+      pageBuilder: (ctx, _, _) => Stack(
+        children: [
+          Positioned(
+            top: origin.dy + box.size.height + 6,
+            left: left,
+            width: w,
+            child: Material(
+              color: AC.card,
+              elevation: 8,
+              shadowColor: const Color(0x33000000),
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final id in m.likedBy)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            MomentAvatar(
+                              member: momentsMember(id),
+                              size: 28,
+                              fontSize: 10,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                id == momentsMeId
+                                    ? l.momentsYou
+                                    : momentsMember(id).name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: AC.ink,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              momentReactionEmoji[m.reactionOf(id) ?? 'heart']!,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      transitionBuilder: (ctx, anim, _, child) => FadeTransition(
+        opacity: anim,
+        child: ScaleTransition(
+          scale: Tween(
+            begin: .9,
+            end: 1.0,
+          ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOut)),
+          alignment: Alignment.topCenter,
+          child: child,
+        ),
+      ),
+    );
   }
 
   void _send(String text) {
@@ -66,6 +155,14 @@ class _MomentCardState extends State<MomentCard>
     _draft.clear();
     setState(() => _open = true);
   }
+
+  String _reactionLabel(AppLocalizations l, String k) => switch (k) {
+    'heart' => l.momentsReactHeart,
+    'laugh' => l.momentsReactLaugh,
+    'thumbs' => l.momentsReactThumbs,
+    'cry' => l.momentsReactCry,
+    _ => l.momentsReactLove,
+  };
 
   String _timeLabel(AppLocalizations l) {
     final t = widget.moment.createdAt;
@@ -95,9 +192,6 @@ class _MomentCardState extends State<MomentCard>
     final hidden = n - 2;
     final shown = _open || hidden <= 0 ? m.comments : m.comments.sublist(n - 2);
     final firstShown = n - shown.length;
-    final likers = m.likedBy.length > 3
-        ? m.likedBy.sublist(m.likedBy.length - 3)
-        : m.likedBy;
     final quick = [l.momentsQuick1, l.momentsQuick2, l.momentsQuick3];
 
     return Container(
@@ -105,12 +199,6 @@ class _MomentCardState extends State<MomentCard>
       decoration: BoxDecoration(
         color: AC.card,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: m.isNew ? const Color(0xFFE9BFAF) : AC.border,
-        ),
-        boxShadow: [
-          if (m.isNew) const BoxShadow(color: AC.salmonTint, spreadRadius: 3),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -184,15 +272,114 @@ class _MomentCardState extends State<MomentCard>
             borderRadius: BorderRadius.circular(20),
             child: SizedBox(
               height: 280,
-              child: m.imagePath != null && !m.imagePath!.startsWith('assets/')
-                  ? Image.file(
-                      File(m.imagePath!),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => _scene(m),
-                    )
-                  : PhotoOrPainted(assetPath: m.imagePath, fallback: _scene(m)),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  m.imagePath != null && !m.imagePath!.startsWith('assets/')
+                      ? Image.file(
+                          File(m.imagePath!),
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, _, _) => _scene(m),
+                        )
+                      : PhotoOrPainted(
+                          assetPath: m.imagePath,
+                          fallback: _scene(m),
+                          // the meal photo is tall: keep the food in view
+                          alignment: m.scene == MomentScene.dinner
+                              ? const Alignment(0, -.7)
+                              : Alignment.center,
+                        ),
+                  if (_rainEmoji != null)
+                    IgnorePointer(
+                      child: _EmojiRain(
+                        key: ValueKey(_rainKey),
+                        emoji: _rainEmoji!,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
+          const SizedBox(height: 2),
+          // reactions close together, and plain counts: a number and its little icon
+          Row(
+            children: [
+              SizedBox(
+                width: 34.0 * (momentReactions.length - 1) + 44,
+                height: 44,
+                child: Stack(
+                  children: [
+                    for (var i = 0; i < momentReactions.length; i++)
+                      PositionedDirectional(
+                        start: i * 34.0,
+                        child: _ReactionButton(
+                          emoji: momentReactionEmoji[momentReactions[i]]!,
+                          selected: widget.myReaction == momentReactions[i],
+                          label: _reactionLabel(l, momentReactions[i]),
+                          onTap: () => _react(momentReactions[i]),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        key: _countKey,
+                        behavior: HitTestBehavior.opaque,
+                        onTap: _showReactors,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 6,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '${m.likedBy.length}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: AC.muted,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(
+                                Icons.add_reaction_outlined,
+                                size: 18,
+                                color: AC.muted,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        '$n',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AC.muted,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(
+                        Icons.chat_bubble_outline_rounded,
+                        size: 18,
+                        color: AC.muted,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
           const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -200,66 +387,6 @@ class _MomentCardState extends State<MomentCard>
               m.caption,
               style: const TextStyle(fontSize: 16, height: 1.6, color: AC.ink),
             ),
-          ),
-          const SizedBox(height: 12),
-          // reactions
-          Row(
-            children: [
-              _LikePill(
-                liked: widget.liked,
-                count: m.likedBy.length,
-                scale: _popScale,
-                label: l.momentsLike,
-                onTap: _like,
-              ),
-              const SizedBox(width: 8),
-              Container(
-                height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: AC.border),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.chat_bubble_outline_rounded,
-                      size: 18,
-                      color: AC.ink,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      '$n',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: AC.ink,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              if (likers.isNotEmpty)
-                SizedBox(
-                  width: 28.0 + (likers.length - 1) * 20,
-                  height: 28,
-                  child: Stack(
-                    children: [
-                      for (var k = 0; k < likers.length; k++)
-                        PositionedDirectional(
-                          start: k * 20.0,
-                          child: MomentAvatar(
-                            member: momentsMember(likers[k]),
-                            size: 28,
-                            fontSize: 10,
-                            ring: AC.card,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-            ],
           ),
           const SizedBox(height: 12),
           // comments
@@ -326,9 +453,7 @@ class _MomentCardState extends State<MomentCard>
                       alignment: Alignment.center,
                       decoration: ShapeDecoration(
                         color: AC.card,
-                        shape: const StadiumBorder(
-                          side: BorderSide(color: AC.border),
-                        ),
+                        shape: const StadiumBorder(),
                       ),
                       child: Text(
                         quick[i],
@@ -356,7 +481,7 @@ class _MomentCardState extends State<MomentCard>
                   const SizedBox(width: 8),
                   Expanded(
                     child: SizedBox(
-                      height: 44,
+                      height: 36,
                       child: TextField(
                         controller: _draft,
                         textInputAction: TextInputAction.send,
@@ -373,12 +498,14 @@ class _MomentCardState extends State<MomentCard>
                           ),
                           filled: true,
                           fillColor: AC.background,
+                          isDense: true,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 14,
+                            vertical: 8,
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(22),
-                            borderSide: const BorderSide(color: AC.border),
+                            borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(22),
@@ -396,20 +523,27 @@ class _MomentCardState extends State<MomentCard>
                     button: true,
                     label: l.momentsSend,
                     excludeSemantics: true,
-                    child: Material(
-                      color: can ? AC.brick : const Color(0xFFD9C6AE),
-                      shape: const CircleBorder(),
-                      child: InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: can ? () => _send(_draft.text) : null,
-                        child: const SizedBox(
-                          width: 44,
-                          height: 44,
-                          // send arrow auto-mirrors in RTL: points left
-                          child: Icon(
-                            Icons.send_rounded,
-                            size: 18,
-                            color: Colors.white,
+                    // the round button is as tall as the text box (36); the tap area stays 44
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: can ? () => _send(_draft.text) : null,
+                      child: SizedBox(
+                        width: 44,
+                        height: 44,
+                        child: Center(
+                          child: Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: can ? AC.brick : const Color(0xFFD9C6AE),
+                              shape: BoxShape.circle,
+                            ),
+                            // send arrow auto-mirrors in RTL: points left
+                            child: const Icon(
+                              Icons.send_rounded,
+                              size: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -428,70 +562,107 @@ class _MomentCardState extends State<MomentCard>
 Widget _scene(Moment m) =>
     CustomPaint(painter: MomentScenePainter(m.scene), size: Size.infinite);
 
-class _LikePill extends StatelessWidget {
-  final bool liked;
-  final int count;
-  final Animation<double> scale;
-  final String label;
+class _ReactionButton extends StatelessWidget {
+  final String emoji, label;
+  final bool selected;
   final VoidCallback onTap;
-  const _LikePill({
-    required this.liked,
-    required this.count,
-    required this.scale,
+  const _ReactionButton({
+    required this.emoji,
     required this.label,
+    required this.selected,
     required this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final fg = liked ? AC.brick : AC.ink;
-    return Semantics(
-      button: true,
-      toggled: liked,
-      label: label,
-      excludeSemantics: true,
-      child: Material(
-        color: liked ? AC.salmonTint : AC.card,
-        shape: StadiumBorder(
-          side: BorderSide(color: liked ? AC.salmonTint : AC.border),
-        ),
-        child: InkWell(
-          customBorder: const StadiumBorder(),
-          onTap: onTap,
-          child: SizedBox(
-            height: 44,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ScaleTransition(
-                    scale: scale,
-                    child: Icon(
-                      liked
-                          ? Icons.favorite_rounded
-                          : Icons.favorite_border_rounded,
-                      size: 18,
-                      color: fg,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '$count',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: fg,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    toggled: selected,
+    label: label,
+    excludeSemantics: true,
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: SizedBox(
+        width: 44,
+        height: 44,
+        child: Center(
+          child: Opacity(
+            opacity: selected ? 1 : .6,
+            child: Text(emoji, style: TextStyle(fontSize: selected ? 26 : 24)),
           ),
         ),
       ),
-    );
+    ),
+  );
+}
+
+/// The chosen reaction raining down over the picture: drops all over it, a little uneven on purpose
+/// (their places, sizes, starts and speeds are slightly different), so it never looks too neat.
+class _EmojiRain extends StatefulWidget {
+  final String emoji;
+  const _EmojiRain({super.key, required this.emoji});
+  @override
+  State<_EmojiRain> createState() => _EmojiRainState();
+}
+
+class _EmojiRainState extends State<_EmojiRain>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2800),
+  )..forward();
+
+  // x (0-1), start (0-1), speed (share of the time one fall takes), size
+  static final _drops = () {
+    final r = math.Random(11);
+    const columns = 10;
+    return [
+      for (var i = 0; i < columns; i++)
+        (
+          ((i + .5) / columns + (r.nextDouble() - .5) * .12).clamp(0.02, 0.98),
+          r.nextDouble() * .5,
+          .38 + r.nextDouble() * .17,
+          26.0,
+        ),
+    ];
+  }();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) => AnimatedBuilder(
+      animation: _c,
+      builder: (context, _) => Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          for (final d in _drops)
+            () {
+              final t = ((_c.value - d.$2) / d.$3).clamp(0.0, 1.0);
+              if (t <= 0 || t >= 1) return const SizedBox.shrink();
+              return Positioned(
+                left: d.$1 * (box.maxWidth - d.$4),
+                top: -d.$4 + t * (box.maxHeight + d.$4),
+                child: Opacity(
+                  opacity: t > .85 ? (1 - t) / .15 : 1,
+                  child: Text(
+                    widget.emoji,
+                    style: TextStyle(
+                      fontSize: d.$4,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ),
+              );
+            }(),
+        ],
+      ),
+    ),
+  );
 }
 
 class _CommentTile extends StatelessWidget {
@@ -518,12 +689,12 @@ class _CommentTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: const BoxDecoration(
               color: AC.background,
-              // CSS "4px 16px 16px 16px": physical top-left is the small one
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4),
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
+              // the small corner is the one next to the avatar (top right in Arabic, top left in English)
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(4),
+                topEnd: Radius.circular(16),
+                bottomEnd: Radius.circular(16),
+                bottomStart: Radius.circular(16),
               ),
             ),
             child: Column(

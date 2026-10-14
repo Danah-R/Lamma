@@ -63,8 +63,9 @@ void main() {
     expect(find.text('أول مشي بالحديقة بعد الصيف، الجو خيال'), findsOneWidget);
     expect(find.textContaining('مع أمينة'), findsOneWidget);
     expect(find.bySemanticsLabel(RegExp('^الإشعارات')), findsOneWidget);
-    // like: count goes 4 -> 5 on the first card
-    await t.tap(find.bySemanticsLabel('أعجبني').first);
+    // react with a heart: the reactions count goes 4 -> 5 on the first card
+    expect(find.text('4'), findsWidgets);
+    await t.tap(find.bySemanticsLabel('قلب').first);
     await t.pumpAndSettle();
     expect(find.text('5'), findsWidgets);
     // quick reply becomes a comment
@@ -376,23 +377,6 @@ void _coachTests() {
     await openMoments(t);
     await t.pump(const Duration(seconds: 2));
     expect(find.byType(CameraCoach), findsNothing);
-  });
-
-  testWidgets('account "reset hint": clears the key and the session', (
-    t,
-  ) async {
-    CoachSession.dismissed = true;
-    await launch(t, prefs: {'moments_coach_seen': true});
-    await t.tap(find.text('الحساب').last);
-    await t.pumpAndSettle();
-    await t.tap(find.text('إعادة تلميح الكاميرا'));
-    await t.pumpAndSettle();
-    expect(find.text('بيطلع لك التلميح في صفحة اللحظات'), findsOneWidget);
-    expect(await seen(), isNull);
-    expect(CoachSession.dismissed, isFalse);
-    await openMoments(t);
-    await t.pump(const Duration(milliseconds: 700));
-    expect(find.byType(CameraCoach), findsOneWidget);
   });
 
   testWidgets('camera button: semantics label, pulse until shared', (t) async {

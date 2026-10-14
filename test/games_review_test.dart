@@ -56,7 +56,7 @@ Future<void> _openGames(WidgetTester t, Size size) async {
   await t.binding.setSurfaceSize(size);
   await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
   await t.pump(const Duration(seconds: 1));
-  await _tap(t, find.text('صندوق الأنشطة').last);
+  await _tap(t, find.byTooltip('صندوق الأنشطة'));
   await _tapText(t, 'عرض الكل');
 }
 

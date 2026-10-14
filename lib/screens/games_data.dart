@@ -13,6 +13,8 @@ class GameInfo {
   final bool isSoon;
   final Color bg, art;
   final bool dark;
+  final String?
+  image; // a picture that replaces the drawing in the card's top area
   const GameInfo({
     required this.id,
     required this.title,
@@ -23,6 +25,7 @@ class GameInfo {
     required this.art,
     this.isSoon = false,
     this.dark = false,
+    this.image,
   });
 }
 
@@ -35,6 +38,7 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     tags: const ['challenge'],
     bg: AC.track,
     art: AC.dotInactive,
+    image: 'assets/games/whoami.jpg',
   ),
   GameInfo(
     id: 'charades',
@@ -42,9 +46,9 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     desc: l.gamesCharadesDesc,
     time: l.gamesTimeRange10to15,
     tags: const ['move', 'challenge'],
-    bg: AC.navy,
-    art: AC.navy2,
-    dark: true,
+    bg: AC.mustardTint,
+    art: AC.huroofArt,
+    image: 'assets/games/charades.webp',
   ),
   GameInfo(
     id: 'seen',
@@ -54,6 +58,7 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     tags: const ['family'],
     bg: AC.tealTint,
     art: AC.seenArt,
+    image: 'assets/games/sin_jim.png',
   ),
   GameInfo(
     id: 'huroof',
@@ -62,8 +67,9 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     time: l.gamesTimeRange5to10,
     tags: const ['challenge'],
     isSoon: true,
-    bg: AC.mustardTint,
-    art: AC.huroofArt,
+    bg: const Color(0xFFEDE5ED), // the soft lavender of the palette
+    art: const Color(0xFFD9CCDB),
+    image: 'assets/games/huroof.jpg',
   ),
   GameInfo(
     id: 'freeze',
@@ -74,6 +80,7 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     isSoon: true,
     bg: AC.sageTint,
     art: AC.freezeArt,
+    image: 'assets/games/thabbit.jpg',
   ),
   GameInfo(
     id: 'photo',
@@ -84,5 +91,6 @@ List<GameInfo> buildGamesList(AppLocalizations l) => [
     isSoon: true,
     bg: AC.salmonTint,
     art: AC.photoArt,
+    image: 'assets/games/photo.jpg',
   ),
 ];

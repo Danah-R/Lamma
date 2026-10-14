@@ -23,6 +23,7 @@ import 'features/notifications/notification_seed.dart';
 import 'features/notifications/notifications_controller.dart';
 import 'features/notifications/widgets/notification_banner.dart';
 import 'features/outings/outing_controller.dart';
+import 'features/survey/survey_controller.dart';
 import 'features/topics/topics_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/account.dart';
@@ -65,12 +66,16 @@ class LammaApp extends StatefulWidget {
 
   /// Camera-hint behaviour; defaults to [kCoachDemoMode] (see config.dart).
   final bool? coachDemoMode;
+
+  /// Whether a new month's survey sends its notification (off by default in tests).
+  final bool announceSurvey;
   const LammaApp({
     super.key,
     this.skipOnboarding = false,
     this.skipSplash = false,
     this.demoNotifications,
     this.coachDemoMode,
+    this.announceSurvey = true,
   });
   @override
   State<LammaApp> createState() => _LammaAppState();
@@ -88,6 +93,7 @@ class _LammaAppState extends State<LammaApp> {
   late final _moments = MomentsController(notifications: _notifications);
   late final _chat = FamilyChatController(notifications: _notifications);
   final _topics = TopicsController();
+  late final _survey = SurveyController(notifications: _notifications);
   late final _outings = OutingController(notifications: _notifications);
   late final _games = GamesController(notifications: _notifications);
   Timer? _demo;
@@ -102,6 +108,9 @@ class _LammaAppState extends State<LammaApp> {
       chat: _chat,
       clubs: _clubs,
     );
+    // a new month's survey: sends its notification the first time the app opens that month
+    _topics.load(); // my topics saved on this phone
+    _survey.init(announce: widget.announceSurvey && !kUnderTest);
     if (widget.demoNotifications ?? kDemoNotifications) {
       _demo = scheduleDemoNotification(_notifications);
     }
@@ -115,6 +124,7 @@ class _LammaAppState extends State<LammaApp> {
     _moments.dispose();
     _chat.dispose();
     _topics.dispose();
+    _survey.dispose();
     _outings.dispose();
     _games.dispose();
     super.dispose();
@@ -126,6 +136,7 @@ class _LammaAppState extends State<LammaApp> {
       ChangeNotifierProvider.value(value: _notifications),
       ChangeNotifierProvider.value(value: _clubs),
       ChangeNotifierProvider.value(value: _topics),
+      ChangeNotifierProvider.value(value: _survey),
       ChangeNotifierProvider.value(value: _moments),
       ChangeNotifierProvider.value(value: _chat),
       ChangeNotifierProvider.value(value: _outings),
@@ -166,12 +177,13 @@ class _ShellState extends State<Shell> {
   final _keys = List.generate(5, (_) => GlobalKey<NavigatorState>());
 
   List<(String, IconData, IconData)> _tabs(AppLocalizations l) => [
-        (l.navHome, Icons.home_outlined, Icons.home_rounded),
-        (l.navLamma, Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
-        (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
-        (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
-      ];
-  static const _muted = Color(0xFFA9B3C6);
+    (l.navHome, Icons.home_outlined, Icons.home_rounded),
+    (l.navLamma, Icons.chat_bubble_outline_rounded, Icons.chat_bubble_rounded),
+    (l.navActivities, Icons.widgets_outlined, Icons.widgets_rounded),
+    (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
+  ];
+  static const _muted = Color(0x99FFF7F1); // page cream at 60% on the navy bar
+  static const _barHeight = 60.0, _peek = 20.0;
 
   Widget _root(int i) => switch (i) {
     0 => HomePage(onSwitchTab: _select),
@@ -227,6 +239,8 @@ class _ShellState extends State<Shell> {
         }
       case NotificationRoute.chat:
         _select(1);
+      case NotificationRoute.profile:
+        _select(3);
       case NotificationRoute.activities:
         _select(_activitiesTab);
       case NotificationRoute.games:
@@ -353,98 +367,105 @@ class _ShellState extends State<Shell> {
                 ],
               ),
             ),
-            bottomNavigationBar: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
-                child: SizedBox(
-                  height: 98, // 64 bar + 34 for the raised camera
+            // The bar sits on the bottom edge, full width, with a straight top edge. The area
+            // under the home indicator is navy too, and the camera button peeks out above.
+            bottomNavigationBar: Builder(
+              builder: (context) {
+                // only part of the home-indicator area is added, so the bar hugs the bottom edge
+                final inset = MediaQuery.of(context).padding.bottom * .45;
+                return SizedBox(
+                  height: _peek + _barHeight + inset,
                   child: Stack(
                     clipBehavior: Clip.none,
-                    alignment: Alignment.bottomCenter,
                     children: [
-                      Container(
-                        height: 64,
-                        decoration: BoxDecoration(
-                          color: AC.oldNavy,
-                          borderRadius: BorderRadius.circular(28),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: .10),
-                              blurRadius: 16,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            _item(0, l),
-                            _item(1, l),
-                            const Expanded(child: SizedBox()),
-                            _item(2, l),
-                            _item(3, l),
-                          ],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: _barHeight + inset,
+                          padding: EdgeInsets.only(bottom: inset),
+                          decoration: BoxDecoration(
+                            color: C.navy,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: .10),
+                                blurRadius: 16,
+                                offset: const Offset(0, -4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              _item(0, l),
+                              _item(1, l),
+                              const Expanded(child: SizedBox()),
+                              _item(2, l),
+                              _item(3, l),
+                            ],
+                          ),
                         ),
                       ),
-                      // The camera: 64px, raised 34px above the bar (the box is
-                      // taller than the bar only so the raised part can be tapped).
-                      Positioned(
-                        top: 0,
-                        child: Semantics(
-                          button: true,
-                          label: l.momentsShareSemantics,
-                          excludeSemantics: true,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: _shareMoment,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SharePulse(
-                                  active: !shared,
-                                  size: 64,
-                                  child: Container(
-                                    width: 64,
-                                    height: 64,
-                                    decoration: BoxDecoration(
-                                      color: AC.brick,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: AC.background,
-                                        width: 4,
+                      // share a moment: centered, peeking out above the bar, with its label underneath
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Tooltip(
+                          message: l.navShare,
+                          child: Semantics(
+                            button: true,
+                            label: l.momentsShareSemantics,
+                            excludeSemantics: true,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: _shareMoment,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SharePulse(
+                                    active: !shared,
+                                    size: 56,
+                                    child: Container(
+                                      width: 56,
+                                      height: 56,
+                                      decoration: const BoxDecoration(
+                                        color: C.brick,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: Colors.white,
+                                        size: 27,
                                       ),
                                     ),
-                                    child: const Icon(
-                                      Icons.camera_alt_rounded,
-                                      color: Colors.white,
-                                      size: 26,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    l.navShare,
+                                    style: const TextStyle(
+                                      fontSize: 10.5,
+                                      fontWeight: FontWeight.w700,
+                                      color: _muted,
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 1),
-                                Text(
-                                  l.navShare,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFF0B9A5),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           if (_coachVisible(shared))
             Positioned(
               left: 0,
               right: 0,
-              bottom: MediaQuery.paddingOf(context).bottom + 118,
+              bottom:
+                  MediaQuery.paddingOf(context).bottom * .45 +
+                  _peek +
+                  _barHeight +
+                  12,
               child: Material(
                 type: MaterialType.transparency,
                 child: Center(
@@ -467,19 +488,48 @@ class _ShellState extends State<Shell> {
   Widget _item(int i, AppLocalizations l) {
     final t = _tabs(l)[i];
     final sel = _i == i;
-    final color = sel ? AC.oldCoral : _muted;
+    final color = sel ? C.peach : _muted;
     return Expanded(
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _select(i),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(sel ? t.$3 : t.$2, size: 24, color: color),
-          const SizedBox(height: 3),
-          Text(t.$1,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
-        ]),
+      child: Tooltip(
+        message: t.$1,
+        child: Semantics(
+          button: true,
+          selected: sel,
+          label: t.$1,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _select(i),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // a soft pill marks the section you are in
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  curve: Curves.easeOut,
+                  width: 54,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: sel
+                        ? C.cream.withValues(alpha: .16)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Icon(sel ? t.$3 : t.$2, size: 24, color: color),
+                ),
+                Text(
+                  t.$1,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

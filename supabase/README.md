@@ -34,3 +34,25 @@ A user gets 8 wrong codes per hour. Tables cannot be written to directly, only t
   `LIVE_BACKEND=1 flutter test test/backend_live_test.dart` (create + join with two separate clients) and
   `LIVE_BACKEND=1 LIVE_FLOW=create flutter test test/backend_ui_live_test.dart` (the real onboarding screens).
   They leave test families behind ("Live test family", "UI test family"); delete them in the dashboard.
+
+## Shared family data (second migration set)
+
+Everything below is private to the family and only written through functions (tables are read-only for the app):
+
+| What | How |
+|---|---|
+| Finish something (first one gets the most: 20/15/10, then 5) | `rpc('claim_first', {'p_key': 'podcast'})` returns `{points, place}` or `{already: true}`; keys: `podcast`, `book`, `topic:<id>`, `event:<id>`, `moment:<day>`, `game:<name>:<day>` |
+| Undo a claim (takes the points back) | `rpc('revoke_claim', {'p_key': ...})` |
+| Parents add/remove points | `rpc('adjust_points', {'p_member_id', 'p_delta'})` |
+| Events and who is coming | `rpc('add_event', ...)`, `rpc('set_going', {'p_event_id', 'p_going'})`; read `family_events`, `event_going` |
+| Moments | `rpc('add_moment', {'p_caption'})`; read `family_moments` |
+| Parents' rules (phone-free time, penalties, rewards) | `rpc('set_rules', {'p_data'})` (parents); read `family_rules`; `rpc('phone_free_done')` switches phone-free off after its window |
+| Podcast questions | `rpc('add_question', {'p_scope': 'podcast', 'p_text'})`; read `family_questions` |
+
+The app reloads all of it every 20 seconds and after changes (`Backend.refreshShared`). Live check:
+`LIVE_BACKEND=1 flutter test test/backend_shared_live_test.dart` (leaves "Shared test family" and "Other family" behind).
+
+## Monthly survey
+
+`monthly_surveys` holds one answer set per person per month (`rpc('submit_survey', {'p_month': '2026-10', 'p_answers': {...}})`).
+The answers are private: a person can read only their own (not parents, not the family).

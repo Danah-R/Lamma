@@ -1,3 +1,6 @@
+import '../../../data.dart' as app;
+import '../../../widgets/sliding_capsule.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -69,6 +72,7 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
     _flashTimer?.cancel();
     setState(() {
       _phase = _Phase.result;
+      app.claimFirst('game:whoami:${app.dayKey}', app.profile.name);
       _flashOk = null;
     });
   }
@@ -223,27 +227,15 @@ class _WhoAmIScreenState extends State<WhoAmIScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AC.track,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Row(
-                          children: [
-                            for (final t in _durations)
-                              Expanded(
-                                child: _SegmentButton(
-                                  label: l.whoAmISeconds(t),
-                                  selected: t == _total,
-                                  onTap: () => setState(() => _total = t),
-                                ),
-                              ),
-                          ],
-                        ),
+                      SlidingCapsule(
+                        labels: [
+                          for (final t in _durations) l.whoAmISeconds(t),
+                        ],
+                        selected: _durations.indexOf(_total),
+                        onChanged: (i) =>
+                            setState(() => _total = _durations[i]),
+                        track: AC.track,
+                        thumb: AC.navy,
                       ),
                       const Spacer(),
                       const SizedBox(height: 16),
@@ -1011,60 +1003,6 @@ class _CategoryTile extends StatelessWidget {
       ),
     );
   }
-}
-
-class _SegmentButton extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  const _SegmentButton({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-  @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: selected,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      // 44 high hit area around the 40 high visual segment.
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: 40,
-          constraints: const BoxConstraints(minWidth: 56),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 3),
-          decoration: BoxDecoration(
-            color: selected ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      color: AC.cardShadow,
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: selected ? AC.ink : AC.muted,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }
 
 class _StartButton extends StatelessWidget {

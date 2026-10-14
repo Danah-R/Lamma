@@ -1,32 +1,43 @@
 {
   "@@locale": "en",
-
   "appTitle": "Lamma",
-
   "navHome": "Home",
   "navLamma": "Lamma",
   "navActivities": "Activity Box",
   "navAccount": "Account",
   "navShare": "Share",
-
   "commonComments": "Comments",
   "commonWriteCommentHint": "Write a comment...",
   "commonShareAction": "Share",
   "commonComingSoon": "Coming soon",
-
   "homeGreeting": "Hello, {name}",
-  "@homeGreeting": { "placeholders": { "name": { "type": "String" } } },
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "homeTodayWithFamily": "Today with the family",
   "homeFamilyNightTime": "Family night · 8:00 PM",
   "homeAttendingCount": "{attending, plural, zero{None of {total} attending} one{1 of {total} attending} other{{attending} of {total} attending}}",
-  "@homeAttendingCount": { "placeholders": { "attending": { "type": "int" }, "total": { "type": "int" } } },
+  "@homeAttendingCount": {
+    "placeholders": {
+      "attending": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "homeStreak": "7 day streak",
   "homeInteractions": "12 interactions this week",
   "homeFamilyCalendar": "Family calendar",
   "homeAddEvent": "+ Add event",
   "homeWeeklyPodcast": "Weekly podcast",
-  "homePodcastTitle": "What makes us laugh together?",
-  "homePodcastEpisode": "Episode 12 · 32 min",
+  "homePodcastTitle": "Freedom from distraction",
+  "homePodcastEpisode": "Fahem 70 · 117 min",
   "homePodcastListenedCount": "3 of 6 listened",
   "homeStartListening": "Start listening",
   "homeMemoriesQuote": "The best memories start with a simple question",
@@ -35,31 +46,86 @@
   "homeFeedMohammedChallenge": "Mohammed finished today's challenge",
   "homeFeedAminaPodcast": "Amina listened to the weekly podcast",
   "homeFeedPhoto": "{name} shared a photo",
-  "@homeFeedPhoto": { "placeholders": { "name": { "type": "String" } } },
+  "@homeFeedPhoto": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "homeFeedChallenge": "{name} finished today's challenge",
-  "@homeFeedChallenge": { "placeholders": { "name": { "type": "String" } } },
+  "@homeFeedChallenge": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "homeFeedPodcast": "{name} listened to the weekly podcast",
-  "@homeFeedPodcast": { "placeholders": { "name": { "type": "String" } } },
+  "@homeFeedPodcast": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "homePhoneFreeBanner": "Phone-free time · {from} – {to}",
-  "@homePhoneFreeBanner": { "placeholders": { "from": { "type": "String" }, "to": { "type": "String" } } },
+  "@homePhoneFreeBanner": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "homePunishmentBanner": "Your punishment: {detail}",
-  "@homePunishmentBanner": { "placeholders": { "detail": { "type": "String" } } },
+  "@homePunishmentBanner": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
   "homeLeaderboardSeeAll": "See all",
   "notifMomentShared": "{name} shared a moment",
-  "@notifMomentShared": { "placeholders": { "name": { "type": "String" } } },
+  "@notifMomentShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "addEventDateLabel": "Date",
   "homeYourWeekButton": "Your week in Lamma",
   "homeDayToday": "· Today",
   "homeNoEvents": "No events",
-
   "eventDetailsTitle": "Event details",
   "eventDetailsDateLine": "{day} {dayNum} · {time}",
-  "@eventDetailsDateLine": { "placeholders": { "day": { "type": "String" }, "dayNum": { "type": "int" }, "time": { "type": "String" } } },
+  "@eventDetailsDateLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "dayNum": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "eventDetailsGoingCount": "{count, plural, zero{None of the family are coming} one{1 of the family is coming} other{{count} of the family are coming}}",
-  "@eventDetailsGoingCount": { "placeholders": { "count": { "type": "int" } } },
+  "@eventDetailsGoingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventDetailsImIn": "You're in",
   "eventDetailsImComing": "I'm coming",
-
   "addEventTitle": "New event",
   "addEventTypeLabel": "Event type",
   "addEventNameLabel": "Name",
@@ -67,13 +133,11 @@
   "addEventDayLabel": "Day",
   "addEventTimeLabel": "Time",
   "addEventSubmit": "Add to calendar",
-
   "notificationsTitle": "Notifications",
   "notifEpisodeReady": "This week's episode is ready",
   "notifSarahMoment": "Sarah shared a moment",
   "notifBadgeEarned": "You earned the Lamma spirit badge",
   "notifEmpty": "That's all for now",
-
   "recapTitle": "Your week",
   "recapHeroTitle": "Your week in Lamma",
   "recapChats": "Chats",
@@ -83,12 +147,16 @@
   "recapMostShared": "Most shared: Talks with Aziz",
   "recapEveryonePlayed": "Everyone played it",
   "recapSeeBadges": "See badges",
-
   "accountTitle": "Account",
   "accountSubtitle": "Your Lamma profile",
   "accountAgeSpirit": "{age} years · Lamma spirit",
-  "@accountAgeSpirit": { "placeholders": { "age": { "type": "int" } } },
-  "accountDesignCharacter": "Design your character",
+  "@accountAgeSpirit": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
   "accountMyInterests": "My interests",
   "accountPlacesToVisit": "Places I'd like to visit",
   "accountNothingPicked": "Nothing picked yet",
@@ -97,22 +165,20 @@
   "accountParentControlsDesc": "Phone-free time, consequences, rewards",
   "accountAchievements": "Achievements",
   "accountStatDays": "Days",
+  "accountStatPictures": "Pictures",
+  "accountStatPoints": "Points",
   "accountStatGames": "Games",
   "accountAllBadges": "All badges and achievements",
-
   "designCharacterTitle": "My character",
   "designCharacterSection": "Character",
   "designOutfitsSection": "Outfits",
   "designSave": "Save",
-
   "badgesTitle": "Badges and achievements",
-
   "lammaSubtitle": "Let's chat",
   "lammaFamilyTalk": "Family talk",
   "lammaOpenFamilyChat": "Open family chat",
   "lammaMomentsOfOurDay": "Moments of our day",
   "lammaShareMomentAction": "+ Share moment",
-
   "momentTitle": "Moment",
   "shareMomentTitle": "Share a moment",
   "shareMomentPhotoHint": "Take or choose a photo",
@@ -122,10 +188,8 @@
   "shareMomentTagCooking": "Cooking",
   "shareMomentSubmit": "Share with family",
   "shareMomentFallbackCaption": "A moment",
-
   "familyChatTitle": "Family chat",
   "familyChatInputHint": "Write a message...",
-
   "activitiesTitle": "Activities",
   "activitiesSubtitle": "What should we do together today?",
   "activitiesGroupGamesTitle": "Group games",
@@ -149,32 +213,77 @@
   "clubsReadMore": "Read more",
   "clubsReadLess": "Less",
   "clubsFinishedCount": "{done} of {total} finished",
-  "@clubsFinishedCount": { "placeholders": { "done": { "type": "int" }, "total": { "type": "int" } } },
+  "@clubsFinishedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "clubsCatchUpBold": "Catch up!",
   "clubsLogProgress": "Log your progress",
   "clubsLogProgressSheetTitle": "How far are you in {title}?",
-  "@clubsLogProgressSheetTitle": { "placeholders": { "title": { "type": "String" } } },
+  "@clubsLogProgressSheetTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "clubsPageOfTotal": "Page {page} of {total}",
-  "@clubsPageOfTotal": { "placeholders": { "page": { "type": "int" }, "total": { "type": "int" } } },
+  "@clubsPageOfTotal": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "clubsMarkAsFinished": "Mark as finished",
   "clubsSaveButton": "Save",
   "clubsMyDoneWaitingRest": "Waiting for the discussion",
   "clubsDoneLabel": "Done",
   "clubsPagesLeft": "{pages, plural, one{1 page left for you} other{{pages} pages left for you}}",
-  "@clubsPagesLeft": { "placeholders": { "pages": { "type": "int" } } },
+  "@clubsPagesLeft": {
+    "placeholders": {
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
   "clubsFamilyProgressTitle": "How far has the family gotten?",
   "clubsThursday": "Thursday",
   "clubsBookDiscussionTime": "After dinner · 9:00 PM",
   "clubsNextMonthSuggestions": "Next month's suggestions",
   "clubsNotVotedYet": "Haven't voted yet",
   "clubsVotedForCount": "Voted for {count}",
-  "@clubsVotedForCount": { "placeholders": { "count": { "type": "int" } } },
+  "@clubsVotedForCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "clubsVoteForMoreHint": "Vote for more than one book — the most-voted becomes the book of the month",
   "clubsSuggestBook": "Suggest a book",
   "clubsSuggestBookHint": "Didn't find what you had in mind?",
   "clubsReadBeforeTitle": "We've read before",
   "clubsScoreOutOf": "{completed} of {total}",
-  "@clubsScoreOutOf": { "placeholders": { "completed": { "type": "int" }, "total": { "type": "int" } } },
+  "@clubsScoreOutOf": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "clubsSuggestPodcastHeading": "Suggest a podcast",
   "clubsSuggestFormSubtitle": "It'll reach the family and join the suggestions",
   "clubsClose": "Close",
@@ -223,59 +332,135 @@
   "clubsAddDiscussionPoint": "Add a discussion point",
   "clubsAddQuestionHint": "Type your question here",
   "activitiesBookClubCount": "3 of 6 reading",
-  "activitiesPodcastClubDetail": "Episode 12 · What makes us laugh together?",
+  "activitiesPodcastClubDetail": "Fahem 70 · Freedom from distraction",
   "activitiesGroupGamesDescFull": "Roulette, Talks with Aziz and Sin Jim",
   "activitiesSpinRoulette": "Spin the roulette",
-
   "activitiesTonightTopicBadge": "Tonight's topic",
   "activitiesTopicCounter": "Topic {index} of {total}",
-  "@activitiesTopicCounter": { "placeholders": { "index": { "type": "int" }, "total": { "type": "int" } } },
+  "@activitiesTopicCounter": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "activitiesChatNow": "Let's chat",
   "activitiesChangeTopic": "Change it",
   "activitiesPrevTopic": "Previous topic",
-
   "activitiesRouletteBadge": "Whose turn tonight?",
   "activitiesRouletteCardDesc": "Who starts, a challenge, or a family decision",
   "activitiesSinJimCardDesc": "Questions about each other — who knows best?",
   "activitiesLettersAzizTitle": "Letters with Aziz",
   "activitiesLettersAzizDesc": "Two teams compete, each answer starts with a letter",
-
   "activitiesBookClubDaysLeft": "{days, plural, one{1 day left} other{{days} days left}}",
-  "@activitiesBookClubDaysLeft": { "placeholders": { "days": { "type": "int" } } },
+  "@activitiesBookClubDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "activitiesClubCatchUpBold": "Catch up!",
   "activitiesClubFinishedCount": "{count, plural, zero{No one finished yet} one{1 finished before you} other{{count} finished before you}}",
-  "@activitiesClubFinishedCount": { "placeholders": { "count": { "type": "int" } } },
+  "@activitiesClubFinishedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "activitiesPodcastEpisodeLabel": "Podcast club · Episode {episode}",
-  "@activitiesPodcastEpisodeLabel": { "placeholders": { "episode": { "type": "int" } } },
+  "@activitiesPodcastEpisodeLabel": {
+    "placeholders": {
+      "episode": {
+        "type": "int"
+      }
+    }
+  },
   "activitiesPodcastCardQuestion": "What makes us laugh together?",
   "activitiesPodcastYourTurnBold": "Your turn to listen!",
   "activitiesPodcastHalfDone": "Half the family finished it — discussion on Thursday",
   "clubsPodcastClubLabel": "Podcast club · {host}",
-  "@clubsPodcastClubLabel": { "placeholders": { "host": { "type": "String" } } },
+  "@clubsPodcastClubLabel": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "clubsBookDoneWaitingBold": "Done!",
   "clubsBookDoneWaitingRest": "{remaining, plural, one{1 left to finish the club} other{{remaining} left to finish the club}}",
-  "@clubsBookDoneWaitingRest": { "placeholders": { "remaining": { "type": "int" } } },
+  "@clubsBookDoneWaitingRest": {
+    "placeholders": {
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
   "clubsBookAllDoneBold": "Everyone's done!",
   "clubsBookAllDoneRest": "See you {day}",
-  "@clubsBookAllDoneRest": { "placeholders": { "day": { "type": "String" } } },
+  "@clubsBookAllDoneRest": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "clubsPodcastYourTurnRest": "{heard} of {total} listened, discussion {day}",
-  "@clubsPodcastYourTurnRest": { "placeholders": { "heard": { "type": "int" }, "total": { "type": "int" }, "day": { "type": "String" } } },
+  "@clubsPodcastYourTurnRest": {
+    "placeholders": {
+      "heard": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "clubsPodcastHeardBold": "Listened ✓",
   "clubsPodcastHeardRest": "See you {day} {time}",
-  "@clubsPodcastHeardRest": { "placeholders": { "day": { "type": "String" }, "time": { "type": "String" } } },
+  "@clubsPodcastHeardRest": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "activitiesPlayPodcastTooltip": "Play",
-
-  "activitiesWeekendOutingTitle": "Weekend outing",
+  "activitiesWeekendOutingTitle": "Suggested outings",
   "activitiesPrevPlace": "Previous place",
   "activitiesNextPlace": "Next place",
   "activitiesPlaceCounter": "{index} of {total}",
-  "@activitiesPlaceCounter": { "placeholders": { "index": { "type": "int" }, "total": { "type": "int" } } },
-  "activitiesWeekendVoteText": "{votes, plural, one{1 of 6 wants to go Friday} other{{votes} of 6 want to go Friday}}",
-  "@activitiesWeekendVoteText": { "placeholders": { "votes": { "type": "int" } } },
-  "activitiesWeekendVoteButton": "I'm in",
-  "activitiesWeekendVotedButton": "You're in",
-  "activitiesWhoVotedLabel": "Who voted",
-
+  "@activitiesPlaceCounter": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "activitiesWeekendVoteText": "{votes, plural, =0{No likes yet} one{1 like} other{{votes} likes}}",
+  "@activitiesWeekendVoteText": {
+    "placeholders": {
+      "votes": {
+        "type": "int"
+      }
+    }
+  },
+  "activitiesWeekendVoteButton": "Like",
+  "activitiesWeekendVotedButton": "Liked",
+  "activitiesWhoVotedLabel": "Who liked it",
   "gamesTitle": "Games",
   "gamesPageSubtitle": "Pick tonight's game",
   "gamesRouletteTitle": "Roulette",
@@ -304,7 +489,13 @@
   "gamesStartPlaying": "Start playing",
   "gamesAllGamesTitle": "All games",
   "gamesCountText": "{count, plural, one{1 game} other{{count} games}}",
-  "@gamesCountText": { "placeholders": { "count": { "type": "int" } } },
+  "@gamesCountText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gamesFilterGroupLabel": "Game type",
   "gamesFilterAll": "All",
   "gamesFilterMove": "Active",
@@ -313,7 +504,16 @@
   "gamesSoonBadge": "Soon",
   "gamesSoonSnack": "Coming soon! We're getting it ready",
   "gamesTileSemanticsLabel": "{title}, {time}",
-  "@gamesTileSemanticsLabel": { "placeholders": { "title": { "type": "String" }, "time": { "type": "String" } } },
+  "@gamesTileSemanticsLabel": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "confirmEndYes": "Yes, end it",
   "confirmEndKeepPlaying": "Keep playing",
   "confirmEndTimerPaused": "Timer paused until you decide",
@@ -328,21 +528,45 @@
   "whoAmICatJobs": "Jobs",
   "whoAmICatPlaces": "Places",
   "whoAmIWordsCount": "{count} words",
-  "@whoAmIWordsCount": { "placeholders": { "count": { "type": "int" } } },
+  "@whoAmIWordsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "whoAmIRoundTime": "Round length",
   "whoAmISeconds": "{n}s",
-  "@whoAmISeconds": { "placeholders": { "n": { "type": "int" } } },
+  "@whoAmISeconds": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "whoAmIStart": "Let's go",
   "whoAmITime": "Time",
   "whoAmIScoreLabel": "Score",
   "whoAmIWordNo": "Word {n}",
-  "@whoAmIWordNo": { "placeholders": { "n": { "type": "int" } } },
+  "@whoAmIWordNo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "whoAmIFlashCorrect": "Got it! +1",
   "whoAmIFlashSkip": "Skipped",
   "whoAmISkip": "Skip",
   "whoAmIGotIt": "Got it!",
   "whoAmITimeLeft": "{n} seconds left",
-  "@whoAmITimeLeft": { "placeholders": { "n": { "type": "int" } } },
+  "@whoAmITimeLeft": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "whoAmIEndRound": "End round",
   "whoAmIEndTitle": "End the round?",
   "whoAmIEndMessage": "You'll go to the results with what you've got so far.",
@@ -363,29 +587,80 @@
   "charadesFallbackTeamA": "Team 1",
   "charadesFallbackTeamB": "Team 2",
   "charadesMembersCount": "{count, plural, =0{Nobody} one{1 member} other{{count} members}}",
-  "@charadesMembersCount": { "placeholders": { "count": { "type": "int" } } },
+  "@charadesMembersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "charadesWhoWithWho": "Who's with who?",
   "charadesTapToPick": "Tap each person to pick their team",
   "charadesPlayerTeamGroup": "{name}'s team",
-  "@charadesPlayerTeamGroup": { "placeholders": { "name": { "type": "String" } } },
+  "@charadesPlayerTeamGroup": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "charadesRounds": "Rounds",
   "charadesRoundsOption": "{count, plural, one{1 round} other{{count} rounds}}",
-  "@charadesRoundsOption": { "placeholders": { "count": { "type": "int" } } },
+  "@charadesRoundsOption": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "charadesStart": "Let's go",
   "charadesNeedMembers": "Each team needs at least one player",
   "charadesRoundOf": "Round {n} of {total}",
-  "@charadesRoundOf": { "placeholders": { "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@charadesRoundOf": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "charadesEndGame": "End game",
   "charadesTeamTurn": "Team turn:",
   "charadesActorThisTime": "Acting this time",
   "charadesPassPhone": "Pass the phone to {name}; everyone else, don't look",
-  "@charadesPassPhone": { "placeholders": { "name": { "type": "String" } } },
+  "@charadesPassPhone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "charadesImReady": "I'm {name}, ready",
-  "@charadesImReady": { "placeholders": { "name": { "type": "String" } } },
+  "@charadesImReady": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "charadesActing": "{name} is acting",
-  "@charadesActing": { "placeholders": { "name": { "type": "String" } } },
+  "@charadesActing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "charadesSecondsShort": "{n}s",
-  "@charadesSecondsShort": { "placeholders": { "n": { "type": "int" } } },
+  "@charadesSecondsShort": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "charadesActIt": "Act it out!",
   "charadesTapToReveal": "Tap to see the word",
   "charadesNoTalking": "No talking or pointing at letters",
@@ -394,7 +669,13 @@
   "charadesEndTurn": "End turn",
   "charadesEndTurnTitle": "End the turn?",
   "charadesEndTurnMessage": "The turn passes to {team}.",
-  "@charadesEndTurnMessage": { "placeholders": { "team": { "type": "String" } } },
+  "@charadesEndTurnMessage": {
+    "placeholders": {
+      "team": {
+        "type": "String"
+      }
+    }
+  },
   "charadesEndGameTitle": "End the game?",
   "charadesEndGameMessage": "We'll count the points so far and pick the winner.",
   "charadesWinnerTeam": "Winning team",
@@ -407,25 +688,58 @@
   "seenDesc": "Answer on behalf of someone and see who knows the family best",
   "seenWhoPlays": "Who's playing?",
   "seenPlayersCount": "{count, plural, one{1 player} other{{count} players}}",
-  "@seenPlayersCount": { "placeholders": { "count": { "type": "int" } } },
+  "@seenPlayersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "seenPickAtLeast3": "pick at least 3",
   "seenQuestionCount": "Number of questions",
   "seenQuestionsOption": "{count, plural, one{1 question} other{{count} questions}}",
-  "@seenQuestionsOption": { "placeholders": { "count": { "type": "int" } } },
+  "@seenQuestionsOption": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "seenStart": "Let's go",
   "seenQuestionNo": "Question {n} of {total}",
-  "@seenQuestionNo": { "placeholders": { "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@seenQuestionNo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "seenAbout": "Question about",
   "seenAnswersAloud": "answers out loud",
   "seenIsAnswerRight": "{name}, is the answer right?",
-  "@seenIsAnswerRight": { "placeholders": { "name": { "type": "String" } } },
+  "@seenIsAnswerRight": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "seenWrong": "Wrong",
   "seenRight": "Right! +1",
   "seenEndTitle": "End the game?",
   "seenEndMessage": "We'll rank everyone on the questions answered so far.",
   "seenWinnerLabel": "Knows the family best",
   "seenPointsCount": "{count, plural, one{1 point} other{{count} points}}",
-  "@seenPointsCount": { "placeholders": { "count": { "type": "int" } } },
+  "@seenPointsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "seenBackToGames": "Games",
   "seenPlayAgain": "Play again",
   "seenCloseLabel": "End",
@@ -440,7 +754,16 @@
   "topicsCatMine": "Our topics",
   "topicsSave": "Save topic",
   "topicsCountOf": "{n} of {total}",
-  "@topicsCountOf": { "placeholders": { "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@topicsCountOf": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "topicsDiscussedBadge": "We talked about it",
   "topicsLetsTalk": "Let's talk",
   "topicsDiscussedButton": "We talked about it",
@@ -457,19 +780,28 @@
   "topicsAddedSnack": "Your topic was added",
   "topicsDoneTitle": "We talked about these",
   "topicsDoneCount": "{count, plural, =0{No topics yet} one{1 topic} other{{count} topics}}",
-  "@topicsDoneCount": { "placeholders": { "count": { "type": "int" } } },
+  "@topicsDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "topicsDoneEmpty": "When you tap \"Let's talk\" on a topic,\nit's saved here so you remember what you talked about",
   "soonPageMessage": "Coming soon",
-
   "azizNext": "Next",
   "azizSkip": "Skip",
-
   "sinJimAnswerOnBehalf": "Answer on behalf of",
   "sinJimQPrefix": "Q:",
   "sinJimEveryoneAnswered": "Everyone answered",
   "sinJimAnswersRecorded": "{count, plural, zero{No answers recorded} one{1 answer recorded} other{{count} answers recorded}}",
-  "@sinJimAnswersRecorded": { "placeholders": { "count": { "type": "int" } } },
-
+  "@sinJimAnswersRecorded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "rouletteModeWhoStarts": "Who starts?",
   "rouletteModeChallenge": "Challenge",
   "rouletteModeDecision": "Decision",
@@ -486,42 +818,47 @@
   "rouletteDecisionMovie": "Watch a movie",
   "rouletteDecisionGames": "Play games",
   "rouletteResultStarts": "{name} starts!",
-  "@rouletteResultStarts": { "placeholders": { "name": { "type": "String" } } },
+  "@rouletteResultStarts": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "rouletteSpin": "Spin the wheel",
   "rouletteGotIt": "Got it",
-
   "bookClubCurrentBook": "Current book",
   "bookClubReadingStatus": "3 of 6 reading · discussion on Thursday",
   "bookClubJoinDiscussion": "Join the discussion",
   "discussionQuestionsHeading": "Discussion questions",
   "bookClubQ1": "Which character are you closest to?",
   "bookClubQ2": "If the ending changed, what would it be?",
-
   "podcastThisWeekEpisode": "This week's episode",
-  "podcastDuration": "32 min",
+  "podcastDuration": "117 min",
   "podcastListenedLabel": "Listened",
   "podcastListenedFraction": "{count}/6",
-  "@podcastListenedFraction": { "placeholders": { "count": { "type": "int" } } },
+  "@podcastListenedFraction": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "podcastNextGathering": "Next gathering: Friday after dinner. We will all talk about it.",
   "podcastQ1": "When did we last laugh until we cried?",
   "podcastQ2": "Who in the family tells the best jokes?",
-
   "talkTopicsGiveMeTopic": "Give me a topic",
   "talkTopicsTrendingNow": "Trending now",
   "talkTopicsTrend1": "Best Ramadan memory",
   "talkTopicsTrend2": "Mom's favorite dish",
-
   "outingsFilterAll": "All",
   "outingsPlacesMap": "Places map",
   "outingsOurOutings": "Our outings",
-
   "suggestPlaceTitle": "Suggestion for the family",
   "suggestPlaceWhyHeading": "Why we suggested it",
   "suggestPlaceAdd": "Add to \"Our outings\"",
   "suggestPlaceAddedSnackbar": "Added to Our outings",
-
   "ourOutingsEmpty": "Nothing here yet.\nAdd a place from Outings.",
-
   "onboardingSplashLogo": "Lamma",
   "onboardingSplashTagline": "Let's gather",
   "onboardingSplashStart": "Start",
@@ -564,21 +901,18 @@
   "onboardingHaveInviteCode": "Have an invite code?",
   "onboardingInviteCodeHint": "LAMMA-48",
   "onboardingJoin": "Join",
-
   "dataCharacterSister": "Sister",
   "dataCharacterBigBrother": "Big brother",
   "dataCharacterFather": "Father",
   "dataCharacterMother": "Mother",
   "dataCharacterLittleGirl": "Little girl",
   "dataCharacterSon": "Son",
-
   "dataMemberNoura": "Noura",
   "dataMemberMohammed": "Mohammed",
   "dataMemberAbdullah": "Abdullah",
   "dataMemberAmina": "Amina",
   "dataMemberSarah": "Sarah",
   "dataMemberYousef": "Yousef",
-
   "dataEventTypeGathering": "Gathering",
   "dataEventTypeOuting": "Outing",
   "dataEventTypeDinner": "Dinner",
@@ -586,7 +920,6 @@
   "dataEventTypeTrip": "Trip",
   "dataEventTypeMovie": "Movie",
   "dataEventTypeOccasion": "Occasion",
-
   "dataDaySat": "Sat",
   "dataDaySun": "Sun",
   "dataDayMon": "Mon",
@@ -609,13 +942,11 @@
   "dataMonthOct": "Oct",
   "dataMonthNov": "Nov",
   "dataMonthDec": "Dec",
-
   "dataEventTitleVillageOuting": "Village outing",
   "dataEventTitleFamilyDinner": "Family dinner",
   "dataEventTime4pm": "4:00 PM",
   "dataEventTime8pm": "8:00 PM",
   "dataTime930pm": "9:30 PM",
-
   "dataPlaceKingSalmanPark": "King Salman Park",
   "dataPlaceCafeAlDar": "Café Al-Dar",
   "dataPlaceStrikeBowling": "Strike Bowling",
@@ -624,55 +955,45 @@
   "dataPlaceWhyCafe": "Suits everyone, a good choice",
   "dataPlaceWhyBowling": "3 of 6 love games and group activities",
   "dataPlaceWhyRestaurant": "Homestyle food and family seating",
-
   "dataOutingTypeNature": "Nature",
   "dataOutingTypeRestaurants": "Restaurants",
   "dataOutingTypeCafes": "Cafés",
   "dataOutingTypeEntertainment": "Entertainment",
-
   "dataBadgeMostInteractive": "Most interactive",
   "dataBadgeLammaSpirit": "Lamma spirit",
   "dataBadgeWeeklyListener": "Weekly listener",
   "dataBadgeWeekWinner": "Week winner",
   "dataBadgeTalksKing": "Talks king",
   "dataBadgeReader": "Reader",
-
   "dataAziz1": "What's the strangest food you've ever tried?",
   "dataAziz2": "Which trip would you repeat tomorrow?",
   "dataAziz3": "What's a small thing that makes your day?",
   "dataAziz4": "Who in the family makes you laugh the most?",
-
   "dataSinJim1": "How old is your grandfather?",
   "dataSinJim2": "What's Dad's favorite dish?",
   "dataSinJim3": "What's Mom's favorite color?",
   "dataSinJim4": "Who is the biggest sleeper in the family?",
-
   "dataTopic1": "If you could travel anywhere now, where would we go?",
   "dataTopic2": "What's the family moment you'd never forget?",
   "dataTopic3": "What tradition should we start this year?",
   "dataTopic4": "What's one thing you've never told us?",
-
   "dataMomentCaptionSarah": "Went out today with the girls",
   "dataMomentCaptionMohammed": "Study break at the café",
   "dataMomentCaptionAmina": "Fresh coffee, quiet morning",
   "dataMomentCaptionAbdullah": "Evening in the majlis",
   "dataMomentCaptionYousef": "My new Lego!",
   "dataMomentCaptionNoura": "Baking with Mom",
-
   "dataTimeTodayAt410pm": "Today, 4:10 PM",
   "dataTimeTodayAt130pm": "Today, 1:30 PM",
   "dataTimeTodayAt815am": "Today, 8:15 AM",
   "dataTimeYesterday": "Yesterday",
   "dataTimeToday": "Today",
   "dataTime2DaysAgo": "2 days ago",
-
   "dataTalkSarah": "What do you want to eat on Thursday?",
   "dataTalkAmina": "Who wants to come with me to the market?",
-
   "dataCommentAbdullah": "Nice!",
   "dataCommentAmina": "God protect you all",
   "dataCommentMohammed": "Take me with you",
-
   "dataInterestCoffee": "Coffee",
   "dataInterestGames": "Games",
   "dataInterestReading": "Reading",
@@ -685,24 +1006,57 @@
   "dataInterestSwimming": "Swimming",
   "dataInterestMusic": "Music",
   "dataInterestTravel": "Travel",
-
   "dataFamilyFallback": "Your family",
   "dataFamilyDefault": "Al-Otaibi family",
-
   "leaderboardTitle": "Leaderboard",
-  "leaderboardCycleReward": "{cycle} reward",
-  "@leaderboardCycleReward": { "placeholders": { "cycle": { "type": "String" } } },
+  "leaderboardCycleReward": "Winner's reward",
+  "@leaderboardCycleReward": {
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      }
+    }
+  },
   "leaderboardLastWinner": "Winner: {winner} · {reward}",
-  "@leaderboardLastWinner": { "placeholders": { "winner": { "type": "String" }, "reward": { "type": "String" } } },
+  "@leaderboardLastWinner": {
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      },
+      "reward": {
+        "type": "String"
+      }
+    }
+  },
   "leaderboardRanking": "Ranking",
   "leaderboardPts": "{points, plural, zero{0 pts} one{1 pt} other{{points} pts}}",
-  "@leaderboardPts": { "placeholders": { "points": { "type": "int" } } },
+  "@leaderboardPts": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
   "leaderboardNoWinnerYet": "No winner yet",
   "leaderboardRewardNow": "Reward {name} (#1) now",
-  "@leaderboardRewardNow": { "placeholders": { "name": { "type": "String" } } },
+  "@leaderboardRewardNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "leaderboardRewardSnackbar": "{name} gets: {reward}",
-  "@leaderboardRewardSnackbar": { "placeholders": { "name": { "type": "String" }, "reward": { "type": "String" } } },
-
+  "@leaderboardRewardSnackbar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reward": {
+        "type": "String"
+      }
+    }
+  },
   "parentControlsPhoneFreeTime": "Phone-free time",
   "parentControlsFrom": "From",
   "parentControlsUntil": "Until",
@@ -712,7 +1066,13 @@
   "parentControlsOrWriteOwn": "Or write your own",
   "parentControlsRecordViolation": "Record a phone violation",
   "parentControlsTakeAwayPoints": "{penalty, plural, one{Take away 1 point} other{Take away {penalty} points}}",
-  "@parentControlsTakeAwayPoints": { "placeholders": { "penalty": { "type": "int" } } },
+  "@parentControlsTakeAwayPoints": {
+    "placeholders": {
+      "penalty": {
+        "type": "int"
+      }
+    }
+  },
   "parentControlsGivePunishment": "Give punishment",
   "parentControlsRecent": "Recent",
   "parentControlsDone": "Done",
@@ -721,8 +1081,19 @@
   "parentControlsRewardForWinner": "Reward for the winner",
   "parentControlsOrWriteOwnReward": "Or write your own reward",
   "parentControlsViolationSnackbar": "{who}: {kind} ({detail})",
-  "@parentControlsViolationSnackbar": { "placeholders": { "who": { "type": "String" }, "kind": { "type": "String" }, "detail": { "type": "String" } } },
-
+  "@parentControlsViolationSnackbar": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
   "violationKindLostPoints": "Lost points",
   "violationKindPunishment": "Punishment",
   "dataCycleWeekly": "Weekly",
@@ -738,42 +1109,72 @@
   "dataRewardSkipChore": "Skip a chore",
   "dataRewardOuting": "Choose the weekend outing",
   "dataRewardGameTime": "Extra game time",
-
   "chatSeedSarahCooking": "What are we cooking tonight?",
   "chatSeedMeGoPark": "Let's go to the park!",
   "chatSeedAminaDinner": "Dinner will be ready soon",
   "chatSeedMeComing": "Coming!",
-
   "momentsTitle": "Our day's moments",
   "momentsSharedCount": "{count} of 6 shared today",
-  "@momentsSharedCount": { "placeholders": { "count": { "type": "int" } } },
+  "@momentsSharedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "momentsNotifications": "Notifications",
   "momentsNew": "New",
   "momentsLike": "Like",
   "momentsYou": "You",
   "momentsWith": " with {names}",
-  "@momentsWith": { "placeholders": { "names": { "type": "String" } } },
+  "@momentsWith": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
   "momentsAnd": " and ",
   "momentsToday": "Today",
   "momentsYesterday": "Yesterday",
   "momentsNow": "Just now",
   "momentsDayTime": "{day}, {time}",
-  "@momentsDayTime": { "placeholders": { "day": { "type": "String" }, "time": { "type": "String" } } },
+  "@momentsDayTime": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "momentsAm": "AM",
   "momentsPm": "PM",
   "momentsSeeAll": "See all comments ({count})",
-  "@momentsSeeAll": { "placeholders": { "count": { "type": "int" } } },
+  "@momentsSeeAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "momentsSeeSecond": "See the other comment",
   "momentsHideComments": "Hide comments",
   "momentsQuick1": "Amazing!",
   "momentsQuick2": "Where is this?",
   "momentsQuick3": "Wish I was there",
   "momentsCommentHint": "Comment on {name}'s moment…",
-  "@momentsCommentHint": { "placeholders": { "name": { "type": "String" } } },
+  "@momentsCommentHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "momentsReplyHint": "Reply to the comments…",
   "momentsSend": "Send comment",
   "momentsEnd": "You've seen all of the last two days",
-
   "momentsNewTitle": "New moment",
   "momentsClose": "Close",
   "momentsSnapPrompt": "Capture a moment from your day",
@@ -791,20 +1192,30 @@
   "momentsPhotosDenied": "We need photo access to pick a picture",
   "momentsSettings": "Settings",
   "momentsDefaultCaption": "A moment from my day",
-
   "momentsShareSemantics": "Share: capture a moment",
   "momentsCoachLabel": "Tip",
   "momentsCoachBody": "Tap the camera below and share it with the family",
   "momentsCoachLater": "Later",
   "momentsCoachNow": "Capture now",
-
   "chatSubtitle": "Family chat · {count} online",
-  "@chatSubtitle": { "placeholders": { "count": { "type": "int" } } },
+  "@chatSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatNotifications": "Notifications",
   "chatToday": "Today",
   "chatQuestionLabel": "Question of the day",
   "chatQuestionFamily": "{count} family members answered",
-  "@chatQuestionFamily": { "placeholders": { "count": { "type": "int" } } },
+  "@chatQuestionFamily": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatQuestionAnswered": "You answered it",
   "chatAnswer": "Answer",
   "chatYou": "You",
@@ -813,21 +1224,44 @@
   "chatPm": "PM",
   "chatPollBadge": "Poll",
   "chatVotes": "{count} votes",
-  "@chatVotes": { "placeholders": { "count": { "type": "int" } } },
+  "@chatVotes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatTyping": "{name} is typing",
-  "@chatTyping": { "placeholders": { "name": { "type": "String" } } },
+  "@chatTyping": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "chatHintWrite": "Write to the family…",
   "chatHintReply": "Write your answer…",
   "chatReplyingTo": "Replying to the question of the day",
   "chatCancelReply": "Cancel reply",
   "chatSend": "Send",
   "chatMessageField": "Your message",
-
   "notifBellLabel": "Notifications, {count} new",
-  "@notifBellLabel": { "placeholders": { "count": { "type": "int" } } },
+  "@notifBellLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifBellLabelNone": "Notifications",
   "notifSummary": "{count, plural, =0{All read} =1{1 new notification} other{{count} new notifications}}",
-  "@notifSummary": { "placeholders": { "count": { "type": "int" } } },
+  "@notifSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifReadAll": "Mark all read",
   "notifSeeAll": "See all notifications",
   "notifPanelEmpty": "Nothing new",
@@ -836,20 +1270,37 @@
   "notifClosePanel": "Close notifications",
   "notifTimeNow": "Just now",
   "notifTimeAgo": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
-  "@notifTimeAgo": { "placeholders": { "count": { "type": "int" } } },
+  "@notifTimeAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifYesterday": "Yesterday",
-
   "notifsTitle": "Notifications",
   "notifsBack": "Back",
   "notifsHeroKickerNew": "Something new in the family",
   "notifsHeroKickerRead": "You haven't missed anything",
   "notifsHeroTitle": "{count, plural, =0{All read} =1{You have 1 new notification} other{You have {count} new notifications}}",
-  "@notifsHeroTitle": { "placeholders": { "count": { "type": "int" } } },
+  "@notifsHeroTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifsGroupToday": "Today",
   "notifsGroupYesterday": "Yesterday",
   "notifsGroupEarlier": "Earlier",
   "notifsGroupCount": "{count, plural, =0{None} =1{1 notification} other{{count} notifications}}",
-  "@notifsGroupCount": { "placeholders": { "count": { "type": "int" } } },
+  "@notifsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifsTagEvent": "Event",
   "notifsTagMoment": "Moment",
   "notifsTagComment": "Comment",
@@ -858,13 +1309,23 @@
   "notifsTagClub": "Book club",
   "notifsTagVote": "Vote",
   "notifsNewPrefix": "New: {text}",
-  "@notifsNewPrefix": { "placeholders": { "text": { "type": "String" } } },
+  "@notifsNewPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "notifsYesterdayAt": "Yesterday, {time}",
-  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
-
+  "@notifsYesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "accountResetCoach": "Show the camera hint again",
   "accountResetCoachDone": "The hint will show on the moments page",
-
   "roleOtherLabel": "Other",
   "onboardingOtherRoleHint": "Your role in the family (e.g. Grandma)",
   "onboardingLiveTogetherQuestion": "Do you live with your family?",
@@ -877,5 +1338,123 @@
   "onboardingErrTooMany": "Too many tries. Please wait an hour and try again.",
   "onboardingErrNetwork": "Couldn't reach Lamma. Check your internet and try again.",
   "accountFamilyCode": "Family join code",
-  "accountFamilyCodeCopied": "Code copied"
+  "accountFamilyCodeCopied": "Code copied",
+  "homeTodayTitle": "Today",
+  "homeNoPlans": "No plans yet",
+  "homeTomorrow": "Tomorrow",
+  "podcastFinishedButton": "Finished listening",
+  "podcastFinishedDone": "I finished listening",
+  "podcastListenedMembers": "Listened so far",
+  "podcastAddQuestionHint": "Add your own question",
+  "podcastAddQuestionButton": "Add",
+  "podcastFullTitle": "Understanding 70 | Series: You Must Break Free (5): Freedom from Distraction | with Sheikh Amjad Sameer",
+  "podcastWhereToListen": "Where do you want to listen?",
+  "podcastPageTitle": "This week's podcast",
+  "podcastNotListened": "Marked as not listened.",
+  "homePhoneFreeWarningPoints": "If you use your phone and leave the app, you'll lose {points} points.",
+  "@homePhoneFreeWarningPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "homePhoneFreeWarningPunishment": "If you use your phone and leave the app, you'll get a punishment: {punishment}.",
+  "@homePhoneFreeWarningPunishment": {
+    "placeholders": {
+      "punishment": {
+        "type": "String"
+      }
+    }
+  },
+  "accountEditAccount": "Edit your account",
+  "editAccountTitle": "Edit account",
+  "editAccountCharacter": "Your character",
+  "editAccountSave": "Save changes",
+  "editAccountSaveFailed": "Couldn't save. Check your internet and try again.",
+  "topicsCatTell": "Things we want to say",
+  "pointsEarned": "+{points} points",
+  "@pointsEarned": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "pointsFirst": "You were first! +{points} points",
+  "@pointsFirst": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "notifsTagSurvey": "Survey",
+  "surveyTitle": "This month's survey",
+  "surveyCardTitle": "How was your month with the family?",
+  "surveyCardDesc": "A few quick questions, just for you",
+  "surveyDoneCard": "You answered this month's survey. See you next month!",
+  "surveyIntro": "Take a minute to think about this month. Only you can see your answers.",
+  "surveyHintMulti": "Pick as many as you like",
+  "surveyQClosest": "Who did you get closest to this month?",
+  "surveyQCloser": "Who do you want to get closer to?",
+  "surveyQLiked": "Which features of the app did you enjoy?",
+  "surveyQDisliked": "Which features didn't you enjoy?",
+  "surveyQOutings": "Which outings did you enjoy the most?",
+  "surveyQGames": "Which games did you enjoy the most?",
+  "surveyQCloseness": "How close did you feel to your family this month?",
+  "surveyCloseLow": "Not very",
+  "surveyCloseHigh": "Very close",
+  "surveyQComment": "Anything else you'd like to tell us?",
+  "surveyCommentHint": "Optional",
+  "surveySubmit": "Send my answers",
+  "surveyThanks": "Thank you! See you next month.",
+  "surveyNothingThisMonth": "Nothing this month",
+  "surveyNoOthers": "No one else has joined the family yet",
+  "surveyFeatureChat": "Family chat",
+  "surveyFeatureMoments": "Moments",
+  "surveyFeatureGames": "Games",
+  "surveyFeaturePodcast": "Podcast club",
+  "surveyFeatureBook": "Book club",
+  "surveyFeatureTopics": "Talk topics",
+  "surveyFeatureOutings": "Outings",
+  "surveyFeatureCalendar": "Calendar and events",
+  "surveyFeaturePoints": "Points and leaderboard",
+  "activitiesOpenInMaps": "Open in Google Maps",
+  "activitiesGoogleMapsRating": "Google Maps",
+  "homeAddTopicTitle": "What do you want to talk about?",
+  "homeAddTopicDesc": "It joins tonight's topics and your topics",
+  "homeAddTopicHint": "Write a topic…",
+  "homeAddTopicButton": "Add",
+  "homeAddTopicAdded": "Added to tonight's topics",
+  "accountMyTopics": "My topics",
+  "accountMyTopicsHint": "Not talked about yet",
+  "accountMyTopicsEmpty": "Nothing waiting. Add a topic from Home.",
+  "momentsReactHeart": "Heart",
+  "momentsReactLaugh": "Laughing",
+  "momentsReactThumbs": "Thumbs up",
+  "momentsReactCry": "Crying",
+  "momentsReactLove": "Heart eyes",
+  "momentsReactionsCount": "{n, plural, =0{No reactions} =1{1 reaction} other{{n} reactions}}",
+  "@momentsReactionsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "momentsCommentsCount": "{n, plural, =0{No comments} =1{1 comment} other{{n} comments}}",
+  "@momentsCommentsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "activitiesAddToCalendar": "Add to calendar",
+  "activitiesAddedToCalendar": "Added to the family calendar",
+  "activitiesAddOuting": "Suggest an outing",
+  "activitiesOutingName": "Where would you like to go?",
+  "activitiesOutingAdd": "Add",
+  "activitiesSuggestedByFamily": "Suggested by the family"
 }

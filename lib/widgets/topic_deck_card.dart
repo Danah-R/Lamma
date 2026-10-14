@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 
 import '../features/topics/topics_data.dart';
@@ -494,10 +495,10 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                 style: OutlinedButton.styleFrom(
                   backgroundColor: _C.bg,
                   foregroundColor: _C.ink,
-                  side: const BorderSide(color: _C.border),
+                  side: BorderSide.none,
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                 ),
                 child: const Row(
@@ -563,7 +564,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
               excludeSemantics: true,
               child: Material(
                 color: Colors.white,
-                shape: const CircleBorder(side: BorderSide(color: _C.border)),
+                shape: const CircleBorder(),
                 child: InkWell(
                   customBorder: const CircleBorder(),
                   onTap: () {
@@ -674,11 +675,11 @@ class _TopicDeckCardState extends State<TopicDeckCard>
               child: Material(
                 color: _C.bg,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: _C.border),
+                  borderRadius: BorderRadius.circular(40),
+                  side: BorderSide.none,
                 ),
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(40),
                   onTap: _prev,
                   child: const SizedBox(
                     width: 52,
@@ -701,9 +702,7 @@ class _TopicDeckCardState extends State<TopicDeckCard>
                 color: done ? _C.doneBg : _C.brick,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: done
-                      ? const BorderSide(color: Color(0xFFB9D3CF))
-                      : BorderSide.none,
+                  side: BorderSide.none,
                 ),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
@@ -731,9 +730,9 @@ class _TopicDeckCardState extends State<TopicDeckCard>
             const SizedBox(width: 8),
             Material(
               color: _C.navy,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(40),
               child: InkWell(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(40),
                 onTap: () => _next(),
                 child: SizedBox(
                   height: 52,
@@ -779,11 +778,11 @@ class _TopicDeckCardState extends State<TopicDeckCard>
       child: Material(
         color: _C.bg,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-          side: const BorderSide(color: _C.border),
+          borderRadius: BorderRadius.circular(40),
+          side: BorderSide.none,
         ),
         child: InkWell(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(40),
           onTap: onTap,
           child: SizedBox(width: 48, height: 48, child: Center(child: icon)),
         ),

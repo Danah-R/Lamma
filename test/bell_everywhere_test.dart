@@ -42,7 +42,7 @@ void main() {
 
     await checkTab('لمّه');
     await checkTab('صندوق الأنشطة');
-    await checkTab('الحساب');
+    // the profile page has no bell (removed on purpose)
     await checkTab('الرئيسية');
     // the camera tab (moments)
     await t.tap(find.byIcon(Icons.camera_alt_rounded));
@@ -59,7 +59,7 @@ void main() {
     c.closePanel();
     await t.pumpAndSettle();
     // ... and every other tab shows no count
-    for (final tab in ['الرئيسية', 'الحساب', 'صندوق الأنشطة', 'لمّه']) {
+    for (final tab in ['الرئيسية', 'صندوق الأنشطة', 'لمّه']) {
       await t.tap(find.text(tab).last);
       await t.pumpAndSettle();
       expect(

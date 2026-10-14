@@ -94,7 +94,16 @@ void main() {
     expect(find.text('محادثة العائلة · 3 متواجدين'), findsOneWidget);
     expect(find.text('أول قهوة بالشتاء'), findsNothing);
     expect(find.text('يا سلام'), findsNothing);
-    expect(find.byType(Image), findsNothing);
+    // (the profile pictures of the people are fine; no moment photos)
+    expect(
+      find.byWidgetPredicate(
+        (w) =>
+            w is Image &&
+            w.image is AssetImage &&
+            (w.image as AssetImage).assetName.startsWith('assets/images'),
+      ),
+      findsNothing,
+    );
     expect(find.byType(CameraCoach), findsNothing);
   });
 
@@ -135,7 +144,7 @@ void main() {
     await t.pumpAndSettle();
     _noOverflowAndTargets(t, 'feed');
     expect(find.bySemanticsLabel(RegExp('^الإشعارات')), findsOneWidget);
-    expect(find.bySemanticsLabel('أعجبني'), findsNWidgets(4));
+    expect(find.bySemanticsLabel('قلب'), findsNWidgets(4));
     expect(find.bySemanticsLabel('أرسل التعليق'), findsNWidgets(4));
     await t.tap(find.byIcon(Icons.camera_alt_rounded));
     await t.pumpAndSettle();

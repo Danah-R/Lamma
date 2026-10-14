@@ -1,9 +1,13 @@
+import '../../../data.dart' as app;
+import '../../../widgets/sliding_capsule.dart';
+import '../shared/celebration.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/data_localizations.dart';
 import '../../../screens/activities_colors.dart';
-import '../../../screens/game_illustrations.dart';
 import '../shared/confirm_end_dialog.dart';
 import '../shared/family_players.dart';
 import '../shared/game_scaffold.dart';
@@ -56,6 +60,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
       _questions = [for (var k = 0; k < _qCount; k++) t[k % t.length]];
       _q = 0;
       _pts.clear();
+      _winnerPaid = false;
     });
   }
 
@@ -63,14 +68,39 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
     ok ? HapticFeedback.mediumImpact() : HapticFeedback.lightImpact();
     final answerer = _players[(_q + 1) % _players.length];
     setState(() {
-      if (ok) _pts[answerer] = (_pts[answerer] ?? 0) + 1;
+      if (ok) {
+        _pts[answerer] = (_pts[answerer] ?? 0) + 1;
+        // a right answer earns real points in the app too
+        app.awardPoints(familyPlayers[answerer].name, correctPoints);
+      }
       _q++;
-      if (_q >= _qCount) _phase = _Phase.result;
+      if (_q >= _qCount) {
+        _phase = _Phase.result;
+        _payWinner();
+        app.claimFirst('game:seen:${app.dayKey}', app.profile.name);
+      }
     });
   }
 
+  bool _winnerPaid = false;
+
+  /// The player(s) with the most right answers win [winPoints], once.
+  void _payWinner() {
+    if (_winnerPaid || _pts.isEmpty) return;
+    final top = _pts.values.fold<int>(0, (a, b) => a > b ? a : b);
+    if (top <= 0) return;
+    _winnerPaid = true;
+    for (final e in _pts.entries) {
+      if (e.value == top) app.awardPoints(familyPlayers[e.key].name, winPoints);
+    }
+  }
+
   void _toResult() {
-    if (mounted) setState(() => _phase = _Phase.result);
+    if (mounted) {
+      setState(() => _phase = _Phase.result);
+      _payWinner();
+      app.claimFirst('game:seen:${app.dayKey}', app.profile.name);
+    }
   }
 
   Future<void> _confirmEnd() async {
@@ -131,23 +161,16 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   ],
                 ),
                 const SizedBox(height: 18),
-                Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: AC.tealTint,
-                    borderRadius: BorderRadius.circular(26),
-                  ),
-                  alignment: Alignment.center,
-                  child: const ExcludeSemantics(
-                    child: SizedBox(
-                      width: 160,
-                      height: 130,
-                      child: FittedBox(
-                        child: SizedBox(
-                          width: 78,
-                          height: 64,
-                          child: GameIllustration('seen'),
-                        ),
+                // the game's own picture, big, with nothing behind it
+                Center(
+                  child: ExcludeSemantics(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(32),
+                      child: Image.asset(
+                        'assets/games/sin_jim.png',
+                        width: 220,
+                        height: 220,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -226,19 +249,15 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    for (final c in _questionOptions) ...[
-                      if (c != _questionOptions.first) const SizedBox(width: 8),
-                      Expanded(
-                        child: _CountChip(
-                          label: l.seenQuestionsOption(c),
-                          selected: c == _qCount,
-                          onTap: () => setState(() => _qCount = c),
-                        ),
-                      ),
-                    ],
+                SlidingCapsule(
+                  labels: [
+                    for (final c in _questionOptions) l.seenQuestionsOption(c),
                   ],
+                  selected: _questionOptions.indexOf(_qCount),
+                  onChanged: (i) =>
+                      setState(() => _qCount = _questionOptions[i]),
+                  track: AC.track,
+                  thumb: AC.navy,
                 ),
               ],
             ),
@@ -256,7 +275,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
     final n = _players.length;
     final about = familyPlayers[_players[_q % n]];
     final answerer = familyPlayers[_players[(_q + 1) % n]];
-    final question = _questions[_q].replaceAll('{X}', about.name);
+    final question = _questions[_q].replaceAll('{X}', ld(context, about.name));
     final key = ValueKey(_q);
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 16),
@@ -342,7 +361,7 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      l.seenIsAnswerRight(about.name),
+                      l.seenIsAnswerRight(ld(context, about.name)),
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 15, color: AC.muted),
                     ),
@@ -428,162 +447,171 @@ class _SeenJeemScreenState extends State<SeenJeemScreen> {
       ..sort((a, b) => (_pts[b] ?? 0).compareTo(_pts[a] ?? 0));
     final win = familyPlayers[ranked.first];
     const medals = [AC.mustard, Color(0xFFC9CFDD), AC.salmon];
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 26),
-            decoration: BoxDecoration(
-              color: AC.teal,
+    final hasWinner = (_pts[ranked.first] ?? 0) > 0;
+    return WinnerConfetti(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(28),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  l.seenWinnerLabel,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white.withValues(alpha: .9),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: PlayerAvatar(player: win, size: 64),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  win.name,
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .16),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    l.seenPointsCount(_pts[ranked.first] ?? 0),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 18),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: AC.border),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
+              child: Container(
+                color: AC.teal,
+                child: Stack(
                   children: [
-                    for (var k = 0; k < ranked.length; k++)
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          border: k == 0
-                              ? null
-                              : const Border(top: BorderSide(color: AC.track)),
-                        ),
-                        child: Row(
+                    const BalloonsBackground(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 26,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
                           children: [
+                            Text(
+                              l.seenWinnerLabel,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white.withValues(alpha: .9),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
                             Container(
-                              width: 28,
-                              height: 28,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: k < medals.length ? medals[k] : AC.track,
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
-                              child: Text(
-                                '${k + 1}',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  color: AC.navy,
-                                ),
+                              child: PlayerAvatar(player: win, size: 64),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              ld(context, win.name),
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
                             ),
-                            const SizedBox(width: 12),
-                            PlayerAvatar(
-                              player: familyPlayers[ranked[k]],
-                              size: 36,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                familyPlayers[ranked[k]].name,
+                            const SizedBox(height: 8),
+                            if (hasWinner) ...[
+                              const PointsBadge(winPoints),
+                              const SizedBox(height: 8),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: AC.border),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (var k = 0; k < ranked.length; k++)
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            border: k == 0
+                                ? null
+                                : const Border(
+                                    top: BorderSide(color: AC.track),
+                                  ),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 28,
+                                height: 28,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: k < medals.length
+                                      ? medals[k]
+                                      : AC.track,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Text(
+                                  '${k + 1}',
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: AC.navy,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              PlayerAvatar(
+                                player: familyPlayers[ranked[k]],
+                                size: 36,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  ld(context, familyPlayers[ranked[k]].name),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AC.ink,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${_pts[ranked[k]] ?? 0}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                   color: AC.ink,
                                 ),
                               ),
-                            ),
-                            Text(
-                              '${_pts[ranked[k]] ?? 0}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: AC.ink,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: _ResultButton(
-                  label: l.seenBackToGames,
-                  background: Colors.white,
-                  foreground: AC.ink,
-                  border: AC.border,
-                  weight: FontWeight.w700,
-                  onTap: () => Navigator.of(context).pop(),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: _ResultButton(
+                    label: l.seenBackToGames,
+                    background: Colors.white,
+                    foreground: AC.ink,
+                    border: AC.border,
+                    weight: FontWeight.w700,
+                    onTap: () => Navigator.of(context).pop(),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _ResultButton(
-                  label: l.seenPlayAgain,
-                  background: AC.brick,
-                  foreground: Colors.white,
-                  onTap: _begin,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _ResultButton(
+                    label: l.seenPlayAgain,
+                    background: AC.brick,
+                    foreground: Colors.white,
+                    onTap: _begin,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -633,76 +661,42 @@ class _PlayerTile extends StatelessWidget {
     child: GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
+      // no box: just the picture with the name under it; the chosen ones get a ring and a colored name
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: selected ? 1 : .6,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+        opacity: selected ? 1 : .55,
+        child: SizedBox(
           height: 92,
-          decoration: BoxDecoration(
-            color: selected ? Colors.white : AC.track,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: selected ? AC.teal : Colors.transparent,
-              width: 2,
-            ),
-          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              PlayerAvatar(player: player, size: 40),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: selected ? AC.teal : Colors.transparent,
+                    width: 3,
+                  ),
+                ),
+                child: PlayerAvatar(player: player, size: 44),
+              ),
               const SizedBox(height: 6),
-              Text(
-                player.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 200),
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: AC.ink,
+                  color: selected ? AC.teal : AC.ink,
+                ),
+                child: Text(
+                  ld(context, player.name),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-class _CountChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  const _CountChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-  @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: selected,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        height: 48,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? AC.navy : Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: selected ? AC.navy : AC.border),
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: selected ? Colors.white : AC.ink,
           ),
         ),
       ),
@@ -722,7 +716,7 @@ class _StartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(40),
       boxShadow: enabled
           ? const [
               BoxShadow(
@@ -735,9 +729,9 @@ class _StartButton extends StatelessWidget {
     ),
     child: Material(
       color: enabled ? AC.brick : const Color(0xFFC9A79F),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(40),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(40),
         onTap: enabled ? onTap : null,
         child: SizedBox(
           height: 56,
@@ -810,7 +804,7 @@ class _QuestionCard extends StatelessWidget {
                     style: const TextStyle(fontSize: 13, color: AC.muted),
                   ),
                   Text(
-                    about.name,
+                    ld(context, about.name),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -847,7 +841,7 @@ class _QuestionCard extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: answerer.name,
+                          text: ld(context, answerer.name),
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             color: _answerInk,

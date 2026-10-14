@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets.dart' show Avatar;
 import 'family_players.dart';
 
-/// Circle in the player's colour with the first letter of their name.
+/// The player's real profile picture.
 class PlayerAvatar extends StatelessWidget {
   final FamilyPlayer player;
   final double size;
@@ -17,19 +18,6 @@ class PlayerAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Opacity(
     opacity: opacity,
-    child: Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: player.color, shape: BoxShape.circle),
-      child: Text(
-        player.initial,
-        style: TextStyle(
-          fontSize: size * .42,
-          fontWeight: FontWeight.w700,
-          color: player.ink,
-        ),
-      ),
-    ),
+    child: Avatar(player.name, size: size),
   );
 }

@@ -1,10 +1,9 @@
-
 import '../../data/family_members.dart';
 
-enum NotificationType { moment, comment, chat, event, game, club, vote }
+enum NotificationType { moment, comment, chat, event, game, club, vote, survey }
 
 /// Where tapping a notification goes.
-enum NotificationRoute { moments, chat, activities, games, clubs }
+enum NotificationRoute { moments, chat, activities, games, clubs, profile }
 
 /// A small picture for the notification (a moment's photo). Either a real
 /// file, or the sample scene's name until real photos are wired.
@@ -65,6 +64,6 @@ const notificationMeId = familyMeId;
 /// Who a notification is from: the shared family list.
 typedef NotificationActor = FamilyMember;
 
-final notificationActors = <String, NotificationActor>{
+Map<String, NotificationActor> get notificationActors => {
   for (final m in familyMembers) m.id: m,
 };

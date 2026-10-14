@@ -81,10 +81,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeWeeklyPodcast => 'البودكاست الأسبوعي';
 
   @override
-  String get homePodcastTitle => 'إيش يضحكنا مع بعض؟';
+  String get homePodcastTitle => 'التحرر من التشتت';
 
   @override
-  String get homePodcastEpisode => 'الحلقة 12 · 32 دقيقة';
+  String get homePodcastEpisode => 'فاهم 70 · 117 دقيقة';
 
   @override
   String get homePodcastListenedCount => 'استمع 3 من 6';
@@ -256,9 +256,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get accountDesignCharacter => 'صمم شخصيتك';
-
-  @override
   String get accountMyInterests => 'اهتماماتي';
 
   @override
@@ -281,6 +278,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountStatDays => 'أيام';
+
+  @override
+  String get accountStatPictures => 'صور';
+
+  @override
+  String get accountStatPoints => 'نقاط';
 
   @override
   String get accountStatGames => 'ألعاب';
@@ -382,7 +385,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get activitiesTalkTopicsDesc => 'بدايات للسوالف';
 
   @override
-  String get activitiesOutingsTitle => 'الخرجات';
+  String get activitiesOutingsTitle => 'الطلعات';
 
   @override
   String get activitiesOutingsDesc => 'أماكن تناسب العائلة كلها';
@@ -648,7 +651,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get activitiesBookClubCount => 'يقرأ 3 من 6';
 
   @override
-  String get activitiesPodcastClubDetail => 'الحلقة 12 · إيش يضحكنا مع بعض؟';
+  String get activitiesPodcastClubDetail => 'فاهم 70 · التحرر من التشتت';
 
   @override
   String get activitiesGroupGamesDescFull => 'روليت، حديث مع عزيز وسين جيم';
@@ -781,7 +784,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get activitiesPlayPodcastTooltip => 'تشغيل';
 
   @override
-  String get activitiesWeekendOutingTitle => 'طلعة الويكند';
+  String get activitiesWeekendOutingTitle => 'الطلعات المقترحة';
 
   @override
   String get activitiesPrevPlace => 'المكان السابق';
@@ -799,23 +802,23 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       votes,
       locale: localeName,
-      other: '$votes من 6 يبون يروحون الجمعة',
-      many: '$votes من 6 يبون يروحون الجمعة',
-      few: '$votes من 6 يبون يروحون الجمعة',
-      two: 'شخصين من 6 بيروحون الجمعة',
-      one: 'شخص واحد من 6 بيروح الجمعة',
+      other: '$votes معجب',
+      few: '$votes معجبين',
+      two: 'معجبان',
+      one: 'معجب واحد',
+      zero: 'ما أحد معجب للحين',
     );
     return '$_temp0';
   }
 
   @override
-  String get activitiesWeekendVoteButton => 'بجي معكم!';
+  String get activitiesWeekendVoteButton => 'أعجبني';
 
   @override
-  String get activitiesWeekendVotedButton => 'صوّتت معهم';
+  String get activitiesWeekendVotedButton => 'أعجبتني';
 
   @override
-  String get activitiesWhoVotedLabel => 'مين صوّت';
+  String get activitiesWhoVotedLabel => 'مين أعجبه';
 
   @override
   String get gamesTitle => 'الألعاب';
@@ -1527,7 +1530,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get podcastThisWeekEpisode => 'حلقة هذا الأسبوع';
 
   @override
-  String get podcastDuration => '32 دقيقة';
+  String get podcastDuration => '117 دقيقة';
 
   @override
   String get podcastListenedLabel => 'استمع';
@@ -1566,7 +1569,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get outingsPlacesMap => 'خريطة الأماكن';
 
   @override
-  String get outingsOurOutings => 'خرجاتنا';
+  String get outingsOurOutings => 'طلعاتنا';
 
   @override
   String get suggestPlaceTitle => 'اقتراح للعائلة';
@@ -1575,13 +1578,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get suggestPlaceWhyHeading => 'ليش اقترحناه';
 
   @override
-  String get suggestPlaceAdd => 'إضافة إلى «خرجاتنا»';
+  String get suggestPlaceAdd => 'إضافة إلى «طلعاتنا»';
 
   @override
-  String get suggestPlaceAddedSnackbar => 'تمت الإضافة إلى خرجاتنا';
+  String get suggestPlaceAddedSnackbar => 'تمت الإضافة إلى طلعاتنا';
 
   @override
-  String get ourOutingsEmpty => 'ماكو شي هنا بعد.\nأضف مكان من صفحة الخرجات.';
+  String get ourOutingsEmpty => 'ماكو شي هنا بعد.\nأضف مكان من صفحة الطلعات.';
 
   @override
   String get onboardingSplashLogo => 'لمّه';
@@ -1674,7 +1677,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingThingsYouLove => 'أشياء تحبها';
 
   @override
-  String get onboardingTypeOfOutings => 'نوع الخرجات';
+  String get onboardingTypeOfOutings => 'نوع الطلعات';
 
   @override
   String get onboardingIPrefer => 'أفضّل...';
@@ -1749,7 +1752,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dataEventTypeGathering => 'تجمّع';
 
   @override
-  String get dataEventTypeOuting => 'خرجة';
+  String get dataEventTypeOuting => 'طلعة';
 
   @override
   String get dataEventTypeDinner => 'عشاء';
@@ -1833,7 +1836,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dataMonthDec => 'ديسمبر';
 
   @override
-  String get dataEventTitleVillageOuting => 'خرجة إلى القرية';
+  String get dataEventTitleVillageOuting => 'طلعة إلى القرية';
 
   @override
   String get dataEventTitleFamilyDinner => 'عشاء عائلي';
@@ -2035,7 +2038,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String leaderboardCycleReward(String cycle) {
-    return 'مكافأة $cycle';
+    return 'مكافأة الفائز';
   }
 
   @override
@@ -2182,7 +2185,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dataRewardSkipChore => 'إعفاء من مهمة';
 
   @override
-  String get dataRewardOuting => 'يختار خرجة نهاية الأسبوع';
+  String get dataRewardOuting => 'يختار طلعة نهاية الأسبوع';
 
   @override
   String get dataRewardGameTime => 'وقت إضافي للألعاب';
@@ -2605,4 +2608,265 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountFamilyCodeCopied => 'تم نسخ الرمز';
+
+  @override
+  String get homeTodayTitle => 'اليوم';
+
+  @override
+  String get homeNoPlans => 'ما فيه خطط بعد';
+
+  @override
+  String get homeTomorrow => 'بكرة';
+
+  @override
+  String get podcastFinishedButton => 'خلّصت الاستماع';
+
+  @override
+  String get podcastFinishedDone => 'خلّصت الاستماع';
+
+  @override
+  String get podcastListenedMembers => 'اللي سمعوها';
+
+  @override
+  String get podcastAddQuestionHint => 'أضف سؤالك';
+
+  @override
+  String get podcastAddQuestionButton => 'إضافة';
+
+  @override
+  String get podcastFullTitle =>
+      'فاهم 70 | سلسلة لازم تتحرر - (5) التحرر من التشتت | مع الشيخ/ أمجد سمير';
+
+  @override
+  String get podcastWhereToListen => 'وين تبي تسمع؟';
+
+  @override
+  String get podcastPageTitle => 'بودكاست هذا الأسبوع';
+
+  @override
+  String get podcastNotListened => 'تم تسجيلها كأنك ما سمعتها.';
+
+  @override
+  String homePhoneFreeWarningPoints(int points) {
+    return 'إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك $points نقطة.';
+  }
+
+  @override
+  String homePhoneFreeWarningPunishment(String punishment) {
+    return 'إذا استخدمت جوالك وطلعت من التطبيق، بتاخذ عقوبة: $punishment.';
+  }
+
+  @override
+  String get accountEditAccount => 'عدّل حسابك';
+
+  @override
+  String get editAccountTitle => 'تعديل الحساب';
+
+  @override
+  String get editAccountCharacter => 'شخصيتك';
+
+  @override
+  String get editAccountSave => 'احفظ التعديلات';
+
+  @override
+  String get editAccountSaveFailed =>
+      'ما قدرنا نحفظ. تأكد من الإنترنت وجرّب مرة ثانية.';
+
+  @override
+  String get topicsCatTell => 'سوالف نبي نقولها';
+
+  @override
+  String pointsEarned(int points) {
+    return '+$points نقطة';
+  }
+
+  @override
+  String pointsFirst(int points) {
+    return 'أنت الأول! +$points نقطة';
+  }
+
+  @override
+  String get notifsTagSurvey => 'استبيان';
+
+  @override
+  String get surveyTitle => 'استبيان الشهر';
+
+  @override
+  String get surveyCardTitle => 'كيف كان شهرك مع العيلة؟';
+
+  @override
+  String get surveyCardDesc => 'كم سؤال سريع، وإجاباتك لك وحدك';
+
+  @override
+  String get surveyDoneCard => 'جاوبت على استبيان هالشهر، نشوفك الشهر الجاي!';
+
+  @override
+  String get surveyIntro =>
+      'خذ لك دقيقة وفكّر في شهرك. إجاباتك ما يشوفها إلا أنت.';
+
+  @override
+  String get surveyHintMulti => 'اختر أكثر من واحد';
+
+  @override
+  String get surveyQClosest => 'مين كنت الأقرب له هالشهر؟';
+
+  @override
+  String get surveyQCloser => 'مين تبي تقرب منه أكثر؟';
+
+  @override
+  String get surveyQLiked => 'أي ميزات في التطبيق استمتعت فيها؟';
+
+  @override
+  String get surveyQDisliked => 'أي ميزات ما عجبتك؟';
+
+  @override
+  String get surveyQOutings => 'أي طلعات استمتعت فيها أكثر؟';
+
+  @override
+  String get surveyQGames => 'أي ألعاب استمتعت فيها أكثر؟';
+
+  @override
+  String get surveyQCloseness => 'قد إيش حسّيت إنك قريب من عيلتك هالشهر؟';
+
+  @override
+  String get surveyCloseLow => 'مو كثير';
+
+  @override
+  String get surveyCloseHigh => 'قريب مرة';
+
+  @override
+  String get surveyQComment => 'فيه شي ثاني تبي تقوله؟';
+
+  @override
+  String get surveyCommentHint => 'اختياري';
+
+  @override
+  String get surveySubmit => 'أرسل إجاباتي';
+
+  @override
+  String get surveyThanks => 'شكرًا لك! نشوفك الشهر الجاي.';
+
+  @override
+  String get surveyNothingThisMonth => 'ما صار شي هالشهر';
+
+  @override
+  String get surveyNoOthers => 'ما انضم أحد ثاني للعيلة للحين';
+
+  @override
+  String get surveyFeatureChat => 'المحادثة العائلية';
+
+  @override
+  String get surveyFeatureMoments => 'اللحظات';
+
+  @override
+  String get surveyFeatureGames => 'الألعاب';
+
+  @override
+  String get surveyFeaturePodcast => 'نادي البودكاست';
+
+  @override
+  String get surveyFeatureBook => 'نادي الكتاب';
+
+  @override
+  String get surveyFeatureTopics => 'مواضيع السوالف';
+
+  @override
+  String get surveyFeatureOutings => 'الطلعات';
+
+  @override
+  String get surveyFeatureCalendar => 'التقويم والفعاليات';
+
+  @override
+  String get surveyFeaturePoints => 'النقاط والترتيب';
+
+  @override
+  String get activitiesOpenInMaps => 'افتح في خرائط قوقل';
+
+  @override
+  String get activitiesGoogleMapsRating => 'خرائط قوقل';
+
+  @override
+  String get homeAddTopicTitle => 'في سالفة ببالك؟';
+
+  @override
+  String get homeAddTopicDesc => 'ينضاف لسوالف الليلة ولمواضيعك';
+
+  @override
+  String get homeAddTopicHint => 'اكتب موضوع…';
+
+  @override
+  String get homeAddTopicButton => 'أضف';
+
+  @override
+  String get homeAddTopicAdded => 'انضاف لسوالف الليلة';
+
+  @override
+  String get accountMyTopics => 'مواضيعي';
+
+  @override
+  String get accountMyTopicsHint => 'للحين ما سولفنا فيها';
+
+  @override
+  String get accountMyTopicsEmpty => 'ما فيه شي ينتظر. أضف موضوع من الرئيسية.';
+
+  @override
+  String get momentsReactHeart => 'قلب';
+
+  @override
+  String get momentsReactLaugh => 'ضحك';
+
+  @override
+  String get momentsReactThumbs => 'إعجاب';
+
+  @override
+  String get momentsReactCry => 'بكاء';
+
+  @override
+  String get momentsReactLove => 'عيون قلوب';
+
+  @override
+  String momentsReactionsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n تفاعل',
+      few: '$n تفاعلات',
+      two: 'تفاعلان',
+      one: 'تفاعل واحد',
+      zero: 'ما فيه تفاعلات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String momentsCommentsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n تعليق',
+      few: '$n تعليقات',
+      two: 'تعليقان',
+      one: 'تعليق واحد',
+      zero: 'ما فيه تعليقات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get activitiesAddToCalendar => 'أضف للتقويم';
+
+  @override
+  String get activitiesAddedToCalendar => 'انضافت لتقويم العائلة';
+
+  @override
+  String get activitiesAddOuting => 'اقترح طلعة';
+
+  @override
+  String get activitiesOutingName => 'وين تبي نروح؟';
+
+  @override
+  String get activitiesOutingAdd => 'أضف';
+
+  @override
+  String get activitiesSuggestedByFamily => 'اقتراح من العيلة';
 }

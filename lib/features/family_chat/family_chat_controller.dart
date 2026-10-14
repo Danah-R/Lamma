@@ -10,7 +10,7 @@ typedef ChatMember = FamilyMember;
 
 const chatMeId = familyMeId;
 
-const chatMembers = familyMembers;
+List<ChatMember> get chatMembers => familyMembers;
 
 ChatMember chatMember(String id) => familyMemberById(id);
 

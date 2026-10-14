@@ -9,12 +9,8 @@ class MomentsHeader extends StatelessWidget {
   const MomentsHeader({super.key, required this.title, required this.subtitle});
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
-    decoration: const BoxDecoration(
-      color: AC.background,
-      border: Border(bottom: BorderSide(color: AC.border)),
-    ),
     child: Row(
       children: [
         Expanded(

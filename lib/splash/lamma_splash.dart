@@ -26,8 +26,15 @@ class _A {
   static const block = '${_p}block.webp';
 
   static const all = [
-    scene, girl, mother, son, sister,
-    fatherBody, fatherArm, dallah, block,
+    scene,
+    girl,
+    mother,
+    son,
+    sister,
+    fatherBody,
+    fatherArm,
+    dallah,
+    block,
   ];
 }
 
@@ -151,7 +158,10 @@ List<double> _interp(List<List<double>> keys, double t) {
     if (t <= keys[i][0]) {
       final a = keys[i - 1], b = keys[i];
       final u = _smooth((t - a[0]) / (b[0] - a[0]));
-      return List<double>.generate(a.length - 1, (j) => a[j + 1] + (b[j + 1] - a[j + 1]) * u);
+      return List<double>.generate(
+        a.length - 1,
+        (j) => a[j + 1] + (b[j + 1] - a[j + 1]) * u,
+      );
     }
   }
   return keys.last.sublist(1);
@@ -161,7 +171,10 @@ double _rad(double deg) => deg * math.pi / 180;
 
 Offset _rotateAround(Offset p, Offset c, double deg) {
   final r = _rad(deg), x = p.dx - c.dx, y = p.dy - c.dy;
-  return Offset(c.dx + x * math.cos(r) - y * math.sin(r), c.dy + x * math.sin(r) + y * math.cos(r));
+  return Offset(
+    c.dx + x * math.cos(r) - y * math.sin(r),
+    c.dy + x * math.sin(r) + y * math.cos(r),
+  );
 }
 
 /// Everything the scene needs for one frame of the pour.
@@ -176,7 +189,12 @@ class _PourPose {
 
     final r = _rad(angle);
     final l = _G.dallahSpout - _G.dallahGrip;
-    spout = grip + Offset(l.dx * math.cos(r) - l.dy * math.sin(r), l.dx * math.sin(r) + l.dy * math.cos(r));
+    spout =
+        grip +
+        Offset(
+          l.dx * math.cos(r) - l.dy * math.sin(r),
+          l.dx * math.sin(r) + l.dy * math.cos(r),
+        );
 
     if (t < _T.streamOn || t > _T.streamOff + _T.streamFade) {
       stream = 0;
@@ -244,15 +262,27 @@ class LammaSplash extends StatefulWidget {
   State<LammaSplash> createState() => _LammaSplashState();
 }
 
-class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin {
-  late final AnimationController _pour =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: _T.pourLength));
-  late final AnimationController _steam =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 2400));
-  late final AnimationController _girlRock =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 900));
+class _LammaSplashState extends State<LammaSplash>
+    with TickerProviderStateMixin {
+  late final AnimationController _pour = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: _T.pourLength),
+  );
+  late final AnimationController _steam = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2400),
+  );
+  late final AnimationController _girlRock = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  );
   late final List<AnimationController> _breath = [3200, 3500, 3800]
-      .map((ms) => AnimationController(vsync: this, duration: Duration(milliseconds: ms)))
+      .map(
+        (ms) => AnimationController(
+          vsync: this,
+          duration: Duration(milliseconds: ms),
+        ),
+      )
       .toList();
 
   final List<_FlyingBlock> _blocks = [];
@@ -281,16 +311,19 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
     super.didChangeDependencies();
     if (_started) return;
     _started = true;
-    Future.wait(_A.all.map((a) => precacheImage(AssetImage(a), context))).whenComplete(() {
-      if (!mounted) return;
-      setState(() => _ready = true);
-      _run();
-    });
+    Future.wait(_A.all.map((a) => precacheImage(AssetImage(a), context)))
+        .whenComplete(() {
+          if (!mounted) return;
+          setState(() => _ready = true);
+          _run();
+        });
   }
 
-  void _after(int ms, VoidCallback fn) => _timers.add(Timer(Duration(milliseconds: ms), () {
-        if (mounted) fn();
-      }));
+  void _after(int ms, VoidCallback fn) => _timers.add(
+    Timer(Duration(milliseconds: ms), () {
+      if (mounted) fn();
+    }),
+  );
 
   void _run() {
     if (MediaQuery.of(context).disableAnimations) {
@@ -309,9 +342,11 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
     _after(_T.firstPour, _startPour);
     _after(_T.firstBlock, () {
       _placeBlock();
-      _timers.add(Timer.periodic(const Duration(milliseconds: _T.blockEvery), (_) {
-        if (mounted) _placeBlock();
-      }));
+      _timers.add(
+        Timer.periodic(const Duration(milliseconds: _T.blockEvery), (_) {
+          if (mounted) _placeBlock();
+        }),
+      );
     });
     _after(_T.logoAt, () => setState(() => _showLogo = true));
     // Auto-continue a couple seconds after where the button used to appear —
@@ -319,9 +354,11 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
     _after(_T.buttonAt + _T.autoStartDelay, () => widget.onStart?.call());
     _after(_T.pourEvery, () {
       _startPour();
-      _timers.add(Timer.periodic(const Duration(milliseconds: _T.pourEvery), (_) {
-        if (mounted) _startPour();
-      }));
+      _timers.add(
+        Timer.periodic(const Duration(milliseconds: _T.pourEvery), (_) {
+          if (mounted) _startPour();
+        }),
+      );
     });
   }
 
@@ -338,9 +375,14 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
     }
     _girlRock.forward(from: 0);
     final level = standing.length;
-    final target = Offset(_G.towerTop.dx, _G.towerTop.dy - level * _G.blockStep) - _G.blockFrom;
+    final target =
+        Offset(_G.towerTop.dx, _G.towerTop.dy - level * _G.blockStep) -
+        _G.blockFrom;
     final block = _FlyingBlock(
-      controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1000)),
+      controller: AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1000),
+      ),
       target: target,
       tilt: level.isOdd ? -5 : 4,
       index: level,
@@ -352,7 +394,10 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
   void _topple(List<_FlyingBlock> stack) {
     for (final b in stack) {
       b.toppling = true;
-      b.topple = AnimationController(vsync: this, duration: const Duration(milliseconds: 950));
+      b.topple = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 950),
+      );
       b.topple!.forward().whenComplete(() {
         if (!mounted) return;
         setState(() => _blocks.remove(b));
@@ -393,54 +438,57 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
             stops: [0.0, 0.35, 0.66, 1.0],
           ),
         ),
-        child: LayoutBuilder(builder: (context, c) {
-          final w = c.maxWidth, h = c.maxHeight;
-          final k = w / _G.frameWidth;
-          final ox = w / 2 - _G.frameCenterX * k;
-          final oy = h * _G.centerYFraction - _G.frameCenterY * k;
-          final pad = MediaQuery.of(context).padding;
+        child: LayoutBuilder(
+          builder: (context, c) {
+            final w = c.maxWidth, h = c.maxHeight;
+            final k = w / _G.frameWidth;
+            final ox = w / 2 - _G.frameCenterX * k;
+            final oy = h * _G.centerYFraction - _G.frameCenterY * k;
+            final pad = MediaQuery.of(context).padding;
 
-          return Stack(
-            children: [
-              if (_ready)
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  child: AnimatedOpacity(
-                    opacity: _showScene ? 1 : 0,
-                    duration: const Duration(milliseconds: _T.sceneFadeIn),
-                    curve: Curves.easeOut,
-                    child: Transform(
-                      transform: Matrix4.identity()
-                        ..translate(ox, oy)
-                        ..scale(k, k, 1.0),
-                      child: SizedBox(
-                        width: _G.sceneW,
-                        height: _G.sceneH,
-                        child: _buildScene(),
+            return Stack(
+              children: [
+                if (_ready)
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: AnimatedOpacity(
+                      opacity: _showScene ? 1 : 0,
+                      duration: const Duration(milliseconds: _T.sceneFadeIn),
+                      curve: Curves.easeOut,
+                      child: Transform(
+                        transform: Matrix4.identity()
+                          ..translate(ox, oy)
+                          ..scale(k, k, 1.0),
+                        child: SizedBox(
+                          width: _G.sceneW,
+                          height: _G.sceneH,
+                          child: _buildScene(),
+                        ),
                       ),
                     ),
                   ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: pad.top + h * 0.06,
+                  child: AnimatedOpacity(
+                    opacity: _showLogo ? 1 : 0,
+                    duration: const Duration(milliseconds: _T.fadeDuration),
+                    curve: Curves.easeInOut,
+                    child: const _Logo(),
+                  ),
                 ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: pad.top + h * 0.06,
-                child: AnimatedOpacity(
-                  opacity: _showLogo ? 1 : 0,
-                  duration: const Duration(milliseconds: _T.fadeDuration),
-                  curve: Curves.easeInOut,
-                  child: const _Logo(),
-                ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget _breathing(String asset, Rect box, AnimationController c) => Positioned.fromRect(
+  Widget _breathing(String asset, Rect box, AnimationController c) =>
+      Positioned.fromRect(
         rect: box,
         child: AnimatedBuilder(
           animation: c,
@@ -448,11 +496,19 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
             final e = Curves.easeInOut.transform(c.value);
             return Transform(
               alignment: Alignment.bottomCenter,
-              transform: Matrix4.diagonal3Values(1 + 0.004 * e, 1 + 0.012 * e, 1),
+              transform: Matrix4.diagonal3Values(
+                1 + 0.004 * e,
+                1 + 0.012 * e,
+                1,
+              ),
               child: child,
             );
           },
-          child: Image.asset(asset, fit: BoxFit.fill, filterQuality: FilterQuality.medium),
+          child: Image.asset(
+            asset,
+            fit: BoxFit.fill,
+            filterQuality: FilterQuality.medium,
+          ),
         ),
       );
 
@@ -461,7 +517,13 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
       clipBehavior: Clip.none,
       children: [
         // The family render (father and dallah removed; they are animated).
-        Positioned.fill(child: Image.asset(_A.scene, fit: BoxFit.fill, filterQuality: FilterQuality.medium)),
+        Positioned.fill(
+          child: Image.asset(
+            _A.scene,
+            fit: BoxFit.fill,
+            filterQuality: FilterQuality.medium,
+          ),
+        ),
 
         // Girl — rocks a little each time she places a block.
         Positioned.fromRect(
@@ -469,7 +531,9 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
           child: AnimatedBuilder(
             animation: _girlRock,
             builder: (_, child) {
-              final s = math.sin(math.pi * Curves.easeInOut.transform(_girlRock.value));
+              final s = math.sin(
+                math.pi * Curves.easeInOut.transform(_girlRock.value),
+              );
               return Transform(
                 alignment: Alignment.bottomCenter,
                 transform: Matrix4.identity()
@@ -478,7 +542,11 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
                 child: child,
               );
             },
-            child: Image.asset(_A.girl, fit: BoxFit.fill, filterQuality: FilterQuality.medium),
+            child: Image.asset(
+              _A.girl,
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.medium,
+            ),
           ),
         ),
         _breathing(_A.mother, _G.mother, _breath[0]),
@@ -495,26 +563,44 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
                   rect: _G.fatherBody,
                   child: Transform(
                     transform: pose.bodyMatrix(),
-                    child: Image.asset(_A.fatherBody, fit: BoxFit.fill, filterQuality: FilterQuality.medium),
+                    child: Image.asset(
+                      _A.fatherBody,
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.medium,
+                    ),
                   ),
                 ),
                 Positioned.fromRect(
                   rect: _G.fatherArm,
                   child: Transform(
                     transform: pose.armMatrix(),
-                    child: Image.asset(_A.fatherArm, fit: BoxFit.fill, filterQuality: FilterQuality.medium),
+                    child: Image.asset(
+                      _A.fatherArm,
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.medium,
+                    ),
                   ),
                 ),
                 Positioned.fromRect(
                   rect: _G.dallah,
                   child: Transform(
                     transform: pose.dallahMatrix(),
-                    child: Image.asset(_A.dallah, fit: BoxFit.fill, filterQuality: FilterQuality.medium),
+                    child: Image.asset(
+                      _A.dallah,
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.medium,
+                    ),
                   ),
                 ),
                 Positioned.fill(
                   child: IgnorePointer(
-                    child: CustomPaint(painter: _StreamPainter(from: pose.spout, to: _G.cupMouth, opacity: pose.stream)),
+                    child: CustomPaint(
+                      painter: _StreamPainter(
+                        from: pose.spout,
+                        to: _G.cupMouth,
+                        opacity: pose.stream,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -526,29 +612,34 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
         _breathing(_A.sister, _G.sister, _breath[2]),
 
         // Blocks the girl places on her tower.
-        ..._blocks.map((b) => Positioned(
-              left: _G.blockFrom.dx,
-              top: _G.blockFrom.dy,
-              width: _G.blockSize.width,
-              height: _G.blockSize.height,
-              child: AnimatedBuilder(
-                animation: Listenable.merge([b.controller, if (b.topple != null) b.topple!]),
-                builder: (_, child) {
-                  final f = b.frame();
-                  return Opacity(
-                    opacity: f.opacity,
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()
-                        ..translate(f.offset.dx, f.offset.dy)
-                        ..rotateZ(_rad(f.rotation)),
-                      child: child,
-                    ),
-                  );
-                },
-                child: Image.asset(_A.block, fit: BoxFit.fill),
-              ),
-            )),
+        ..._blocks.map(
+          (b) => Positioned(
+            left: _G.blockFrom.dx,
+            top: _G.blockFrom.dy,
+            width: _G.blockSize.width,
+            height: _G.blockSize.height,
+            child: AnimatedBuilder(
+              animation: Listenable.merge([
+                b.controller,
+                if (b.topple != null) b.topple!,
+              ]),
+              builder: (_, child) {
+                final f = b.frame();
+                return Opacity(
+                  opacity: f.opacity,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..translate(f.offset.dx, f.offset.dy)
+                      ..rotateZ(_rad(f.rotation)),
+                    child: child,
+                  ),
+                );
+              },
+              child: Image.asset(_A.block, fit: BoxFit.fill),
+            ),
+          ),
+        ),
 
         // Steam rising from the poured cup.
         if (_steamOn)
@@ -560,7 +651,8 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
             child: IgnorePointer(
               child: AnimatedBuilder(
                 animation: _steam,
-                builder: (_, _) => CustomPaint(painter: _SteamPainter(_steam.value)),
+                builder: (_, _) =>
+                    CustomPaint(painter: _SteamPainter(_steam.value)),
               ),
             ),
           ),
@@ -573,12 +665,16 @@ class _LammaSplashState extends State<LammaSplash> with TickerProviderStateMixin
     );
   }
 
-  Widget _hotspot(Rect r, String label, VoidCallback onTap) => Positioned.fromRect(
+  Widget _hotspot(Rect r, String label, VoidCallback onTap) =>
+      Positioned.fromRect(
         rect: r,
         child: Semantics(
           button: true,
           label: label,
-          child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: onTap),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onTap,
+          ),
         ),
       );
 }
@@ -594,7 +690,12 @@ class _BlockFrame {
 }
 
 class _FlyingBlock {
-  _FlyingBlock({required this.controller, required this.target, required this.tilt, required this.index});
+  _FlyingBlock({
+    required this.controller,
+    required this.target,
+    required this.tilt,
+    required this.index,
+  });
 
   final AnimationController controller;
   final Offset target;
@@ -613,7 +714,10 @@ class _FlyingBlock {
     double op = 1;
     if (v <= 0.7) {
       final u = _flight.transform((v / 0.7).clamp(0.0, 1.0));
-      pos = Offset(target.dx * u, target.dy * u - math.sin(math.pi * u) * _G.blockArc);
+      pos = Offset(
+        target.dx * u,
+        target.dy * u - math.sin(math.pi * u) * _G.blockArc,
+      );
       rot = tilt * u;
       op = u < 0.15 ? u / 0.15 : 1;
     } else {
@@ -657,7 +761,9 @@ class _StreamPainter extends CustomPainter {
     canvas.drawPath(
       path,
       Paint()
-        ..color = _C.coffee.withValues(alpha: opacity.clamp(0.0, 1.0).toDouble())
+        ..color = _C.coffee.withValues(
+          alpha: opacity.clamp(0.0, 1.0).toDouble(),
+        )
         ..style = PaintingStyle.stroke
         ..strokeWidth = 6.5
         ..strokeCap = StrokeCap.round,
@@ -665,7 +771,8 @@ class _StreamPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_StreamPainter old) => old.from != from || old.opacity != opacity;
+  bool shouldRepaint(_StreamPainter old) =>
+      old.from != from || old.opacity != opacity;
 }
 
 class _SteamPainter extends CustomPainter {
@@ -683,7 +790,10 @@ class _SteamPainter extends CustomPainter {
       final w = 12 * (1 + 0.8 * p);
       final c = origin + Offset(xs[i] + 8 * p + 6, -60 * p + 18);
       canvas.drawRRect(
-        RRect.fromRectAndRadius(Rect.fromCenter(center: c, width: w, height: 36), const Radius.circular(10)),
+        RRect.fromRectAndRadius(
+          Rect.fromCenter(center: c, width: w, height: 36),
+          const Radius.circular(10),
+        ),
         Paint()
           ..color = Colors.white.withValues(alpha: a * 0.8)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
@@ -710,12 +820,21 @@ class _Logo extends StatelessWidget {
         children: [
           Text(
             'لمّه',
-            style: const TextStyle(fontSize: 72, fontWeight: FontWeight.w900, color: _C.red, height: 1),
+            style: const TextStyle(
+              fontSize: 72,
+              fontWeight: FontWeight.w900,
+              color: _C.red,
+              height: 1,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
             'يلا نتلمّ',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: _C.taglineBrown),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: _C.taglineBrown,
+            ),
           ),
         ],
       ),

@@ -5,6 +5,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../../backend/backend.dart';
+import '../../data.dart' as app;
+import '../../widgets/podcast_listen.dart' show fahemAppleUrl;
 import '../../screens/activities_colors.dart';
 import '../notifications/notification_events.dart';
 import '../notifications/notifications_controller.dart';
@@ -86,14 +89,18 @@ class PodcastSuggestion {
   final String title, note, about;
   final int votes;
   final Color iconColor;
-  final String? url;
+
+  /// The channel's picture, and where to listen (null: a search is used instead).
+  final String? logo, youtubeUrl, appleUrl;
   const PodcastSuggestion({
     required this.title,
     required this.note,
     this.about = '',
     required this.votes,
     required this.iconColor,
-    this.url,
+    this.logo,
+    this.youtubeUrl,
+    this.appleUrl,
   });
 }
 
@@ -131,7 +138,16 @@ const suggestionCoverPalette = <(Color, Color, Color)>[
 class ClubsController extends ChangeNotifier {
   final NotificationsController? _notifications;
 
-  ClubsController({this._notifications});
+  ClubsController({this._notifications}) {
+    // redraw whenever the family's shared data was refreshed from the database
+    app.sharedTick.addListener(notifyListeners);
+  }
+
+  @override
+  void dispose() {
+    app.sharedTick.removeListener(notifyListeners);
+    super.dispose();
+  }
 
   /// "باقي X أيام على نقاش …": the title and days come from the current book.
   void announceDiscussionReminder({DateTime? at, bool announce = true}) {
@@ -171,20 +187,32 @@ class ClubsController extends ChangeNotifier {
   final int _daysLeft = 5;
   int get daysLeft => _daysLeft;
 
-  List<ClubReader> _bookMembers = const [
-    ClubReader(initial: 'م', name: 'محمد', percent: 100, color: AC.brick),
-    ClubReader(initial: 'س', name: 'سارة', percent: 100, color: AC.navy),
-    ClubReader(initial: 'أ', name: 'أمينة', percent: 100, color: AC.teal),
-    ClubReader(
-      initial: 'أ',
-      name: 'أنت',
-      percent: 60,
-      color: AC.mustard,
-      isMe: true,
-    ),
-    ClubReader(initial: 'ي', name: 'يوسف', percent: 35, color: AC.sage),
-    ClubReader(initial: 'ن', name: 'نورة', percent: 10, color: AC.salmon),
-  ];
+  /// The signed-in person's own reading progress (0-100). It is the only real number here.
+  int _myPercent = 60;
+
+  /// Stand-in progress for the other family members, until reading progress is saved
+  /// in the database. The people themselves are the app's real family members.
+  static const _samplePercents = [100, 100, 100, 35, 10, 80];
+
+  bool _isMe(app.Member m) =>
+      m.id != null ? m.id == app.profile.memberId : m.name == app.profile.name;
+
+  List<ClubReader> get _bookMembers {
+    var k = 0;
+    return [
+      for (final m in app.members)
+        ClubReader(
+          initial: m.name.isEmpty ? '' : m.name.characters.first,
+          name: m.name,
+          percent: _isMe(m)
+              ? _myPercent
+              : _samplePercents[k++ % _samplePercents.length],
+          color: AC.sage,
+          isMe: _isMe(m),
+        ),
+    ];
+  }
+
   List<ClubReader> get bookMembers => List.unmodifiable(_bookMembers);
 
   ClubDiscussion _bookDiscussion = const ClubDiscussion(
@@ -271,7 +299,16 @@ class ClubsController extends ChangeNotifier {
   ];
   List<ReadBeforeEntry> get readBefore => List.unmodifiable(_readBefore);
 
-  ClubReader get _me => _bookMembers.firstWhere((m) => m.isMe);
+  ClubReader get _me => _bookMembers.firstWhere(
+    (m) => m.isMe,
+    orElse: () => ClubReader(
+      initial: '',
+      name: app.profile.name,
+      percent: _myPercent,
+      color: AC.sage,
+      isMe: true,
+    ),
+  );
 
   /// 0..1. The signed-in member's own reading progress.
   double get myBookProgress => _me.percent / 100;
@@ -291,16 +328,13 @@ class ClubsController extends ChangeNotifier {
       (_currentBook.totalPages * (1 - myBookProgress)).round();
 
   void updateMyProgress(double progress) {
-    final i = _bookMembers.indexWhere((m) => m.isMe);
-    if (i == -1) return;
-    final percent = (progress.clamp(0, 1) * 100).round();
-    _bookMembers = [
-      for (var j = 0; j < _bookMembers.length; j++)
-        if (j == i)
-          _bookMembers[j].copyWith(percent: percent)
-        else
-          _bookMembers[j],
-    ];
+    final was = _myPercent;
+    _myPercent = (progress.clamp(0, 1) * 100).round();
+    // finishing the book counts like any other "first one done"
+    if (was < 100 && _myPercent >= 100)
+      app.claimFirst('book', app.profile.name);
+    if (was >= 100 && _myPercent < 100)
+      app.revokeFirst('book', app.profile.name);
     notifyListeners();
   }
 
@@ -348,41 +382,73 @@ class ClubsController extends ChangeNotifier {
     host: 'أمجد سمير',
     platform: 'يوتيوب',
     title: 'التحرر من التشتت',
-    duration: 'ساعتين',
+    duration: '117 دقيقة',
     about:
         'حلقة عن استعادة التركيز وسط الجوالات والتنبيهات. اخترناها لأنها تفتح '
         'سالفة: كيف نرجع نحضر مع بعض فعلًا وقت الجلسة؟',
     youtubeUrl: 'https://youtu.be/f0AHyAhNulc',
+    appleUrl: fahemAppleUrl,
   );
   PodcastEpisode get currentEpisode => _currentEpisode;
 
   /// Other members who've already heard the week's episode (mirrors the
   /// book club's member → color convention). Whether *I* heard it is
   /// tracked separately in [iHeard].
-  final List<ClubReader> _heardBy = const [
-    ClubReader(initial: 'م', name: 'محمد', percent: 100, color: AC.brick),
-    ClubReader(initial: 'س', name: 'سارة', percent: 100, color: AC.navy),
-    ClubReader(initial: 'أ', name: 'أمينة', percent: 100, color: AC.teal),
+  List<ClubReader> get _heardBy => [
+    // connected: the family members who really marked it; offline: a few sample people
+    for (final m in app.members.where(
+      (m) =>
+          !_isMe(m) &&
+          (app.sharedLive
+              ? app.finishersOf('podcast').contains(m.name)
+              : false),
+    ))
+      ClubReader(
+        initial: m.name.isEmpty ? '' : m.name.characters.first,
+        name: m.name,
+        percent: 100,
+        color: AC.sage,
+      ),
+    if (!app.sharedLive)
+      for (final m in app.members.where((m) => !_isMe(m)).take(3))
+        ClubReader(
+          initial: m.name.isEmpty ? '' : m.name.characters.first,
+          name: m.name,
+          percent: 100,
+          color: AC.sage,
+        ),
   ];
   List<ClubReader> get heardBy => List.unmodifiable(_heardBy);
 
-  bool _iHeard = false;
-  bool get iHeard => _iHeard;
+  bool get iHeard => app.finishersOf('podcast').contains(app.profile.name);
 
   /// How many members (others + me) have heard the week's episode.
-  int get heardCount => _heardBy.length + (_iHeard ? 1 : 0);
+  int get heardCount => _heardBy.length + (iHeard ? 1 : 0);
 
-  List<String> _questions = const [
+  /// How many questions come built in; anything after them was added by a member.
+  static const defaultQuestionCount = 3;
+  static const _baseQuestions = [
     'وش أكثر شي يشتّتنا وحنا جالسين مع بعض؟',
     'وش رأيكم نخلي جلسة العشاء بدون جوالات؟',
     'وش عادة وحدة نبدأ فيها هالأسبوع؟',
   ];
-  List<String> get questions => List.unmodifiable(_questions);
+  final List<String> _localQuestions =
+      []; // used while the database is not connected
+  List<String> get questions => List.unmodifiable([
+    ..._baseQuestions,
+    ...(app.sharedLive ? app.sharedQuestions : _localQuestions),
+  ]);
 
   void addDiscussionQuestion(String text) {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
-    _questions = [..._questions, trimmed];
+    if (app.sharedLive) {
+      Backend.addQuestion(
+        trimmed,
+      ); // shared with the family; the refresh redraws the list
+    } else {
+      _localQuestions.add(trimmed);
+    }
     notifyListeners();
   }
 
@@ -393,25 +459,35 @@ class ClubsController extends ChangeNotifier {
   );
   ClubDiscussion get podDiscussion => _podDiscussion;
 
+  static const _fenjanApple =
+      'https://podcasts.apple.com/sa/podcast/%D9%81%D9%86%D8%AC%D8%A7%D9%86-%D9%85%D8%B9-%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D9%86-%D8%A3%D8%A8%D9%88%D9%85%D8%A7%D9%84%D8%AD/id985515827';
+
   List<PodcastSuggestion> _podSuggestions = const [
     PodcastSuggestion(
       title: 'كيف تنجح العلاقات',
       note: 'ياسر الحزيمي · يوتيوب',
       votes: 4,
       iconColor: AC.brick,
-      url: 'https://youtu.be/pJ0auP7dbcY',
+      logo: 'assets/podcast/channels/fenjan.jpg',
+      youtubeUrl: 'https://youtu.be/pJ0auP7dbcY',
+      appleUrl: _fenjanApple,
     ),
     PodcastSuggestion(
       title: 'فنجان',
       note: 'ثمانية · حوارات طويلة',
       votes: 2,
       iconColor: AC.navy,
+      logo: 'assets/podcast/channels/fenjan.jpg',
+      youtubeUrl: 'https://www.youtube.com/@thmanyahPodcasts',
+      appleUrl: _fenjanApple,
     ),
     PodcastSuggestion(
       title: 'أسمار',
       note: 'ثمانية · قصص وحكايات',
       votes: 1,
       iconColor: AC.gamesTeal,
+      logo: 'assets/podcast/channels/asmar.jpg',
+      appleUrl: 'https://podcasts.apple.com/sa/podcast/%D8%A3%D8%B3%D9%85%D8%A7%D8%B1/id1482564772',
     ),
   ];
   List<PodcastSuggestion> get podSuggestions =>
@@ -420,10 +496,20 @@ class ClubsController extends ChangeNotifier {
   final Set<int> _podVotes = {};
   Set<int> get podVotes => Set.unmodifiable(_podVotes);
 
-  void toggleHeard() {
-    _iHeard = !_iHeard;
+  /// Marks the episode as heard (or not) for me. Heard counts as finishing it: the first person in the
+  /// family gets the most points. Returns the points earned.
+  Future<int> markHeard(bool heard) async {
+    var pts = 0;
+    if (heard) {
+      pts = await app.claimFirst('podcast', app.profile.name);
+    } else {
+      await app.revokeFirst('podcast', app.profile.name);
+    }
     notifyListeners();
+    return pts;
   }
+
+  void toggleHeard() => markHeard(!iHeard);
 
   void togglePodVote(int id) {
     if (!_podVotes.add(id)) _podVotes.remove(id);

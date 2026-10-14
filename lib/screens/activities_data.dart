@@ -22,6 +22,15 @@ class WeekendPlace {
 
   /// Bundled photo (assets/images/outings/); the drawn scene shows until it exists.
   final String imagePath;
+
+  /// What Google Maps searches for when the card is tapped (the place's own name as Google lists it,
+  /// so it opens the one main place), unless [mapsUrl] gives the exact link, and the place's Google Maps rating
+  /// (stars, number of reviews). The rating is a snapshot, null when it has not been checked yet.
+  final String mapsQuery;
+  final String?
+  mapsUrl; // an exact Google Maps share link for the place, when we have one
+  final double? rating;
+  final int? ratingCount;
   const WeekendPlace({
     required this.name,
     required this.tag,
@@ -30,10 +39,14 @@ class WeekendPlace {
     required this.sky,
     required this.barColor,
     required this.imagePath,
+    required this.mapsQuery,
+    this.mapsUrl,
+    this.rating,
+    this.ratingCount,
   });
 }
 
-const weekendPlaces = <WeekendPlace>[
+final weekendPlaces = <WeekendPlace>[
   WeekendPlace(
     name: 'حديقة الملك سلمان',
     tag: 'مناسبة لكل الأعمار',
@@ -42,6 +55,7 @@ const weekendPlaces = <WeekendPlace>[
     sky: AC.sageTint,
     barColor: AC.sage,
     imagePath: 'assets/images/outings/king_salman_park.jpg',
+    mapsQuery: 'King Salman Park, Riyadh',
   ),
   WeekendPlace(
     name: 'وادي حنيفة',
@@ -51,6 +65,9 @@ const weekendPlaces = <WeekendPlace>[
     sky: AC.wadiSky,
     barColor: AC.wadiBar,
     imagePath: 'assets/images/outings/wadi_hanifa.jpg',
+    mapsQuery: 'Wadi Hanifah, Riyadh',
+    rating: 4.3,
+    ratingCount: 2000,
   ),
   WeekendPlace(
     name: 'البوليفارد',
@@ -60,5 +77,8 @@ const weekendPlaces = <WeekendPlace>[
     sky: AC.navy,
     barColor: AC.mustard,
     imagePath: 'assets/images/outings/boulevard.jpg',
+    mapsQuery: 'Boulevard Riyadh City',
+    rating: 4.6,
+    ratingCount: 64000,
   ),
 ];

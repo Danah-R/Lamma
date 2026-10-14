@@ -29,7 +29,7 @@ void main() {
   group('TopicsController', () {
     test('categories, filtering, navigation', () {
       final c = TopicsController();
-      expect(c.visibleTopics.length, 20);
+      expect(c.visibleTopics.length, 21);
       expect(c.categories.map((x) => x.id), isNot(contains('mine')));
       c.selectCategory('food');
       expect(c.visibleTopics.length, 4);
@@ -39,7 +39,7 @@ void main() {
       c.next();
       expect(c.currentIndex, 0);
       c.selectCategory(null);
-      expect(c.visibleTopics.length, 20);
+      expect(c.visibleTopics.length, 21);
     });
 
     test('save, discussed order, my topics, openTopic', () {
@@ -76,7 +76,7 @@ void main() {
     expect(find.text('افتحوا سالفة، والباقي عليكم'), findsOneWidget);
     expect(find.text('الكل'), findsOneWidget);
     expect(find.text('مواضيعنا'), findsNothing);
-    expect(find.text('1 من 20'), findsOneWidget);
+    expect(find.text('1 من 21'), findsOneWidget);
 
     await t.scrollUntilVisible(
       find.text('أكل'),
@@ -236,7 +236,7 @@ void main() {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(seconds: 1));
-    await t.tap(find.text('صندوق الأنشطة').last);
+    await t.tap(find.byTooltip('صندوق الأنشطة'));
     await _settle(t);
     await t.tap(find.text('يلا نسولف').first);
     await _settle(t);
@@ -338,7 +338,7 @@ void main() {
     );
     c.selectCategory(null);
     await _settle(t);
-    expect(find.text('1 من 21'), findsOneWidget);
+    expect(find.text('1 من 22'), findsOneWidget);
     expect(c.visibleTopics.last.text, 'سالفة جديدة');
     expect(c.visibleTopics.last.isMine, isTrue);
   });
@@ -368,10 +368,10 @@ void main() {
     await _settle(t);
     await t.tap(find.text('غيّرها'));
     await t.pump(const Duration(milliseconds: 200));
-    expect(find.text('2 من 20'), findsOneWidget);
+    expect(find.text('2 من 21'), findsOneWidget);
     expect(c.currentIndex, 1);
     await t.tap(find.byIcon(Icons.arrow_forward_rounded).first);
     await t.pump(const Duration(milliseconds: 200));
-    expect(find.text('1 من 20'), findsOneWidget);
+    expect(find.text('1 من 21'), findsOneWidget);
   });
 }

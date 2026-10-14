@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../backend/backend.dart';
 import '../data.dart';
 import '../widgets/notification_bell.dart';
 import '../l10n/app_localizations.dart';
@@ -15,6 +16,7 @@ import '../features/games/games_controller.dart';
 import '../features/outings/outing_controller.dart';
 import '../widgets/photo_or_painted.dart';
 import '../widgets.dart';
+import '../widgets/podcast_listen.dart';
 import '../features/clubs/clubs_controller.dart';
 import '../features/clubs/clubs_screen.dart';
 import '../features/topics/topics_controller.dart';
@@ -67,6 +69,7 @@ class ActivitiesPage extends StatelessWidget {
               onRoulette: () => go(context, const RoulettePage()),
               onSinJim: () => goGame(context, const SeenJeemScreen()),
               onCharades: () => goGame(context, const CharadesScreen()),
+              onWhoAmI: () => goGame(context, const WhoAmIScreen()),
             ),
             const SizedBox(height: 32),
             ClubsSection(
@@ -150,13 +153,14 @@ class _DotsRow extends StatelessWidget {
 /// "ألعاب جماعية": section header, the full-width roulette card, and the
 /// Sin Jim / Letters-with-Aziz tile grid.
 class GamesSection extends StatelessWidget {
-  final VoidCallback onSeeAll, onRoulette, onSinJim, onCharades;
+  final VoidCallback onSeeAll, onRoulette, onSinJim, onCharades, onWhoAmI;
   const GamesSection({
     super.key,
     required this.onSeeAll,
     required this.onRoulette,
     required this.onSinJim,
     required this.onCharades,
+    required this.onWhoAmI,
   });
   @override
   Widget build(BuildContext context) {
@@ -172,49 +176,33 @@ class GamesSection extends StatelessWidget {
         const SizedBox(height: 14),
         _RouletteCard(onTap: onRoulette),
         const SizedBox(height: 12),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _GameTile(
-                  background: AC.tealTint,
-                  iconBg: AC.teal,
-                  iconChild: const Icon(
-                    Icons.help_outline_rounded,
-                    color: Colors.white,
-                    size: 22,
-                  ),
-                  title: l.gamesSinJimTitle,
-                  desc: l.activitiesSinJimCardDesc,
-                  descColor: AC.sinJimDesc,
-                  onTap: onSinJim,
-                ),
+        Row(
+          children: [
+            Expanded(
+              child: _GameTile(
+                image: 'assets/games/sin_jim.png',
+                title: l.gamesSinJimTitle,
+                onTap: onSinJim,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _GameTile(
-                  background: AC.mustardTint,
-                  iconBg: AC.navy,
-                  iconChild: const SizedBox(
-                    width: 32,
-                    height: 26,
-                    child: FittedBox(
-                      child: SizedBox(
-                        width: 78,
-                        height: 64,
-                        child: GameIllustration('charades'),
-                      ),
-                    ),
-                  ),
-                  title: l.gamesCharadesTitle,
-                  desc: l.gamesCharadesDesc,
-                  descColor: AC.lettersDesc,
-                  onTap: onCharades,
-                ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _GameTile(
+                image: 'assets/games/charades.webp',
+                title: l.gamesCharadesTitle,
+                onTap: onCharades,
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 10),
+            // no picture for this one yet: its own drawing on a soft background
+            Expanded(
+              child: _GameTile(
+                image: 'assets/games/whoami.jpg',
+                title: l.gamesWhoAmITitle,
+                onTap: onWhoAmI,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -280,18 +268,10 @@ class _RouletteCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 44,
-                height: 44,
-                decoration: const BoxDecoration(
-                  color: AC.brick,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
+              const Icon(
+                Icons.arrow_forward_rounded,
+                color: AC.brick,
+                size: 26,
               ),
             ],
           ),
@@ -301,62 +281,28 @@ class _RouletteCard extends StatelessWidget {
   }
 }
 
+/// A group game shown as just its picture.
 class _GameTile extends StatelessWidget {
-  final Color background, iconBg, descColor;
-  final Widget iconChild;
-  final String title, desc;
+  final String image, title;
   final VoidCallback onTap;
   const _GameTile({
-    required this.background,
-    required this.iconBg,
-    required this.iconChild,
+    required this.image,
     required this.title,
-    required this.desc,
-    required this.descColor,
     required this.onTap,
   });
   @override
-  Widget build(BuildContext context) => Material(
-    color: background,
-    borderRadius: BorderRadius.circular(20),
-    child: InkWell(
-      borderRadius: BorderRadius.circular(20),
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 44,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: iconChild,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-                color: AC.ink,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              desc,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 13, height: 1.3, color: descColor),
-            ),
-          ],
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    label: title,
+    child: AspectRatio(
+      aspectRatio: 1,
+      child: Material(
+        color: AC.card,
+        borderRadius: BorderRadius.circular(20),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Ink.image(image: AssetImage(image), fit: BoxFit.cover),
         ),
       ),
     ),
@@ -486,13 +432,14 @@ class ClubsSection extends StatelessWidget {
           captionBold: bookBold,
           captionBoldColor: AC.brick,
           captionRest: bookRest,
+          peopleNames: [
+            for (final m in clubs.bookMembers)
+              if (m.percent >= 100) m.name,
+          ],
           topRight: _Badge(l.activitiesBookClubDaysLeft(clubs.daysLeft)),
           bottomTrailing: finishedReaders.isEmpty
               ? null
-              : _AvatarStack(
-                  colors: [for (final r in finishedReaders) r.color],
-                  initials: [for (final r in finishedReaders) r.initial],
-                ),
+              : _AvatarStack(names: [for (final r in finishedReaders) r.name]),
           onTap: onBookClub,
         ),
         const SizedBox(height: 12),
@@ -507,9 +454,13 @@ class ClubsSection extends StatelessWidget {
           captionBold: podBold,
           captionBoldColor: AC.teal,
           captionRest: podRest,
+          peopleNames: [
+            for (final r in clubs.heardBy) r.name,
+            if (clubs.iHeard) profile.name,
+          ],
           topRight: _RoundIconButton(
-            background: AC.teal,
-            iconColor: Colors.white,
+            background: Colors.transparent,
+            iconColor: AC.teal,
             icon: Icons.play_arrow_rounded,
             tooltip: l.activitiesPlayPodcastTooltip,
             onTap: () => _openEpisode(context, clubs.currentEpisode.youtubeUrl),
@@ -544,13 +495,17 @@ class _Badge extends StatelessWidget {
   );
 }
 
-class ClubCard extends StatelessWidget {
+class ClubCard extends StatefulWidget {
   final Color iconBg, iconColor, progressColor, captionBoldColor;
   final IconData icon;
   final String label, title, captionBold, captionRest;
   final double progress;
   final Widget topRight;
   final Widget? bottomTrailing;
+
+  /// The people behind the caption (who finished / who listened): tapping the caption row opens
+  /// their list right inside the card.
+  final List<String> peopleNames;
   final VoidCallback onTap;
   const ClubCard({
     super.key,
@@ -566,20 +521,24 @@ class ClubCard extends StatelessWidget {
     required this.captionRest,
     required this.topRight,
     this.bottomTrailing,
+    this.peopleNames = const [],
     required this.onTap,
   });
+  @override
+  State<ClubCard> createState() => _ClubCardState();
+}
+
+class _ClubCardState extends State<ClubCard> {
+  bool _open = false;
   @override
   Widget build(BuildContext context) => Material(
     color: AC.card,
     borderRadius: BorderRadius.circular(20),
     child: InkWell(
       borderRadius: BorderRadius.circular(20),
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: AC.border),
-          borderRadius: BorderRadius.circular(20),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -588,16 +547,7 @@ class ClubCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: iconBg,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(icon, color: iconColor, size: 24),
-                ),
+                Icon(widget.icon, color: widget.iconColor, size: 30),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -605,18 +555,18 @@ class ClubCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        label,
+                        widget.label,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: iconColor,
+                          color: widget.iconColor,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        title,
+                        widget.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -629,43 +579,60 @@ class ClubCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                topRight,
+                widget.topRight,
               ],
             ),
             const SizedBox(height: 14),
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
-                value: progress,
+                value: widget.progress,
                 minHeight: 8,
-                color: progressColor,
+                color: widget.progressColor,
                 backgroundColor: AC.track,
               ),
             ),
             const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(fontSize: 13, color: AC.muted),
-                      children: [
-                        TextSpan(
-                          text: captionBold,
-                          style: TextStyle(
-                            color: captionBoldColor,
-                            fontWeight: FontWeight.w700,
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: widget.peopleNames.isEmpty
+                  ? null
+                  : () => setState(() => _open = !_open),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        style: const TextStyle(fontSize: 13, color: AC.muted),
+                        children: [
+                          TextSpan(
+                            text: widget.captionBold,
+                            style: TextStyle(
+                              color: widget.captionBoldColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        TextSpan(text: ' $captionRest'),
-                      ],
+                          TextSpan(text: ' $widget.captionRest'),
+                        ],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                ?bottomTrailing,
-              ],
+                  ?widget.bottomTrailing,
+                ],
+              ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              alignment: Alignment.topCenter,
+              child: _open && widget.peopleNames.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: PeopleList(widget.peopleNames),
+                    )
+                  : const SizedBox(width: double.infinity),
             ),
           ],
         ),
@@ -675,14 +642,13 @@ class ClubCard extends StatelessWidget {
 }
 
 class _AvatarStack extends StatelessWidget {
-  final List<Color> colors;
-  final List<String> initials;
+  final List<String> names;
   static const _size = 24.0;
   static const _overlap = 8.0;
-  const _AvatarStack({required this.colors, required this.initials});
+  const _AvatarStack({required this.names});
   @override
   Widget build(BuildContext context) {
-    final n = initials.length;
+    final n = names.length;
     return SizedBox(
       width: n == 0 ? 0 : (n - 1) * (_size - _overlap) + _size,
       height: _size,
@@ -691,24 +657,7 @@ class _AvatarStack extends StatelessWidget {
           for (var i = 0; i < n; i++)
             PositionedDirectional(
               start: i * (_size - _overlap),
-              child: Container(
-                width: _size,
-                height: _size,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: colors[i % colors.length],
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: Text(
-                  initials[i],
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
+              child: Avatar(names[i], size: _size), // real profile picture
             ),
         ],
       ),
@@ -721,14 +670,12 @@ class _AvatarStack extends StatelessWidget {
 class _RoundIconButton extends StatelessWidget {
   final Color background;
   final Color iconColor;
-  final Color? borderColor;
   final IconData icon;
   final String tooltip;
   final VoidCallback onTap;
   const _RoundIconButton({
     required this.background,
     required this.iconColor,
-    this.borderColor,
     required this.icon,
     required this.tooltip,
     required this.onTap,
@@ -741,18 +688,14 @@ class _RoundIconButton extends StatelessWidget {
       message: tooltip,
       child: Material(
         color: background,
-        shape: CircleBorder(
-          side: borderColor != null
-              ? BorderSide(color: borderColor!)
-              : BorderSide.none,
-        ),
+        shape: const CircleBorder(),
         child: InkWell(
           customBorder: const CircleBorder(),
           onTap: onTap,
           child: SizedBox(
             width: 44,
             height: 44,
-            child: Icon(icon, color: iconColor, size: 20),
+            child: Icon(icon, color: iconColor, size: 24),
           ),
         ),
       ),
@@ -765,14 +708,12 @@ class _RoundIconButton extends StatelessWidget {
 class _PillButton extends StatelessWidget {
   final String label;
   final Color background, foreground;
-  final Color? borderColor;
   final IconData? icon;
   final VoidCallback? onTap;
   const _PillButton({
     required this.label,
     required this.background,
     required this.foreground,
-    this.borderColor,
     this.icon,
     required this.onTap,
   });
@@ -801,14 +742,9 @@ class _PillButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           constraints: const BoxConstraints(minHeight: 48),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: borderColor != null
-                ? Border.all(color: borderColor!)
-                : null,
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -892,6 +828,8 @@ class WeekendOutingCard extends StatefulWidget {
 }
 
 class _WeekendOutingCardState extends State<WeekendOutingCard> {
+  bool _votersOpen =
+      false; // the list of who voted is open (the cards grow to fit it)
   late final PageController _pageCtrl = PageController();
   int _index = 0;
 
@@ -902,7 +840,7 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
   }
 
   void _go(int delta) {
-    final n = weekendPlaces.length;
+    final n = _places(AppLocalizations.of(context)).length;
     _pageCtrl.animateToPage(
       (_index + delta + n) % n,
       duration: const Duration(milliseconds: 500),
@@ -912,10 +850,127 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
 
   void _toggleVote(int i) => context.read<OutingController>().toggleVote(i);
 
+  /// The built-in places, then the ones the family suggested.
+  List<WeekendPlace> _places(AppLocalizations l) => [
+    ...weekendPlaces,
+    for (final name in suggestedOutings)
+      WeekendPlace(
+        name: name,
+        tag: l.activitiesSuggestedByFamily,
+        baseVotes: 0,
+        scene: OutingScene.park,
+        sky: AC.sageTint,
+        barColor: AC.sage,
+        imagePath:
+            'assets/images/outings/none.jpg', // no photo: the drawn scene shows
+        mapsQuery: name,
+      ),
+  ];
+
+  /// A small sheet to suggest a new outing; it joins the list for the whole family.
+  Future<void> _addOuting() async {
+    final l = AppLocalizations.of(context);
+    final ctl = TextEditingController();
+    final name = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: C.cream,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          18,
+          20,
+          20 + MediaQuery.of(ctx).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l.activitiesAddOuting,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: C.navy,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: ctl,
+                    autofocus: true,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (v) => Navigator.pop(ctx, v),
+                    decoration: InputDecoration(
+                      hintText: l.activitiesOutingName,
+                      filled: true,
+                      fillColor: C.card,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                FilledButton(
+                  onPressed: () => Navigator.pop(ctx, ctl.text),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: C.brick,
+                    minimumSize: const Size(76, 52),
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Text(
+                    l.activitiesOutingAdd,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+    final v = name?.trim() ?? '';
+    if (v.isEmpty || !mounted) return;
+    context.read<OutingController>().suggest(v);
+    setState(() {
+      suggestedOutings = [...suggestedOutings, v];
+    });
+    if (sharedLive) Backend.addOuting(v);
+  }
+
+  /// Puts the outing in the family calendar (the Home page), on the coming Friday at 4 PM.
+  void _addToCalendar(WeekendPlace place) {
+    final l = AppLocalizations.of(context);
+    final now = DateTime.now();
+    var days = (DateTime.friday - now.weekday + 7) % 7;
+    if (days == 0) days = 7;
+    final date = DateTime(now.year, now.month, now.day + days);
+    events.add(
+      Ev(place.name, date, '4:00 PM', 'Outing', C.sage, [profile.name]),
+    );
+    if (sharedLive) Backend.addEvent(place.name, date, '4:00 PM', 'Outing');
+    sharedTick.value++; // so the Home page redraws its calendar
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(l.activitiesAddedToCalendar)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final n = weekendPlaces.length;
+    final places = _places(l);
+    final n = places.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -934,45 +989,39 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
               ),
             ),
             _RoundIconButton(
-              background: AC.card,
+              background: Colors.transparent,
               iconColor: AC.ink,
-              borderColor: AC.border,
               icon: Icons.arrow_back_rounded,
               tooltip: l.activitiesPrevPlace,
               onTap: () => _go(-1),
             ),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 56,
-              child: Text(
-                l.activitiesPlaceCounter(_index + 1, n),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: AC.muted,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 4),
             _RoundIconButton(
-              background: AC.brick,
-              iconColor: Colors.white,
+              background: Colors.transparent,
+              iconColor: AC.brick,
               icon: Icons.arrow_forward_rounded,
               tooltip: l.activitiesNextPlace,
               onTap: () => _go(1),
+            ),
+            // add an outing
+            _RoundIconButton(
+              background: Colors.transparent,
+              iconColor: AC.ink,
+              icon: Icons.add_rounded,
+              tooltip: l.activitiesAddOuting,
+              onTap: _addOuting,
             ),
           ],
         ),
         const SizedBox(height: 14),
         SizedBox(
-          height: 326,
+          height: _votersOpen ? 372 + 40.0 * (3).clamp(1, 6) : 372,
           child: PageView.builder(
             controller: _pageCtrl,
             itemCount: n,
             onPageChanged: (i) => setState(() => _index = i),
             itemBuilder: (context, i) {
-              final place = weekendPlaces[i];
+              final place = places[i];
               final voted = context.watch<OutingController>().hasVoted(i);
               final votes = place.baseVotes + (voted ? 1 : 0);
               return _PlaceCard(
@@ -980,6 +1029,10 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
                 votes: votes,
                 voted: voted,
                 onToggleVote: () => _toggleVote(i),
+                onAddToCalendar: () => _addToCalendar(place),
+                votersOpen: _votersOpen,
+                onToggleVoters: () =>
+                    setState(() => _votersOpen = !_votersOpen),
               );
             },
           ),
@@ -998,12 +1051,33 @@ class _PlaceCard extends StatelessWidget {
   final int votes;
   final bool voted;
   final VoidCallback onToggleVote;
+  final VoidCallback onAddToCalendar;
+  final bool votersOpen;
+  final VoidCallback onToggleVoters;
   const _PlaceCard({
     required this.place,
     required this.votes,
     required this.voted,
     required this.onToggleVote,
+    required this.onAddToCalendar,
+    required this.votersOpen,
+    required this.onToggleVoters,
   });
+
+  /// Opens the place in Google Maps (the app if it is installed, otherwise the website).
+  Future<void> _openMaps(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l = AppLocalizations.of(context);
+    final url = Uri.parse(
+      place.mapsUrl ??
+          'https://www.google.com/maps/search/?api=1&query=${Uri.encodeQueryComponent(place.mapsQuery)}',
+    );
+    final ok = await launchUrl(url, mode: LaunchMode.externalApplication);
+    if (!ok) messenger.showSnackBar(SnackBar(content: Text(l.soonPageMessage)));
+  }
+
+  /// 2000 -> "2K", 64000 -> "64K" (Google shows rating counts this way).
+  String _compactCount(int n) => n >= 1000 ? '${(n / 1000).round()}K' : '$n';
 
   @override
   Widget build(BuildContext context) {
@@ -1011,7 +1085,6 @@ class _PlaceCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AC.card,
-        border: Border.all(color: AC.border),
         borderRadius: BorderRadius.circular(22),
       ),
       clipBehavior: Clip.antiAlias,
@@ -1019,44 +1092,68 @@ class _PlaceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: 140,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                PhotoOrPainted(
-                  assetPath: place.imagePath,
-                  fallback: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Container(color: place.sky),
-                      CustomPaint(painter: _scenePainterFor(place.scene)),
-                    ],
+          GestureDetector(
+            onTap: () => _openMaps(context),
+            child: SizedBox(
+              height: 140,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  PhotoOrPainted(
+                    assetPath: place.imagePath,
+                    fallback: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Container(color: place.sky),
+                        CustomPaint(painter: _scenePainterFor(place.scene)),
+                      ],
+                    ),
                   ),
-                ),
-                PositionedDirectional(
-                  start: 14,
-                  bottom: 14,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AC.card,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      place.tag,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: AC.ink,
+                  // a map pin: the card opens Google Maps
+                  PositionedDirectional(
+                    end: 12,
+                    top: 12,
+                    child: Semantics(
+                      label: l.activitiesOpenInMaps,
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: const BoxDecoration(
+                          color: AC.card,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.location_on_rounded,
+                          color: AC.brick,
+                          size: 22,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  PositionedDirectional(
+                    start: 14,
+                    bottom: 14,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AC.card,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        place.tag,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AC.ink,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -1065,12 +1162,59 @@ class _PlaceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  place.name,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: AC.ink,
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _openMaps(context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        place.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AC.ink,
+                        ),
+                      ),
+                      // the place's Google Maps rating (stars, and how many people rated it)
+                      if (place.rating != null) ...[
+                        const SizedBox(height: 4),
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.star_rounded,
+                              color: Color(0xFFF2B01E),
+                              size: 18,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              place.rating!.toStringAsFixed(1),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: AC.ink,
+                              ),
+                            ),
+                            if (place.ratingCount != null)
+                              Text(
+                                '  (${_compactCount(place.ratingCount!)})',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: AC.muted,
+                                ),
+                              ),
+                            Text(
+                              '  ·  ${l.activitiesGoogleMapsRating}',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: AC.muted,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -1095,30 +1239,57 @@ class _PlaceCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
+                    // like (a heart)
                     Expanded(
                       child: voted
                           ? _PillButton(
                               label: l.activitiesWeekendVotedButton,
-                              background: AC.sageTint,
-                              foreground: AC.votedText,
-                              borderColor: AC.treeGreen,
-                              icon: Icons.check_rounded,
+                              background: AC.salmonTint,
+                              foreground: AC.brick,
+                              icon: Icons.favorite_rounded,
                               onTap: onToggleVote,
                             )
                           : _PillButton(
                               label: l.activitiesWeekendVoteButton,
-                              background: AC.brick,
-                              foreground: Colors.white,
+                              background: AC.track,
+                              foreground: AC.ink,
+                              icon: Icons.favorite_border_rounded,
                               onTap: onToggleVote,
                             ),
+                    ),
+                    const SizedBox(width: 8),
+                    // add the outing to the family calendar on Home
+                    Expanded(
+                      child: _PillButton(
+                        label: l.activitiesAddToCalendar,
+                        background: AC.brick,
+                        foreground: Colors.white,
+                        icon: Icons.event_rounded,
+                        onTap: onAddToCalendar,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Semantics(
                       label: l.activitiesWhoVotedLabel,
-                      child: _VotersStack(count: votes),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: votes == 0 ? null : onToggleVoters,
+                        child: _VotersStack(count: votes, voted: voted),
+                      ),
                     ),
                   ],
                 ),
+                if (votersOpen && votes > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: PeopleList(
+                      [
+                        if (voted) profile.name,
+                        for (final m in members)
+                          if (m.name != profile.name) m.name,
+                      ].take(votes).toList(),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -1130,16 +1301,28 @@ class _PlaceCard extends StatelessWidget {
 
 class _VotersStack extends StatelessWidget {
   final int count;
-  const _VotersStack({required this.count});
+  final bool voted; // when you voted, you are one of the pictures
+  const _VotersStack({required this.count, required this.voted});
   static const _size = 32.0;
   static const _overlap = 10.0;
 
   @override
   Widget build(BuildContext context) {
-    final more = (count - 2).clamp(0, 999);
-    final items = [_dot(AC.brick, 'م'), _dot(AC.navy, 'س'), _moreDot(more)];
+    // real family members' pictures, up to two, then "+N" for the rest
+    final names = <String>[
+      if (voted) profile.name,
+      for (final m in members)
+        if (m.name != profile.name) m.name,
+    ].take(count.clamp(0, 2)).toList();
+    final more = (count - names.length).clamp(0, 999);
+    final items = [
+      for (final n in names) Avatar(n, size: _size),
+      if (more > 0) _moreDot(more),
+    ];
     return SizedBox(
-      width: (items.length - 1) * (_size - _overlap) + _size,
+      width: items.isEmpty
+          ? 0
+          : (items.length - 1) * (_size - _overlap) + _size,
       height: _size,
       child: Stack(
         children: [
@@ -1152,25 +1335,6 @@ class _VotersStack extends StatelessWidget {
       ),
     );
   }
-
-  Widget _dot(Color color, String initial) => Container(
-    width: _size,
-    height: _size,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color: color,
-      shape: BoxShape.circle,
-      border: Border.all(color: Colors.white, width: 2),
-    ),
-    child: Text(
-      initial,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 13,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
-  );
 
   Widget _moreDot(int more) => Container(
     width: _size,
@@ -1541,7 +1705,7 @@ class _GamesPageState extends State<GamesPage> {
                               crossAxisCount: 2,
                               mainAxisSpacing: 12,
                               crossAxisSpacing: 12,
-                              mainAxisExtent: 236,
+                              mainAxisExtent: 252,
                             ),
                         itemCount: games.length,
                         itemBuilder: (context, i) {
@@ -1581,7 +1745,7 @@ class _GamesHeader extends StatelessWidget {
             excludeSemantics: true,
             child: Material(
               color: AC.card,
-              shape: const CircleBorder(side: BorderSide(color: AC.border)),
+              shape: const CircleBorder(),
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: onBack,
@@ -1898,7 +2062,6 @@ class _FilterChip extends StatelessWidget {
           decoration: BoxDecoration(
             color: selected ? AC.navy : AC.card,
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: selected ? AC.navy : AC.border),
           ),
           child: Text(
             label,
@@ -1942,23 +2105,31 @@ class GameTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 96,
+                  height: game.image != null ? 108 : 96,
                   width: double.infinity,
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     color: game.art,
                     borderRadius: BorderRadius.circular(16),
+                    image: game.image == null
+                        ? null
+                        : DecorationImage(
+                            image: AssetImage(game.image!),
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   child: Stack(
                     children: [
-                      Center(
-                        child: FittedBox(
-                          child: SizedBox(
-                            width: 78,
-                            height: 64,
-                            child: GameIllustration(game.id),
+                      if (game.image == null)
+                        Center(
+                          child: FittedBox(
+                            child: SizedBox(
+                              width: 78,
+                              height: 64,
+                              child: GameIllustration(game.id),
+                            ),
                           ),
                         ),
-                      ),
                       if (game.isSoon)
                         Positioned(
                           top: 8,
@@ -2071,7 +2242,7 @@ class _AzizPageState extends State<AzizPage> {
     final l = AppLocalizations.of(context);
     return Page1(l.gamesAzizTitle, [
       LCard(
-        color: AC.oldTeal,
+        color: C.teal,
         padding: const EdgeInsets.all(28),
         child: Center(
           child: Text(
@@ -2095,7 +2266,7 @@ class _AzizPageState extends State<AzizPage> {
             child: Btn(
               l.azizSkip,
               outlined: true,
-              color: AC.oldInkSoft,
+              color: C.inkSoft,
               onTap: _next,
             ),
           ),
@@ -2127,7 +2298,7 @@ class _SinJimPageState extends State<SinJimPage> {
             Text(
               l.sinJimAnswerOnBehalf,
               style: const TextStyle(
-                color: AC.oldInkSoft,
+                color: C.inkSoft,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -2164,7 +2335,7 @@ class _SinJimPageState extends State<SinJimPage> {
         child: Text(
           l.sinJimAnswersRecorded(_answered),
           style: const TextStyle(
-            color: AC.oldInkSoft,
+            color: C.inkSoft,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
@@ -2202,14 +2373,7 @@ class _RoulettePageState extends State<RoulettePage>
       'Play games',
     ],
   };
-  static const _colors = [
-    AC.oldCoral,
-    AC.oldNavy,
-    AC.oldMustard,
-    AC.oldTeal,
-    AC.oldTerracotta,
-    AC.oldGreen,
-  ];
+  static const _colors = [C.peach, C.navy, C.yellow, C.teal, C.brick, C.sage];
 
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
@@ -2337,7 +2501,7 @@ class _RoulettePageState extends State<RoulettePage>
                                   child: Icon(
                                     Icons.arrow_drop_down_rounded,
                                     size: 48,
-                                    color: AC.oldInk,
+                                    color: C.ink,
                                   ),
                                 ),
                               ],
@@ -2367,7 +2531,7 @@ class _RoulettePageState extends State<RoulettePage>
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
-                              color: AC.oldTerracotta,
+                              color: C.brick,
                             ),
                           ),
                         ],
@@ -2576,7 +2740,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                       style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
-                        color: AC.oldInk,
+                        color: C.ink,
                       ),
                     ),
                   ),
@@ -2584,7 +2748,7 @@ class _WinnerDialogState extends State<_WinnerDialog>
                 const SizedBox(height: 22),
                 Btn(
                   l.rouletteGotIt,
-                  color: AC.oldTerracotta,
+                  color: C.brick,
                   onTap: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -2620,7 +2784,7 @@ class BookClubPage extends StatelessWidget {
               width: 74,
               height: 100,
               decoration: BoxDecoration(
-                color: AC.oldTerracotta,
+                color: C.brick,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
@@ -2637,7 +2801,7 @@ class BookClubPage extends StatelessWidget {
                   Text(
                     l.bookClubCurrentBook,
                     style: const TextStyle(
-                      color: AC.oldInkSoft,
+                      color: C.inkSoft,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
@@ -2652,7 +2816,7 @@ class BookClubPage extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     l.bookClubReadingStatus,
-                    style: const TextStyle(color: AC.oldInkSoft, fontSize: 12),
+                    style: const TextStyle(color: C.inkSoft, fontSize: 12),
                   ),
                 ],
               ),
@@ -2684,63 +2848,167 @@ class PodcastPage extends StatefulWidget {
 }
 
 class _PodcastPageState extends State<PodcastPage> {
-  bool _listened = false;
+  bool _showListeners = false;
+  final _question = TextEditingController();
+  final _confetti = ConfettiController(duration: const Duration(seconds: 2));
+
+  @override
+  void dispose() {
+    _confetti.dispose();
+    _question.dispose();
+    super.dispose();
+  }
+
+  /// Asks where to listen, then opens that app.
+  Future<void> _chooseApp(ClubsController clubs) => chooseListenApp(
+    context,
+    youtubeUrl: clubs.currentEpisode.youtubeUrl,
+    appleUrl: clubs.currentEpisode.appleUrl ?? fahemAppleUrl,
+  );
+
+  void _addQuestion(ClubsController clubs) {
+    if (_question.text.trim().isEmpty) return;
+    clubs.addDiscussionQuestion(_question.text);
+    _question.clear();
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final count = 3 + (_listened ? 1 : 0);
-    return Page1(l.activitiesPodcastClubTitle, [
-      LCard(
-        color: AC.oldNavy,
-        padding: const EdgeInsets.all(22),
-        child: Column(
-          children: [
-            Text(
-              l.podcastThisWeekEpisode,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontWeight: FontWeight.w700,
+    final clubs = context.watch<ClubsController>();
+    final heard = clubs.iHeard;
+    final listeners = [
+      for (final r in clubs.heardBy) r.name,
+      if (heard) profile.name,
+    ];
+    return Page1(l.podcastPageTitle, [
+      // the episode's cover, then its real title and length underneath
+      // tapping the cover works like "Start listening": it asks where to listen
+      Semantics(
+        button: true,
+        label: l.homeStartListening,
+        child: GestureDetector(
+          onTap: () => _chooseApp(clubs),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    'assets/podcast/episode_thumbnail.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: .45),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 36,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              l.homePodcastTitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text(
-              l.podcastDuration,
-              style: const TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 16),
-            FilledButton.icon(
-              onPressed: () => setState(() {
-                if (!_listened) addPoints(profile.name, 15);
-                _listened = true;
-              }),
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: AC.oldTerracotta,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 26,
-                  vertical: 12,
-                ),
-              ),
-              icon: const Icon(Icons.play_arrow_rounded),
-              label: Text(
-                l.homeStartListening,
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-      const SizedBox(height: 12),
+      const SizedBox(height: 14),
+      Text(
+        l.podcastFullTitle,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: C.navy,
+          height: 1.35,
+        ),
+      ),
+      const SizedBox(height: 4),
+      Text(
+        l.podcastDuration,
+        style: const TextStyle(
+          fontSize: 13,
+          color: C.inkSoft,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: 18),
+
+      // one button; it asks where to listen
+      StartListeningButton(onPressed: () => _chooseApp(clubs)),
+      const SizedBox(height: 22),
+
+      // finished listening: confetti bursts around the button
+      Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          if (!heard)
+            Btn(
+              l.podcastFinishedButton,
+              icon: Icons.check_rounded,
+              onTap: () {
+                pointsToast(context, clubs.markHeard(true));
+                _confetti.play();
+              },
+            )
+          else
+            // tapping it again undoes it, in case it was pressed by accident
+            LCard(
+              color: C.tealTint,
+              onTap: () {
+                clubs.markHeard(false);
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(content: Text(l.podcastNotListened)));
+              },
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle_rounded, color: C.teal),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l.podcastFinishedDone,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ConfettiWidget(
+            confettiController: _confetti,
+            blastDirectionality: BlastDirectionality.explosive,
+            numberOfParticles: 40,
+            minBlastForce: 8,
+            maxBlastForce: 24,
+            gravity: 0.2,
+            shouldLoop: false,
+            colors: const [
+              C.brick,
+              C.teal,
+              C.yellow,
+              C.peach,
+              C.sage,
+              C.navy,
+              C.lavender,
+            ],
+          ),
+        ],
+      ),
+      const SizedBox(height: 22),
+
+      // the members who listened: tap to open the list right here
       LCard(
+        onTap: () => setState(() => _showListeners = !_showListeners),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -2748,41 +3016,116 @@ class _PodcastPageState extends State<PodcastPage> {
               children: [
                 Expanded(
                   child: Text(
-                    l.podcastListenedLabel,
+                    l.podcastListenedMembers,
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
                 Text(
-                  l.podcastListenedFraction(count),
+                  l.podcastListenedFraction(clubs.heardCount),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: AC.oldTerracotta,
+                    color: C.brick,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            Bar(count / 6),
-            const SizedBox(height: 10),
-            Text(
-              l.podcastNextGathering,
-              style: const TextStyle(
-                color: AC.oldInkSoft,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
+            const SizedBox(height: 12),
+            if (listeners.isEmpty)
+              const Text('—', style: TextStyle(color: C.inkSoft))
+            else
+              AvatarStack(listeners, size: 40),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              alignment: Alignment.topCenter,
+              child: !_showListeners || listeners.isEmpty
+                  ? const SizedBox(width: double.infinity)
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Column(
+                        children: [
+                          for (final name in listeners)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              child: Row(
+                                children: [
+                                  Avatar(name, size: 32),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      ld(context, name),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: C.teal,
+                                    size: 18,
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
             ),
           ],
         ),
       ),
       SectionTitle(l.discussionQuestionsHeading),
-      for (final q in [l.podcastQ1, l.podcastQ2])
+      for (final q in [
+        l.podcastQ1,
+        l.podcastQ2,
+        ...clubs.questions.skip(ClubsController.defaultQuestionCount),
+      ])
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: LCard(
             child: Text(q, style: const TextStyle(fontWeight: FontWeight.w700)),
           ),
         ),
+      // add your own
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _question,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _addQuestion(clubs),
+              decoration: InputDecoration(
+                hintText: l.podcastAddQuestionHint,
+                filled: true,
+                fillColor: C.card,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          FilledButton(
+            onPressed: () => _addQuestion(clubs),
+            style: FilledButton.styleFrom(
+              backgroundColor: C.brick,
+              minimumSize: const Size(64, 52),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            child: Text(
+              l.podcastAddQuestionButton,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
     ]);
   }
 }
@@ -2828,19 +3171,19 @@ class _OutingsPageState extends State<OutingsPage> {
       Container(
         height: 130,
         decoration: BoxDecoration(
-          color: AC.oldTealTint,
+          color: C.tealTint,
           borderRadius: BorderRadius.circular(24),
         ),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.map_rounded, color: AC.oldTeal, size: 34),
+              const Icon(Icons.map_rounded, color: C.teal, size: 34),
               const SizedBox(height: 6),
               Text(
                 l.outingsPlacesMap,
                 style: const TextStyle(
-                  color: AC.oldTeal,
+                  color: C.teal,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -2871,7 +3214,7 @@ class _OutingsPageState extends State<OutingsPage> {
                       ),
                       Text(
                         ld(context, p.why),
-                        style: const TextStyle(color: AC.oldInkSoft, fontSize: 12),
+                        style: const TextStyle(color: C.inkSoft, fontSize: 12),
                       ),
                     ],
                   ),
@@ -2884,7 +3227,7 @@ class _OutingsPageState extends State<OutingsPage> {
       Btn(
         l.outingsOurOutings,
         outlined: true,
-        color: AC.oldNavy,
+        color: C.navy,
         onTap: () => go(context, const OurOutingsPage()),
       ),
     ]);
@@ -2902,7 +3245,7 @@ class SuggestPlacePage extends StatelessWidget {
       l.suggestPlaceTitle,
       [
         LCard(
-          color: AC.oldTeal,
+          color: C.teal,
           padding: const EdgeInsets.symmetric(vertical: 36),
           child: Center(
             child: Text(
@@ -2927,7 +3270,7 @@ class SuggestPlacePage extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 ld(context, p.why),
-                style: const TextStyle(color: AC.oldInkSoft, height: 1.4),
+                style: const TextStyle(color: C.inkSoft, height: 1.4),
               ),
             ],
           ),
@@ -2963,7 +3306,7 @@ class OurOutingsPage extends StatelessWidget {
               l.ourOutingsEmpty,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: AC.oldInkSoft,
+                color: C.inkSoft,
                 fontWeight: FontWeight.w600,
                 height: 1.5,
               ),

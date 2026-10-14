@@ -27,7 +27,7 @@ void main() {
     await t.binding.setSurfaceSize(const Size(400, 850));
     await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(seconds: 1));
-    await _tap(t, find.text('صندوق الأنشطة').last);
+    await _tap(t, find.byTooltip('صندوق الأنشطة'));
     await _tapText(t, 'عرض الكل');
     expect(_navBar, findsOneWidget, reason: 'games list keeps the bar');
 

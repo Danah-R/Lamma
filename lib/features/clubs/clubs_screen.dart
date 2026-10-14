@@ -349,7 +349,7 @@ class _ClubsHeader extends StatelessWidget {
             button: true,
             child: Material(
               color: AC.card,
-              shape: const CircleBorder(side: BorderSide(color: AC.border)),
+              shape: const CircleBorder(),
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: onBack,

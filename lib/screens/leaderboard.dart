@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/data_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../widgets/rank_badges.dart';
 
-List<Member> get ranked => [...members]..sort((a, b) => b.points.compareTo(a.points));
+List<Member> get ranked =>
+    [...members]..sort((a, b) => b.points.compareTo(a.points));
 
 /// The kid in first place: parents don't compete for the reward.
 Member? get leader {
@@ -23,25 +26,65 @@ class RankList extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final list = limit == null ? ranked : ranked.take(limit!).toList();
-    return Column(children: [
-      for (var i = 0; i < list.length; i++) ...[
-        if (i > 0) const Divider(height: 1, color: C.line),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(children: [
-            SizedBox(
-                width: 30,
-                child: Text('${i + 1}',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: C.brick))),
-            Avatar(list[i].name, size: 34),
-            const SizedBox(width: 12),
-            Expanded(
-                child: Text(ld(context, list[i].name), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
-            Text(l.leaderboardPts(list[i].points), style: const TextStyle(fontWeight: FontWeight.w700)),
-          ]),
-        ),
+    return Column(
+      children: [
+        for (var i = 0; i < list.length; i++) ...[
+          if (i > 0) const Divider(height: 1, color: C.line),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 30,
+                  child: Text(
+                    '${i + 1}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: C.brick,
+                    ),
+                  ),
+                ),
+                // the leader wears a crown above their picture
+                SizedBox(
+                  width: 44,
+                  height: i == 0 ? 50 : 44,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Avatar(list[i].name, size: 40),
+                      if (i == 0)
+                        // rests on the empty space above the head, so it touches the picture
+                        const Positioned(top: 3, child: Crown(width: 18)),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    ld(context, list[i].name),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                // top three wear a medal, right before their points
+                if (i < 3) ...[
+                  RankMedal(i + 1, size: 26),
+                  const SizedBox(width: 8),
+                ] else
+                  const SizedBox(width: 34),
+                Text(
+                  l.leaderboardPts(list[i].points),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
-    ]);
+    );
   }
 }
 
@@ -51,47 +94,78 @@ class LeaderboardPage extends StatefulWidget {
   State<LeaderboardPage> createState() => _LeaderboardPageState();
 }
 
-class _LeaderboardPageState extends State<LeaderboardPage> {
+class _LeaderboardPageState extends State<LeaderboardPage>
+    with SharedRefresh<LeaderboardPage> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Page1(l.leaderboardTitle, [
-        LCard(
-          color: C.yellowTint,
-          child: Row(children: [
+      LCard(
+        color: C.yellowTint,
+        child: Row(
+          children: [
             const Icon(Icons.emoji_events_rounded, color: C.brick, size: 30),
             const SizedBox(width: 14),
             Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(l.leaderboardCycleReward(ld(context, rules.cycle)),
-                    style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w700)),
-                Text(ld(context, rules.reward), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-              ]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l.leaderboardCycleReward(ld(context, rules.cycle)),
+                    style: const TextStyle(
+                      color: C.inkSoft,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    ld(context, rules.reward),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ]),
+          ],
         ),
-        if (rules.lastWinner != null) ...[
-          const SizedBox(height: 10),
-          LCard(
-            child: Row(children: [
+      ),
+      if (rules.lastWinner != null) ...[
+        const SizedBox(height: 10),
+        LCard(
+          child: Row(
+            children: [
               const Icon(Icons.celebration_rounded, color: C.teal),
               const SizedBox(width: 12),
               Expanded(
-                  child: Text(l.leaderboardLastWinner(ld(context, rules.lastWinner!), ld(context, rules.lastReward!)),
-                      style: const TextStyle(fontWeight: FontWeight.w700))),
-            ]),
+                child: Text(
+                  l.leaderboardLastWinner(
+                    ld(context, rules.lastWinner!),
+                    ld(context, rules.lastReward!),
+                  ),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
           ),
-        ],
-        SectionTitle(l.leaderboardRanking),
-        const RankList(),
-        if (profile.isParent) ...[
-          const SizedBox(height: 20),
-          Btn(l.accountParentControlsTitle, icon: Icons.shield_rounded, color: C.teal, onTap: () async {
+        ),
+      ],
+      SectionTitle(l.leaderboardRanking),
+      const RankList(),
+      if (profile.isParent) ...[
+        const SizedBox(height: 20),
+        Btn(
+          l.accountParentControlsTitle,
+          icon: Icons.shield_rounded,
+          color: C.teal,
+          onTap: () async {
             await go(context, const ParentControlsPage());
             if (mounted) setState(() {});
-          }),
-        ],
-      ]);
+          },
+        ),
+      ],
+    ]);
   }
 }
 
@@ -103,6 +177,13 @@ class ParentControlsPage extends StatefulWidget {
 }
 
 class _ParentControlsPageState extends State<ParentControlsPage> {
+  // every change on this page is also saved for the whole family
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    remoteSaveRules?.call();
+  }
+
   String? _who;
   final _custom = TextEditingController(text: rules.punishment);
   final _customReward = TextEditingController();
@@ -117,9 +198,12 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
   List<Member> get _kids => members.where((m) => !m.isParent).toList();
 
   Future<void> _pickTime(bool from) async {
-    final t = await showTimePicker(context: context, initialTime: const TimeOfDay(hour: 20, minute: 0));
+    final t = await showTimePicker(
+      context: context,
+      initialTime: from ? rules.from : rules.to,
+    );
     if (t == null || !mounted) return;
-    setState(() => from ? rules.from = t.format(context) : rules.to = t.format(context));
+    setState(() => from ? rules.from = t : rules.to = t);
   }
 
   void _apply(AppLocalizations l) {
@@ -128,15 +212,23 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
         ? Violation(who, 'Lost points', '-${rules.penalty} pts', 'Just now')
         : Violation(who, 'Punishment', rules.punishment, 'Just now');
     if (rules.consequence == 'points') {
-      addPoints(who, -rules.penalty);
+      adjustPoints(who, -rules.penalty);
     } else {
       rules.punishments[who] = rules.punishment;
     }
     rules.violations.insert(0, v);
     setState(() => _who = null);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l.parentControlsViolationSnackbar(
-            ld(context, who), ld(context, v.kind).toLowerCase(), ld(context, v.detail)))));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          l.parentControlsViolationSnackbar(
+            ld(context, who),
+            ld(context, v.kind).toLowerCase(),
+            ld(context, v.detail),
+          ),
+        ),
+      ),
+    );
   }
 
   void _giveReward(AppLocalizations l) {
@@ -146,7 +238,15 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
     rules.lastReward = rules.reward;
     setState(() {});
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l.leaderboardRewardSnackbar(ld(context, w.name), ld(context, rules.reward)))));
+      SnackBar(
+        content: Text(
+          l.leaderboardRewardSnackbar(
+            ld(context, w.name),
+            ld(context, rules.reward),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -156,79 +256,173 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
     return Page1(l.accountParentControlsTitle, [
       // phone-free time
       LCard(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            const Icon(Icons.phonelink_erase_rounded, color: C.brick),
-            const SizedBox(width: 12),
-            Expanded(
-                child: Text(l.parentControlsPhoneFreeTime, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
-            Switch(
-                value: rules.phoneFree,
-                activeThumbColor: Colors.white,
-                activeTrackColor: C.teal,
-                onChanged: (v) => setState(() => rules.phoneFree = v)),
-          ]),
-          if (rules.phoneFree) ...[
-            const SizedBox(height: 10),
-            Row(children: [
-              Expanded(child: _timeBox(l.parentControlsFrom, ld(context, rules.from), () => _pickTime(true))),
-              const SizedBox(width: 10),
-              Expanded(child: _timeBox(l.parentControlsUntil, ld(context, rules.to), () => _pickTime(false))),
-            ]),
-            const SizedBox(height: 16),
-            Text(l.parentControlsIfPhoneUsed, style: const TextStyle(fontWeight: FontWeight.w700)),
-            const SizedBox(height: 8),
-            Wrap(spacing: 8, children: [
-              Choice(l.parentControlsLosePointsChoice, points, () => setState(() => rules.consequence = 'points'), idle: C.cream),
-              Choice(ld(context, 'Punishment'), !points, () => setState(() => rules.consequence = 'punishment'), idle: C.cream),
-            ]),
-            const SizedBox(height: 14),
-            if (points)
-              Row(children: [
-                Expanded(child: Text(l.parentControlsPointsLost, style: const TextStyle(fontWeight: FontWeight.w700))),
-                IconButton.filled(
-                    style: IconButton.styleFrom(backgroundColor: C.line, foregroundColor: C.ink),
-                    onPressed: () => setState(() => rules.penalty = (rules.penalty - 5).clamp(5, 50)),
-                    icon: const Icon(Icons.remove_rounded)),
-                SizedBox(
-                    width: 48,
-                    child: Text('-${rules.penalty}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18))),
-                IconButton.filled(
-                    style: IconButton.styleFrom(backgroundColor: C.line, foregroundColor: C.ink),
-                    onPressed: () => setState(() => rules.penalty = (rules.penalty + 5).clamp(5, 50)),
-                    icon: const Icon(Icons.add_rounded)),
-              ])
-            else ...[
-              Wrap(spacing: 8, runSpacing: 8, children: [
-                for (final p in punishmentOptions)
-                  Choice(ld(context, p), rules.punishment == p, () => setState(() {
-                        rules.punishment = p;
-                        _custom.text = p;
-                      }), idle: C.cream),
-              ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.phonelink_erase_rounded, color: C.brick),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    l.parentControlsPhoneFreeTime,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Switch(
+                  value: rules.phoneFree,
+                  activeThumbColor: Colors.white,
+                  activeTrackColor: C.teal,
+                  onChanged: (v) => setState(() => rules.phoneFree = v),
+                ),
+              ],
+            ),
+            if (rules.phoneFree) ...[
               const SizedBox(height: 10),
-              TextField(
-                controller: _custom,
-                onChanged: (v) => rules.punishment = v.trim().isEmpty ? punishmentOptions.first : v.trim(),
-                decoration: InputDecoration(hintText: l.parentControlsOrWriteOwn),
+              Row(
+                children: [
+                  Expanded(
+                    child: _timeBox(
+                      l.parentControlsFrom,
+                      rules.from.format(context),
+                      () => _pickTime(true),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _timeBox(
+                      l.parentControlsUntil,
+                      rules.to.format(context),
+                      () => _pickTime(false),
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 16),
+              Text(
+                l.parentControlsIfPhoneUsed,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: [
+                  Choice(
+                    l.parentControlsLosePointsChoice,
+                    points,
+                    () => setState(() => rules.consequence = 'points'),
+                    idle: C.cream,
+                  ),
+                  Choice(
+                    ld(context, 'Punishment'),
+                    !points,
+                    () => setState(() => rules.consequence = 'punishment'),
+                    idle: C.cream,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              if (points)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l.parentControlsPointsLost,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    IconButton.filled(
+                      style: IconButton.styleFrom(
+                        backgroundColor: C.line,
+                        foregroundColor: C.ink,
+                      ),
+                      onPressed: () => setState(
+                        () => rules.penalty = (rules.penalty - 5).clamp(5, 50),
+                      ),
+                      icon: const Icon(Icons.remove_rounded),
+                    ),
+                    SizedBox(
+                      width: 48,
+                      child: Text(
+                        '-${rules.penalty}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    IconButton.filled(
+                      style: IconButton.styleFrom(
+                        backgroundColor: C.line,
+                        foregroundColor: C.ink,
+                      ),
+                      onPressed: () => setState(
+                        () => rules.penalty = (rules.penalty + 5).clamp(5, 50),
+                      ),
+                      icon: const Icon(Icons.add_rounded),
+                    ),
+                  ],
+                )
+              else ...[
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final p in punishmentOptions)
+                      Choice(
+                        ld(context, p),
+                        rules.punishment == p,
+                        () => setState(() {
+                          rules.punishment = p;
+                          _custom.text = p;
+                        }),
+                        idle: C.cream,
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _custom,
+                  onChanged: (v) => rules.punishment = v.trim().isEmpty
+                      ? punishmentOptions.first
+                      : v.trim(),
+                  decoration: InputDecoration(
+                    hintText: l.parentControlsOrWriteOwn,
+                  ),
+                ),
+              ],
             ],
           ],
-        ]),
+        ),
       ),
 
       // record a violation
       SectionTitle(l.parentControlsRecordViolation),
-      Wrap(spacing: 8, runSpacing: 8, children: [
-        for (final k in _kids) Choice(ld(context, k.name), _who == k.name, () => setState(() => _who = k.name)),
-      ]),
+      Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          for (final k in _kids)
+            Choice(
+              ld(context, k.name),
+              _who == k.name,
+              () => setState(() => _who = k.name),
+            ),
+        ],
+      ),
       const SizedBox(height: 12),
-      Btn(points ? l.parentControlsTakeAwayPoints(rules.penalty) : l.parentControlsGivePunishment,
-          icon: Icons.phone_disabled_rounded,
-          enabled: _who != null && rules.phoneFree,
-          onTap: () => _apply(l)),
+      Btn(
+        points
+            ? l.parentControlsTakeAwayPoints(rules.penalty)
+            : l.parentControlsGivePunishment,
+        icon: Icons.phone_disabled_rounded,
+        enabled: _who != null && rules.phoneFree,
+        onTap: () => _apply(l),
+      ),
 
       // log
       if (rules.violations.isNotEmpty) ...[
@@ -238,44 +432,87 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
             padding: const EdgeInsets.only(bottom: 8),
             child: LCard(
               padding: const EdgeInsets.all(12),
-              child: Row(children: [
-                Avatar(v.who, size: 36),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('${ld(context, v.who)} · ${ld(context, v.kind)}', style: const TextStyle(fontWeight: FontWeight.w700)),
-                    Text('${ld(context, v.detail)} · ${ld(context, v.when)}', style: const TextStyle(color: C.inkSoft, fontSize: 12)),
-                  ]),
-                ),
-                if (v.kind == 'Punishment' && !v.done)
-                  TextButton(
+              child: Row(
+                children: [
+                  Avatar(v.who, size: 36),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${ld(context, v.who)} · ${ld(context, v.kind)}',
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          '${ld(context, v.detail)} · ${ld(context, v.when)}',
+                          style: const TextStyle(
+                            color: C.inkSoft,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (v.kind == 'Punishment' && !v.done)
+                    TextButton(
                       onPressed: () => setState(() {
-                            v.done = true;
-                            rules.punishments.remove(v.who);
-                          }),
-                      child: Text(l.parentControlsDone, style: const TextStyle(color: C.teal, fontWeight: FontWeight.w700)))
-                else if (v.done)
-                  const Icon(Icons.check_circle_rounded, color: C.teal),
-              ]),
+                        v.done = true;
+                        rules.punishments.remove(v.who);
+                      }),
+                      child: Text(
+                        l.parentControlsDone,
+                        style: const TextStyle(
+                          color: C.teal,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    )
+                  else if (v.done)
+                    const Icon(Icons.check_circle_rounded, color: C.teal),
+                ],
+              ),
             ),
           ),
       ],
 
       // rewards
       SectionTitle(l.parentControlsLeaderboardReward),
-      Text(l.parentControlsWinningCycle, style: const TextStyle(fontWeight: FontWeight.w700)),
+      Text(
+        l.parentControlsWinningCycle,
+        style: const TextStyle(fontWeight: FontWeight.w700),
+      ),
       const SizedBox(height: 8),
-      Wrap(spacing: 8, children: [
-        for (final c in ['Weekly', 'Monthly'])
-          Choice(ld(context, c), rules.cycle == c, () => setState(() => rules.cycle = c)),
-      ]),
+      Wrap(
+        spacing: 8,
+        children: [
+          for (final c in ['Weekly', 'Monthly'])
+            Choice(
+              ld(context, c),
+              rules.cycle == c,
+              () => setState(() => rules.cycle = c),
+            ),
+        ],
+      ),
       const SizedBox(height: 16),
-      Text(l.parentControlsRewardForWinner, style: const TextStyle(fontWeight: FontWeight.w700)),
+      Text(
+        l.parentControlsRewardForWinner,
+        style: const TextStyle(fontWeight: FontWeight.w700),
+      ),
       const SizedBox(height: 8),
-      Wrap(spacing: 8, runSpacing: 8, children: [
-        for (final r in rewardOptions)
-          Choice(ld(context, r), rules.reward == r, () => setState(() => rules.reward = r), color: C.teal),
-      ]),
+      Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          for (final r in rewardOptions)
+            Choice(
+              ld(context, r),
+              rules.reward == r,
+              () => setState(() => rules.reward = r),
+              color: C.teal,
+            ),
+        ],
+      ),
       const SizedBox(height: 10),
       TextField(
         controller: _customReward,
@@ -285,17 +522,37 @@ class _ParentControlsPageState extends State<ParentControlsPage> {
         decoration: InputDecoration(hintText: l.parentControlsOrWriteOwnReward),
       ),
       const SizedBox(height: 14),
-      Btn(leader == null ? l.leaderboardNoWinnerYet : l.leaderboardRewardNow(ld(context, leader!.name)),
-          icon: Icons.emoji_events_rounded, color: C.teal, enabled: leader != null, onTap: () => _giveReward(l)),
+      Btn(
+        leader == null
+            ? l.leaderboardNoWinnerYet
+            : l.leaderboardRewardNow(ld(context, leader!.name)),
+        icon: Icons.emoji_events_rounded,
+        color: C.teal,
+        enabled: leader != null,
+        onTap: () => _giveReward(l),
+      ),
     ]);
   }
 
   Widget _timeBox(String label, String value, VoidCallback onTap) => LCard(
-        onTap: onTap,
-        padding: const EdgeInsets.all(12),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(label, style: const TextStyle(color: C.inkSoft, fontSize: 12, fontWeight: FontWeight.w700)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-        ]),
-      );
+    onTap: onTap,
+    padding: const EdgeInsets.all(12),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: C.inkSoft,
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        ),
+      ],
+    ),
+  );
 }

@@ -9,19 +9,24 @@ import 'package:lamma/backend/supabase_config.dart';
 import 'package:lamma/data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Map<String, dynamic> _p(String name, String role, {String? label, String? phone}) => Backend.profileJson(
-      name: name,
-      role: role,
-      roleLabel: label,
-      age: 30,
-      job: 'Working',
-      livesWithFamily: true,
-      phone: phone,
-      interests: ['Coffee', 'Games'],
-      outingTypes: ['Nature'],
-      prefer: 'Games',
-      avatar: 3,
-    );
+Map<String, dynamic> _p(
+  String name,
+  String role, {
+  String? label,
+  String? phone,
+}) => Backend.profileJson(
+  name: name,
+  role: role,
+  roleLabel: label,
+  age: 30,
+  job: 'Working',
+  livesWithFamily: true,
+  phone: phone,
+  interests: ['Coffee', 'Games'],
+  outingTypes: ['Nature'],
+  prefer: 'Games',
+  avatar: 3,
+);
 
 void main() {
   final live = Platform.environment['LIVE_BACKEND'] == '1';
@@ -32,17 +37,39 @@ void main() {
     final b = SupabaseClient(supabaseUrl, supabaseAnonKey);
 
     // phone A: a mom starts the family
-    await Backend.createFamily('Live test family', _p('Amina', 'mom', phone: '0500000000'), client: a);
+    await Backend.createFamily(
+      'Live test family',
+      _p('Amina', 'mom', phone: '0500000000'),
+      client: a,
+    );
     expect(profile.isParent, isTrue);
     expect(profile.familyCode, startsWith('LAMMA-'));
     expect(members.map((m) => m.name), ['Amina']);
     final code = profile.familyCode;
 
     // phone B: checks a wrong code, then the right one (typed loosely) and joins
-    await expectLater(Backend.checkJoinCode('LAMMA-NOPE99', client: b),
-        throwsA(isA<BackendException>().having((e) => e.kind, 'kind', BackendError.invalidCode)));
-    expect(await Backend.checkJoinCode(code.toLowerCase().replaceAll('-', ' '), client: b), 'Live test family');
-    await Backend.joinFamily(code, _p('Reem', 'other', label: 'Grandma'), client: b);
+    await expectLater(
+      Backend.checkJoinCode('LAMMA-NOPE99', client: b),
+      throwsA(
+        isA<BackendException>().having(
+          (e) => e.kind,
+          'kind',
+          BackendError.invalidCode,
+        ),
+      ),
+    );
+    expect(
+      await Backend.checkJoinCode(
+        code.toLowerCase().replaceAll('-', ' '),
+        client: b,
+      ),
+      'Live test family',
+    );
+    await Backend.joinFamily(
+      code,
+      _p('Reem', 'other', label: 'Grandma'),
+      client: b,
+    );
 
     // B sees the whole family, and is not a parent
     expect(members.map((m) => m.name).toSet(), {'Amina', 'Reem'});

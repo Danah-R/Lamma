@@ -211,7 +211,8 @@ void main() {
       }
       if (isSplash) {
         final n = 'FontWeight.w900'.allMatches(src).length;
-        if (n != 1) problems.add('${f.path}: expected exactly one w900, got $n');
+        if (n != 1)
+          problems.add('${f.path}: expected exactly one w900, got $n');
       }
     }
     expect(problems, isEmpty);

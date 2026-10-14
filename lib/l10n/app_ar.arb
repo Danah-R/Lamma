@@ -1,19 +1,15 @@
 {
   "@@locale": "ar",
-
   "appTitle": "لمّه",
-
   "navHome": "الرئيسية",
   "navLamma": "لمّه",
   "navActivities": "صندوق الأنشطة",
   "navAccount": "الحساب",
   "navShare": "مشاركة",
-
   "commonComments": "التعليقات",
   "commonWriteCommentHint": "اكتب تعليقًا...",
   "commonShareAction": "مشاركة",
   "commonComingSoon": "قريبًا",
-
   "homeGreeting": "هلا، {name}",
   "homeTodayWithFamily": "اليوم مع العائلة",
   "homeFamilyNightTime": "سهرة العائلة · 8:00 مساءً",
@@ -23,8 +19,8 @@
   "homeFamilyCalendar": "تقويم العائلة",
   "homeAddEvent": "+ إضافة فعالية",
   "homeWeeklyPodcast": "البودكاست الأسبوعي",
-  "homePodcastTitle": "إيش يضحكنا مع بعض؟",
-  "homePodcastEpisode": "الحلقة 12 · 32 دقيقة",
+  "homePodcastTitle": "التحرر من التشتت",
+  "homePodcastEpisode": "فاهم 70 · 117 دقيقة",
   "homePodcastListenedCount": "استمع 3 من 6",
   "homeStartListening": "ابدأ الاستماع",
   "homeMemoriesQuote": "أجمل الذكريات تبدأ بسؤال بسيط",
@@ -43,13 +39,11 @@
   "homeYourWeekButton": "أسبوعك في لمّه",
   "homeDayToday": "· اليوم",
   "homeNoEvents": "لا توجد فعاليات",
-
   "eventDetailsTitle": "تفاصيل الفعالية",
   "eventDetailsDateLine": "{day} {dayNum} · {time}",
   "eventDetailsGoingCount": "{count, plural, zero{محد من العائلة قادم} one{واحد من العائلة قادم} two{اثنان من العائلة قادمون} few{{count} من العائلة قادمين} many{{count} من العائلة قادم} other{{count} من العائلة قادم}}",
   "eventDetailsImIn": "أنت مشارك",
   "eventDetailsImComing": "أنا قادم",
-
   "addEventTitle": "فعالية جديدة",
   "addEventTypeLabel": "نوع الفعالية",
   "addEventNameLabel": "الاسم",
@@ -57,13 +51,11 @@
   "addEventDayLabel": "اليوم",
   "addEventTimeLabel": "الوقت",
   "addEventSubmit": "إضافة إلى التقويم",
-
   "notificationsTitle": "الإشعارات",
   "notifEpisodeReady": "حلقة هذا الأسبوع جاهزة",
   "notifSarahMoment": "شاركت سارة لحظة",
   "notifBadgeEarned": "حصلت على وسام روح لمّه",
   "notifEmpty": "هذا كل شي حاليًا",
-
   "recapTitle": "أسبوعك",
   "recapHeroTitle": "أسبوعك في لمّه",
   "recapChats": "المحادثات",
@@ -73,11 +65,9 @@
   "recapMostShared": "الأكثر مشاركة: حديث مع عزيز",
   "recapEveryonePlayed": "الكل لعبها",
   "recapSeeBadges": "عرض الأوسمة",
-
   "accountTitle": "الحساب",
   "accountSubtitle": "ملفك في لمّه",
   "accountAgeSpirit": "{age} سنة · روح لمّه",
-  "accountDesignCharacter": "صمم شخصيتك",
   "accountMyInterests": "اهتماماتي",
   "accountPlacesToVisit": "أماكن أحب أزورها",
   "accountNothingPicked": "لم يتم اختيار شيء بعد",
@@ -86,22 +76,20 @@
   "accountParentControlsDesc": "وقت بدون جوال، عقوبات، مكافآت",
   "accountAchievements": "الإنجازات",
   "accountStatDays": "أيام",
+  "accountStatPictures": "صور",
+  "accountStatPoints": "نقاط",
   "accountStatGames": "ألعاب",
   "accountAllBadges": "كل الأوسمة والإنجازات",
-
   "designCharacterTitle": "شخصيتي",
   "designCharacterSection": "الشخصية",
   "designOutfitsSection": "الأزياء",
   "designSave": "حفظ",
-
   "badgesTitle": "الأوسمة والإنجازات",
-
   "lammaSubtitle": "يلا نسولف",
   "lammaFamilyTalk": "سوالف العائلة",
   "lammaOpenFamilyChat": "فتح محادثة العائلة",
   "lammaMomentsOfOurDay": "لحظات يومنا",
   "lammaShareMomentAction": "+ شارك لحظة",
-
   "momentTitle": "اللحظة",
   "shareMomentTitle": "شارك لحظة",
   "shareMomentPhotoHint": "التقط أو اختر صورة",
@@ -111,10 +99,8 @@
   "shareMomentTagCooking": "طبخ",
   "shareMomentSubmit": "شارك مع العائلة",
   "shareMomentFallbackCaption": "لحظة",
-
   "familyChatTitle": "محادثة العائلة",
   "familyChatInputHint": "اكتب رسالة...",
-
   "activitiesTitle": "الأنشطة",
   "activitiesSubtitle": "وش نسوي مع بعض اليوم؟",
   "activitiesGroupGamesTitle": "ألعاب جماعية",
@@ -125,7 +111,7 @@
   "activitiesPodcastDesc": "الحلقة 12 · استمع 3 من 6",
   "activitiesTalkTopicsTitle": "مواضيع للحديث",
   "activitiesTalkTopicsDesc": "بدايات للسوالف",
-  "activitiesOutingsTitle": "الخرجات",
+  "activitiesOutingsTitle": "الطلعات",
   "activitiesOutingsDesc": "أماكن تناسب العائلة كلها",
   "activitiesNewTopic": "موضوع جديد",
   "activitiesClubsSection": "النوادي",
@@ -206,22 +192,19 @@
   "clubsAddDiscussionPoint": "أضف نقطة للنقاش",
   "clubsAddQuestionHint": "اكتب سؤالك هنا",
   "activitiesBookClubCount": "يقرأ 3 من 6",
-  "activitiesPodcastClubDetail": "الحلقة 12 · إيش يضحكنا مع بعض؟",
+  "activitiesPodcastClubDetail": "فاهم 70 · التحرر من التشتت",
   "activitiesGroupGamesDescFull": "روليت، حديث مع عزيز وسين جيم",
   "activitiesSpinRoulette": "دور الروليت",
-
   "activitiesTonightTopicBadge": "سالفة الليلة",
   "activitiesTopicCounter": "موضوع {index} من {total}",
   "activitiesChatNow": "يلا نسولف",
   "activitiesChangeTopic": "غيّرها",
   "activitiesPrevTopic": "الموضوع السابق",
-
   "activitiesRouletteBadge": "على مين الدور الليلة؟",
   "activitiesRouletteCardDesc": "مين يبدأ، تحدي، أو قرار للعائلة",
   "activitiesSinJimCardDesc": "أسئلة عن بعض، مين يعرف أكثر؟",
   "activitiesLettersAzizTitle": "حروف مع عزيز",
   "activitiesLettersAzizDesc": "فريقين يتحدّون، وكل جواب يبدأ بحرف",
-
   "activitiesBookClubDaysLeft": "{days, plural, one{باقي يوم واحد} two{باقي يومين} few{باقي {days} أيام} many{باقي {days} يومًا} other{باقي {days} يوم}}",
   "activitiesClubCatchUpBold": "يلا كمّل!",
   "activitiesClubFinishedCount": "{count, plural, zero{ما خلّص أحد بعد} one{خلّص واحد قبلك} two{خلّص اثنين قبلك} few{{count} خلّصوا قبلك} many{{count} خلّصوا قبلك} other{{count} خلّصوا قبلك}}",
@@ -238,16 +221,14 @@
   "clubsPodcastHeardBold": "سمعتها ✓",
   "clubsPodcastHeardRest": "نشوفكم {day} {time}",
   "activitiesPlayPodcastTooltip": "تشغيل",
-
-  "activitiesWeekendOutingTitle": "طلعة الويكند",
+  "activitiesWeekendOutingTitle": "الطلعات المقترحة",
   "activitiesPrevPlace": "المكان السابق",
   "activitiesNextPlace": "المكان التالي",
   "activitiesPlaceCounter": "{index} من {total}",
-  "activitiesWeekendVoteText": "{votes, plural, one{شخص واحد من 6 بيروح الجمعة} two{شخصين من 6 بيروحون الجمعة} few{{votes} من 6 يبون يروحون الجمعة} many{{votes} من 6 يبون يروحون الجمعة} other{{votes} من 6 يبون يروحون الجمعة}}",
-  "activitiesWeekendVoteButton": "بجي معكم!",
-  "activitiesWeekendVotedButton": "صوّتت معهم",
-  "activitiesWhoVotedLabel": "مين صوّت",
-
+  "activitiesWeekendVoteText": "{votes, plural, =0{ما أحد معجب للحين} one{معجب واحد} two{معجبان} few{{votes} معجبين} other{{votes} معجب}}",
+  "activitiesWeekendVoteButton": "أعجبني",
+  "activitiesWeekendVotedButton": "أعجبتني",
+  "activitiesWhoVotedLabel": "مين أعجبه",
   "gamesTitle": "الألعاب",
   "gamesPageSubtitle": "اختاروا لعبة الليلة",
   "gamesRouletteTitle": "الروليت",
@@ -410,15 +391,12 @@
   "topicsDoneCount": "{count, plural, zero{ولا موضوع للحين} one{موضوع واحد} two{موضوعين} few{{count} مواضيع} many{{count} مواضيع} other{{count} مواضيع}}",
   "topicsDoneEmpty": "لما تضغطون \"يلا نسولف\" على موضوع،\nيتسجّل هنا عشان تتذكرون وش سولفتوا فيه",
   "soonPageMessage": "قريبًا",
-
   "azizNext": "التالي",
   "azizSkip": "تخطي",
-
   "sinJimAnswerOnBehalf": "جاوب نيابة عن",
   "sinJimQPrefix": "س:",
   "sinJimEveryoneAnswered": "الكل جاوب",
   "sinJimAnswersRecorded": "{count, plural, zero{ما فيه إجابات مسجلة} one{إجابة وحدة مسجلة} two{إجابتين مسجلتين} few{{count} إجابات مسجلة} many{{count} إجابة مسجلة} other{{count} إجابة مسجلة}}",
-
   "rouletteModeWhoStarts": "مين يبدأ؟",
   "rouletteModeChallenge": "تحدي",
   "rouletteModeDecision": "قرار",
@@ -437,38 +415,31 @@
   "rouletteResultStarts": "{name} يبدأ!",
   "rouletteSpin": "دور العجلة",
   "rouletteGotIt": "تمام",
-
   "bookClubCurrentBook": "الكتاب الحالي",
   "bookClubReadingStatus": "يقرأ 3 من 6 · النقاش يوم الخميس",
   "bookClubJoinDiscussion": "انضم للنقاش",
   "discussionQuestionsHeading": "أسئلة للنقاش",
   "bookClubQ1": "أي شخصية تحس إنك قريب منها؟",
   "bookClubQ2": "لو تغيرت النهاية، وش كانت تكون؟",
-
   "podcastThisWeekEpisode": "حلقة هذا الأسبوع",
-  "podcastDuration": "32 دقيقة",
+  "podcastDuration": "117 دقيقة",
   "podcastListenedLabel": "استمع",
   "podcastListenedFraction": "{count}/6",
   "podcastNextGathering": "التجمع الجاي: يوم الجمعة بعد العشاء. بنسولف عنها كلنا.",
   "podcastQ1": "متى آخر مرة ضحكنا لين دمعت عيوننا؟",
   "podcastQ2": "مين في العائلة يحكي أحلى النكت؟",
-
   "talkTopicsGiveMeTopic": "عطني موضوع",
   "talkTopicsTrendingNow": "رائج الحين",
   "talkTopicsTrend1": "أحلى ذكرى رمضان",
   "talkTopicsTrend2": "أكلة أمي المفضلة",
-
   "outingsFilterAll": "الكل",
   "outingsPlacesMap": "خريطة الأماكن",
-  "outingsOurOutings": "خرجاتنا",
-
+  "outingsOurOutings": "طلعاتنا",
   "suggestPlaceTitle": "اقتراح للعائلة",
   "suggestPlaceWhyHeading": "ليش اقترحناه",
-  "suggestPlaceAdd": "إضافة إلى «خرجاتنا»",
-  "suggestPlaceAddedSnackbar": "تمت الإضافة إلى خرجاتنا",
-
-  "ourOutingsEmpty": "ماكو شي هنا بعد.\nأضف مكان من صفحة الخرجات.",
-
+  "suggestPlaceAdd": "إضافة إلى «طلعاتنا»",
+  "suggestPlaceAddedSnackbar": "تمت الإضافة إلى طلعاتنا",
+  "ourOutingsEmpty": "ماكو شي هنا بعد.\nأضف مكان من صفحة الطلعات.",
   "onboardingSplashLogo": "لمّه",
   "onboardingSplashTagline": "يلا نتلمّ",
   "onboardingSplashStart": "ابدأ",
@@ -499,7 +470,7 @@
   "onboardingJobStudent": "طالب/ة",
   "onboardingJobHome": "أبقى في البيت",
   "onboardingThingsYouLove": "أشياء تحبها",
-  "onboardingTypeOfOutings": "نوع الخرجات",
+  "onboardingTypeOfOutings": "نوع الطلعات",
   "onboardingIPrefer": "أفضّل...",
   "onboardingPreferGames": "الألعاب",
   "onboardingPreferDiscussions": "النقاشات",
@@ -511,29 +482,25 @@
   "onboardingHaveInviteCode": "عندك رمز دعوة؟",
   "onboardingInviteCodeHint": "LAMMA-48",
   "onboardingJoin": "انضمام",
-
   "dataCharacterSister": "الأخت",
   "dataCharacterBigBrother": "الأخ الكبير",
   "dataCharacterFather": "الأب",
   "dataCharacterMother": "الأم",
   "dataCharacterLittleGirl": "البنت الصغيرة",
   "dataCharacterSon": "الابن",
-
   "dataMemberNoura": "نورة",
   "dataMemberMohammed": "محمد",
   "dataMemberAbdullah": "عبدالله",
   "dataMemberAmina": "أمينة",
   "dataMemberSarah": "سارة",
   "dataMemberYousef": "يوسف",
-
   "dataEventTypeGathering": "تجمّع",
-  "dataEventTypeOuting": "خرجة",
+  "dataEventTypeOuting": "طلعة",
   "dataEventTypeDinner": "عشاء",
   "dataEventTypeGames": "ألعاب",
   "dataEventTypeTrip": "رحلة",
   "dataEventTypeMovie": "فلم",
   "dataEventTypeOccasion": "مناسبة",
-
   "dataDaySat": "السبت",
   "dataDaySun": "الأحد",
   "dataDayMon": "الإثنين",
@@ -556,13 +523,11 @@
   "dataMonthOct": "أكتوبر",
   "dataMonthNov": "نوفمبر",
   "dataMonthDec": "ديسمبر",
-
-  "dataEventTitleVillageOuting": "خرجة إلى القرية",
+  "dataEventTitleVillageOuting": "طلعة إلى القرية",
   "dataEventTitleFamilyDinner": "عشاء عائلي",
   "dataEventTime4pm": "4:00 مساءً",
   "dataEventTime8pm": "8:00 مساءً",
   "dataTime930pm": "9:30 مساءً",
-
   "dataPlaceKingSalmanPark": "حديقة الملك سلمان",
   "dataPlaceCafeAlDar": "مقهى الدار",
   "dataPlaceStrikeBowling": "سترايك بولينج",
@@ -571,55 +536,45 @@
   "dataPlaceWhyCafe": "يناسب الكل، خيار موفق",
   "dataPlaceWhyBowling": "3 من 6 يحبون الألعاب والأنشطة الجماعية",
   "dataPlaceWhyRestaurant": "أكل بيتي وجلسة عائلية",
-
   "dataOutingTypeNature": "الطبيعة",
   "dataOutingTypeRestaurants": "المطاعم",
   "dataOutingTypeCafes": "المقاهي",
   "dataOutingTypeEntertainment": "الترفيه",
-
   "dataBadgeMostInteractive": "الأكثر تفاعلًا",
   "dataBadgeLammaSpirit": "روح لمّه",
   "dataBadgeWeeklyListener": "مستمع الأسبوع",
   "dataBadgeWeekWinner": "بطل الأسبوع",
   "dataBadgeTalksKing": "ملك السوالف",
   "dataBadgeReader": "القارئ",
-
   "dataAziz1": "وش أغرب أكلة جربتها بحياتك؟",
   "dataAziz2": "أي رحلة ممكن تسويها مرة ثانية بكرة؟",
   "dataAziz3": "وش الشي البسيط اللي يسعّد يومك؟",
   "dataAziz4": "مين في العائلة يضحكك أكثر؟",
-
   "dataSinJim1": "كم عمر جدك؟",
   "dataSinJim2": "وش أكلة بابا المفضلة؟",
   "dataSinJim3": "وش لون ماما المفضل؟",
   "dataSinJim4": "مين أكثر واحد ينام في العائلة؟",
-
   "dataTopic1": "لو تقدر تسافر لأي مكان الحين، وين بنروح؟",
   "dataTopic2": "وش لحظة العائلة اللي ما تقدر تنساها؟",
   "dataTopic3": "وش عادة لازم نبدأها هالسنة؟",
   "dataTopic4": "وش الشي اللي ما حكيته لنا قبل؟",
-
   "dataMomentCaptionSarah": "طلعت اليوم مع البنات",
   "dataMomentCaptionMohammed": "استراحة مذاكرة في الكافيه",
   "dataMomentCaptionAmina": "قهوة جديدة وصباح هادئ",
   "dataMomentCaptionAbdullah": "مسا في المجلس",
   "dataMomentCaptionYousef": "ليقو الجديد حقي!",
   "dataMomentCaptionNoura": "أخبز مع ماما",
-
   "dataTimeTodayAt410pm": "اليوم، 4:10 مساءً",
   "dataTimeTodayAt130pm": "اليوم، 1:30 مساءً",
   "dataTimeTodayAt815am": "اليوم، 8:15 صباحًا",
   "dataTimeYesterday": "أمس",
   "dataTimeToday": "اليوم",
   "dataTime2DaysAgo": "قبل يومين",
-
   "dataTalkSarah": "وش تبون تاكلون يوم الخميس؟",
   "dataTalkAmina": "مين ينزل معاي للسوق؟",
-
   "dataCommentAbdullah": "حلو!",
   "dataCommentAmina": "الله يحفظكم",
   "dataCommentMohammed": "وديني وياكم",
-
   "dataInterestCoffee": "قهوة",
   "dataInterestGames": "ألعاب",
   "dataInterestReading": "قراءة",
@@ -632,19 +587,16 @@
   "dataInterestSwimming": "سباحة",
   "dataInterestMusic": "موسيقى",
   "dataInterestTravel": "سفر",
-
   "dataFamilyFallback": "عائلتك",
   "dataFamilyDefault": "عائلة العتيبي",
-
   "leaderboardTitle": "لوحة المتصدرين",
-  "leaderboardCycleReward": "مكافأة {cycle}",
+  "leaderboardCycleReward": "مكافأة الفائز",
   "leaderboardLastWinner": "الفائز: {winner} · {reward}",
   "leaderboardRanking": "الترتيب",
   "leaderboardPts": "{points, plural, zero{0 نقطة} one{نقطة وحدة} two{نقطتين} few{{points} نقاط} many{{points} نقطة} other{{points} نقطة}}",
   "leaderboardNoWinnerYet": "لا يوجد فائز بعد",
   "leaderboardRewardNow": "كافئ {name} (الأول) الحين",
   "leaderboardRewardSnackbar": "{name} يحصل على: {reward}",
-
   "parentControlsPhoneFreeTime": "وقت بدون جوال",
   "parentControlsFrom": "من",
   "parentControlsUntil": "إلى",
@@ -662,7 +614,6 @@
   "parentControlsRewardForWinner": "مكافأة الفائز",
   "parentControlsOrWriteOwnReward": "أو اكتب مكافأتك",
   "parentControlsViolationSnackbar": "{who}: {kind} ({detail})",
-
   "violationKindLostPoints": "خصم نقاط",
   "violationKindPunishment": "عقوبة",
   "dataCycleWeekly": "أسبوعية",
@@ -676,44 +627,74 @@
   "dataRewardDinnerPlace": "يختار مكان عشاء العائلة",
   "dataRewardMovie": "يختار فلم ليلة السينما",
   "dataRewardSkipChore": "إعفاء من مهمة",
-  "dataRewardOuting": "يختار خرجة نهاية الأسبوع",
+  "dataRewardOuting": "يختار طلعة نهاية الأسبوع",
   "dataRewardGameTime": "وقت إضافي للألعاب",
-
   "chatSeedSarahCooking": "وش بنطبخ الليلة؟",
   "chatSeedMeGoPark": "يلا نروح الحديقة!",
   "chatSeedAminaDinner": "العشاء بيجهز الحين",
   "chatSeedMeComing": "جاي!",
-
   "momentsTitle": "لحظات يومنا",
   "momentsSharedCount": "{count} من 6 شاركوا اليوم",
-  "@momentsSharedCount": { "placeholders": { "count": { "type": "int" } } },
+  "@momentsSharedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "momentsNotifications": "الإشعارات",
   "momentsNew": "جديد",
   "momentsLike": "أعجبني",
   "momentsYou": "أنت",
   "momentsWith": " مع {names}",
-  "@momentsWith": { "placeholders": { "names": { "type": "String" } } },
+  "@momentsWith": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
   "momentsAnd": " و",
   "momentsToday": "اليوم",
   "momentsYesterday": "أمس",
   "momentsNow": "الحين",
   "momentsDayTime": "{day}، {time}",
-  "@momentsDayTime": { "placeholders": { "day": { "type": "String" }, "time": { "type": "String" } } },
+  "@momentsDayTime": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "momentsAm": "ص",
   "momentsPm": "م",
   "momentsSeeAll": "شوف كل التعليقات ({count})",
-  "@momentsSeeAll": { "placeholders": { "count": { "type": "int" } } },
+  "@momentsSeeAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "momentsSeeSecond": "شوف التعليق الثاني",
   "momentsHideComments": "إخفاء التعليقات",
   "momentsQuick1": "خيال!",
   "momentsQuick2": "وين هذا؟",
   "momentsQuick3": "ودي كنت معكم",
   "momentsCommentHint": "علّق على لحظة {name}…",
-  "@momentsCommentHint": { "placeholders": { "name": { "type": "String" } } },
+  "@momentsCommentHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "momentsReplyHint": "رد على اللي علّقوا…",
   "momentsSend": "أرسل التعليق",
   "momentsEnd": "شفت كل لحظات اليومين",
-
   "momentsNewTitle": "لحظة جديدة",
   "momentsClose": "إغلاق",
   "momentsSnapPrompt": "صوّر لحظة من يومك",
@@ -731,20 +712,30 @@
   "momentsPhotosDenied": "نحتاج إذن الصور عشان تختار",
   "momentsSettings": "الإعدادات",
   "momentsDefaultCaption": "لحظة من يومي",
-
   "momentsShareSemantics": "مشاركة: صوّر لحظة",
   "momentsCoachLabel": "تلميح",
   "momentsCoachBody": "اضغط الكاميرا تحت وشاركها العائلة",
   "momentsCoachLater": "بعدين",
   "momentsCoachNow": "صوّر الحين",
-
   "chatSubtitle": "محادثة العائلة · {count} متواجدين",
-  "@chatSubtitle": { "placeholders": { "count": { "type": "int" } } },
+  "@chatSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatNotifications": "الإشعارات",
   "chatToday": "اليوم",
   "chatQuestionLabel": "سؤال اليوم",
   "chatQuestionFamily": "{count} من العائلة جاوبوا",
-  "@chatQuestionFamily": { "placeholders": { "count": { "type": "int" } } },
+  "@chatQuestionFamily": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatQuestionAnswered": "جاوبت عليه",
   "chatAnswer": "جاوب",
   "chatYou": "أنت",
@@ -753,21 +744,44 @@
   "chatPm": "م",
   "chatPollBadge": "تصويت",
   "chatVotes": "{count} أصوات",
-  "@chatVotes": { "placeholders": { "count": { "type": "int" } } },
+  "@chatVotes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatTyping": "{name} يكتب",
-  "@chatTyping": { "placeholders": { "name": { "type": "String" } } },
+  "@chatTyping": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "chatHintWrite": "اكتب للعائلة…",
   "chatHintReply": "اكتب ردك…",
   "chatReplyingTo": "ترد على سؤال اليوم",
   "chatCancelReply": "إلغاء الرد",
   "chatSend": "إرسال",
   "chatMessageField": "رسالتك",
-
   "notifBellLabel": "الإشعارات، {count} جديدة",
-  "@notifBellLabel": { "placeholders": { "count": { "type": "int" } } },
+  "@notifBellLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifBellLabelNone": "الإشعارات",
   "notifSummary": "{count, plural, zero{كل شي مقروء} one{إشعار واحد جديد} two{إشعارين جداد} few{{count} إشعارات جديدة} many{{count} إشعارات جديدة} other{{count} إشعارات جديدة}}",
-  "@notifSummary": { "placeholders": { "count": { "type": "int" } } },
+  "@notifSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifReadAll": "قريت الكل",
   "notifSeeAll": "عرض كل الإشعارات",
   "notifPanelEmpty": "ما فيه شي جديد",
@@ -776,20 +790,37 @@
   "notifClosePanel": "إغلاق الإشعارات",
   "notifTimeNow": "الحين",
   "notifTimeAgo": "{count, plural, one{قبل دقيقة} two{قبل دقيقتين} few{قبل {count} دقايق} many{قبل {count} دقيقة} other{قبل {count} دقيقة}}",
-  "@notifTimeAgo": { "placeholders": { "count": { "type": "int" } } },
+  "@notifTimeAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifYesterday": "أمس",
-
   "notifsTitle": "الإشعارات",
   "notifsBack": "رجوع",
   "notifsHeroKickerNew": "صار شي جديد بالعائلة",
   "notifsHeroKickerRead": "ما فيه شي فاتك",
   "notifsHeroTitle": "{count, plural, zero{كل شي مقروء} one{عندك إشعار جديد} two{عندك إشعارين جداد} few{عندك {count} إشعارات جديدة} many{عندك {count} إشعارات جديدة} other{عندك {count} إشعارات جديدة}}",
-  "@notifsHeroTitle": { "placeholders": { "count": { "type": "int" } } },
+  "@notifsHeroTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifsGroupToday": "اليوم",
   "notifsGroupYesterday": "أمس",
   "notifsGroupEarlier": "قبل",
   "notifsGroupCount": "{count, plural, zero{ولا إشعار} one{إشعار واحد} two{إشعارين} few{{count} إشعارات} many{{count} إشعارات} other{{count} إشعارات}}",
-  "@notifsGroupCount": { "placeholders": { "count": { "type": "int" } } },
+  "@notifsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notifsTagEvent": "فعالية",
   "notifsTagMoment": "لحظة",
   "notifsTagComment": "تعليق",
@@ -798,13 +829,23 @@
   "notifsTagClub": "نادي الكتاب",
   "notifsTagVote": "تصويت",
   "notifsNewPrefix": "جديد: {text}",
-  "@notifsNewPrefix": { "placeholders": { "text": { "type": "String" } } },
+  "@notifsNewPrefix": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "notifsYesterdayAt": "أمس، {time}",
-  "@notifsYesterdayAt": { "placeholders": { "time": { "type": "String" } } },
-
+  "@notifsYesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "accountResetCoach": "إعادة تلميح الكاميرا",
   "accountResetCoachDone": "بيطلع لك التلميح في صفحة اللحظات",
-
   "roleOtherLabel": "غير ذلك",
   "onboardingOtherRoleHint": "دورك في العائلة (مثل: جدة)",
   "onboardingLiveTogetherQuestion": "تسكن مع عائلتك؟",
@@ -817,5 +858,123 @@
   "onboardingErrTooMany": "محاولات كثيرة. انتظر ساعة وجرّب مرة ثانية.",
   "onboardingErrNetwork": "ما قدرنا نوصل للمّة. تأكد من الإنترنت وجرّب مرة ثانية.",
   "accountFamilyCode": "رمز الانضمام للعائلة",
-  "accountFamilyCodeCopied": "تم نسخ الرمز"
+  "accountFamilyCodeCopied": "تم نسخ الرمز",
+  "homeTodayTitle": "اليوم",
+  "homeNoPlans": "ما فيه خطط بعد",
+  "homeTomorrow": "بكرة",
+  "podcastFinishedButton": "خلّصت الاستماع",
+  "podcastFinishedDone": "خلّصت الاستماع",
+  "podcastListenedMembers": "اللي سمعوها",
+  "podcastAddQuestionHint": "أضف سؤالك",
+  "podcastAddQuestionButton": "إضافة",
+  "podcastFullTitle": "فاهم 70 | سلسلة لازم تتحرر - (5) التحرر من التشتت | مع الشيخ/ أمجد سمير",
+  "podcastWhereToListen": "وين تبي تسمع؟",
+  "podcastPageTitle": "بودكاست هذا الأسبوع",
+  "podcastNotListened": "تم تسجيلها كأنك ما سمعتها.",
+  "homePhoneFreeWarningPoints": "إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك {points} نقطة.",
+  "@homePhoneFreeWarningPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "homePhoneFreeWarningPunishment": "إذا استخدمت جوالك وطلعت من التطبيق، بتاخذ عقوبة: {punishment}.",
+  "@homePhoneFreeWarningPunishment": {
+    "placeholders": {
+      "punishment": {
+        "type": "String"
+      }
+    }
+  },
+  "accountEditAccount": "عدّل حسابك",
+  "editAccountTitle": "تعديل الحساب",
+  "editAccountCharacter": "شخصيتك",
+  "editAccountSave": "احفظ التعديلات",
+  "editAccountSaveFailed": "ما قدرنا نحفظ. تأكد من الإنترنت وجرّب مرة ثانية.",
+  "topicsCatTell": "سوالف نبي نقولها",
+  "pointsEarned": "+{points} نقطة",
+  "@pointsEarned": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "pointsFirst": "أنت الأول! +{points} نقطة",
+  "@pointsFirst": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "notifsTagSurvey": "استبيان",
+  "surveyTitle": "استبيان الشهر",
+  "surveyCardTitle": "كيف كان شهرك مع العيلة؟",
+  "surveyCardDesc": "كم سؤال سريع، وإجاباتك لك وحدك",
+  "surveyDoneCard": "جاوبت على استبيان هالشهر، نشوفك الشهر الجاي!",
+  "surveyIntro": "خذ لك دقيقة وفكّر في شهرك. إجاباتك ما يشوفها إلا أنت.",
+  "surveyHintMulti": "اختر أكثر من واحد",
+  "surveyQClosest": "مين كنت الأقرب له هالشهر؟",
+  "surveyQCloser": "مين تبي تقرب منه أكثر؟",
+  "surveyQLiked": "أي ميزات في التطبيق استمتعت فيها؟",
+  "surveyQDisliked": "أي ميزات ما عجبتك؟",
+  "surveyQOutings": "أي طلعات استمتعت فيها أكثر؟",
+  "surveyQGames": "أي ألعاب استمتعت فيها أكثر؟",
+  "surveyQCloseness": "قد إيش حسّيت إنك قريب من عيلتك هالشهر؟",
+  "surveyCloseLow": "مو كثير",
+  "surveyCloseHigh": "قريب مرة",
+  "surveyQComment": "فيه شي ثاني تبي تقوله؟",
+  "surveyCommentHint": "اختياري",
+  "surveySubmit": "أرسل إجاباتي",
+  "surveyThanks": "شكرًا لك! نشوفك الشهر الجاي.",
+  "surveyNothingThisMonth": "ما صار شي هالشهر",
+  "surveyNoOthers": "ما انضم أحد ثاني للعيلة للحين",
+  "surveyFeatureChat": "المحادثة العائلية",
+  "surveyFeatureMoments": "اللحظات",
+  "surveyFeatureGames": "الألعاب",
+  "surveyFeaturePodcast": "نادي البودكاست",
+  "surveyFeatureBook": "نادي الكتاب",
+  "surveyFeatureTopics": "مواضيع السوالف",
+  "surveyFeatureOutings": "الطلعات",
+  "surveyFeatureCalendar": "التقويم والفعاليات",
+  "surveyFeaturePoints": "النقاط والترتيب",
+  "activitiesOpenInMaps": "افتح في خرائط قوقل",
+  "activitiesGoogleMapsRating": "خرائط قوقل",
+  "homeAddTopicTitle": "في سالفة ببالك؟",
+  "homeAddTopicDesc": "ينضاف لسوالف الليلة ولمواضيعك",
+  "homeAddTopicHint": "اكتب موضوع…",
+  "homeAddTopicButton": "أضف",
+  "homeAddTopicAdded": "انضاف لسوالف الليلة",
+  "accountMyTopics": "مواضيعي",
+  "accountMyTopicsHint": "للحين ما سولفنا فيها",
+  "accountMyTopicsEmpty": "ما فيه شي ينتظر. أضف موضوع من الرئيسية.",
+  "momentsReactHeart": "قلب",
+  "momentsReactLaugh": "ضحك",
+  "momentsReactThumbs": "إعجاب",
+  "momentsReactCry": "بكاء",
+  "momentsReactLove": "عيون قلوب",
+  "momentsReactionsCount": "{n, plural, =0{ما فيه تفاعلات} =1{تفاعل واحد} =2{تفاعلان} few{{n} تفاعلات} other{{n} تفاعل}}",
+  "@momentsReactionsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "momentsCommentsCount": "{n, plural, =0{ما فيه تعليقات} =1{تعليق واحد} =2{تعليقان} few{{n} تعليقات} other{{n} تعليق}}",
+  "@momentsCommentsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "activitiesAddToCalendar": "أضف للتقويم",
+  "activitiesAddedToCalendar": "انضافت لتقويم العائلة",
+  "activitiesAddOuting": "اقترح طلعة",
+  "activitiesOutingName": "وين تبي نروح؟",
+  "activitiesOutingAdd": "أضف",
+  "activitiesSuggestedByFamily": "اقتراح من العيلة"
 }

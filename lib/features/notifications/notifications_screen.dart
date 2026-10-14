@@ -9,10 +9,10 @@ import 'widgets/notification_visuals.dart';
 
 /// Opens the full notifications screen above everything, including the
 /// bottom bar.
-Future<void> openNotificationsScreen(BuildContext context) =>
-    Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute<void>(builder: (_) => const NotificationsScreen()),
-    );
+Future<void> openNotificationsScreen(BuildContext context) => Navigator.of(
+  context,
+  rootNavigator: true,
+).push(MaterialPageRoute<void>(builder: (_) => const NotificationsScreen()));
 
 const _heroInk = Color(0xFF6E5418);
 const _readBorder = Color(0xFFF3EADF);
@@ -69,6 +69,13 @@ final _styles = <NotificationType, _TypeStyle>{
     AC.tealTint,
     AC.tealDeep,
     Icons.menu_book_outlined,
+  ),
+  NotificationType.survey: _TypeStyle(
+    (l) => l.notifsTagSurvey,
+    AC.brick,
+    AC.salmonTint,
+    AC.brickDeep,
+    Icons.favorite_border_rounded,
   ),
   NotificationType.vote: _TypeStyle(
     (l) => l.notifsTagVote,
@@ -212,9 +219,8 @@ class NotificationsScreen extends StatelessWidget {
             ),
             Expanded(
               child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
+                behavior: ScrollConfiguration.of(context)
+                    .copyWith(scrollbars: false),
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
                   children: [

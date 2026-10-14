@@ -185,6 +185,7 @@ void main() {
         case NotificationType.game:
         case NotificationType.event:
         case NotificationType.vote:
+        case NotificationType.survey:
           break;
       }
     }

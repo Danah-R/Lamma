@@ -1,9 +1,13 @@
+import '../../../data.dart' as app;
+import '../../../widgets/sliding_capsule.dart';
+import '../shared/celebration.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/data_localizations.dart';
 import '../../../screens/activities_colors.dart';
-import '../../../screens/game_illustrations.dart';
 import '../shared/confirm_end_dialog.dart';
 import '../shared/family_players.dart';
 import '../shared/game_scaffold.dart';
@@ -87,6 +91,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
       _score[0] = 0;
       _score[1] = 0;
       _points.clear();
+      _winnerPaid = false;
       _deck = List.of(charadesWords)..shuffle();
       _wordI = 0;
       _revealed = false;
@@ -112,6 +117,9 @@ class _CharadesScreenState extends State<CharadesScreen> {
       _turn = next;
       _revealed = false;
       _phase = next >= _rounds * 2 ? _Phase.result : _Phase.handoff;
+      if (_phase == _Phase.result) _payWinner();
+      if (_phase == _Phase.result)
+        app.claimFirst('game:charades:${app.dayKey}', app.profile.name);
     });
   }
 
@@ -120,8 +128,22 @@ class _CharadesScreenState extends State<CharadesScreen> {
     if (!mounted) return;
     setState(() {
       _phase = _Phase.result;
+      _payWinner();
+      app.claimFirst('game:charades:${app.dayKey}', app.profile.name);
       _revealed = false;
     });
+  }
+
+  bool _winnerPaid = false;
+
+  /// Everyone on the team with the most right answers wins [winPoints], once (nothing for a tie).
+  void _payWinner() {
+    if (_winnerPaid || _score[0] == _score[1]) return;
+    _winnerPaid = true;
+    final win = _score[0] > _score[1] ? 0 : 1;
+    for (final i in _members(win)) {
+      app.awardPoints(familyPlayers[i].name, winPoints);
+    }
   }
 
   void _answer(bool ok) {
@@ -131,6 +153,8 @@ class _CharadesScreenState extends State<CharadesScreen> {
         _score[_turnTeam]++;
         final a = _actorIndex();
         _points[a] = (_points[a] ?? 0) + 1;
+        // a right answer earns real points in the app too (for the player who acted it out)
+        app.awardPoints(familyPlayers[a].name, correctPoints);
       }
       _wordI++;
       _revealed = false;
@@ -237,15 +261,13 @@ class _CharadesScreenState extends State<CharadesScreen> {
                       ),
                     ),
                     ExcludeSemantics(
-                      child: SizedBox(
-                        width: 52,
-                        height: 44,
-                        child: FittedBox(
-                          child: SizedBox(
-                            width: 78,
-                            height: 64,
-                            child: GameIllustration('charades'),
-                          ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/games/charades.webp',
+                          width: 52,
+                          height: 52,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -320,7 +342,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                           shortB: shortB,
                           first: i == 0,
                           groupLabel: l.charadesPlayerTeamGroup(
-                            familyPlayers[i].name,
+                            ld(context, familyPlayers[i].name),
                           ),
                           onPick: (t) => setState(
                             () => _team[i] = _team[i] == t ? null : t,
@@ -339,27 +361,16 @@ class _CharadesScreenState extends State<CharadesScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AC.track,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Row(
-                    children: [
-                      for (final n in charadesRoundOptions)
-                        Expanded(
-                          child: _Segment(
-                            label: l.charadesRoundsOption(n),
-                            selected: n == _rounds,
-                            onTap: () => setState(() => _rounds = n),
-                          ),
-                        ),
-                    ],
-                  ),
+                SlidingCapsule(
+                  labels: [
+                    for (final n in charadesRoundOptions)
+                      l.charadesRoundsOption(n),
+                  ],
+                  selected: charadesRoundOptions.indexOf(_rounds),
+                  onChanged: (i) =>
+                      setState(() => _rounds = charadesRoundOptions[i]),
+                  track: AC.track,
+                  thumb: AC.navy,
                 ),
               ],
             ),
@@ -491,7 +502,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                               ),
                             ),
                             Text(
-                              actor.name,
+                              ld(context, actor.name),
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -507,7 +518,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 270),
                     child: Text(
-                      l.charadesPassPhone(actor.name),
+                      l.charadesPassPhone(ld(context, actor.name)),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15,
@@ -531,7 +542,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
           ),
         ),
         _BigButton(
-          label: l.charadesImReady(actor.name),
+          label: l.charadesImReady(ld(context, actor.name)),
           height: 58,
           radius: 18,
           background: AC.background,
@@ -623,7 +634,7 @@ class _CharadesScreenState extends State<CharadesScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          l.charadesActing(actor.name),
+                          l.charadesActing(ld(context, actor.name)),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -840,152 +851,174 @@ class _CharadesScreenState extends State<CharadesScreen> {
         if (_team[i] != null) i,
     ]..sort((a, b) => (_points[b] ?? 0).compareTo(_points[a] ?? 0));
     final top = ranked.isEmpty ? 0 : (_points[ranked.first] ?? 0);
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
-            decoration: BoxDecoration(
-              color: tie ? AC.teal : charadesTeams[win].color,
+    return WinnerConfetti(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(26),
-            ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  width: 56,
-                  height: 46,
-                  child: CustomPaint(painter: _CrownPainter()),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  tie ? l.charadesTie : l.charadesWinnerTeam,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white.withValues(alpha: .9),
-                  ),
-                ),
-                Text(
-                  tie ? l.charadesEveryoneWon : _teamName(l, win),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              for (var k = 0; k < 2; k++) ...[
-                if (k == 1) const SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: charadesTeams[k].tint,
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          _teamName(l, k),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: charadesTeams[k].ink,
-                          ),
-                        ),
-                        Text(
-                          '${_score[k]}',
-                          style: TextStyle(
-                            fontSize: 36,
-                            height: 1.1,
-                            fontWeight: FontWeight.w700,
-                            color: charadesTeams[k].ink,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 14),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AC.border),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Container(
+                color: tie ? AC.teal : charadesTeams[win].color,
+                child: Stack(
                   children: [
+                    const BalloonsBackground(),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 4),
-                      child: Text(
-                        l.charadesPlayerPoints,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: AC.ink,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 22,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              width: 56,
+                              height: 46,
+                              child: CustomPaint(painter: _CrownPainter()),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              tie ? l.charadesTie : l.charadesWinnerTeam,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white.withValues(alpha: .9),
+                              ),
+                            ),
+                            Text(
+                              tie ? l.charadesEveryoneWon : _teamName(l, win),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                            if (!tie) ...[
+                              const SizedBox(height: 10),
+                              const PointsBadge(winPoints),
+                            ],
+                          ],
                         ),
                       ),
                     ),
-                    for (var k = 0; k < ranked.length; k++)
-                      _RankRow(
-                        player: familyPlayers[ranked[k]],
-                        teamName: _teamName(l, _team[ranked[k]]!),
-                        style: charadesTeams[_team[ranked[k]]!],
-                        points: _points[ranked[k]] ?? 0,
-                        star: top > 0 && (_points[ranked[k]] ?? 0) == top,
-                        starLabel: l.charadesStarPlayer,
-                        first: k == 0,
-                      ),
                   ],
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: _BigButton(
-                  label: l.charadesBackToGames,
-                  height: 54,
-                  radius: 16,
-                  background: Colors.white,
-                  foreground: AC.ink,
-                  border: AC.border,
-                  weight: FontWeight.w700,
-                  onTap: () => Navigator.of(context).pop(),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                for (var k = 0; k < 2; k++) ...[
+                  if (k == 1) const SizedBox(width: 10),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: charadesTeams[k].tint,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            _teamName(l, k),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: charadesTeams[k].ink,
+                            ),
+                          ),
+                          Text(
+                            '${_score[k]}',
+                            style: TextStyle(
+                              fontSize: 36,
+                              height: 1.1,
+                              fontWeight: FontWeight.w700,
+                              color: charadesTeams[k].ink,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 14),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AC.border),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 4),
+                        child: Text(
+                          l.charadesPlayerPoints,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AC.ink,
+                          ),
+                        ),
+                      ),
+                      for (var k = 0; k < ranked.length; k++)
+                        _RankRow(
+                          player: familyPlayers[ranked[k]],
+                          teamName: _teamName(l, _team[ranked[k]]!),
+                          style: charadesTeams[_team[ranked[k]]!],
+                          points: _points[ranked[k]] ?? 0,
+                          star: top > 0 && (_points[ranked[k]] ?? 0) == top,
+                          starLabel: l.charadesStarPlayer,
+                          first: k == 0,
+                        ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _BigButton(
-                  label: l.charadesNewGame,
-                  height: 54,
-                  radius: 16,
-                  background: AC.brick,
-                  foreground: Colors.white,
-                  onTap: _startGame,
+            ),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: _BigButton(
+                    label: l.charadesBackToGames,
+                    height: 54,
+                    radius: 16,
+                    background: Colors.white,
+                    foreground: AC.ink,
+                    border: AC.border,
+                    weight: FontWeight.w700,
+                    onTap: () => Navigator.of(context).pop(),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _BigButton(
+                    label: l.charadesNewGame,
+                    height: 54,
+                    radius: 16,
+                    background: AC.brick,
+                    foreground: Colors.white,
+                    onTap: _startGame,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1129,7 +1162,7 @@ class _PlayerRow extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: Text(
-            player.name,
+            ld(context, player.name),
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,
@@ -1140,134 +1173,19 @@ class _PlayerRow extends StatelessWidget {
         Semantics(
           container: true,
           label: groupLabel,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 3),
-            decoration: BoxDecoration(
-              color: AC.track,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                _TeamSeg(
-                  label: shortA,
-                  color: charadesTeams[0].color,
-                  on: team == 0,
-                  onTap: () => onPick(0),
-                ),
-                const SizedBox(width: 4),
-                _TeamSeg(
-                  label: shortB,
-                  color: charadesTeams[1].color,
-                  on: team == 1,
-                  onTap: () => onPick(1),
-                ),
-              ],
-            ),
+          child: SlidingCapsule(
+            labels: [shortA, shortB],
+            selected: team,
+            onChanged: onPick,
+            track: AC.track,
+            thumb: AC.navy,
+            thumbColors: [charadesTeams[0].color, charadesTeams[1].color],
+            height: 44,
+            fontSize: 13,
+            segmentWidth: 58,
           ),
         ),
       ],
-    ),
-  );
-}
-
-class _TeamSeg extends StatelessWidget {
-  final String label;
-  final Color color;
-  final bool on;
-  final VoidCallback onTap;
-  const _TeamSeg({
-    required this.label,
-    required this.color,
-    required this.on,
-    required this.onTap,
-  });
-  @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: on,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      // 44 high hit area around the visual segment.
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: 36,
-          constraints: const BoxConstraints(minWidth: 52),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: on ? color : Colors.transparent,
-            borderRadius: BorderRadius.circular(9),
-          ),
-          child: Text(
-            label,
-            maxLines: 1,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: on ? Colors.white : AC.muted,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-class _Segment extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  const _Segment({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-  @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: selected,
-    child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      // 44 high hit area around the visual segment.
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: 40,
-          margin: const EdgeInsets.symmetric(horizontal: 3),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: selected ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: selected
-                ? const [
-                    BoxShadow(
-                      color: AC.cardShadow,
-                      blurRadius: 6,
-                      offset: Offset(0, 2),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: selected ? AC.ink : AC.muted,
-            ),
-          ),
-        ),
-      ),
     ),
   );
 }
@@ -1528,7 +1446,7 @@ class _RankRow extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: Text(
-            player.name,
+            ld(context, player.name),
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,

@@ -68,7 +68,7 @@ void main() {
     final before = c.items.length;
     await t.tap(find.text('صندوق الأنشطة').last);
     await t.pumpAndSettle();
-    final vote = find.text('بجي معكم!').first;
+    final vote = find.text('أعجبني').first;
     await t.scrollUntilVisible(
       vote,
       300,

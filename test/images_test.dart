@@ -30,7 +30,8 @@ class _Bundle extends CachingAssetBundle {
         for (final k in have) k: <Object>[],
       })!;
     }
-    if (have.contains(key)) {
+    // the family's profile pictures are always bundled
+    if (have.contains(key) || key.startsWith('assets/characters/')) {
       return ByteData.sublistView(Uint8List.fromList(_png));
     }
     throw FlutterError('Unable to load asset: "$key".');

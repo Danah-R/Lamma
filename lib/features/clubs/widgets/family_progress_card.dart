@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets.dart' show Avatar;
+
 import '../../../l10n/app_localizations.dart';
 import '../../../screens/activities_colors.dart';
 import '../clubs_controller.dart';
@@ -29,7 +31,6 @@ class FamilyProgressCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: AC.card,
-        border: Border.all(color: AC.border),
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
@@ -128,18 +129,12 @@ class _ReaderRow extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final done = reader.percent == 100;
     final barColor = done ? AC.teal : AC.brick;
-    final needsDarkText =
-        reader.color == AC.mustard ||
-        reader.color == AC.sage ||
-        reader.color == AC.salmon;
     return Row(
       children: [
         Container(
           width: 30,
           height: 30,
-          alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: reader.color,
             shape: BoxShape.circle,
             boxShadow: reader.isMe
                 ? const [
@@ -148,14 +143,10 @@ class _ReaderRow extends StatelessWidget {
                   ]
                 : null,
           ),
-          child: Text(
-            reader.initial,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: needsDarkText ? AC.ink : Colors.white,
-            ),
-          ),
+          child: Avatar(
+            reader.name,
+            size: 30,
+          ), // the person's real profile picture
         ),
         const SizedBox(width: 10),
         SizedBox(

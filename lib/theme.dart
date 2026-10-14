@@ -17,7 +17,9 @@ const kFontFamily = 'Thmanyah';
 ///    They are mostly *fills*: they are too light to carry text or icons on white.
 class C {
   // ---- surfaces
-  static const cream = Color(0xFFF6F6F6); // neutral, slightly dimmed white: the page, so white containers stand out
+  static const cream = Color(
+    0xFFF6F6F6,
+  ); // neutral, slightly dimmed white: the page, so white containers stand out
   static const card = Color(0xFFFFFFFF); // containers
 
   // ---- brand
@@ -41,7 +43,9 @@ class C {
   static const field = Color(0xFFFCEBDE); // input fields: a subtle warm neutral
   static const brickTint = Color(0xFFF5DFD7);
   static const peachTint = Color(0xFFFBE6D8);
-  static const tealTint = Color(0xFFD8E6E6); // teal at ~17% on white: the light version of teal
+  static const tealTint = Color(
+    0xFFD8E6E6,
+  ); // teal at ~17% on white: the light version of teal
   static const sageTint = Color(0xFFDCE3D1);
   static const yellowTint = Color(0xFFFBE9C6);
   static const sageDark = Color(0xFF33582D); // sage, deepened: chosen interests
@@ -60,21 +64,22 @@ class C {
 }
 
 ThemeData buildTheme() {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: C.brick,
-    brightness: Brightness.light,
-  ).copyWith(
-    primary: C.brick,
-    onPrimary: Colors.white,
-    secondary: C.teal,
-    onSecondary: Colors.white,
-    tertiary: C.yellow,
-    onTertiary: C.ink,
-    surface: C.cream,
-    onSurface: C.ink,
-    outline: C.line,
-    outlineVariant: C.line,
-  );
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: C.brick,
+        brightness: Brightness.light,
+      ).copyWith(
+        primary: C.brick,
+        onPrimary: Colors.white,
+        secondary: C.teal,
+        onSecondary: Colors.white,
+        tertiary: C.yellow,
+        onTertiary: C.ink,
+        surface: C.cream,
+        onSurface: C.ink,
+        outline: C.line,
+        outlineVariant: C.line,
+      );
   // One font everywhere: the family is also set on the text themes
   // themselves, and on every component that styles its own text.
   final textTheme = Typography.blackMountainView.apply(
@@ -165,10 +170,14 @@ ThemeData buildTheme() {
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.all(Colors.white),
       trackColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? C.teal : C.sand),
+        (s) => s.contains(WidgetState.selected) ? C.teal : C.sand,
+      ),
       trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(color: C.brick, linearTrackColor: C.line),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: C.brick,
+      linearTrackColor: C.line,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       hintStyle: const TextStyle(fontFamily: kFontFamily, color: C.inkSoft),
       labelStyle: font,

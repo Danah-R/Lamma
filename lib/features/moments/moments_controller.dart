@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../data.dart' as app;
 import '../../data/family_members.dart';
 import '../notifications/notification_events.dart';
 import '../notifications/notifications_controller.dart';
@@ -12,7 +13,7 @@ typedef MomentsMember = FamilyMember;
 
 const momentsMeId = familyMeId;
 
-const momentsMembers = familyMembers;
+List<MomentsMember> get momentsMembers => familyMembers;
 
 MomentsMember momentsMember(String id) => familyMemberById(id);
 
@@ -27,6 +28,18 @@ String momentAsset(MomentScene s) => switch (s) {
   MomentScene.dinner => 'assets/images/moments/kabsa.jpg',
   MomentScene.park => 'assets/images/moments/park.jpg',
   MomentScene.desert => 'assets/images/moments/desert.jpg',
+};
+
+/// The reactions a moment can get, in the order they are shown.
+const momentReactions = ['heart', 'laugh', 'thumbs', 'cry', 'love'];
+
+/// The emoji drawn for each reaction.
+const momentReactionEmoji = {
+  'heart': '❤️',
+  'laugh': '😂',
+  'thumbs': '👍',
+  'cry': '😢',
+  'love': '😍',
 };
 
 class MomentComment {
@@ -48,7 +61,10 @@ class Moment {
   final MomentScene scene;
   final List<String> withIds;
   final DateTime createdAt;
-  final List<String> likedBy;
+  final List<String> likedBy; // everyone who reacted (with any reaction)
+
+  /// Which reaction each person chose (a person in [likedBy] with none here reacted with a heart).
+  final Map<String, String> reactions;
   final List<MomentComment> comments;
 
   /// Posted by me in this session ("جديد" badge + highlighted frame).
@@ -63,23 +79,32 @@ class Moment {
     this.scene = MomentScene.park,
     this.withIds = const [],
     this.likedBy = const [],
+    this.reactions = const {},
     this.comments = const [],
     this.isNew = false,
   });
 
-  Moment copyWith({List<String>? likedBy, List<MomentComment>? comments}) =>
-      Moment(
-        id: id,
-        authorId: authorId,
-        caption: caption,
-        createdAt: createdAt,
-        imagePath: imagePath,
-        scene: scene,
-        withIds: withIds,
-        likedBy: likedBy ?? this.likedBy,
-        comments: comments ?? this.comments,
-        isNew: isNew,
-      );
+  /// The reaction [memberId] gave, or null.
+  String? reactionOf(String memberId) =>
+      likedBy.contains(memberId) ? (reactions[memberId] ?? 'heart') : null;
+
+  Moment copyWith({
+    List<String>? likedBy,
+    Map<String, String>? reactions,
+    List<MomentComment>? comments,
+  }) => Moment(
+    id: id,
+    authorId: authorId,
+    caption: caption,
+    createdAt: createdAt,
+    imagePath: imagePath,
+    scene: scene,
+    withIds: withIds,
+    likedBy: likedBy ?? this.likedBy,
+    reactions: reactions ?? this.reactions,
+    comments: comments ?? this.comments,
+    isNew: isNew,
+  );
 }
 
 class MomentsController extends ChangeNotifier {
@@ -113,21 +138,29 @@ class MomentsController extends ChangeNotifier {
   int get sharedTodayCount => _todayAuthors.length;
   bool get didIShareToday => _todayAuthors.contains(momentsMeId);
 
-  bool isLiked(Moment m) => m.likedBy.contains(momentsMeId);
+  bool isLiked(Moment m) => m.reactionOf(momentsMeId) == 'heart';
 
-  void toggleLike(int id) {
+  /// My reaction on [m] (null if none).
+  String? myReaction(Moment m) => m.reactionOf(momentsMeId);
+
+  /// Gives (or changes) my reaction; tapping the one I already gave takes it back.
+  void react(int id, String key) {
     _replace(id, (m) {
-      final liked = m.likedBy.contains(momentsMeId);
+      final had = m.reactionOf(momentsMeId);
+      final others = {...m.reactions}..remove(momentsMeId);
+      final likers = [
+        for (final x in m.likedBy)
+          if (x != momentsMeId) x,
+      ];
+      if (had == key) return m.copyWith(likedBy: likers, reactions: others);
       return m.copyWith(
-        likedBy: liked
-            ? [
-                for (final x in m.likedBy)
-                  if (x != momentsMeId) x,
-              ]
-            : [...m.likedBy, momentsMeId],
+        likedBy: [...likers, momentsMeId],
+        reactions: {...others, momentsMeId: key},
       );
     });
   }
+
+  void toggleLike(int id) => react(id, 'heart');
 
   /// [authorId] defaults to me; a comment by someone else notifies me.
   void addComment(int id, String text, {String authorId = momentsMeId}) {
@@ -180,6 +213,8 @@ class MomentsController extends ChangeNotifier {
       isNew: mine,
     );
     _moments.insert(0, moment);
+    // the first one in the family to share a moment each day gets the most points
+    if (mine) app.claimFirst('moment:${app.dayKey}', app.profile.name);
     notifyListeners();
     _notifications?.add(
       NotificationEvents.momentShared(

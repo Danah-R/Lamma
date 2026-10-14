@@ -78,10 +78,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeWeeklyPodcast => 'Weekly podcast';
 
   @override
-  String get homePodcastTitle => 'What makes us laugh together?';
+  String get homePodcastTitle => 'Freedom from distraction';
 
   @override
-  String get homePodcastEpisode => 'Episode 12 · 32 min';
+  String get homePodcastEpisode => 'Fahem 70 · 117 min';
 
   @override
   String get homePodcastListenedCount => '3 of 6 listened';
@@ -252,9 +252,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get accountDesignCharacter => 'Design your character';
-
-  @override
   String get accountMyInterests => 'My interests';
 
   @override
@@ -278,6 +275,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountStatDays => 'Days';
+
+  @override
+  String get accountStatPictures => 'Pictures';
+
+  @override
+  String get accountStatPoints => 'Points';
 
   @override
   String get accountStatGames => 'Games';
@@ -646,7 +649,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activitiesPodcastClubDetail =>
-      'Episode 12 · What makes us laugh together?';
+      'Fahem 70 · Freedom from distraction';
 
   @override
   String get activitiesGroupGamesDescFull =>
@@ -775,7 +778,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activitiesPlayPodcastTooltip => 'Play';
 
   @override
-  String get activitiesWeekendOutingTitle => 'Weekend outing';
+  String get activitiesWeekendOutingTitle => 'Suggested outings';
 
   @override
   String get activitiesPrevPlace => 'Previous place';
@@ -793,20 +796,21 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       votes,
       locale: localeName,
-      other: '$votes of 6 want to go Friday',
-      one: '1 of 6 wants to go Friday',
+      other: '$votes likes',
+      one: '1 like',
+      zero: 'No likes yet',
     );
     return '$_temp0';
   }
 
   @override
-  String get activitiesWeekendVoteButton => 'I\'m in';
+  String get activitiesWeekendVoteButton => 'Like';
 
   @override
-  String get activitiesWeekendVotedButton => 'You\'re in';
+  String get activitiesWeekendVotedButton => 'Liked';
 
   @override
-  String get activitiesWhoVotedLabel => 'Who voted';
+  String get activitiesWhoVotedLabel => 'Who liked it';
 
   @override
   String get gamesTitle => 'Games';
@@ -1494,7 +1498,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get podcastThisWeekEpisode => 'This week\'s episode';
 
   @override
-  String get podcastDuration => '32 min';
+  String get podcastDuration => '117 min';
 
   @override
   String get podcastListenedLabel => 'Listened';
@@ -2005,7 +2009,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String leaderboardCycleReward(String cycle) {
-    return '$cycle reward';
+    return 'Winner\'s reward';
   }
 
   @override
@@ -2561,4 +2565,263 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountFamilyCodeCopied => 'Code copied';
+
+  @override
+  String get homeTodayTitle => 'Today';
+
+  @override
+  String get homeNoPlans => 'No plans yet';
+
+  @override
+  String get homeTomorrow => 'Tomorrow';
+
+  @override
+  String get podcastFinishedButton => 'Finished listening';
+
+  @override
+  String get podcastFinishedDone => 'I finished listening';
+
+  @override
+  String get podcastListenedMembers => 'Listened so far';
+
+  @override
+  String get podcastAddQuestionHint => 'Add your own question';
+
+  @override
+  String get podcastAddQuestionButton => 'Add';
+
+  @override
+  String get podcastFullTitle =>
+      'Understanding 70 | Series: You Must Break Free (5): Freedom from Distraction | with Sheikh Amjad Sameer';
+
+  @override
+  String get podcastWhereToListen => 'Where do you want to listen?';
+
+  @override
+  String get podcastPageTitle => 'This week\'s podcast';
+
+  @override
+  String get podcastNotListened => 'Marked as not listened.';
+
+  @override
+  String homePhoneFreeWarningPoints(int points) {
+    return 'If you use your phone and leave the app, you\'ll lose $points points.';
+  }
+
+  @override
+  String homePhoneFreeWarningPunishment(String punishment) {
+    return 'If you use your phone and leave the app, you\'ll get a punishment: $punishment.';
+  }
+
+  @override
+  String get accountEditAccount => 'Edit your account';
+
+  @override
+  String get editAccountTitle => 'Edit account';
+
+  @override
+  String get editAccountCharacter => 'Your character';
+
+  @override
+  String get editAccountSave => 'Save changes';
+
+  @override
+  String get editAccountSaveFailed =>
+      'Couldn\'t save. Check your internet and try again.';
+
+  @override
+  String get topicsCatTell => 'Things we want to say';
+
+  @override
+  String pointsEarned(int points) {
+    return '+$points points';
+  }
+
+  @override
+  String pointsFirst(int points) {
+    return 'You were first! +$points points';
+  }
+
+  @override
+  String get notifsTagSurvey => 'Survey';
+
+  @override
+  String get surveyTitle => 'This month\'s survey';
+
+  @override
+  String get surveyCardTitle => 'How was your month with the family?';
+
+  @override
+  String get surveyCardDesc => 'A few quick questions, just for you';
+
+  @override
+  String get surveyDoneCard =>
+      'You answered this month\'s survey. See you next month!';
+
+  @override
+  String get surveyIntro =>
+      'Take a minute to think about this month. Only you can see your answers.';
+
+  @override
+  String get surveyHintMulti => 'Pick as many as you like';
+
+  @override
+  String get surveyQClosest => 'Who did you get closest to this month?';
+
+  @override
+  String get surveyQCloser => 'Who do you want to get closer to?';
+
+  @override
+  String get surveyQLiked => 'Which features of the app did you enjoy?';
+
+  @override
+  String get surveyQDisliked => 'Which features didn\'t you enjoy?';
+
+  @override
+  String get surveyQOutings => 'Which outings did you enjoy the most?';
+
+  @override
+  String get surveyQGames => 'Which games did you enjoy the most?';
+
+  @override
+  String get surveyQCloseness =>
+      'How close did you feel to your family this month?';
+
+  @override
+  String get surveyCloseLow => 'Not very';
+
+  @override
+  String get surveyCloseHigh => 'Very close';
+
+  @override
+  String get surveyQComment => 'Anything else you\'d like to tell us?';
+
+  @override
+  String get surveyCommentHint => 'Optional';
+
+  @override
+  String get surveySubmit => 'Send my answers';
+
+  @override
+  String get surveyThanks => 'Thank you! See you next month.';
+
+  @override
+  String get surveyNothingThisMonth => 'Nothing this month';
+
+  @override
+  String get surveyNoOthers => 'No one else has joined the family yet';
+
+  @override
+  String get surveyFeatureChat => 'Family chat';
+
+  @override
+  String get surveyFeatureMoments => 'Moments';
+
+  @override
+  String get surveyFeatureGames => 'Games';
+
+  @override
+  String get surveyFeaturePodcast => 'Podcast club';
+
+  @override
+  String get surveyFeatureBook => 'Book club';
+
+  @override
+  String get surveyFeatureTopics => 'Talk topics';
+
+  @override
+  String get surveyFeatureOutings => 'Outings';
+
+  @override
+  String get surveyFeatureCalendar => 'Calendar and events';
+
+  @override
+  String get surveyFeaturePoints => 'Points and leaderboard';
+
+  @override
+  String get activitiesOpenInMaps => 'Open in Google Maps';
+
+  @override
+  String get activitiesGoogleMapsRating => 'Google Maps';
+
+  @override
+  String get homeAddTopicTitle => 'What do you want to talk about?';
+
+  @override
+  String get homeAddTopicDesc => 'It joins tonight\'s topics and your topics';
+
+  @override
+  String get homeAddTopicHint => 'Write a topic…';
+
+  @override
+  String get homeAddTopicButton => 'Add';
+
+  @override
+  String get homeAddTopicAdded => 'Added to tonight\'s topics';
+
+  @override
+  String get accountMyTopics => 'My topics';
+
+  @override
+  String get accountMyTopicsHint => 'Not talked about yet';
+
+  @override
+  String get accountMyTopicsEmpty => 'Nothing waiting. Add a topic from Home.';
+
+  @override
+  String get momentsReactHeart => 'Heart';
+
+  @override
+  String get momentsReactLaugh => 'Laughing';
+
+  @override
+  String get momentsReactThumbs => 'Thumbs up';
+
+  @override
+  String get momentsReactCry => 'Crying';
+
+  @override
+  String get momentsReactLove => 'Heart eyes';
+
+  @override
+  String momentsReactionsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n reactions',
+      one: '1 reaction',
+      zero: 'No reactions',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String momentsCommentsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n comments',
+      one: '1 comment',
+      zero: 'No comments',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get activitiesAddToCalendar => 'Add to calendar';
+
+  @override
+  String get activitiesAddedToCalendar => 'Added to the family calendar';
+
+  @override
+  String get activitiesAddOuting => 'Suggest an outing';
+
+  @override
+  String get activitiesOutingName => 'Where would you like to go?';
+
+  @override
+  String get activitiesOutingAdd => 'Add';
+
+  @override
+  String get activitiesSuggestedByFamily => 'Suggested by the family';
 }

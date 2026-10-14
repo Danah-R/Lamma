@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../data.dart' as app;
+import '../../../widgets.dart' show Avatar;
 import '../moments_controller.dart';
 
-/// A family member's initial in a colored circle.
+/// A family member's profile picture (the same one the rest of the app shows).
+/// Falls back to their initial in a colored circle if there is no picture for that name.
 class MomentAvatar extends StatelessWidget {
   final MomentsMember member;
   final double size;
@@ -17,23 +20,17 @@ class MomentAvatar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Container(
-    width: size,
-    height: size,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color: member.color,
-      shape: BoxShape.circle,
-      border: ring == null ? null : Border.all(color: ring!, width: 2),
-    ),
-    child: Text(
-      member.initial,
-      style: TextStyle(
-        fontSize: fontSize ?? (size * .42).roundToDouble(),
-        fontWeight: FontWeight.w700,
-        color: member.ink,
-        height: 1.1,
+  Widget build(BuildContext context) {
+    // "me" is whoever is signed in, whatever name they chose
+    final name = member.id == momentsMeId ? app.profile.name : member.name;
+    final picture = Avatar(name, size: size);
+    if (ring == null) return picture;
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: ring!, width: 2),
       ),
-    ),
-  );
+      child: ClipOval(child: picture),
+    );
+  }
 }

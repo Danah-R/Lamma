@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets.dart' show Avatar;
+
+import '../../../data.dart' show profile;
 import '../../../l10n/app_localizations.dart';
+import '../../../widgets.dart' show PeopleList;
 import '../../../screens/activities_colors.dart';
 import '../clubs_controller.dart';
 import '../motion.dart';
@@ -29,7 +33,6 @@ class PodcastHeardCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: AC.card,
-        border: Border.all(color: AC.border),
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
@@ -76,16 +79,49 @@ class PodcastHeardCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          Row(
-            children: [
-              Semantics(
-                label: l.clubsWhoHeardAvatarsLabel,
-                child: _AvatarStack(readers: heardBy),
-              ),
-              const Spacer(),
-              _HeardButton(heard: iHeard, onTap: onToggleHeard),
-            ],
+          // tap the pictures to see who heard it, right here
+          Builder(
+            builder: (context) {
+              var listOpen = false; // lives in this little builder, so only the list redraws
+              return StatefulBuilder(
+                builder: (context, setOpen) {
+                  final names = [
+                    for (final r in heardBy) r.name,
+                    if (iHeard) profile.name,
+                  ];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Semantics(
+                            label: l.clubsWhoHeardAvatarsLabel,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: names.isEmpty
+                                  ? null
+                                  : () => setOpen(() => listOpen = !listOpen),
+                              child: Row(
+                                children: [_AvatarStack(readers: heardBy)],
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          _HeardButton(heard: iHeard, onTap: onToggleHeard),
+                        ],
+                      ),
+                      if (listOpen && names.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: PeopleList(names),
+                        ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
+
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -132,24 +168,7 @@ class _AvatarStack extends StatelessWidget {
         for (var i = 0; i < readers.length; i++)
           PositionedDirectional(
             start: i * (_size - _overlap),
-            child: Container(
-              width: _size,
-              height: _size,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: readers[i].color,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-              child: Text(
-                readers[i].initial,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: Avatar(readers[i].name, size: _size), // real profile picture
           ),
       ],
     ),

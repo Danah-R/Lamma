@@ -215,13 +215,13 @@ abstract class AppLocalizations {
   /// No description provided for @homePodcastTitle.
   ///
   /// In en, this message translates to:
-  /// **'What makes us laugh together?'**
+  /// **'Freedom from distraction'**
   String get homePodcastTitle;
 
   /// No description provided for @homePodcastEpisode.
   ///
   /// In en, this message translates to:
-  /// **'Episode 12 · 32 min'**
+  /// **'Fahem 70 · 117 min'**
   String get homePodcastEpisode;
 
   /// No description provided for @homePodcastListenedCount.
@@ -506,12 +506,6 @@ abstract class AppLocalizations {
   /// **'{age} years · Lamma spirit'**
   String accountAgeSpirit(int age);
 
-  /// No description provided for @accountDesignCharacter.
-  ///
-  /// In en, this message translates to:
-  /// **'Design your character'**
-  String get accountDesignCharacter;
-
   /// No description provided for @accountMyInterests.
   ///
   /// In en, this message translates to:
@@ -559,6 +553,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days'**
   String get accountStatDays;
+
+  /// No description provided for @accountStatPictures.
+  ///
+  /// In en, this message translates to:
+  /// **'Pictures'**
+  String get accountStatPictures;
+
+  /// No description provided for @accountStatPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get accountStatPoints;
 
   /// No description provided for @accountStatGames.
   ///
@@ -1247,7 +1253,7 @@ abstract class AppLocalizations {
   /// No description provided for @activitiesPodcastClubDetail.
   ///
   /// In en, this message translates to:
-  /// **'Episode 12 · What makes us laugh together?'**
+  /// **'Fahem 70 · Freedom from distraction'**
   String get activitiesPodcastClubDetail;
 
   /// No description provided for @activitiesGroupGamesDescFull.
@@ -1421,7 +1427,7 @@ abstract class AppLocalizations {
   /// No description provided for @activitiesWeekendOutingTitle.
   ///
   /// In en, this message translates to:
-  /// **'Weekend outing'**
+  /// **'Suggested outings'**
   String get activitiesWeekendOutingTitle;
 
   /// No description provided for @activitiesPrevPlace.
@@ -1445,25 +1451,25 @@ abstract class AppLocalizations {
   /// No description provided for @activitiesWeekendVoteText.
   ///
   /// In en, this message translates to:
-  /// **'{votes, plural, one{1 of 6 wants to go Friday} other{{votes} of 6 want to go Friday}}'**
+  /// **'{votes, plural, =0{No likes yet} one{1 like} other{{votes} likes}}'**
   String activitiesWeekendVoteText(int votes);
 
   /// No description provided for @activitiesWeekendVoteButton.
   ///
   /// In en, this message translates to:
-  /// **'I\'m in'**
+  /// **'Like'**
   String get activitiesWeekendVoteButton;
 
   /// No description provided for @activitiesWeekendVotedButton.
   ///
   /// In en, this message translates to:
-  /// **'You\'re in'**
+  /// **'Liked'**
   String get activitiesWeekendVotedButton;
 
   /// No description provided for @activitiesWhoVotedLabel.
   ///
   /// In en, this message translates to:
-  /// **'Who voted'**
+  /// **'Who liked it'**
   String get activitiesWhoVotedLabel;
 
   /// No description provided for @gamesTitle.
@@ -2627,7 +2633,7 @@ abstract class AppLocalizations {
   /// No description provided for @podcastDuration.
   ///
   /// In en, this message translates to:
-  /// **'32 min'**
+  /// **'117 min'**
   String get podcastDuration;
 
   /// No description provided for @podcastListenedLabel.
@@ -3635,7 +3641,7 @@ abstract class AppLocalizations {
   /// No description provided for @leaderboardCycleReward.
   ///
   /// In en, this message translates to:
-  /// **'{cycle} reward'**
+  /// **'Winner\'s reward'**
   String leaderboardCycleReward(String cycle);
 
   /// No description provided for @leaderboardLastWinner.
@@ -4559,6 +4565,462 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code copied'**
   String get accountFamilyCodeCopied;
+
+  /// No description provided for @homeTodayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get homeTodayTitle;
+
+  /// No description provided for @homeNoPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'No plans yet'**
+  String get homeNoPlans;
+
+  /// No description provided for @homeTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get homeTomorrow;
+
+  /// No description provided for @podcastFinishedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished listening'**
+  String get podcastFinishedButton;
+
+  /// No description provided for @podcastFinishedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'I finished listening'**
+  String get podcastFinishedDone;
+
+  /// No description provided for @podcastListenedMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Listened so far'**
+  String get podcastListenedMembers;
+
+  /// No description provided for @podcastAddQuestionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your own question'**
+  String get podcastAddQuestionHint;
+
+  /// No description provided for @podcastAddQuestionButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get podcastAddQuestionButton;
+
+  /// No description provided for @podcastFullTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding 70 | Series: You Must Break Free (5): Freedom from Distraction | with Sheikh Amjad Sameer'**
+  String get podcastFullTitle;
+
+  /// No description provided for @podcastWhereToListen.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do you want to listen?'**
+  String get podcastWhereToListen;
+
+  /// No description provided for @podcastPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s podcast'**
+  String get podcastPageTitle;
+
+  /// No description provided for @podcastNotListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as not listened.'**
+  String get podcastNotListened;
+
+  /// No description provided for @homePhoneFreeWarningPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'If you use your phone and leave the app, you\'ll lose {points} points.'**
+  String homePhoneFreeWarningPoints(int points);
+
+  /// No description provided for @homePhoneFreeWarningPunishment.
+  ///
+  /// In en, this message translates to:
+  /// **'If you use your phone and leave the app, you\'ll get a punishment: {punishment}.'**
+  String homePhoneFreeWarningPunishment(String punishment);
+
+  /// No description provided for @accountEditAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit your account'**
+  String get accountEditAccount;
+
+  /// No description provided for @editAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit account'**
+  String get editAccountTitle;
+
+  /// No description provided for @editAccountCharacter.
+  ///
+  /// In en, this message translates to:
+  /// **'Your character'**
+  String get editAccountCharacter;
+
+  /// No description provided for @editAccountSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get editAccountSave;
+
+  /// No description provided for @editAccountSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Check your internet and try again.'**
+  String get editAccountSaveFailed;
+
+  /// No description provided for @topicsCatTell.
+  ///
+  /// In en, this message translates to:
+  /// **'Things we want to say'**
+  String get topicsCatTell;
+
+  /// No description provided for @pointsEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'+{points} points'**
+  String pointsEarned(int points);
+
+  /// No description provided for @pointsFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'You were first! +{points} points'**
+  String pointsFirst(int points);
+
+  /// No description provided for @notifsTagSurvey.
+  ///
+  /// In en, this message translates to:
+  /// **'Survey'**
+  String get notifsTagSurvey;
+
+  /// No description provided for @surveyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This month\'s survey'**
+  String get surveyTitle;
+
+  /// No description provided for @surveyCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How was your month with the family?'**
+  String get surveyCardTitle;
+
+  /// No description provided for @surveyCardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A few quick questions, just for you'**
+  String get surveyCardDesc;
+
+  /// No description provided for @surveyDoneCard.
+  ///
+  /// In en, this message translates to:
+  /// **'You answered this month\'s survey. See you next month!'**
+  String get surveyDoneCard;
+
+  /// No description provided for @surveyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a minute to think about this month. Only you can see your answers.'**
+  String get surveyIntro;
+
+  /// No description provided for @surveyHintMulti.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick as many as you like'**
+  String get surveyHintMulti;
+
+  /// No description provided for @surveyQClosest.
+  ///
+  /// In en, this message translates to:
+  /// **'Who did you get closest to this month?'**
+  String get surveyQClosest;
+
+  /// No description provided for @surveyQCloser.
+  ///
+  /// In en, this message translates to:
+  /// **'Who do you want to get closer to?'**
+  String get surveyQCloser;
+
+  /// No description provided for @surveyQLiked.
+  ///
+  /// In en, this message translates to:
+  /// **'Which features of the app did you enjoy?'**
+  String get surveyQLiked;
+
+  /// No description provided for @surveyQDisliked.
+  ///
+  /// In en, this message translates to:
+  /// **'Which features didn\'t you enjoy?'**
+  String get surveyQDisliked;
+
+  /// No description provided for @surveyQOutings.
+  ///
+  /// In en, this message translates to:
+  /// **'Which outings did you enjoy the most?'**
+  String get surveyQOutings;
+
+  /// No description provided for @surveyQGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Which games did you enjoy the most?'**
+  String get surveyQGames;
+
+  /// No description provided for @surveyQCloseness.
+  ///
+  /// In en, this message translates to:
+  /// **'How close did you feel to your family this month?'**
+  String get surveyQCloseness;
+
+  /// No description provided for @surveyCloseLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not very'**
+  String get surveyCloseLow;
+
+  /// No description provided for @surveyCloseHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Very close'**
+  String get surveyCloseHigh;
+
+  /// No description provided for @surveyQComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything else you\'d like to tell us?'**
+  String get surveyQComment;
+
+  /// No description provided for @surveyCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get surveyCommentHint;
+
+  /// No description provided for @surveySubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send my answers'**
+  String get surveySubmit;
+
+  /// No description provided for @surveyThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! See you next month.'**
+  String get surveyThanks;
+
+  /// No description provided for @surveyNothingThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing this month'**
+  String get surveyNothingThisMonth;
+
+  /// No description provided for @surveyNoOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'No one else has joined the family yet'**
+  String get surveyNoOthers;
+
+  /// No description provided for @surveyFeatureChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Family chat'**
+  String get surveyFeatureChat;
+
+  /// No description provided for @surveyFeatureMoments.
+  ///
+  /// In en, this message translates to:
+  /// **'Moments'**
+  String get surveyFeatureMoments;
+
+  /// No description provided for @surveyFeatureGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get surveyFeatureGames;
+
+  /// No description provided for @surveyFeaturePodcast.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast club'**
+  String get surveyFeaturePodcast;
+
+  /// No description provided for @surveyFeatureBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Book club'**
+  String get surveyFeatureBook;
+
+  /// No description provided for @surveyFeatureTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk topics'**
+  String get surveyFeatureTopics;
+
+  /// No description provided for @surveyFeatureOutings.
+  ///
+  /// In en, this message translates to:
+  /// **'Outings'**
+  String get surveyFeatureOutings;
+
+  /// No description provided for @surveyFeatureCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar and events'**
+  String get surveyFeatureCalendar;
+
+  /// No description provided for @surveyFeaturePoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Points and leaderboard'**
+  String get surveyFeaturePoints;
+
+  /// No description provided for @activitiesOpenInMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Google Maps'**
+  String get activitiesOpenInMaps;
+
+  /// No description provided for @activitiesGoogleMapsRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps'**
+  String get activitiesGoogleMapsRating;
+
+  /// No description provided for @homeAddTopicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to talk about?'**
+  String get homeAddTopicTitle;
+
+  /// No description provided for @homeAddTopicDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'It joins tonight\'s topics and your topics'**
+  String get homeAddTopicDesc;
+
+  /// No description provided for @homeAddTopicHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a topic…'**
+  String get homeAddTopicHint;
+
+  /// No description provided for @homeAddTopicButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get homeAddTopicButton;
+
+  /// No description provided for @homeAddTopicAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to tonight\'s topics'**
+  String get homeAddTopicAdded;
+
+  /// No description provided for @accountMyTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'My topics'**
+  String get accountMyTopics;
+
+  /// No description provided for @accountMyTopicsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Not talked about yet'**
+  String get accountMyTopicsHint;
+
+  /// No description provided for @accountMyTopicsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing waiting. Add a topic from Home.'**
+  String get accountMyTopicsEmpty;
+
+  /// No description provided for @momentsReactHeart.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart'**
+  String get momentsReactHeart;
+
+  /// No description provided for @momentsReactLaugh.
+  ///
+  /// In en, this message translates to:
+  /// **'Laughing'**
+  String get momentsReactLaugh;
+
+  /// No description provided for @momentsReactThumbs.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumbs up'**
+  String get momentsReactThumbs;
+
+  /// No description provided for @momentsReactCry.
+  ///
+  /// In en, this message translates to:
+  /// **'Crying'**
+  String get momentsReactCry;
+
+  /// No description provided for @momentsReactLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart eyes'**
+  String get momentsReactLove;
+
+  /// No description provided for @momentsReactionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No reactions} =1{1 reaction} other{{n} reactions}}'**
+  String momentsReactionsCount(int n);
+
+  /// No description provided for @momentsCommentsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No comments} =1{1 comment} other{{n} comments}}'**
+  String momentsCommentsCount(int n);
+
+  /// No description provided for @activitiesAddToCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to calendar'**
+  String get activitiesAddToCalendar;
+
+  /// No description provided for @activitiesAddedToCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the family calendar'**
+  String get activitiesAddedToCalendar;
+
+  /// No description provided for @activitiesAddOuting.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest an outing'**
+  String get activitiesAddOuting;
+
+  /// No description provided for @activitiesOutingName.
+  ///
+  /// In en, this message translates to:
+  /// **'Where would you like to go?'**
+  String get activitiesOutingName;
+
+  /// No description provided for @activitiesOutingAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get activitiesOutingAdd;
+
+  /// No description provided for @activitiesSuggestedByFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested by the family'**
+  String get activitiesSuggestedByFamily;
 }
 
 class _AppLocalizationsDelegate

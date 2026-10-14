@@ -110,8 +110,8 @@ class MomentsScreenState extends State<MomentsScreen> {
                         MomentCard(
                           key: _cardKeys.putIfAbsent(m.id, GlobalKey.new),
                           moment: m,
-                          liked: c.isLiked(m),
-                          onLike: () => c.toggleLike(m.id),
+                          myReaction: c.myReaction(m),
+                          onReact: (k) => c.react(m.id, k),
                           onComment: (t) => c.addComment(m.id, t),
                         ),
                         const SizedBox(height: 16),

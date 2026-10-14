@@ -7,6 +7,8 @@ import '../../../screens/activities_colors.dart';
 import '../../moments/moments_controller.dart' show MomentScene;
 import '../../moments/widgets/moment_scene.dart';
 import '../../../widgets/photo_or_painted.dart';
+import '../../../data.dart' as app;
+import '../../../widgets.dart' show Avatar;
 import '../notification_model.dart';
 
 /// "قبل 5 دقايق" / "8:15 ص" / "أمس".
@@ -61,30 +63,26 @@ class NotificationAvatar extends StatelessWidget {
         child: Icon(
           n.type == NotificationType.club
               ? Icons.menu_book_outlined
+              : n.type == NotificationType.survey
+              ? Icons.favorite_border_rounded
               : Icons.notifications_none_rounded,
           size: size * .5,
           color: AC.teal,
         ),
       );
     }
+    // the person's real profile picture (the same one the rest of the app shows)
+    final picture = Avatar(
+      a.id == notificationMeId ? app.profile.name : a.name,
+      size: size,
+    );
+    if (ring == null) return picture;
     return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: a.color,
         shape: BoxShape.circle,
-        border: ring == null ? null : Border.all(color: ring!, width: 2),
+        border: Border.all(color: ring!, width: 2),
       ),
-      child: Text(
-        a.initial,
-        style: TextStyle(
-          fontSize: (size * .42).roundToDouble(),
-          fontWeight: FontWeight.w700,
-          color: a.ink,
-          height: 1.1,
-        ),
-      ),
+      child: ClipOval(child: picture),
     );
   }
 }

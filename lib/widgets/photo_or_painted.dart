@@ -8,11 +8,14 @@ class PhotoOrPainted extends StatelessWidget {
   /// What shows when there's no photo (and underneath while it loads).
   final Widget fallback;
   final BoxFit fit;
+  final Alignment
+  alignment; // which part of the photo stays in view when it is cropped
   const PhotoOrPainted({
     super.key,
     required this.assetPath,
     required this.fallback,
     this.fit = BoxFit.cover,
+    this.alignment = Alignment.center,
   });
 
   @override
@@ -29,6 +32,7 @@ class PhotoOrPainted extends StatelessWidget {
           Image.asset(
             path,
             fit: fit,
+            alignment: alignment,
             // decode no bigger than it is shown
             cacheWidth: c.maxWidth.isFinite ? (c.maxWidth * dpr).round() : null,
             frameBuilder: (context, child, frame, sync) {

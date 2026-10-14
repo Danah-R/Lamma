@@ -193,7 +193,7 @@ void _coachTests() {
     expect(find.byType(CameraCoach), findsOneWidget);
     expect(find.text('صوّر لحظة من يومك'), findsOneWidget);
     expect(find.text('اضغط الكاميرا تحت وشاركها العائلة'), findsOneWidget);
-    expect(find.text('مشاركة'), findsOneWidget);
+    expect(find.text('مشاركة'), findsNothing); // the camera has no word under it any more
     expect(t.getSize(find.byType(CameraCoach)).width, 270);
     // buttons hug their text (the wide test font may wrap them to two rows;
     // on the simulator they sit on one row)

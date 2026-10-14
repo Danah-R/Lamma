@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/number_symbols_data.dart' show numberFormatSymbols;
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,8 @@ const _startAtHome = bool.fromEnvironment('START_AT_HOME');
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // numbers in the Arabic text use the digits 0-9 (10), not the Arabic-Indic ones
+  numberFormatSymbols['ar'] = numberFormatSymbols['en']!;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // A returning install signs in silently and, if it already belongs to a family,
   // goes straight into the app. Offline or on any failure, onboarding runs as usual.
@@ -183,7 +186,7 @@ class _ShellState extends State<Shell> {
     (l.navAccount, Icons.person_outline_rounded, Icons.person_rounded),
   ];
   static const _muted = Color(0x99FFF7F1); // page cream at 60% on the navy bar
-  static const _barHeight = 60.0, _peek = 20.0;
+  static const _barHeight = 60.0, _peek = 28.0;
 
   Widget _root(int i) => switch (i) {
     0 => HomePage(onSwitchTab: _select),
@@ -216,6 +219,7 @@ class _ShellState extends State<Shell> {
     _notifications = context.read<NotificationsController>()
       ..onOpen = _openTarget
       ..addListener(_onNotificationsChanged);
+    _loadCamTapped();
   }
 
   @override
@@ -326,7 +330,30 @@ class _ShellState extends State<Shell> {
 
   // From any other tab the camera goes to the feed; pressing it again while
   // on the feed opens "لحظة جديدة".
+  // the camera's pulsing stops for good once it has been tapped
+  static const _camTappedKey = 'camera_tapped';
+  bool _camTapped = false;
+
+  Future<void> _loadCamTapped() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if ((prefs.getBool(_camTappedKey) ?? false) && mounted)
+        setState(() => _camTapped = true);
+    } catch (_) {}
+  }
+
+  Future<void> _rememberCamTapped() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_camTappedKey, true);
+    } catch (_) {}
+  }
+
   void _shareMoment() {
+    if (!_camTapped) {
+      setState(() => _camTapped = true);
+      _rememberCamTapped();
+    }
     _dismissCoach();
     if (_i == _momentsTab &&
         _keys[_momentsTab].currentState?.canPop() != true) {
@@ -385,6 +412,10 @@ class _ShellState extends State<Shell> {
                           padding: EdgeInsets.only(bottom: inset),
                           decoration: BoxDecoration(
                             color: C.navy,
+                            // curved top corners
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(30),
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: .10),
@@ -407,45 +438,40 @@ class _ShellState extends State<Shell> {
                       // share a moment: centered, peeking out above the bar, with its label underneath
                       Align(
                         alignment: Alignment.topCenter,
-                        child: Tooltip(
-                          message: l.navShare,
-                          child: Semantics(
-                            button: true,
-                            label: l.momentsShareSemantics,
-                            excludeSemantics: true,
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: _shareMoment,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SharePulse(
-                                    active: !shared,
-                                    size: 56,
-                                    child: Container(
-                                      width: 56,
-                                      height: 56,
-                                      decoration: const BoxDecoration(
-                                        color: C.brick,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.camera_alt_rounded,
-                                        color: Colors.white,
-                                        size: 27,
+                        child: Padding(
+                          // nudged down a little
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Tooltip(
+                            message: l.navShare,
+                            child: Semantics(
+                              button: true,
+                              label: l.momentsShareSemantics,
+                              excludeSemantics: true,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: _shareMoment,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SharePulse(
+                                      active: !shared && !_camTapped,
+                                      size: 70,
+                                      child: Container(
+                                        width: 70,
+                                        height: 70,
+                                        decoration: const BoxDecoration(
+                                          color: C.brick,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(
+                                          Icons.camera_alt_rounded,
+                                          color: Colors.white,
+                                          size: 34,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    l.navShare,
-                                    style: const TextStyle(
-                                      fontSize: 10.5,
-                                      fontWeight: FontWeight.w700,
-                                      color: _muted,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -502,18 +528,10 @@ class _ShellState extends State<Shell> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // a soft pill marks the section you are in
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  curve: Curves.easeOut,
+                // the selected tab is shown by its color and filled icon only: no box behind it
+                SizedBox(
                   width: 54,
                   height: 30,
-                  decoration: BoxDecoration(
-                    color: sel
-                        ? C.cream.withValues(alpha: .16)
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
                   child: Icon(sel ? t.$3 : t.$2, size: 24, color: color),
                 ),
                 Text(

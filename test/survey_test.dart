@@ -97,9 +97,9 @@ void main() {
       await t.pump(const Duration(seconds: 1));
       await t.tap(find.byTooltip('الحساب'));
       await t.pump(const Duration(milliseconds: 500));
-      expect(find.text('كيف كان شهرك مع العيلة؟'), findsOneWidget);
+      expect(find.text('كيف كان شهرك مع العائلة؟'), findsOneWidget);
 
-      await t.tap(find.text('كيف كان شهرك مع العيلة؟'));
+      await t.tap(find.text('كيف كان شهرك مع العائلة؟'));
       await t.pump(const Duration(milliseconds: 500));
       expect(find.text('استبيان الشهر'), findsOneWidget);
       expect(find.text('مين كنت الأقرب له هالشهر؟'), findsOneWidget);
@@ -116,7 +116,7 @@ void main() {
       for (final q in [
         'أي طلعات استمتعت فيها أكثر؟',
         'أي ألعاب استمتعت فيها أكثر؟',
-        'قد إيش حسّيت إنك قريب من عيلتك هالشهر؟',
+        'قد إيش حسّيت إنك قريب من عائلتك هالشهر؟',
         'فيه شي ثاني تبي تقوله؟',
       ]) {
         await t.dragUntilVisible(
@@ -134,7 +134,7 @@ void main() {
       await t.pump(const Duration(milliseconds: 500));
 
       expect(find.text('شكرًا لك! نشوفك الشهر الجاي.'), findsOneWidget);
-      expect(find.text('كيف كان شهرك مع العيلة؟'), findsNothing);
+      expect(find.text('كيف كان شهرك مع العائلة؟'), findsNothing);
       expect(
         find.text('جاوبت على استبيان هالشهر، نشوفك الشهر الجاي!'),
         findsOneWidget,

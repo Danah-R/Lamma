@@ -248,7 +248,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String accountAgeSpirit(int age) {
-    return '$age years · Lamma spirit';
+    return '$age years';
   }
 
   @override
@@ -2766,7 +2766,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountMyTopicsHint => 'Not talked about yet';
 
   @override
-  String get accountMyTopicsEmpty => 'Nothing waiting. Add a topic from Home.';
+  String get accountMyTopicsEmpty => 'No topics currently';
 
   @override
   String get momentsReactHeart => 'Heart';
@@ -2824,4 +2824,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activitiesSuggestedByFamily => 'Suggested by the family';
+
+  @override
+  String get accountFamilyMembers => 'Family members';
+
+  @override
+  String accountShowFamily(int n) {
+    return 'Show all $n family members';
+  }
+
+  @override
+  String get accountHideFamily => 'Hide the list';
+
+  @override
+  String homePointsThisWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n points this week',
+      one: '1 point this week',
+      zero: 'No points this week yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String accountMemberOfFamily(String family) {
+    return 'Member of the $family family';
+  }
 }

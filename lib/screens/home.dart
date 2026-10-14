@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -26,11 +28,58 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SharedRefresh<HomePage> {
   Timer? _clock;
+  static const _weekKey = 'week_points_base';
+  int _weekBase = 0;
+  bool _weekReady = false;
+
+  /// The week we are in (counted from Saturday, like the family week).
+  String get _thisWeek {
+    final d = DateTime.now();
+    final start = DateTime(
+      d.year,
+      d.month,
+      d.day,
+    ).subtract(Duration(days: (d.weekday + 1) % 7));
+    return '${start.year}-${start.month}-${start.day}';
+  }
+
+  int get _myPoints =>
+      members
+          .where(
+            (m) => profile.memberId != null
+                ? m.id == profile.memberId
+                : m.name == profile.name,
+          )
+          .firstOrNull
+          ?.points ??
+      0;
+
+  /// Points earned since the week started (the total, minus what I had at the start of the week).
+  int get _weekPoints =>
+      _weekReady ? (_myPoints - _weekBase).clamp(0, 99999) : 0;
+
+  Future<void> _loadWeek() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final saved = prefs.getString(_weekKey)?.split('|');
+      if (saved != null && saved.length == 2 && saved[0] == _thisWeek) {
+        _weekBase = int.tryParse(saved[1]) ?? _myPoints;
+      } else {
+        // a new week: today's total is where this week starts
+        _weekBase = _myPoints;
+        await prefs.setString(_weekKey, '$_thisWeek|$_weekBase');
+      }
+    } catch (_) {
+      _weekBase = _myPoints;
+    }
+    if (mounted) setState(() => _weekReady = true);
+  }
 
   @override
   void initState() {
     super.initState();
     rules.tick(DateTime.now());
+    _loadWeek();
     // re-check the phone-free window twice a minute: it appears when the time starts
     // and the switch turns off when the time is up
     _clock = Timer.periodic(const Duration(seconds: 30), (_) {
@@ -232,23 +281,6 @@ class _HomePageState extends State<HomePage> with SharedRefresh<HomePage> {
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      if (art != null)
-                        // the picture stands directly on the divider line below it, faint and mirrored
-                        Positioned(
-                          left: -6,
-                          bottom: -16,
-                          width: 118,
-                          child: Opacity(
-                            opacity: .22,
-                            child: Transform.flip(
-                              flipX: true,
-                              child: Image.asset(
-                                art.asset,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -332,19 +364,23 @@ class _HomePageState extends State<HomePage> with SharedRefresh<HomePage> {
                   Divider(color: line, height: 1),
                   const SizedBox(height: 14),
                   GestureDetector(
-                    onTap: () => go(context, const BadgesPage()),
+                    // the points I earned this week; tap to see the leaderboard
+                    onTap: () async {
+                      await go(context, const LeaderboardPage());
+                      if (mounted) setState(() {});
+                    },
                     behavior: HitTestBehavior.opaque,
                     child: Row(
                       children: [
                         Icon(
-                          Icons.chat_bubble_outline_rounded,
+                          Icons.emoji_events_outlined,
                           color: fgSoft,
                           size: 18,
                         ),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            l.homeInteractions,
+                            l.homePointsThisWeek(_weekPoints),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -801,16 +837,21 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
 
 // ---- 08 add event
 class AddEventPage extends StatefulWidget {
-  const AddEventPage({super.key});
+  /// Filled in when the page is opened for something specific (an outing from the suggestions).
+  final String? initialName;
+  final String? initialType;
+  const AddEventPage({super.key, this.initialName, this.initialType});
   @override
   State<AddEventPage> createState() => _AddEventPageState();
 }
 
 class _AddEventPageState extends State<AddEventPage> {
-  String _type = eventTypes.first;
+  late String _type = eventTypes.contains(widget.initialType)
+      ? widget.initialType!
+      : eventTypes.first;
   DateTime _date = DateTime(today.year, today.month, today.day);
   TimeOfDay _time = const TimeOfDay(hour: 20, minute: 0);
-  final _name = TextEditingController();
+  late final _name = TextEditingController(text: widget.initialName ?? '');
   bool _calOpen = false;
 
   @override

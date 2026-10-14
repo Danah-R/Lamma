@@ -186,7 +186,7 @@ class NotificationEvents {
     );
   }
 
-  /// "استبيان الشهر جاهز: كيف كان شهرك مع العيلة؟" (opens the profile, where the survey is)
+  /// "استبيان الشهر جاهز: كيف كان شهرك مع العائلة؟" (opens the profile, where the survey is)
   static AppNotification monthlySurvey({
     required String month,
     required DateTime at,
@@ -194,7 +194,7 @@ class NotificationEvents {
     id: 'survey-$month',
     type: NotificationType.survey,
     lead: 'استبيان الشهر:',
-    text: 'استبيان الشهر جاهز: كيف كان شهرك مع العيلة؟',
+    text: 'استبيان الشهر جاهز: كيف كان شهرك مع العائلة؟',
     targetRoute: NotificationRoute.profile,
     createdAt: at,
   );

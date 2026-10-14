@@ -503,7 +503,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountAgeSpirit.
   ///
   /// In en, this message translates to:
-  /// **'{age} years · Lamma spirit'**
+  /// **'{age} years'**
   String accountAgeSpirit(int age);
 
   /// No description provided for @accountMyInterests.
@@ -4941,7 +4941,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountMyTopicsEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Nothing waiting. Add a topic from Home.'**
+  /// **'No topics currently'**
   String get accountMyTopicsEmpty;
 
   /// No description provided for @momentsReactHeart.
@@ -5021,6 +5021,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Suggested by the family'**
   String get activitiesSuggestedByFamily;
+
+  /// No description provided for @accountFamilyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Family members'**
+  String get accountFamilyMembers;
+
+  /// No description provided for @accountShowFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all {n} family members'**
+  String accountShowFamily(int n);
+
+  /// No description provided for @accountHideFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the list'**
+  String get accountHideFamily;
+
+  /// No description provided for @homePointsThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No points this week yet} one{1 point this week} other{{n} points this week}}'**
+  String homePointsThisWeek(int n);
+
+  /// No description provided for @accountMemberOfFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Member of the {family} family'**
+  String accountMemberOfFamily(String family);
 }
 
 class _AppLocalizationsDelegate

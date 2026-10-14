@@ -189,6 +189,7 @@ void main() {
     await t.pumpWidget(const LammaApp(skipSplash: true, skipOnboarding: true));
     await t.pump(const Duration(milliseconds: 500));
     expect(t.hasRunningAnimations, isTrue);
-    expect(find.text('مشاركة'), findsOneWidget);
+    // no word under the camera any more
+    expect(find.text('مشاركة'), findsNothing);
   });
 }

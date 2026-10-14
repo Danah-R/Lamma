@@ -348,19 +348,18 @@ const places = <Place>[
 final ourOutings = <Place>[];
 
 const badges = <(String, IconData, Color, bool)>[
-  ('Most interactive', Icons.emoji_events_rounded, C.yellow, true),
-  ('Lamma spirit', Icons.favorite_rounded, C.brick, true),
   ('Weekly listener', Icons.headphones_rounded, C.teal, true),
   ('Week winner', Icons.military_tech_rounded, C.navy, true),
+  ('Reader', Icons.menu_book_rounded, C.inkSoft, true),
   ('Talks king', Icons.forum_rounded, C.brick, true),
-  ('Reader', Icons.menu_book_rounded, C.inkSoft, false),
 ];
 
 /// Pictures for the badges that have one (the others use an icon).
 const badgeImages = <String, String>{
-  'Reader': 'assets/badges/reader.png',
-  'Weekly listener': 'assets/badges/listener.png',
-  'Week winner': 'assets/badges/winner.png',
+  'Reader': 'assets/badges/reader.jpg',
+  'Talks king': 'assets/badges/talks_king.jpg',
+  'Weekly listener': 'assets/badges/listener.jpg',
+  'Week winner': 'assets/badges/winner.jpg',
 };
 
 const azizQuestions = [

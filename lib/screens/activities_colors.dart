@@ -14,7 +14,7 @@ class AC {
   static const ink = Color(0xFF2B211E);
   static const muted = Color(0xFF6B5D55);
   static const brick = Color(0xFF9A4A3E);
-  static const navy = Color(0xFF1E2A47);
+  static const navy = C.navy; // one navy for the whole app: the same as the bottom bar and the headings
   static const mustard = Color(0xFFDEB461);
   static const salmon = Color(0xFFE29079);
   static const teal = Color(0xFF3E7A75);

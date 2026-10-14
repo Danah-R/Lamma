@@ -149,7 +149,7 @@
   "recapSeeBadges": "See badges",
   "accountTitle": "Account",
   "accountSubtitle": "Your Lamma profile",
-  "accountAgeSpirit": "{age} years · Lamma spirit",
+  "accountAgeSpirit": "{age} years",
   "@accountAgeSpirit": {
     "placeholders": {
       "age": {
@@ -1429,7 +1429,7 @@
   "homeAddTopicAdded": "Added to tonight's topics",
   "accountMyTopics": "My topics",
   "accountMyTopicsHint": "Not talked about yet",
-  "accountMyTopicsEmpty": "Nothing waiting. Add a topic from Home.",
+  "accountMyTopicsEmpty": "No topics currently",
   "momentsReactHeart": "Heart",
   "momentsReactLaugh": "Laughing",
   "momentsReactThumbs": "Thumbs up",
@@ -1456,5 +1456,31 @@
   "activitiesAddOuting": "Suggest an outing",
   "activitiesOutingName": "Where would you like to go?",
   "activitiesOutingAdd": "Add",
-  "activitiesSuggestedByFamily": "Suggested by the family"
+  "activitiesSuggestedByFamily": "Suggested by the family",
+  "accountFamilyMembers": "Family members",
+  "accountShowFamily": "Show all {n} family members",
+  "@accountShowFamily": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "accountHideFamily": "Hide the list",
+  "homePointsThisWeek": "{n, plural, =0{No points this week yet} one{1 point this week} other{{n} points this week}}",
+  "@homePointsThisWeek": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "accountMemberOfFamily": "Member of the {family} family",
+  "@accountMemberOfFamily": {
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -25,6 +25,8 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage>
     with SharedRefresh<AccountPage> {
+  bool _showFamily = false;
+
   // space the floating tab bar occupies
   static const _bottomInset = 104.0;
 
@@ -38,6 +40,16 @@ class _AccountPageState extends State<AccountPage>
   Future<void> _editAccount() async {
     await go(context, const EditAccountPage());
     if (mounted) setState(() {});
+  }
+
+  /// The family's name for "member of the ... family" (the word "family" itself is dropped from it).
+  String get _familyName {
+    var n = profile.family.trim();
+    n = n
+        .replaceAll(RegExp(r'\s*family\s*$', caseSensitive: false), '')
+        .replaceFirst(RegExp(r'^(عائلة|العائلة)\s+'), '')
+        .trim();
+    return n.isEmpty ? profile.family : n;
   }
 
   int get _pictures => context
@@ -84,16 +96,23 @@ class _AccountPageState extends State<AccountPage>
                     child: Stack(
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GestureDetector(
-                              onTap: _editAccount,
-                              child: Avatar(profile.name, size: 96),
+                            // level with the name (both start below the "Edit your account" link)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40),
+                              child: GestureDetector(
+                                onTap: _editAccount,
+                                child: Avatar(profile.name, size: 96),
+                              ),
                             ),
                             const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // starts below the "Edit your account" link, so the two never overlap
+                                  const SizedBox(height: 40),
                                   Text(
                                     profile.name,
                                     maxLines: 1,
@@ -102,6 +121,17 @@ class _AccountPageState extends State<AccountPage>
                                       fontSize: 30,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: -.3,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  // "member of the ... family": the family's name without a repeated "family"
+                                  Text(
+                                    l.accountMemberOfFamily(_familyName),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: C.ink.withValues(alpha: .7),
                                     ),
                                   ),
                                   const SizedBox(height: 2),
@@ -230,39 +260,135 @@ class _AccountPageState extends State<AccountPage>
                   const SizedBox(height: 22),
                   const _FlexGap(),
 
-                  // interests: set as a line of text rather than a bag of tags
-                  SectionLabel(l.accountMyInterests),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 22,
-                    runSpacing: 6,
+                  // interests and favorite outings, side by side
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (final i in profile.interests)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // a small sage dot: the interests' color
-                            Container(
-                              width: 8,
-                              height: 8,
-                              decoration: const BoxDecoration(
-                                color: C.sage,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
                             Text(
-                              ld(context, i),
+                              l.accountMyInterests,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: .3,
+                                color: C.inkSoft,
                               ),
                             ),
+                            const SizedBox(height: 10),
+                            for (final i in profile.interests)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  children: [
+                                    // a small sage dot: the interests' color
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: const BoxDecoration(
+                                        color: C.sage,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        ld(context, i),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.accountPlacesToVisit,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: .3,
+                                color: C.inkSoft,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            if (profile.outingTypes.isEmpty)
+                              Text(
+                                l.accountNothingPicked,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: C.inkSoft,
+                                ),
+                              )
+                            else
+                              for (final t in profile.outingTypes)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        _outingIcons[t] ?? Icons.place_outlined,
+                                        size: 18,
+                                        color: C.ink.withValues(alpha: .8),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          ld(context, t),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 22),
+
+                  // achievements: numbers sit in the page, not in cards
+                  SectionLabel(l.accountAchievements),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(child: _Stat('12', l.accountStatDays, C.brick)),
+                      const SizedBox(width: 8),
+                      Expanded(child: _Stat('8', l.accountStatGames, C.teal)),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _Stat(
+                          '$_pictures',
+                          l.accountStatPictures,
+                          C.navy,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _Stat('$_points', l.accountStatPoints, C.yellow),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
 
                   // my topics: the ones I added that the family has not talked about yet
                   Builder(
@@ -273,14 +399,6 @@ class _AccountPageState extends State<AccountPage>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SectionLabel(l.accountMyTopics),
-                          const SizedBox(height: 4),
-                          Text(
-                            l.accountMyTopicsHint,
-                            style: const TextStyle(
-                              fontSize: 12.5,
-                              color: C.inkSoft,
-                            ),
-                          ),
                           const SizedBox(height: 10),
                           if (mine.isEmpty)
                             Text(
@@ -325,48 +443,13 @@ class _AccountPageState extends State<AccountPage>
                                   ),
                                 ),
                               ),
-                          const SizedBox(height: 22),
+                          const SizedBox(height: 0),
                         ],
                       );
                     },
                   ),
 
-                  // places: each saved category, with its own mark
-                  SectionLabel(l.accountPlacesToVisit),
-                  const SizedBox(height: 12),
-                  if (profile.outingTypes.isEmpty)
-                    Text(
-                      l.accountNothingPicked,
-                      style: const TextStyle(fontSize: 15, color: C.inkSoft),
-                    )
-                  else
-                    Wrap(
-                      spacing: 24,
-                      runSpacing: 12,
-                      children: [
-                        for (final t in profile.outingTypes)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                _outingIcons[t] ?? Icons.place_outlined,
-                                size: 20,
-                                color: C.ink.withValues(alpha: .8),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                ld(context, t),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  const SizedBox(height: 22),
-                  const _FlexGap(),
+                  const SizedBox(height: 14),
 
                   if (profile.isParent) ...[
                     SectionLabel(l.accountParentSection),
@@ -378,67 +461,149 @@ class _AccountPageState extends State<AccountPage>
                       onTap: () => go(context, const ParentControlsPage()),
                     ),
                     const Divider(height: 20, color: C.line),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                   ],
 
-                  // the family's join code, so people can invite each other
-                  if (profile.memberId != null) ...[
-                    SectionLabel(l.accountFamilyCode),
-                    const SizedBox(height: 6),
-                    InkWell(
-                      onTap: () {
-                        Clipboard.setData(
-                          ClipboardData(text: profile.familyCode),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(l.accountFamilyCodeCopied)),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Directionality(
-                                textDirection: TextDirection
-                                    .ltr, // a code always reads left to right
-                                child: Text(
-                                  profile.familyCode,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1.5,
-                                  ),
-                                ),
+                  const SizedBox(height: 28),
+                  // everyone in the family: tap to show or hide the list, right here
+                  SectionLabel(l.accountFamilyMembers),
+                  const SizedBox(height: 8),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () => setState(() => _showFamily = !_showFamily),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(
+                        children: [
+                          AvatarStack([
+                            for (final m in members) m.name,
+                          ], size: 34),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              _showFamily
+                                  ? l.accountHideFamily
+                                  : l.accountShowFamily(members.length),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: C.brick,
                               ),
                             ),
-                            const Icon(
-                              Icons.copy_rounded,
-                              size: 20,
-                              color: C.inkSoft,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOut,
+                    alignment: Alignment.topCenter,
+                    child: !_showFamily
+                        ? const SizedBox(width: double.infinity)
+                        : Column(
+                            children: [
+                              for (final m in members)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 6,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Avatar(m.name, size: 44),
+                                      const SizedBox(width: 14),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              ld(context, m.name),
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              ld(context, m.role),
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: C.inkSoft,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (m.isParent)
+                                        const Icon(
+                                          Icons.shield_outlined,
+                                          size: 18,
+                                          color: C.inkSoft,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                  ),
+                  const SizedBox(height: 28),
+
+                  // the family's join code at the bottom of the page: tap it to copy and share it
+                  ...[
+                    SectionLabel(l.accountFamilyCode),
+                    const SizedBox(height: 8),
+                    // the code sits on the right, in a light-red pill; tap it to copy
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Material(
+                        color: C.brickTint,
+                        shape: const StadiumBorder(),
+                        child: InkWell(
+                          customBorder: const StadiumBorder(),
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(text: profile.familyCode),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(l.accountFamilyCodeCopied),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
                             ),
-                          ],
+                            child: Directionality(
+                              textDirection: TextDirection
+                                  .ltr, // a code always reads left to right
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    profile.familyCode,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 1.2,
+                                      color: C.brick,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.copy_rounded,
+                                    size: 15,
+                                    color: C.brick,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 28),
                   ],
-
-                  // achievements: numbers sit in the page, not in cards
-                  SectionLabel(l.accountAchievements),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      _Stat('12', l.accountStatDays, C.brick),
-                      _Stat('8', l.accountStatGames, C.teal),
-                      // pictures (moments) I shared, and the points I have collected
-                      _Stat('$_pictures', l.accountStatPictures, C.navy),
-                      _Stat('$_points', l.accountStatPoints, C.yellow),
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -481,44 +646,47 @@ class _BadgeStrip extends StatelessWidget {
                 // badges with their own picture: all of it, on a soft background
                 ? Opacity(
                     opacity: b.$4 ? 1 : .45,
-                    child: Container(
-                      width: 58,
-                      height: 58,
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: C.peachTint,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Image.asset(
-                        badgeImages[b.$1]!,
-                        fit: BoxFit.contain,
-                        filterQuality: FilterQuality.high,
-                        errorBuilder: (_, _, _) =>
-                            Icon(b.$2, size: 24, color: b.$3),
-                      ),
-                    ),
+                    child: _BadgePicture(badge: b, size: 36),
                   )
                 : Container(
-                    width: 30,
-                    height: 30,
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: !b.$4
-                          ? C.line
-                          : (b == badges.first
-                                ? C.yellow
-                                : b.$3.withValues(alpha: .14)),
+                      color: !b.$4 ? C.line : C.yellow,
                     ),
                     child: Icon(
                       b.$4 ? b.$2 : Icons.lock_rounded,
-                      size: 15,
-                      color: !b.$4
-                          ? C.inkSoft
-                          : (b == badges.first ? C.ink : b.$3),
+                      size: 18,
+                      color: !b.$4 ? C.inkSoft : C.ink,
                     ),
                   ),
           ),
       ],
+    ),
+  );
+}
+
+/// A badge's own picture as a circle (the picture already has its background and room around it,
+/// so it is shown whole); if it cannot be loaded the badge's icon shows instead.
+class _BadgePicture extends StatelessWidget {
+  final (String, IconData, Color, bool) badge;
+  final double size;
+  const _BadgePicture({required this.badge, required this.size});
+  @override
+  Widget build(BuildContext context) => ClipOval(
+    child: Image.asset(
+      badgeImages[badge.$1]!,
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      filterQuality: FilterQuality.high,
+      errorBuilder: (_, _, _) => Container(
+        width: size,
+        height: size,
+        color: C.yellow,
+        child: Icon(badge.$2, size: size * .5, color: C.ink),
+      ),
     ),
   );
 }
@@ -530,26 +698,33 @@ class _Stat extends StatelessWidget {
   const _Stat(this.value, this.label, this.color);
   @override
   Widget build(BuildContext context) => Container(
-    width: 92,
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
     decoration: BoxDecoration(
       color: C.card,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(14),
     ),
     child: Column(
+      mainAxisSize: MainAxisSize.min,
+      // text starts on the right in Arabic (the left in English), as it did before
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           value,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 21,
             fontWeight: FontWeight.w600,
-            height: 1.1,
+            height: 1.15,
             color: color,
           ),
         ),
-        const SizedBox(height: 2),
-        Text(label, style: const TextStyle(fontSize: 12, color: C.inkSoft)),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 11.5, color: C.inkSoft),
+          ),
+        ),
       ],
     ),
   );
@@ -625,45 +800,33 @@ class BadgesPage extends StatelessWidget {
           for (final b in badges)
             Opacity(
               opacity: b.$4 ? 1 : .45,
-              child: LCard(
-                color: b == badges.first ? C.navy : null,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (badgeImages[b.$1] != null)
-                      Container(
-                        width: 84,
-                        height: 84,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: C.peachTint,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Image.asset(
-                          badgeImages[b.$1]!,
-                          fit: BoxFit.contain,
-                          filterQuality: FilterQuality.high,
-                          errorBuilder: (_, _, _) =>
-                              Icon(b.$2, size: 24, color: b.$3),
-                        ),
-                      )
-                    else
-                      Icon(
-                        b.$4 ? b.$2 : Icons.lock_rounded,
-                        color: b == badges.first ? C.yellow : b.$3,
-                        size: 30,
+              // no box behind a badge: just the picture and its name
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (badgeImages[b.$1] != null)
+                    _BadgePicture(badge: b, size: 68)
+                  else
+                    Container(
+                      width: 68,
+                      height: 68,
+                      decoration: const BoxDecoration(
+                        color: C.yellow,
+                        shape: BoxShape.circle,
                       ),
-                    const SizedBox(height: 8),
-                    Text(
-                      ld(context, b.$1),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: b == badges.first ? Colors.white : C.ink,
+                      child: Icon(
+                        b.$4 ? b.$2 : Icons.lock_rounded,
+                        color: C.ink,
+                        size: 36,
                       ),
                     ),
-                  ],
-                ),
+                  const SizedBox(height: 8),
+                  Text(
+                    ld(context, b.$1),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w700, color: C.ink),
+                  ),
+                ],
               ),
             ),
         ],

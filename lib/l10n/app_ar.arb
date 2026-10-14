@@ -67,7 +67,7 @@
   "recapSeeBadges": "عرض الأوسمة",
   "accountTitle": "الحساب",
   "accountSubtitle": "ملفك في لمّه",
-  "accountAgeSpirit": "{age} سنة · روح لمّه",
+  "accountAgeSpirit": "{age} سنة",
   "accountMyInterests": "اهتماماتي",
   "accountPlacesToVisit": "أماكن أحب أزورها",
   "accountNothingPicked": "لم يتم اختيار شيء بعد",
@@ -871,7 +871,7 @@
   "podcastWhereToListen": "وين تبي تسمع؟",
   "podcastPageTitle": "بودكاست هذا الأسبوع",
   "podcastNotListened": "تم تسجيلها كأنك ما سمعتها.",
-  "homePhoneFreeWarningPoints": "إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك {points} نقطة.",
+  "homePhoneFreeWarningPoints": "إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك {points, plural, one{نقطة وحدة} two{نقطتين} few{{points} نقاط} many{{points} نقطة} other{{points} نقطة}}.",
   "@homePhoneFreeWarningPoints": {
     "placeholders": {
       "points": {
@@ -893,7 +893,7 @@
   "editAccountSave": "احفظ التعديلات",
   "editAccountSaveFailed": "ما قدرنا نحفظ. تأكد من الإنترنت وجرّب مرة ثانية.",
   "topicsCatTell": "سوالف نبي نقولها",
-  "pointsEarned": "+{points} نقطة",
+  "pointsEarned": "+{points, plural, one{نقطة وحدة} two{نقطتين} few{{points} نقاط} many{{points} نقطة} other{{points} نقطة}}",
   "@pointsEarned": {
     "placeholders": {
       "points": {
@@ -901,7 +901,7 @@
       }
     }
   },
-  "pointsFirst": "أنت الأول! +{points} نقطة",
+  "pointsFirst": "أنت الأول! +{points, plural, one{نقطة وحدة} two{نقطتين} few{{points} نقاط} many{{points} نقطة} other{{points} نقطة}}",
   "@pointsFirst": {
     "placeholders": {
       "points": {
@@ -911,7 +911,7 @@
   },
   "notifsTagSurvey": "استبيان",
   "surveyTitle": "استبيان الشهر",
-  "surveyCardTitle": "كيف كان شهرك مع العيلة؟",
+  "surveyCardTitle": "كيف كان شهرك مع العائلة؟",
   "surveyCardDesc": "كم سؤال سريع، وإجاباتك لك وحدك",
   "surveyDoneCard": "جاوبت على استبيان هالشهر، نشوفك الشهر الجاي!",
   "surveyIntro": "خذ لك دقيقة وفكّر في شهرك. إجاباتك ما يشوفها إلا أنت.",
@@ -922,7 +922,7 @@
   "surveyQDisliked": "أي ميزات ما عجبتك؟",
   "surveyQOutings": "أي طلعات استمتعت فيها أكثر؟",
   "surveyQGames": "أي ألعاب استمتعت فيها أكثر؟",
-  "surveyQCloseness": "قد إيش حسّيت إنك قريب من عيلتك هالشهر؟",
+  "surveyQCloseness": "قد إيش حسّيت إنك قريب من عائلتك هالشهر؟",
   "surveyCloseLow": "مو كثير",
   "surveyCloseHigh": "قريب مرة",
   "surveyQComment": "فيه شي ثاني تبي تقوله؟",
@@ -930,7 +930,7 @@
   "surveySubmit": "أرسل إجاباتي",
   "surveyThanks": "شكرًا لك! نشوفك الشهر الجاي.",
   "surveyNothingThisMonth": "ما صار شي هالشهر",
-  "surveyNoOthers": "ما انضم أحد ثاني للعيلة للحين",
+  "surveyNoOthers": "ما انضم أحد ثاني للعائلة للحين",
   "surveyFeatureChat": "المحادثة العائلية",
   "surveyFeatureMoments": "اللحظات",
   "surveyFeatureGames": "الألعاب",
@@ -949,7 +949,7 @@
   "homeAddTopicAdded": "انضاف لسوالف الليلة",
   "accountMyTopics": "مواضيعي",
   "accountMyTopicsHint": "للحين ما سولفنا فيها",
-  "accountMyTopicsEmpty": "ما فيه شي ينتظر. أضف موضوع من الرئيسية.",
+  "accountMyTopicsEmpty": "ما فيه مواضيع حاليًا",
   "momentsReactHeart": "قلب",
   "momentsReactLaugh": "ضحك",
   "momentsReactThumbs": "إعجاب",
@@ -976,5 +976,31 @@
   "activitiesAddOuting": "اقترح طلعة",
   "activitiesOutingName": "وين تبي نروح؟",
   "activitiesOutingAdd": "أضف",
-  "activitiesSuggestedByFamily": "اقتراح من العيلة"
+  "activitiesSuggestedByFamily": "اقتراح من العائلة",
+  "accountFamilyMembers": "أفراد العائلة",
+  "accountShowFamily": "عرض كل أفراد العائلة ({n})",
+  "@accountShowFamily": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "accountHideFamily": "إخفاء القائمة",
+  "homePointsThisWeek": "{n, plural, =0{ما جبت نقاط هالأسبوع للحين} one{نقطة وحدة هالأسبوع} two{نقطتين هالأسبوع} few{{n} نقاط هالأسبوع} other{{n} نقطة هالأسبوع}}",
+  "@homePointsThisWeek": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "accountMemberOfFamily": "عضو في عائلة {family}",
+  "@accountMemberOfFamily": {
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  }
 }

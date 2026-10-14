@@ -177,8 +177,8 @@ void main() {
     await tapText(t, 'عدّل حسابك');
     await back(t);
     // the badges sit at the top of Account, visible without opening anything; tapping opens the full list
-    expect(find.byTooltip('الأكثر تفاعلًا'), findsOneWidget);
-    await t.tap(find.byTooltip('الأكثر تفاعلًا'));
+    expect(find.byTooltip('ملك السوالف'), findsOneWidget);
+    await t.tap(find.byTooltip('ملك السوالف'));
     await t.pumpAndSettle();
     expect(t.takeException(), isNull);
   });

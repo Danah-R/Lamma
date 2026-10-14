@@ -23,6 +23,7 @@ import '../features/topics/topics_controller.dart';
 import '../features/topics/topics_screen.dart';
 import '../widgets/topic_deck_card.dart';
 import 'activities_colors.dart';
+import 'home.dart' show AddEventPage;
 import 'activities_data.dart';
 import '../features/games/charades/charades_screen.dart';
 import '../features/games/seen_jeem/seen_jeem_screen.dart';
@@ -949,21 +950,14 @@ class _WeekendOutingCardState extends State<WeekendOutingCard> {
     if (sharedLive) Backend.addOuting(v);
   }
 
-  /// Puts the outing in the family calendar (the Home page), on the coming Friday at 4 PM.
-  void _addToCalendar(WeekendPlace place) {
-    final l = AppLocalizations.of(context);
-    final now = DateTime.now();
-    var days = (DateTime.friday - now.weekday + 7) % 7;
-    if (days == 0) days = 7;
-    final date = DateTime(now.year, now.month, now.day + days);
-    events.add(
-      Ev(place.name, date, '4:00 PM', 'Outing', C.sage, [profile.name]),
+  /// Opens the add-event page with this outing filled in, so the date, time and details can be chosen
+  /// before it goes in the family calendar on the Home page.
+  Future<void> _addToCalendar(WeekendPlace place) async {
+    await go(
+      context,
+      AddEventPage(initialName: place.name, initialType: 'Outing'),
     );
-    if (sharedLive) Backend.addEvent(place.name, date, '4:00 PM', 'Outing');
     sharedTick.value++; // so the Home page redraws its calendar
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(l.activitiesAddedToCalendar)));
   }
 
   @override

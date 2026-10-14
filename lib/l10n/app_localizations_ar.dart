@@ -252,7 +252,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String accountAgeSpirit(int age) {
-    return '$age سنة · روح لمّه';
+    return '$age سنة';
   }
 
   @override
@@ -2648,7 +2648,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String homePhoneFreeWarningPoints(int points) {
-    return 'إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك $points نقطة.';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points نقطة',
+      many: '$points نقطة',
+      few: '$points نقاط',
+      two: 'نقطتين',
+      one: 'نقطة وحدة',
+    );
+    return 'إذا استخدمت جوالك وطلعت من التطبيق، بتنخصم منك $_temp0.';
   }
 
   @override
@@ -2677,12 +2686,30 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String pointsEarned(int points) {
-    return '+$points نقطة';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points نقطة',
+      many: '$points نقطة',
+      few: '$points نقاط',
+      two: 'نقطتين',
+      one: 'نقطة وحدة',
+    );
+    return '+$_temp0';
   }
 
   @override
   String pointsFirst(int points) {
-    return 'أنت الأول! +$points نقطة';
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points نقطة',
+      many: '$points نقطة',
+      few: '$points نقاط',
+      two: 'نقطتين',
+      one: 'نقطة وحدة',
+    );
+    return 'أنت الأول! +$_temp0';
   }
 
   @override
@@ -2692,7 +2719,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get surveyTitle => 'استبيان الشهر';
 
   @override
-  String get surveyCardTitle => 'كيف كان شهرك مع العيلة؟';
+  String get surveyCardTitle => 'كيف كان شهرك مع العائلة؟';
 
   @override
   String get surveyCardDesc => 'كم سؤال سريع، وإجاباتك لك وحدك';
@@ -2726,7 +2753,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get surveyQGames => 'أي ألعاب استمتعت فيها أكثر؟';
 
   @override
-  String get surveyQCloseness => 'قد إيش حسّيت إنك قريب من عيلتك هالشهر؟';
+  String get surveyQCloseness => 'قد إيش حسّيت إنك قريب من عائلتك هالشهر؟';
 
   @override
   String get surveyCloseLow => 'مو كثير';
@@ -2750,7 +2777,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get surveyNothingThisMonth => 'ما صار شي هالشهر';
 
   @override
-  String get surveyNoOthers => 'ما انضم أحد ثاني للعيلة للحين';
+  String get surveyNoOthers => 'ما انضم أحد ثاني للعائلة للحين';
 
   @override
   String get surveyFeatureChat => 'المحادثة العائلية';
@@ -2807,7 +2834,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountMyTopicsHint => 'للحين ما سولفنا فيها';
 
   @override
-  String get accountMyTopicsEmpty => 'ما فيه شي ينتظر. أضف موضوع من الرئيسية.';
+  String get accountMyTopicsEmpty => 'ما فيه مواضيع حاليًا';
 
   @override
   String get momentsReactHeart => 'قلب';
@@ -2868,5 +2895,35 @@ class AppLocalizationsAr extends AppLocalizations {
   String get activitiesOutingAdd => 'أضف';
 
   @override
-  String get activitiesSuggestedByFamily => 'اقتراح من العيلة';
+  String get activitiesSuggestedByFamily => 'اقتراح من العائلة';
+
+  @override
+  String get accountFamilyMembers => 'أفراد العائلة';
+
+  @override
+  String accountShowFamily(int n) {
+    return 'عرض كل أفراد العائلة ($n)';
+  }
+
+  @override
+  String get accountHideFamily => 'إخفاء القائمة';
+
+  @override
+  String homePointsThisWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n نقطة هالأسبوع',
+      few: '$n نقاط هالأسبوع',
+      two: 'نقطتين هالأسبوع',
+      one: 'نقطة وحدة هالأسبوع',
+      zero: 'ما جبت نقاط هالأسبوع للحين',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String accountMemberOfFamily(String family) {
+    return 'عضو في عائلة $family';
+  }
 }
